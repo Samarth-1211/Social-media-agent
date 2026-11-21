@@ -1,0 +1,19 @@
+{
+  "name": "tdm-plugins",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Development tooling for the TDM Groups plugin marketplace.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "new-skill": "node scripts/new-skill.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.9.1"
+  }
+}

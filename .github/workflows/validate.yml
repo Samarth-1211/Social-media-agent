@@ -1,0 +1,32 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install validator dependencies
+        run: npm ci
+
+      - name: Repository checks
+        run: node scripts/validate.mjs
+        env:
+          SKIP_CLAUDE_VALIDATE: "1"
+
+      # Official manifest check. Non-blocking until we confirm the CLI runs in CI without signing in.
+      - name: claude plugin validate
+        continue-on-error: true
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude plugin validate .
+          claude plugin validate plugins/social-media-manager
