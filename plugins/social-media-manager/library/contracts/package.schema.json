@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:package",
+  "$comment": "draft — completed in its group (Group 6, delivery)",
+  "title": "Delivery package",
+  "type": "object",
+  "required": ["job_id", "files"],
+  "properties": {
+    "job_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "platform": { "type": "string" },
+          "aspect_ratio": { "type": "string" }
+        }
+      }
+    },
+    "caption": { "type": "string" },
+    "hashtags": { "type": "array", "items": { "type": "string" } },
+    "delivered_at": { "type": "string", "format": "date-time" }
+  }
+}

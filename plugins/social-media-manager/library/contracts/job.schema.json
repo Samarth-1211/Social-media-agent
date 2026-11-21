@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:job",
+  "title": "Job",
+  "description": "One production job (a video or a poster) for one client. Source of truth for progress, gates, credits and outputs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id",
+    "client_id",
+    "type",
+    "title",
+    "track",
+    "status",
+    "current_stage",
+    "stage_history",
+    "gates",
+    "credits",
+    "outputs",
+    "client_feedback",
+    "revision_round",
+    "log",
+    "version",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "job_id": {
+      "description": "<CLIENTCODE>-<NN>, e.g. HOL-03. Number is per client and grows past 99.",
+      "type": "string",
+      "pattern": "^[A-Z]{3}-[0-9]{2,}$"
+    },
+    "client_id": { "$ref": "#/$defs/slug" },
+    "type": { "enum": ["video", "poster"] },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "track": { "enum": ["quick", "full"] },
+    "style_preset": {
+      "description": "Name of a preset in library/presets/, or null for none.",
+      "type": ["string", "null"]
+    },
+    "status": {
+      "description": "Overall job state. Stage-level progress lives in current_stage and stage_history.",
+      "enum": ["active", "paused", "waiting_on_client", "delivered", "cancelled"]
+    },
+
+    "current_stage": {
+      "description": "A stage id from stages.yaml.",
+      "$ref": "#/$defs/stageId"
+    },
+    "stage_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stage", "status", "started_at"],
+        "properties": {
+          "stage": { "$ref": "#/$defs/stageId" },
+          "status": { "enum": ["in_progress", "done", "skipped", "reopened", "failed"] },
+          "started_at": { "$ref": "#/$defs/timestamp" },
+          "finished_at": { "$ref": "#/$defs/nullableTimestamp" },
+          "by": { "$ref": "#/$defs/person" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stage", "owner_role", "status"],
+        "properties": {
+          "stage": { "$ref": "#/$defs/stageId" },
+          "owner_role": { "enum": ["admin", "editor", "client"] },
+          "status": { "enum": ["pending", "approved", "changes_requested"] },
+          "decided_by": { "type": ["string", "null"] },
+          "decided_at": { "$ref": "#/$defs/nullableTimestamp" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+
+    "assignee": {
+      "description": "Team member handle responsible for the job.",
+      "type": ["string", "null"]
+    },
+    "deadline": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+
+    "credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["budget", "used", "ledger"],
+      "properties": {
+        "budget": { "type": "number", "minimum": 0 },
+        "used": { "type": "number", "minimum": 0 },
+        "ledger": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["at", "stage", "amount", "description"],
+            "properties": {
+              "at": { "$ref": "#/$defs/timestamp" },
+              "stage": { "$ref": "#/$defs/stageId" },
+              "amount": { "type": "number", "description": "Credits spent (positive) or refunded (negative)." },
+              "description": { "type": "string" },
+              "tool": { "type": "string", "description": "Service or model used, e.g. higgsfield/<model>." },
+              "by": { "$ref": "#/$defs/person" }
+            }
+          }
+        }
+      }
+    },
+
+    "outputs": {
+      "description": "Stage outputs keyed by contract field name (the `writes` names in stages.yaml).",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/fieldName" },
+      "additionalProperties": { "$ref": "#/$defs/output" }
+    },
+    "client_feedback": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["received_at", "round", "raw"],
+        "properties": {
+          "received_at": { "$ref": "#/$defs/timestamp" },
+          "round": { "type": "integer", "minimum": 0 },
+          "raw": { "type": "string", "description": "The client's reply as received (no phone numbers)." },
+          "recorded_by": { "$ref": "#/$defs/person" },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["item", "target_stage"],
+              "properties": {
+                "item": { "type": "string" },
+                "target_stage": { "$ref": "#/$defs/stageId" },
+                "status": { "enum": ["open", "done", "declined"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "revision_round": {
+      "description": "Client revision rounds used so far; compare with client.revision_cap.",
+      "type": "integer",
+      "minimum": 0
+    },
+
+    "log": {
+      "description": "Most recent events, newest last. Keep only the last 20.",
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at", "message"],
+        "properties": {
+          "at": { "$ref": "#/$defs/timestamp" },
+          "by": { "$ref": "#/$defs/person" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+
+    "version": {
+      "description": "Increments on every save. Used to detect concurrent edits.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": { "$ref": "#/$defs/timestamp" },
+    "updated_at": { "$ref": "#/$defs/timestamp" }
+  },
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "stageId": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "fieldName": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "nullableTimestamp": { "type": ["string", "null"], "format": "date-time" },
+    "person": { "type": "string", "description": "Team member handle, or 'client' or 'system'." },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["updated_at"],
+      "properties": {
+        "data": { "description": "Inline structured content, validated against the field's schema when one exists." },
+        "files": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Paths or URLs of files produced (relative to the job's outputs/ folder in files mode)."
+        },
+        "summary": { "type": "string" },
+        "schema": { "type": "string", "description": "Schema file the data follows, e.g. brief.schema.json." },
+        "stage": { "$ref": "#/$defs/stageId" },
+        "by": { "$ref": "#/$defs/person" },
+        "updated_at": { "$ref": "#/$defs/timestamp" }
+      }
+    }
+  }
+}

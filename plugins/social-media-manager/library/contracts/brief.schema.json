@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:brief",
+  "title": "Brief",
+  "description": "The approved creative brief for one job. Written by the brief stage; stored in job.outputs.brief.data.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id",
+    "client_id",
+    "type",
+    "objective",
+    "key_message",
+    "language",
+    "deliverables",
+    "assumptions",
+    "open_questions",
+    "version",
+    "updated_at"
+  ],
+  "properties": {
+    "job_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "type": { "enum": ["video", "poster"] },
+
+    "objective": {
+      "description": "What this piece must achieve, in one or two sentences.",
+      "type": "string",
+      "minLength": 1
+    },
+    "occasion": {
+      "description": "Festival, launch or event this is for, if any.",
+      "type": ["string", "null"]
+    },
+    "audience": {
+      "description": "Who this piece is for. Defaults to the client's audience if not narrower.",
+      "type": "string"
+    },
+    "key_message": { "type": "string", "minLength": 1 },
+    "offer": {
+      "description": "Price, discount or offer to show, if any.",
+      "type": ["string", "null"]
+    },
+    "cta": {
+      "description": "Call to action, e.g. 'DM to book', 'Visit this Sunday'.",
+      "type": ["string", "null"]
+    },
+    "language": { "enum": ["Hindi", "English", "Hinglish"] },
+    "tone": { "type": "string" },
+
+    "deliverables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["platform", "format", "aspect_ratio"],
+        "properties": {
+          "platform": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "format": { "enum": ["reel", "short", "story", "feed-video", "feed-post", "carousel", "poster", "banner"] },
+          "aspect_ratio": { "enum": ["9:16", "4:5", "1:1", "16:9", "3:4", "2:3"] },
+          "duration_sec": {
+            "description": "Target length for video deliverables.",
+            "type": ["number", "null"],
+            "minimum": 1
+          },
+          "count": { "type": "integer", "minimum": 1, "default": 1 }
+        }
+      }
+    },
+    "mandatories": {
+      "description": "Must appear: logo, address, phone line, disclaimer, hashtags, etc.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "avoid": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string", "description": "URL or file path." }
+    },
+    "style_preset": { "type": ["string", "null"] },
+
+    "deadline": { "type": ["string", "null"], "format": "date" },
+    "credit_budget": {
+      "description": "Generation credits budgeted for this job.",
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "success_measure": {
+      "description": "How we'll judge it worked, e.g. 'DMs during festival week'.",
+      "type": ["string", "null"]
+    },
+
+    "assumptions": {
+      "description": "Anything we filled in without the client confirming it.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "version": { "type": "integer", "minimum": 1 },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

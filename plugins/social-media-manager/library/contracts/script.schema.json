@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:script",
+  "$comment": "draft — completed in its group (Group 2, pre-production)",
+  "title": "Script",
+  "type": "object",
+  "required": ["job_id", "language", "lines"],
+  "properties": {
+    "job_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "language": { "enum": ["Hindi", "English", "Hinglish"] },
+    "hook": { "type": "string" },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "beat": { "type": "integer", "minimum": 1 },
+          "voiceover": { "type": "string" },
+          "on_screen_text": { "type": "string" }
+        }
+      }
+    },
+    "cta": { "type": "string" }
+  }
+}

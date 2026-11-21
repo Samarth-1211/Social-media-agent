@@ -1,0 +1,292 @@
+# Stage registry: the single source of truth for the production pipeline.
+# The producer skill runs jobs through these stages in file order, skipping any stage
+# whose `tracks` or `job_types` don't match the job. See docs/STAGE-CONTRACT.md.
+#
+# Fields
+#   id              unique stage id (kebab-case)
+#   group           skills/ group folder the skill lives in
+#   skill           skill folder name that runs this stage
+#   status          planned | placeholder | active
+#   reads           contract fields this stage REQUIRES; each must be written by an
+#                   earlier stage on every (job_type, track) path that runs it, or be `client`
+#   optional_reads  contract fields used if present (may be skipped on the quick track)
+#   writes          contract fields this stage produces (stored in job.outputs.<field>)
+#   gate            who approves before the job moves on: admin | editor | client | none
+#   tracks          quick | full
+#   job_types       video | poster
+#
+# A stage only reads and writes its declared fields. Gate decisions live in job.gates[],
+# so approval stages declare no `writes`.
+
+version: 1
+
+stages:
+  # ── Shared opening ────────────────────────────────────────────────
+  - id: intake
+    group: control
+    skill: producer
+    status: planned
+    reads: [client]
+    optional_reads: []
+    writes: [request]
+    gate: none
+    tracks: [quick, full]
+    job_types: [video, poster]
+
+  - id: brief
+    group: pre-production
+    skill: brief
+    status: planned
+    reads: [client, request]
+    optional_reads: []
+    writes: [brief]
+    gate: admin
+    tracks: [quick, full]
+    job_types: [video, poster]
+
+  - id: concept
+    group: pre-production
+    skill: concept
+    status: planned
+    reads: [client, brief]
+    optional_reads: []
+    writes: [concept]
+    gate: admin
+    tracks: [quick, full]
+    job_types: [video, poster]
+
+  # ── Video: pre-production ────────────────────────────────────────
+  - id: hooks
+    group: pre-production
+    skill: hooks
+    status: planned
+    reads: [brief, concept]
+    optional_reads: []
+    writes: [hooks]
+    gate: none
+    tracks: [full]
+    job_types: [video]
+
+  - id: script
+    group: pre-production
+    skill: script
+    status: planned
+    reads: [client, brief, concept]
+    optional_reads: [hooks]
+    writes: [script]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: localise
+    group: pre-production
+    skill: localise
+    status: planned
+    reads: [client, script]
+    optional_reads: []
+    writes: [localised_script]
+    gate: admin
+    tracks: [full]
+    job_types: [video]
+
+  - id: client-script-approval
+    group: delivery
+    skill: client-messenger
+    status: planned
+    reads: [script]
+    optional_reads: [localised_script]
+    writes: []
+    gate: client
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: style-bible
+    group: pre-production
+    skill: style-bible
+    status: planned
+    reads: [client, brief, concept]
+    optional_reads: []
+    writes: [style_bible]
+    gate: admin
+    tracks: [full]
+    job_types: [video]
+
+  - id: casting
+    group: pre-production
+    skill: casting
+    status: planned
+    reads: [script, style_bible]
+    optional_reads: []
+    writes: [cast]
+    gate: admin
+    tracks: [full]
+    job_types: [video]
+
+  - id: storyboard
+    group: pre-production
+    skill: storyboard
+    status: planned
+    reads: [script]
+    optional_reads: [style_bible, cast]
+    writes: [storyboard]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: production-plan
+    group: pre-production
+    skill: production-plan
+    status: planned
+    reads: [storyboard]
+    optional_reads: []
+    writes: [production_plan]
+    gate: admin
+    tracks: [full]
+    job_types: [video]
+
+  # ── Video: generation and quality ────────────────────────────────
+  - id: clips
+    group: generation
+    skill: clips
+    status: planned
+    reads: [storyboard]
+    optional_reads: [production_plan, style_bible, cast]
+    writes: [clips]
+    gate: none
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: voice-music
+    group: generation
+    skill: voice-music
+    status: planned
+    reads: [script]
+    optional_reads: [localised_script, storyboard]
+    writes: [voiceover, music]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: qa-clips
+    group: quality
+    skill: qa-review
+    status: planned
+    reads: [storyboard, clips]
+    optional_reads: []
+    writes: [qa_report]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [video]
+
+  # ── Video: post-production ───────────────────────────────────────
+  - id: assemble
+    group: post-production
+    skill: assemble
+    status: planned
+    reads: [storyboard, clips, voiceover, music]
+    optional_reads: [qa_report]
+    writes: [rough_cut]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: captions-motion
+    group: post-production
+    skill: captions-motion
+    status: planned
+    reads: [rough_cut, script]
+    optional_reads: [localised_script]
+    writes: [captions]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: audio-mix
+    group: post-production
+    skill: audio-mix
+    status: planned
+    reads: [rough_cut, voiceover, music]
+    optional_reads: []
+    writes: [audio_mix]
+    gate: editor
+    tracks: [full]
+    job_types: [video]
+
+  - id: finish
+    group: post-production
+    skill: finish
+    status: planned
+    reads: [rough_cut, captions]
+    optional_reads: [audio_mix]
+    writes: [master]
+    gate: admin
+    tracks: [quick, full]
+    job_types: [video]
+
+  - id: resolve-export
+    group: post-production
+    skill: resolve-export
+    status: planned
+    reads: [master]
+    optional_reads: []
+    writes: [resolve_project]
+    gate: none
+    tracks: [full]
+    job_types: [video]
+
+  - id: client-final-approval
+    group: delivery
+    skill: client-messenger
+    status: planned
+    reads: [master]
+    optional_reads: []
+    writes: []
+    gate: client
+    tracks: [quick, full]
+    job_types: [video]
+
+  # ── Poster ───────────────────────────────────────────────────────
+  - id: poster-drafts
+    group: generation
+    skill: poster-design
+    status: planned
+    reads: [client, brief, concept]
+    optional_reads: []
+    writes: [poster_drafts]
+    gate: editor
+    tracks: [quick, full]
+    job_types: [poster]
+
+  - id: client-poster-approval
+    group: delivery
+    skill: client-messenger
+    status: planned
+    reads: [poster_drafts]
+    optional_reads: []
+    writes: []
+    gate: client
+    tracks: [quick, full]
+    job_types: [poster]
+
+  - id: poster-final
+    group: generation
+    skill: poster-design
+    status: planned
+    reads: [poster_drafts]
+    optional_reads: []
+    writes: [master]
+    gate: admin
+    tracks: [quick, full]
+    job_types: [poster]
+
+  # ── Shared close ─────────────────────────────────────────────────
+  - id: delivery
+    group: delivery
+    skill: publish
+    status: planned
+    reads: [master]
+    optional_reads: [resolve_project]
+    writes: [package]
+    gate: admin
+    tracks: [quick, full]
+    job_types: [video, poster]

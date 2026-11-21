@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:client",
+  "title": "Client",
+  "description": "A client's brand profile. Every field the agency learns is marked confirmed or guessed in `confidence`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "client_id",
+    "client_code",
+    "name",
+    "business_type",
+    "city",
+    "languages",
+    "confidence",
+    "open_questions",
+    "version",
+    "changelog",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "client_id": {
+      "description": "Stable kebab-case id, e.g. holi-cafe.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "client_code": {
+      "description": "Three capital letters used in job ids, e.g. HOL.",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "business_type": { "type": "string", "description": "e.g. cafe, salon, real estate developer." },
+    "city": { "type": "string" },
+    "contact_person": { "type": ["string", "null"] },
+    "whatsapp": {
+      "description": "E.164 number, e.g. +919812345678. Never copy into evals or examples.",
+      "type": ["string", "null"],
+      "pattern": "^\\+[1-9][0-9]{7,14}$"
+    },
+
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["Hindi", "English", "Hinglish"] }
+    },
+    "platforms": {
+      "description": "Where the client posts, e.g. instagram, facebook, youtube, linkedin, whatsapp-status.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "posting_frequency": { "type": ["string", "null"], "description": "e.g. '3 reels + 2 posters per week'." },
+
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "age_range": { "type": "string" },
+        "locations": { "type": "array", "items": { "type": "string" } },
+        "interests": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "tone_of_voice": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "traits": { "type": "array", "items": { "type": "string" } },
+        "sample_lines": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "visual_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "colours": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hex"],
+            "properties": {
+              "name": { "type": "string" },
+              "hex": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+              "use": { "type": "string", "description": "e.g. primary, accent, background." }
+            }
+          }
+        },
+        "fonts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "use": { "type": "string", "description": "e.g. headings, body, Hindi text." }
+            }
+          }
+        },
+        "logo_ref": {
+          "description": "Path or URL of the logo file.",
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "do": { "type": "array", "items": { "type": "string" } },
+    "dont": { "type": "array", "items": { "type": "string" } },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref"],
+        "properties": {
+          "ref": { "type": "string", "description": "URL or file path." },
+          "kind": { "enum": ["liked", "competitor", "own-past-work", "inspiration"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "festival_calendar": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["occasion"],
+        "properties": {
+          "occasion": { "type": "string", "description": "e.g. Diwali, Holi, store anniversary." },
+          "date": { "type": ["string", "null"], "description": "ISO date if fixed, else a month or note." },
+          "priority": { "enum": ["high", "medium", "low"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+
+    "price_points": {
+      "description": "Prices the client is happy to show in creatives.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["item", "price"],
+        "properties": {
+          "item": { "type": "string" },
+          "price": { "type": "number", "minimum": 0 },
+          "currency": { "type": "string", "default": "INR" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "revision_cap": {
+      "description": "Client revision rounds included per job.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 2
+    },
+
+    "learnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["date", "kind", "what"],
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "kind": { "enum": ["liked", "rejected"] },
+          "what": { "type": "string" },
+          "source_job": { "type": ["string", "null"], "pattern": "^[A-Z]{3}-[0-9]{2,}$" }
+        }
+      }
+    },
+
+    "confidence": {
+      "description": "Marks each profile field as confirmed by the client or guessed by us.",
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "name", "business_type", "city", "contact_person", "whatsapp",
+          "languages", "platforms", "posting_frequency",
+          "audience", "tone_of_voice", "visual_identity",
+          "do", "dont", "references", "festival_calendar",
+          "price_points", "revision_cap"
+        ]
+      },
+      "additionalProperties": { "enum": ["confirmed", "guessed"] }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "version": { "type": "integer", "minimum": 1 },
+    "changelog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "date", "change"],
+        "properties": {
+          "version": { "type": "integer", "minimum": 1 },
+          "date": { "type": "string", "format": "date" },
+          "by": { "type": "string" },
+          "change": { "type": "string" }
+        }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}
