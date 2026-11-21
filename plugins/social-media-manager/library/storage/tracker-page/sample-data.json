@@ -144,7 +144,7 @@
     "[{\"occasion\":\"Diwali\",\"date\":null,\"priority\":\"high\",\"note\":\"Pre-Diwali curtain and sofa cleaning offer\"},{\"occasion\":\"Wedding season\",\"date\":\"November-February\",\"priority\":\"high\",\"note\":\"Saree and sherwani dry clean\"}]",
     "[{\"item\":\"Wash + iron per kg\",\"price\":89,\"currency\":\"INR\"}]",
     "2",
-    "2",
+    "3",
     "{\"name\":{\"status\":\"confirmed\",\"basis\":\"client said, onboarding 2026-11-10\"},\"business_type\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"city\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"languages\":{\"status\":\"confirmed\",\"basis\":\"admin approved\"},\"audience\":{\"status\":\"guessed\",\"basis\":\"inferred from Google Business reviews\"},\"tone_of_voice\":{\"status\":\"guessed\",\"basis\":\"inferred from past Instagram captions\"},\"visual_identity\":{\"status\":\"confirmed\",\"basis\":\"logo file colours, approved by owner\"},\"festival_calendar\":{\"status\":\"guessed\",\"basis\":\"standard Indore calendar suggestion\"},\"price_points\":{\"status\":\"confirmed\",\"basis\":\"admin entered from rate card\"},\"revision_cap\":{\"status\":\"confirmed\",\"basis\":\"default 2, admin approved\"}}",
     "3",
     "2026-11-10T10:00:00+05:30",

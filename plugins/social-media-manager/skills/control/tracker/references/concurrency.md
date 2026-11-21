@@ -11,7 +11,7 @@ The tracker writes only team members, config and imports, and only for the admin
    - **Unchanged:** go on.
    - **Changed in fields you aren't touching:** keep their change, apply yours, and say so.
    - **Changed in the same fields:** stop. Show both values and ask which wins.
-5. **Write** the whole row, with `version` + 1 and `updated_at` = now (India time ISO). Use the cell rules in `${CLAUDE_PLUGIN_ROOT}/library/storage/google-sheets.md` §2: an apostrophe before text, numbers and booleans as they are.
+5. **Write** the whole row, with `version` + 1 and `updated_at` from `get_now` (storage README §2). Use the cell rules in `${CLAUDE_PLUGIN_ROOT}/library/storage/google-sheets.md` §2: an apostrophe before text, numbers and booleans as they are.
 6. **Read back** and confirm the row now shows the new values. Report "Saved" only after this.
 
 ## Team changes

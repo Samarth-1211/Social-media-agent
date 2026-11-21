@@ -13,7 +13,7 @@ const P = path.join(ROOT, 'plugins', 'social-media-manager', 'library');
 const OUT = path.join(P, 'storage', 'tracker-page', 'sample-data.json');
 const ex = (n) => JSON.parse(fs.readFileSync(path.join(P, 'contracts', 'examples', `${n}.example.json`), 'utf8'));
 
-const clientA = ex('client');
+const clientA = { ...ex('client'), next_job_number: 3 }; // SHL-01 and SHL-02 exist in the sample
 const clientB = {
   client_id: 'narmada-heights',
   client_code: 'NRH',

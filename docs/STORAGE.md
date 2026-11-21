@@ -33,6 +33,7 @@ After changing `sheet-layout.json`, run both build scripts and `node scripts/val
   - Values read back as strings, without the apostrophe. Trailing empty cells are left out of each row.
 - **Setup works as generated.** `sheet-setup.json` sent unchanged built all 14 tabs, headers, dropdowns, protected headers and Dashboard formulas, and auto-widened Clients to 29 columns.
 - **Round trip is lossless.** The example client, job (with gates, history, outputs, log), team member and config were written to the sheet, read back, and decoded **identical** to the originals, and still valid against their schemas.
+- **The clock works.** Claude has no reliable clock: in testing, sessions wrote times hours apart for the same moment. Rewriting `=TEXT(NOW(),…)` into `Config!E1` and reading it back returns the current India time (the sheet's time zone), so every timestamp now comes from `get_now`. A full producer run (S3) stamped all 13 gates with consistent real times.
 - **The Dashboard works on real data.** It listed the job under "waiting on editor", counted it per assignee, and showed the empty states for overdue and credits.
 
 ## Honest limits
@@ -50,3 +51,4 @@ Things I could not test from Claude Code. Please check in the Claude app:
 2. In **claude.ai and the desktop app**, the plugin's skills can call the Google Sheets and Drive connector tools (same operations; tool names may differ from Claude Code's `mcp__claude_ai_Google_Sheets__*`).
 3. Each teammate opening the shared tracker page gets the Google Sheets permission prompt and sees data.
 4. `${CLAUDE_PLUGIN_ROOT}` links in skills resolve on claude.ai and in the desktop app (open since Prompt 1).
+5. `get_now` in the app: the connector's write-then-read of `Config!E1` returns the current time (it does in Claude Code).

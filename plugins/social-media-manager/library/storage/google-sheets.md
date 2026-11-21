@@ -54,6 +54,13 @@ The leading apostrophe forces plain text. Sheets doesn't store it and doesn't re
 - Timestamps are ISO 8601 with offset, e.g. `2026-11-22T15:30:00+05:30` (India time).
 - Dates are `YYYY-MM-DD`.
 
+**The clock (`get_now`).** Claude has no reliable clock: it knows today's date but not the time, and guessing gives every session a different "now". Take every timestamp from the sheet instead:
+1. Write this formula into `Config!E1` with update values, exactly as below (no apostrophe):
+   `=TEXT(NOW(),"yyyy-mm-dd")&"T"&TEXT(NOW(),"HH:mm:ss")&"+05:30"`
+2. Read `Config!E1` back. The value is now, in India time (the spreadsheet's time zone is `Asia/Kolkata`), e.g. `2026-11-22T15:30:07+05:30`.
+
+Rewriting the formula forces Google to evaluate it; reading the cell alone may return an old value. Call `get_now` once at the start of each turn that writes, and use that value for every timestamp written in that turn. `Config!D1` holds the label "clock (do not edit)".
+
 ## 3. Tabs and keys
 
 Row 1 of every data tab holds the column keys from `sheet-layout.json`, in order. **Check row 1 before relying on positions;** if it differs from the layout, stop and report.
@@ -85,6 +92,7 @@ Columns marked `storage_only` in the layout (row keys, `seq`, a question's `stat
 
 | Operation | Steps |
 |---|---|
+| `get_now` | §2, "The clock": rewrite the `Config!E1` formula, then read `Config!E1`. |
 | `get_config` | Read `Config!A:B` and convert using `config.schema.json` types. |
 | `save_config` | Re-read; check `version`; write the changed `value` cells, `version` + 1 and `updated_at`. |
 | `get_team` / `save_team` | Read `Team!A:H`. To save, update the member's row (or append a new one), with `version` + 1. |

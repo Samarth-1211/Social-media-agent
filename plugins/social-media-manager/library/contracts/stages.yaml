@@ -28,7 +28,7 @@
 # A stage only reads and writes its declared fields. Gate decisions live in job.gates[],
 # so approval stages declare no `writes`.
 #
-# intake is run by `producer`; it becomes `active` once producer exists (M5).
+# intake is run by `producer` (control/producer), which is built, so it is `active`.
 
 version: 2
 
@@ -37,7 +37,7 @@ stages:
   - id: intake
     group: control
     skill: producer
-    status: placeholder
+    status: active
     reads: [client]
     optional_reads: []
     writes: [request]

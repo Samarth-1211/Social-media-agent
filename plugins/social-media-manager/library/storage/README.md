@@ -32,6 +32,7 @@ Every operation reads before it writes. "Record" means the logical record in `li
 
 | Operation | Input | Output | Rules |
 |---|---|---|---|
+| `get_now` | none | the current time, ISO 8601 India time | The only source of timestamps. Call once at the start of each turn that writes; never invent or estimate a time. |
 | `get_config` | none | config record | Read once per session; re-read before `save_config`. |
 | `save_config` | changed fields, `expected_version` | new version | Admin only. |
 | `get_team` | none | team members | Active and inactive. |
@@ -52,6 +53,7 @@ Every operation reads before it writes. "Record" means the logical record in `li
 ## 3. Rules for every write
 
 1. **Read before every write and write the whole updated record.** Never write from memory or from an earlier read in the conversation.
+   - Every timestamp you write (`updated_at`, `at`, `started_at`, `decided_at`…) comes from `get_now`, never from a guess.
 2. **Version check.** Every record has `version` and `updated_at`. Just before writing, read the row again. If `version` or `updated_at` changed since your read, someone else (or a person editing the sheet by hand) changed it:
    - merge only if your change touches different fields, and say so;
    - otherwise stop, show both versions, and ask.

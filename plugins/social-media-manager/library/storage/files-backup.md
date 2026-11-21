@@ -56,4 +56,5 @@ Admin only. Confirm the target sheet by title before writing.
 
 - Announce it: "Working in files mode: this computer only, not shared."
 - Follow every rule in `README.md` §3. `version` and `updated_at` work the same way.
+- `get_now` in files mode: read the computer's clock (for example `date -Iseconds` in a shell) and convert it to India time. If no clock is available, ask.
 - Regenerate `client.md` and `job.md`, and update both `index.json` files, on every save.

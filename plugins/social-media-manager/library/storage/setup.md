@@ -34,7 +34,7 @@ Ask in **one** message:
 
 For each person:
 - make a `handle` (lowercase, hyphens: `ravi`, `ravi-k`);
-- append a Team row: `active` true, `added_at` = now, `version` 1, `updated_at` = now.
+- append a Team row: `active` true, `added_at` and `updated_at` from `get_now` (the clock cell is created in step 2), `version` 1.
 
 Show the list back and confirm before saving. The admin (Samarth) must be in it with role `admin`.
 
