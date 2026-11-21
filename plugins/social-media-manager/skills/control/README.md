@@ -5,7 +5,7 @@ Runs jobs. Holds no creative rules.
 | Skill | Status | Does | Stages |
 |---|---|---|---|
 | `producer` | planned | Runs a job through the stages and gates in `library/contracts/stages.yaml`. Thin: reads the registry, calls the stage skill, records the gate. | `intake` |
-| `tracker` | planned | Job records, status views, credits ledger, resume catch-up. All saving goes through the storage layer (`library/storage/`). | none (called by `producer`) |
+| `tracker` | built (M4) | Job records, status views, credits ledger, resume catch-up. All saving goes through the storage layer (`library/storage/`). | none (called by `producer`) |
 
 Built in Prompt 2.
 

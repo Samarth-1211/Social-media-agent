@@ -351,7 +351,19 @@ for (const plugin of plugins) {
       if (!fs.existsSync(path.join(P, target))) c8.errors.push(`${rel(f)}: link to missing file ${target}`);
     }
   }
-  c8.notes.push(`${plugin.name}: ${linkCount} library link(s) checked`);
+  // ${CLAUDE_SKILL_DIR}/... links resolve against the skill folder that contains the file.
+  const skillDirRe = /\$\{CLAUDE_SKILL_DIR\}\/([^\s)\]"'`<>|*]+)/g;
+  for (const s of skills) {
+    for (const f of walkFiles(s.dir)) {
+      if (!/\.(md|ya?ml|json|txt)$/.test(f)) continue;
+      for (const m of readText(f).matchAll(skillDirRe)) {
+        const target = m[1].replace(/[.,;:!?]+$/, '');
+        linkCount++;
+        if (!fs.existsSync(path.join(s.dir, target))) c8.errors.push(`${rel(f)}: link to missing file \${CLAUDE_SKILL_DIR}/${target}`);
+      }
+    }
+  }
+  c8.notes.push(`${plugin.name}: ${linkCount} link(s) checked`);
 
   // ── 11. Storage layer (only for plugins that have one) ──
   const layoutPath = path.join(P, 'library', 'storage', 'sheet-layout.json');
