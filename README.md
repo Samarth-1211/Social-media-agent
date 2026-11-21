@@ -4,14 +4,14 @@ TDM Groups' Claude plugin marketplace.
 
 | Plugin | What it does |
 |---|---|
-| [`social-media-manager`](plugins/social-media-manager/) | Social media production system: video and poster jobs, client brands, approvals. Claude works as the agency's production team, stage by stage with human gates. |
+| [`social-media-manager`](plugins/social-media-manager/) | Social media production system: video and poster jobs, client brands, approvals. Claude works as the agency's production team, stage by stage with human gates. **0.1.0:** Group 1 (producer, tracker, brand-keeper, client-feedback); creative stages are placeholders. The team's command list is in the plugin README. |
 
 ## Repo layout
 
 ```
 .claude-plugin/marketplace.json   the marketplace (lists the plugins)
 plugins/social-media-manager/     the plugin; the only folder that ships to users
-evals/                            test briefs, rubrics, results (not shipped)
+evals/                            eval clients, feedback samples, rubrics, scenarios, results (not shipped)
 scripts/                          validate.mjs, new-skill.mjs
 docs/                             architecture, stage contract, how to add a skill, decisions
 ```
@@ -37,7 +37,11 @@ Add a skill: `node scripts/new-skill.mjs <group> <skill-name>`. See [docs/ADD-A-
 node scripts/validate.mjs
 ```
 
-This runs the repo's checks: manifests, skills, the stage registry, schemas, presets and links. If the Claude Code CLI is installed, it also runs `claude plugin validate`; set `SKIP_CLAUDE_VALIDATE=1` to skip that part. CI runs the same validator on every push and pull request.
+This runs the repo's checks: manifests, skills, the stage registry, schemas, presets, links, and the Google Sheets storage layout and sample data. If the Claude Code CLI is installed, it also runs `claude plugin validate`; set `SKIP_CLAUDE_VALIDATE=1` to skip that part. CI runs the same validator on every push and pull request.
+
+## Test
+
+Scenario scripts and pass criteria: [evals/scenarios/group1.md](evals/scenarios/group1.md), [evals/rubrics/group1.md](evals/rubrics/group1.md). Client-feedback samples: `node evals/run-feedback-samples.mjs run`, then `score`. Run against the **TDM Studio TEST Database** only.
 
 ## Install (teammates)
 

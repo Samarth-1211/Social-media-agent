@@ -52,3 +52,4 @@ Things I could not test from Claude Code. Please check in the Claude app:
 3. Each teammate opening the shared tracker page gets the Google Sheets permission prompt and sees data.
 4. `${CLAUDE_PLUGIN_ROOT}` links in skills resolve on claude.ai and in the desktop app (open since Prompt 1).
 5. `get_now` in the app: the connector's write-then-read of `Config!E1` returns the current time (it does in Claude Code).
+6. **Installing the plugin** on claude.ai and in the desktop app: the exact steps (open point in `docs/ARCHITECTURE.md`). Then run the S10 checklist in `evals/scenarios/group1.md`.

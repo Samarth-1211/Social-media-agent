@@ -2,7 +2,9 @@
 
 All notable changes to the `social-media-manager` plugin. Versions follow semver (see `docs/ARCHITECTURE.md`, Versioning).
 
-## [Unreleased] - Group 1 in progress
+## [0.1.0] - 2026-11-22
+
+Group 1: control and brand. Jobs run from intake to delivery with real gates; every creative stage is a placeholder.
 
 ### Added
 - Contracts v2: stages as placeholders with gate owners and credit_spend; final job, client, brief schemas; new request, team, config schemas; examples.
@@ -14,6 +16,9 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 - Evals: two eval clients, Group 1 rubric and scenario scripts (S1–S11, with the S10 Claude-app checklist), results `evals/results/2026-11-22_v0.1.0.md`.
 - Files mode keeps the full log in `jobs/<id>/log-full.json`; exports leave out empty cells; client-feedback asks producer to refresh `next_action` after saving feedback.
 - Storage: `get_now` clock cell (`Config!D1:E1`); every timestamp comes from the sheet, not a guess. Sample data: SHL `next_job_number` 3; SHL-02 brief and concept outputs and NRH-01 request output added (the validator now checks that every stage a sample job marks done has its outputs).
+
+### Tested
+- Scenarios S1–S9 and S11 pass (`evals/results/2026-11-22_v0.1.0.md`); S10 is a checklist for the Claude app.
 
 ## [0.0.1] - 2026-11-21
 

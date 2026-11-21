@@ -1,6 +1,6 @@
 {
   "name": "tdm-plugins",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Development tooling for the TDM Groups plugin marketplace.",
   "type": "module",
