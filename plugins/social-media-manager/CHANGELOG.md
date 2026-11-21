@@ -11,6 +11,8 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 - `control/producer` skill: runs jobs through stages and gates from `stages.yaml`, placeholder stages, gate permissions, budget gate, commands. `intake` is now `active`.
 - `brand/brand-keeper` skill: onboarding from material or interview, confidence marks with basis, open questions with recommendations, client code, festival calendar suggestions, versions and changelog, learnings, brand brief. `./skills/brand` registered.
 - `brand/client-feedback` skill: quote ledger, labels, conflict rules (contradiction, old version, multiple voices), Hinglish vague-note decoder, revision rounds and cap, routing table, change-list and WhatsApp message templates, three examples.
+- Evals: two eval clients, Group 1 rubric and scenario scripts (S1–S11, with the S10 Claude-app checklist), results `evals/results/2026-11-22_v0.1.0.md`.
+- Files mode keeps the full log in `jobs/<id>/log-full.json`; exports leave out empty cells; client-feedback asks producer to refresh `next_action` after saving feedback.
 - Storage: `get_now` clock cell (`Config!D1:E1`); every timestamp comes from the sheet, not a guess. Sample data: SHL `next_job_number` 3; SHL-02 brief and concept outputs and NRH-01 request output added (the validator now checks that every stage a sample job marks done has its outputs).
 
 ## [0.0.1] - 2026-11-21

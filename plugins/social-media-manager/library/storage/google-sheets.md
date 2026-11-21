@@ -48,7 +48,7 @@ The leading apostrophe forces plain text. Sheets doesn't store it and doesn't re
 - Every value comes back as a string. Numbers look like `"200"`, booleans like `"TRUE"`.
 - Trailing empty cells are left out of a row.
 - Convert each value back using the column type.
-- An empty cell means null or absent.
+- An empty cell means the field is absent: leave it out of the record. Don't turn it into `[]`, `""` or `null` (unless the schema requires the field, in which case use its empty value).
 
 **Format rules:**
 - Timestamps are ISO 8601 with offset, e.g. `2026-11-22T15:30:00+05:30` (India time).

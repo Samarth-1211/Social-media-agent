@@ -90,6 +90,7 @@ Plus a `feedback` log entry (`append_log`). Learnings go to `brand-keeper` as su
 
 11. **Save, then hand over.**
     1. Save the feedback entry (`<job_id>-F<n>`) and `revision_round` with `update_job`, plus a `feedback` log line. Timestamps from `get_now`. Read it back.
+       Then ask `producer` to refresh `next_action` (the producer owns it), so the board shows who acts next: "<name> to confirm the route for <feedback_id>" when routing is proposed, or "<assignee> to send the questions in <feedback_id> to <client>" when it's only clarifications. The client gate stays pending.
     2. When the assignee or admin confirms the route ("route ok", "reopen script"), set `routing.status` = `confirmed` with `confirmed_by` and `confirmed_at`. Then hand to `producer`: `sent_back` to the confirmed stage, or `changes_requested` if it's the stage just shown.
        - If `over_cap` is true, or there's a `change_request`, **only the admin** may confirm the route.
     3. If they reject the route, set `rejected` and ask which stage instead.

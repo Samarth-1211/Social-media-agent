@@ -25,6 +25,7 @@ Default folder: `${CLAUDE_PROJECT_DIR}/.tdm-studio/` (or `config.data_folder`). 
     └── <job_id>/
         ├── job.json            job record (full: gates, history, credits, feedback, outputs; log = last 20)
         ├── job.md              readable view, regenerated on every save (library/templates/job-record.md)
+        ├── log-full.json       every log entry, append-only (the sheet's Log tab, for this job)
         └── outputs/            files produced by stages
 ```
 
@@ -34,7 +35,7 @@ Records are the logical records from `library/contracts/`. They are validated be
 
 Admin only.
 1. Read every data tab (`google-sheets.md` §3) and build each client, job and team record, plus config.
-2. Validate each one. List any that fail, and export them anyway, flagged in `export-report.md`.
+2. Leave out fields whose cells are empty (`google-sheets.md` §2), so two exports of the same sheet are identical. Validate each one. List any that fail, and export them anyway, flagged in `export-report.md`.
 3. Write the folder above. Each `index.json` lists every record, sorted by ID.
 4. Write `export-report.md`: when, from which sheet (title and ID), and the counts of clients, jobs and team members.
 
@@ -58,3 +59,4 @@ Admin only. Confirm the target sheet by title before writing.
 - Follow every rule in `README.md` §3. `version` and `updated_at` work the same way.
 - `get_now` in files mode: read the computer's clock (for example `date -Iseconds` in a shell) and convert it to India time. If no clock is available, ask.
 - Regenerate `client.md` and `job.md`, and update both `index.json` files, on every save.
+- `job.json` keeps only the last 20 log entries, so **append every log entry to `jobs/<job_id>/log-full.json` as well**. That file plays the part of the sheet's Log tab; import uses it, when present, to restore the full log.
