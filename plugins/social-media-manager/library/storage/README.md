@@ -40,7 +40,7 @@ Every operation reads before it writes. "Record" means the logical record in `li
 | `list_clients` | optional filter (status, name contains) | `client_id, client_code, name, status, business_type, city` | Light read: Clients tab only. |
 | `get_client` | `client_id`, code or name | client record | If a name matches several clients, list them and ask. |
 | `get_brand_brief` | `client_id` | the brand-brief view | Profile essentials + open questions + active learnings, rendered with `${CLAUDE_PLUGIN_ROOT}/library/templates/brand-brief.md`. What later stages read. |
-| `save_client` | whole record, `expected_version` | new version | Real changes bump `version` and add a changelog entry; typo-only fixes don't. Admin only for `price_points` and `revision_cap`. |
+| `save_client` | whole record, `expected_version` (none for a new client) | new version | Real changes bump `version` and add a changelog entry; typo-only fixes don't. Admin only for `price_points` and `revision_cap`. |
 | `create_job` | client, type, title, track, deadline, assignee, budget | new job record | Takes the job number from the client's `next_job_number` and increments it in the same step. |
 | `get_job` | `job_id` | job record | Rebuilds the record from the Jobs row plus its rows in the child tabs. |
 | `list_jobs` | filter: client, assignee, `waiting_on`, status, overdue | job summaries | Light read: Jobs tab only. |

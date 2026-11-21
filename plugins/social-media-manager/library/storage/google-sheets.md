@@ -100,6 +100,7 @@ Columns marked `storage_only` in the layout (row keys, `seq`, a question's `stat
 | `get_client` | Read the client's Clients row, then its rows in Questions (status `open`), Learnings and ClientChanges. |
 | `get_brand_brief` | Same reads as `get_client`. Render `library/templates/brand-brief.md` with active learnings and high or medium open questions only. |
 | `save_client` | Re-read the row and check `version` and `updated_at`. Write the whole Clients row. Append new Learnings and ClientChanges rows. For a resolved question, set its `status` to `answered` and fill `answer`; never delete it. |
+| `save_client`, new client | Re-read `Clients!A:B`: `client_id` and `client_code` must not exist yet (if they do, stop and report). Append the Clients row with `version` 1 and `next_job_number` 1. Append one Questions row per open question (`status` open), and the ClientChanges row for v1. Read the new row back. |
 | `create_job` | See below. |
 | `get_job` | Read the Jobs row, then read Gates, StageHistory, Outputs, Credits, Feedback and Log and keep that job's rows. Build the record and validate it. |
 | `list_jobs` | Read `Jobs!A:S`. "Overdue" means `deadline` < today and status `active`. |

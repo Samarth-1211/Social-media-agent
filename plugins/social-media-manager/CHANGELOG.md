@@ -9,6 +9,7 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 - Storage layer on Google Sheets + Drive: operations, setup, backup, sheet layout, tracker page with mock mode.
 - `control/tracker` skill: status board, overdue, per client, per assignee, credits, catch-up card, team and backup actions. `./skills/control` registered.
 - `control/producer` skill: runs jobs through stages and gates from `stages.yaml`, placeholder stages, gate permissions, budget gate, commands. `intake` is now `active`.
+- `brand/brand-keeper` skill: onboarding from material or interview, confidence marks with basis, open questions with recommendations, client code, festival calendar suggestions, versions and changelog, learnings, brand brief. `./skills/brand` registered.
 - Storage: `get_now` clock cell (`Config!D1:E1`); every timestamp comes from the sheet, not a guess. Sample data: SHL `next_job_number` 3.
 
 ## [0.0.1] - 2026-11-21

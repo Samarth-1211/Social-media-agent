@@ -15,6 +15,7 @@
     "brand-management"
   ],
   "skills": [
-    "./skills/control"
+    "./skills/control",
+    "./skills/brand"
   ]
 }
