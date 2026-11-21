@@ -1,0 +1,448 @@
+<title>TDM Social Media Tracker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a production board. Summary strip (who is holding work) → filters → stage lanes in pipeline order,
+   with the selected job's detail beside the board on wide screens and below it on phones. */
+:root {
+  --bg: #F3F6F9; --surface: #FFFFFF; --sunk: #EBF0F5; --ink: #17202C; --muted: #5A6576; --line: #D9E0E8;
+  --accent: #B56A00; --accent-soft: #FCEBCB;
+  --w-admin: #B56A00; --w-editor: #1D67A8; --w-client: #7347AD; --bad: #B42318; --bad-soft: #FDE4E1; --good: #23704A;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E131A; --surface: #151C26; --sunk: #1B2430; --ink: #E5EAF1; --muted: #98A3B3; --line: #273243;
+  --accent: #F0A93A; --accent-soft: #3A2A11;
+  --w-admin: #F0A93A; --w-editor: #63ADEB; --w-client: #B99AEB; --bad: #F2786C; --bad-soft: #3B1A17; --good: #5FC58E;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0E131A; --surface: #151C26; --sunk: #1B2430; --ink: #E5EAF1; --muted: #98A3B3; --line: #273243;
+  --accent: #F0A93A; --accent-soft: #3A2A11;
+  --w-admin: #F0A93A; --w-editor: #63ADEB; --w-client: #B99AEB; --bad: #F2786C; --bad-soft: #3B1A17; --good: #5FC58E;
+  color-scheme: dark; }
+
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--f-body); }
+.wrap { max-width: 1320px; margin: 0 auto; padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 18px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: 1.6rem; } h2 { font-size: 1.15rem; } h3 { font-size: 0.95rem; }
+.mono, .id { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+header.top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.source { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.85rem; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
+.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.live { color: var(--good); } .pill.sample { color: var(--accent); }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 11px; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+
+nav.views { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+nav.views a { padding: 8px 12px; color: var(--muted); text-decoration: none; font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
+nav.views a[aria-current="page"] { color: var(--ink); border-color: var(--accent); }
+
+.notice { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 8px; }
+.notice.bad { border-left-color: var(--bad); }
+.notice .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stat { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); padding: 10px 12px; cursor: pointer; display: grid; gap: 2px; border-top: 3px solid var(--c, var(--line)); }
+.stat[aria-pressed="true"] { background: var(--sunk); border-color: var(--c); }
+.stat b { font-family: var(--f-display); font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.filters label { display: grid; gap: 3px; font-size: 0.78rem; color: var(--muted); }
+.filters select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; min-width: 130px; }
+
+.split { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1040px) { .split.has-detail { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); } }
+.lanes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }
+.lane { background: var(--sunk); border-radius: var(--r); padding: 10px; display: grid; gap: 8px; min-width: 0; }
+.lane header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.card { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 5px; cursor: pointer; min-width: 0; }
+.card:hover { border-color: var(--muted); }
+.card[aria-current="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.card .title { font-weight: 600; overflow-wrap: anywhere; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 0.8rem; color: var(--muted); }
+.w { color: var(--c); border-color: color-mix(in srgb, var(--c) 40%, var(--line)); }
+.w-admin { --c: var(--w-admin); } .w-editor { --c: var(--w-editor); } .w-client { --c: var(--w-client); } .w-none { --c: var(--muted); }
+.late { color: var(--bad); font-weight: 600; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 16px; min-width: 0; align-content: start; }
+.panel section { display: grid; gap: 8px; min-width: 0; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; font-size: 0.88rem; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
+.meter { height: 8px; background: var(--sunk); border-radius: 99px; position: relative; overflow: hidden; }
+.meter i { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 99px; }
+.meter i.over { background: var(--bad); }
+.meter .warn { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--ink); opacity: .5; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.84rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--f-data); }
+.st-approved { color: var(--good); } .st-pending { color: var(--accent); font-weight: 600; } .st-changes_requested, .st-sent_back { color: var(--bad); }
+ul.plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+ul.plain li { overflow-wrap: anywhere; }
+.ph { font-size: 0.72rem; padding: 1px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.conf-c { color: var(--good); font-weight: 700; } .conf-g { color: var(--accent); font-weight: 700; }
+.swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; margin-right: 4px; }
+.prio-high { color: var(--bad); font-weight: 600; } .prio-medium { color: var(--accent); font-weight: 600; } .prio-low { color: var(--muted); }
+.clients { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); align-content: start; }
+.empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: var(--r); }
+footer { font-size: 0.78rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<script type="application/json" id="tracker-config">
+{ "spreadsheet_id": "<SPREADSHEET_ID>", "sheets_server": "Google Sheets", "refresh_ms": 60000 }
+</script>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>TDM Social Media Tracker</h1>
+      <div class="muted">Read-only view of the TDM Studio Database. Changes happen through Claude.</div>
+    </div>
+    <div class="source" id="source"><span class="pill"><span class="dot"></span>Connecting…</span></div>
+  </header>
+  <nav class="views" aria-label="Views">
+    <a href="#jobs" data-view="jobs">Jobs</a>
+    <a href="#clients" data-view="clients">Clients</a>
+    <a href="#credits" data-view="credits">Credits</a>
+  </nav>
+  <div id="notices"></div>
+  <main id="main"><div class="empty">Loading jobs, clients and credits from the TDM Studio Database…</div></main>
+  <footer>Never shows client phone numbers. Times are India time.</footer>
+  <input type="file" id="sample-file" accept="application/json,.json" hidden>
+</div>
+
+<script>
+(() => {
+  // Pipeline order, from library/contracts/stages.yaml (v2).
+  const STAGES = ['intake','brief','concept','hooks','script','localise','client-script-approval','style-bible','casting','storyboard','production-plan','clips','voice-music','qa-clips','assemble','captions-motion','audio-mix','finish','resolve-export','client-final-approval','poster-drafts','client-poster-approval','poster-final','delivery'];
+  // Tabs read, and the A1 range of each (columns from sheet-layout.json).
+  const TABS = { Jobs: 'Jobs!A1:S', Clients: 'Clients!A1:AC', Questions: 'Questions!A1:H', Learnings: 'Learnings!A1:I', ClientChanges: 'ClientChanges!A1:F', Gates: 'Gates!A1:M', Credits: 'Credits!A1:L', Outputs: 'Outputs!A1:J', StageHistory: 'StageHistory!A1:H', Log: 'Log!A1:F', Feedback: 'Feedback!A1:O', Team: 'Team!A1:H' };
+  const JSON_COLS = new Set(['decision_maker','audience','tone_of_voice','words','visual_identity','references','festival_calendar','price_points','confidence','shown_outputs','items','conflicts','routing','messages','data']);
+  const LIST_COLS = new Set(['languages','platforms','do','dont','files','sections','learnings_suggested']);
+  const NUM_COLS = new Set(['credits_budget','credits_warn_at','credits_used','revision_round','version','seq','amount','estimate','round','about_version','revision_cap','next_job_number']);
+
+  let cfg = {};
+  try { cfg = JSON.parse(document.getElementById('tracker-config').textContent); } catch (e) { cfg = {}; }
+  const state = { source: 'loading', raw: {}, errors: {}, updatedAt: null, view: 'jobs', job: null, client: null,
+    filter: { client: '', assignee: '', type: '', waiting: '', overdue: false, closed: false } };
+  let mcpRef = null;
+
+  // ── helpers ───────────────────────────────────────────────
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const IST = 'Asia/Kolkata';
+  const todayIST = () => new Intl.DateTimeFormat('en-CA', { timeZone: IST }).format(new Date());
+  const monthIST = () => todayIST().slice(0, 7);
+  const fmtTime = (iso) => { if (!iso) return ''; const d = new Date(iso); if (isNaN(d)) return esc(iso);
+    return new Intl.DateTimeFormat('en-IN', { timeZone: IST, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).format(d); };
+  const fmtDate = (ymd) => { if (!ymd) return ''; const d = new Date(ymd + 'T12:00:00+05:30'); if (isNaN(d)) return esc(ymd);
+    return new Intl.DateTimeFormat('en-IN', { timeZone: IST, day: 'numeric', month: 'short' }).format(d); };
+  const cell = (key, v) => {
+    if (v === undefined || v === '') return null;
+    if (JSON_COLS.has(key)) { try { return JSON.parse(v); } catch (e) { return { _invalid: v }; } }
+    if (LIST_COLS.has(key)) return String(v).split('\n');
+    if (NUM_COLS.has(key)) { const n = Number(String(v).replace(/,/g, '')); return isNaN(n) ? null : n; }
+    if (v === 'TRUE') return true; if (v === 'FALSE') return false;
+    return v;
+  };
+  const rows = (tab) => {
+    const vals = state.raw[tab]; if (!Array.isArray(vals) || !vals.length) return [];
+    const head = vals[0];
+    return vals.slice(1).filter((r) => r.some((x) => x !== '')).map((r) => Object.fromEntries(head.map((k, i) => [k, cell(k, r[i])])));
+  };
+  const bySeq = (a, b) => (a.seq ?? 0) - (b.seq ?? 0);
+  const stageIndex = (s) => { const i = STAGES.indexOf(s); return i < 0 ? 999 : i; };
+  const waitPill = (w) => `<span class="pill w w-${esc(w || 'none')}"><span class="dot"></span>${w && w !== 'none' ? 'waiting on ' + esc(w) : 'running'}</span>`;
+
+  // ── model ─────────────────────────────────────────────────
+  function model() {
+    const team = Object.fromEntries(rows('Team').map((t) => [t.handle, t]));
+    const clients = rows('Clients');
+    const clientById = Object.fromEntries(clients.map((c) => [c.client_id, c]));
+    const group = (tab, key) => { const m = {}; for (const r of rows(tab)) (m[r[key]] ??= []).push(r); for (const k in m) m[k].sort(bySeq); return m; };
+    const gates = group('Gates', 'job_id'), hist = group('StageHistory', 'job_id'), credits = group('Credits', 'job_id'),
+      logs = group('Log', 'job_id'), outs = group('Outputs', 'job_id'), fb = group('Feedback', 'job_id');
+    const qs = group('Questions', 'client_id'), ls = group('Learnings', 'client_id'), ch = group('ClientChanges', 'client_id');
+    const today = todayIST();
+    const jobs = rows('Jobs').map((j) => ({ ...j,
+      client: clientById[j.client_id], gates: gates[j.job_id] || [], history: hist[j.job_id] || [], ledger: credits[j.job_id] || [],
+      log: (logs[j.job_id] || []).slice(-20), outputs: outs[j.job_id] || [], feedback: fb[j.job_id] || [],
+      overdue: j.status === 'active' && j.deadline && j.deadline < today }));
+    for (const c of clients) { c.questions = (qs[c.client_id] || []).filter((q) => q.status === 'open'); c.learnings = ls[c.client_id] || []; c.changes = (ch[c.client_id] || []).slice().reverse(); c.jobs = jobs.filter((j) => j.client_id === c.client_id); }
+    return { team, clients, clientById, jobs };
+  }
+  const who = (m, h) => (h && m.team[h] ? esc(m.team[h].name) : esc(h || '—'));
+
+  // ── rendering ─────────────────────────────────────────────
+  function renderSource() {
+    const el = document.getElementById('source');
+    const upd = state.updatedAt ? `<span class="muted">Updated ${fmtTime(new Date(state.updatedAt).toISOString())}</span>` : '';
+    if (state.source === 'live') el.innerHTML = `<span class="pill live"><span class="dot"></span>Live · Google Sheets</span>${upd}<button class="btn" id="refresh">Refresh</button>`;
+    else if (state.source === 'sample') el.innerHTML = `<span class="pill sample"><span class="dot"></span>Sample data (fictional)</span>`;
+    else el.innerHTML = `<span class="pill"><span class="dot"></span>Connecting…</span>`;
+    const r = document.getElementById('refresh'); if (r) r.onclick = () => mcpRef?.invalidate(cfg.sheets_server).catch(() => {});
+  }
+
+  function renderNotices() {
+    const el = document.getElementById('notices'); const out = [];
+    const errs = Object.values(state.errors);
+    if (errs.length) {
+      const codes = new Set(errs.map((e) => e.code)); const e = errs[0]; const srv = esc(cfg.sheets_server || 'Google Sheets');
+      let msg;
+      if (codes.has('approval_required')) msg = `This page needs your permission to read the TDM Studio Database through ${srv}.<div class="row"><button class="btn primary" id="allow">Allow reading the sheet</button></div>`;
+      else if (codes.has('needs_reauth')) msg = `${srv} needs to be reconnected. Reconnect it in claude.ai Settings → Connectors, then reload this page.`;
+      else if (codes.has('server_not_connected') || codes.has('selection_required')) msg = `${srv} isn't connected for your account. Add it in claude.ai Settings → Connectors, then reload.`;
+      else if (codes.has('not_in_manifest') || codes.has('blocked_by_policy')) msg = `Reading ${srv} isn't allowed for this view of the page. Ask the admin to republish it, or use the sample data.`;
+      else if (codes.has('tool_error')) msg = `${srv} couldn't read a tab: ${esc(e.message)}. Check that the sheet ID in this page is right and that the tab headers match the layout.`;
+      else msg = `Couldn't reach ${srv} just now (${esc(e.code)}). The page will try again on the next refresh.`;
+      out.push(`<div class="notice bad"><div>${msg}</div><div class="row"><button class="btn" id="use-sample">View sample data instead</button></div></div>`);
+    }
+    if (state.sampleReason) out.push(`<div class="notice"><div>${state.sampleReason}</div></div>`);
+    el.innerHTML = out.join('');
+    const a = document.getElementById('allow'); if (a) a.onclick = allowOnce;
+    const s = document.getElementById('use-sample'); if (s) s.onclick = () => startSample('Showing fictional sample data. Live data needs the Google Sheets connector.');
+  }
+
+  function renderNav() {
+    for (const a of document.querySelectorAll('nav.views a')) a.setAttribute('aria-current', a.dataset.view === state.view ? 'page' : 'false');
+  }
+
+  function jobMatches(j, f) {
+    if (!f.closed && j.status !== 'active') return false;
+    if (f.client && j.client_id !== f.client) return false;
+    if (f.assignee && j.assignee !== f.assignee) return false;
+    if (f.type && j.type !== f.type) return false;
+    if (f.waiting && j.waiting_on !== f.waiting) return false;
+    if (f.overdue && !j.overdue) return false;
+    return true;
+  }
+
+  function renderJobs(m) {
+    const f = state.filter; const open = m.jobs.filter((j) => j.status === 'active');
+    const count = (w) => open.filter((j) => j.waiting_on === w).length;
+    const stat = (key, label, n, c) => `<button class="stat" data-stat="${key}" aria-pressed="${key === 'overdue' ? f.overdue : f.waiting === key}" style="--c: var(${c})"><span class="label">${label}</span><b>${n}</b></button>`;
+    const opt = (vals, cur, all) => `<option value="">${all}</option>` + vals.map(([v, l]) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(l)}</option>`).join('');
+    const assignees = [...new Set(m.jobs.map((j) => j.assignee).filter(Boolean))].map((h) => [h, m.team[h]?.name || h]);
+    const shown = m.jobs.filter((j) => jobMatches(j, f));
+    const byStage = {}; for (const j of shown) (byStage[j.current_stage] ??= []).push(j);
+    const lanes = Object.keys(byStage).sort((a, b) => stageIndex(a) - stageIndex(b)).map((s) => `
+      <div class="lane"><header><h3>${esc(s)}</h3><span class="muted mono">${byStage[s].length}</span></header>
+      ${byStage[s].sort((a, b) => (a.deadline || '9') < (b.deadline || '9') ? -1 : 1).map((j) => `
+        <button class="card" data-job="${esc(j.job_id)}" aria-current="${state.job === j.job_id}">
+          <span class="meta"><span class="id">${esc(j.job_id)}</span><span>${esc(j.type)} · ${esc(j.track)}</span></span>
+          <span class="title">${esc(j.title)}</span>
+          <span class="meta"><span>${esc(j.client?.name || j.client_id)}</span><span>${who(m, j.assignee)}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : ''}">${j.overdue ? 'Overdue · ' : 'Due '}${fmtDate(j.deadline)}</span>` : ''}</span>
+          ${waitPill(j.waiting_on)}
+        </button>`).join('')}
+      </div>`).join('');
+    const detail = state.job && m.jobs.find((j) => j.job_id === state.job);
+    return `
+      <div class="strip">${stat('admin', 'Waiting on admin', count('admin'), '--w-admin')}${stat('editor', 'Waiting on editor', count('editor'), '--w-editor')}${stat('client', 'Waiting on client', count('client'), '--w-client')}${stat('overdue', 'Overdue', open.filter((j) => j.overdue).length, '--bad')}</div>
+      <div class="filters">
+        <label for="f-client">Client<select id="f-client">${opt(m.clients.map((c) => [c.client_id, c.name]), f.client, 'All clients')}</select></label>
+        <label for="f-assignee">Assignee<select id="f-assignee">${opt(assignees, f.assignee, 'Everyone')}</select></label>
+        <label for="f-type">Type<select id="f-type">${opt([['video', 'Video'], ['poster', 'Poster']], f.type, 'Video and poster')}</select></label>
+        <label for="f-waiting">Waiting on<select id="f-waiting">${opt([['admin', 'Admin'], ['editor', 'Editor'], ['client', 'Client'], ['none', 'Nobody (running)']], f.waiting, 'Anyone')}</select></label>
+        <label for="f-closed" style="grid-auto-flow: column; align-items: center; gap: 6px;"><input type="checkbox" id="f-closed"${f.closed ? ' checked' : ''}> Include paused, delivered, cancelled</label>
+      </div>
+      <div class="split${detail ? ' has-detail' : ''}">
+        <div class="lanes">${lanes || `<div class="empty">No jobs match these filters.</div>`}</div>
+        ${detail ? renderJobDetail(m, detail) : ''}
+      </div>`;
+  }
+
+  function renderJobDetail(m, j) {
+    const used = j.credits_used || 0, budget = j.credits_budget || 0, pct = budget ? Math.min(100, (used / budget) * 100) : 0;
+    const warn = j.credits_warn_at && budget ? (j.credits_warn_at / budget) * 100 : null;
+    const brief = j.outputs.find((o) => o.field === 'brief');
+    const briefHtml = !brief ? '<span class="muted">Not written yet.</span>'
+      : brief.data?.placeholder ? `<span class="ph">placeholder</span> <span class="muted">${esc(brief.data.note)}</span>`
+      : `<dl class="kv"><dt>Objective</dt><dd>${esc(brief.data?.objective)}</dd><dt>Key message</dt><dd>${esc(brief.data?.key_message)}</dd><dt>CTA</dt><dd>${esc(brief.data?.cta)}</dd><dt>Language</dt><dd>${esc(brief.data?.language)}</dd></dl>`;
+    return `<aside class="panel" id="detail" aria-label="Job ${esc(j.job_id)}">
+      <section>
+        <div class="meta"><span class="id">${esc(j.job_id)}</span><span>${esc(j.type)} · ${esc(j.track)} track · ${esc(j.status)}</span><button class="btn" id="close-detail" style="margin-left:auto">Close</button></div>
+        <h2>${esc(j.title)}</h2>
+        <div class="meta"><a href="#client-${esc(j.client_id)}">${esc(j.client?.name || j.client_id)}</a><span>Assignee ${who(m, j.assignee)}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : ''}">Deadline ${fmtDate(j.deadline)}${j.overdue ? ' (overdue)' : ''}</span>` : ''}</div>
+      </section>
+      <section><div class="label">Now</div><div>${esc(j.current_stage)} · ${waitPill(j.waiting_on)}</div><div><b>Next:</b> ${esc(j.next_action)}</div></section>
+      <section><div class="label">Credits</div>
+        <div class="mono">${used} / ${budget} used${j.credits_warn_at ? ` · warn at ${j.credits_warn_at}` : ''}</div>
+        <div class="meter" role="img" aria-label="${used} of ${budget} credits used"><i class="${used > budget ? 'over' : ''}" style="width:${pct}%"></i>${warn ? `<span class="warn" style="left:${warn}%"></span>` : ''}</div>
+        ${j.ledger.length ? `<div class="tablewrap"><table><thead><tr><th>When</th><th>Stage</th><th>Tier</th><th class="num">Amount</th><th class="num">Est.</th></tr></thead><tbody>${j.ledger.map((l) => `<tr><td>${fmtTime(l.at)}</td><td>${esc(l.stage)}</td><td>${esc(l.tier)}</td><td class="num">${esc(l.amount)}</td><td class="num">${esc(l.estimate ?? '')}</td></tr>`).join('')}</tbody></table></div>` : '<span class="muted">No credits spent yet.</span>'}
+      </section>
+      <section><div class="label">Brief</div>${briefHtml}</section>
+      <section><div class="label">Gates</div><div class="tablewrap"><table><thead><tr><th>Stage</th><th>Owner</th><th>Status</th><th>Decided</th></tr></thead><tbody>
+        ${j.gates.map((g) => `<tr><td>${esc(g.stage)}${g.kind === 'budget' ? ' <span class="ph">budget</span>' : ''}</td><td>${esc(g.owner_role)}</td><td class="st-${esc(g.status)}">${esc(g.status)}${g.sent_back_to ? ' → ' + esc(g.sent_back_to) : ''}</td><td>${g.decided_by ? `${who(m, g.decided_by)}, ${fmtTime(g.decided_at)}` : `<span class="muted">asked ${fmtTime(g.requested_at)}</span>`}${g.note ? `<div class="muted">${esc(g.note)}</div>` : ''}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">No gates yet.</td></tr>'}
+      </tbody></table></div></section>
+      <section><div class="label">Outputs</div><ul class="plain">${j.outputs.map((o) => `<li><b>${esc(o.field)}</b> <span class="mono muted">v${esc(o.version)}</span> ${o.data?.placeholder ? '<span class="ph">placeholder</span>' : ''} ${esc(o.summary || '')}${(o.files || []).map((f) => ` <a href="${esc(f)}" target="_blank" rel="noopener">file</a>`).join('')}</li>`).join('') || '<li class="muted">None yet.</li>'}</ul></section>
+      ${j.feedback.length ? `<section><div class="label">Client feedback · revision round ${esc(j.revision_round)}</div><ul class="plain">${j.feedback.map((f) => { const items = Array.isArray(f.items) ? f.items : []; const conf = Array.isArray(f.conflicts) ? f.conflicts.length : 0;
+        return `<li><span class="id">${esc(f.feedback_id)}</span> · round ${esc(f.round)} on ${esc(f.about_stage)} · ${items.length} items${conf ? `, <span class="late">${conf} conflict${conf > 1 ? 's' : ''}</span>` : ''}${f.over_cap ? ', <span class="late">over cap</span>' : ''} · routing ${esc(f.routing?.status || '—')}${f.routing?.proposed_stage ? ' → ' + esc(f.routing.proposed_stage) : ''}</li>`; }).join('')}</ul></section>` : ''}
+      <section><div class="label">Stages</div><ul class="plain">${j.history.map((h) => `<li>${esc(h.stage)} · ${esc(h.status)} <span class="muted">${fmtTime(h.started_at)}${h.finished_at ? ' → ' + fmtTime(h.finished_at) : ''}</span></li>`).join('')}</ul></section>
+      <section><div class="label">Log (latest first)</div><ul class="plain">${j.log.slice().reverse().map((l) => `<li><span class="muted">${fmtTime(l.at)} · ${who(m, l.by)} · ${esc(l.kind)}</span><br>${esc(l.message)}</li>`).join('') || '<li class="muted">Empty.</li>'}</ul></section>
+    </aside>`;
+  }
+
+  function confMark(c, field) {
+    const x = c.confidence?.[field]; if (!x) return '';
+    return x.status === 'confirmed' ? `<span class="conf-c" title="Confirmed: ${esc(x.basis)}">✓</span>` : `<span class="conf-g" title="Guessed: ${esc(x.basis)}">?</span>`;
+  }
+
+  function renderClients(m) {
+    const list = `<div class="clients">${m.clients.map((c) => `<button class="card" data-client="${esc(c.client_id)}" aria-current="${state.client === c.client_id}">
+      <span class="meta"><span class="id">${esc(c.client_code)}</span><span>${esc(c.status)}</span></span><span class="title">${esc(c.name)}</span>
+      <span class="meta"><span>${esc(c.business_type)}</span><span>${esc(c.city)}</span></span>
+      <span class="meta"><span>${c.jobs.filter((j) => j.status === 'active').length} open jobs</span>${c.questions.length ? `<span class="prio-medium">${c.questions.length} open question${c.questions.length > 1 ? 's' : ''}</span>` : ''}</span></button>`).join('') || '<div class="empty">No clients yet.</div>'}</div>`;
+    const c = state.client && m.clientById[state.client];
+    if (!c) return list;
+    const guessed = Object.entries(c.confidence || {}).filter(([, v]) => v.status === 'guessed').map(([k, v]) => `${esc(k)} <span class="muted">(${esc(v.basis)})</span>`);
+    const tov = c.tone_of_voice || {};
+    return `<div class="split has-detail">${list}<aside class="panel" aria-label="${esc(c.name)} profile">
+      <section><div class="meta"><span class="id">${esc(c.client_code)}</span><span>profile v${esc(c.version)} · updated ${fmtTime(c.updated_at)}</span><button class="btn" id="close-client" style="margin-left:auto">Close</button></div>
+        <h2>${esc(c.name)}</h2><div class="muted">${esc(c.business_type)} · ${esc(c.city)}</div></section>
+      <section><dl class="kv">
+        <dt>Contact</dt><dd>${esc(c.contact_person || '—')} · WhatsApp ${c.whatsapp ? 'on file' : 'not on file'}</dd>
+        <dt>Decides</dt><dd>${esc(c.decision_maker?.name || '—')}${c.decision_maker?.role ? ` (${esc(c.decision_maker.role)})` : ''}</dd>
+        <dt>Languages</dt><dd>${esc((c.languages || []).join(', '))} ${confMark(c, 'languages')}</dd>
+        <dt>Platforms</dt><dd>${esc((c.platforms || []).join(', '))} ${confMark(c, 'platforms')}</dd>
+        <dt>Audience</dt><dd>${esc(c.audience?.summary || '—')} ${confMark(c, 'audience')}</dd>
+        <dt>Voice</dt><dd>${esc(tov.summary || '—')} ${confMark(c, 'tone_of_voice')}${(tov.attributes || []).map((a) => `<div><b>${esc(a.name)}</b>: ${esc(a.means)} <span class="muted">(not ${esc(a.doesnt_mean)})</span></div>`).join('')}</dd>
+        <dt>Look</dt><dd>${(c.visual_identity?.colours || []).map((k) => `<span><span class="swatch" style="background:${/^#[0-9a-f]{6}$/i.test(k.hex) ? k.hex : 'transparent'}"></span>${esc(k.name || k.hex)}</span>`).join(' ') || '—'} ${confMark(c, 'visual_identity')}</dd>
+        <dt>Do</dt><dd>${esc((c.do || []).join(' · ') || '—')}</dd>
+        <dt>Don't</dt><dd>${esc((c.dont || []).join(' · ') || '—')}</dd>
+        <dt>Revision cap</dt><dd>${esc(c.revision_cap)} rounds</dd>
+      </dl></section>
+      <section><div class="label">Guessed fields (unconfirmed)</div>${guessed.length ? `<ul class="plain">${guessed.map((g) => `<li><span class="conf-g">?</span> ${g}</li>`).join('')}</ul>` : '<span class="muted">Everything recorded is confirmed.</span>'}</section>
+      <section><div class="label">Open questions</div>${c.questions.length ? `<ul class="plain">${c.questions.map((q) => `<li><span class="prio-${esc(q.priority)}">${esc(q.priority)}</span> ${esc(q.question)}<div class="muted">Recommended: ${esc(q.recommendation)}</div></li>`).join('')}</ul>` : '<span class="muted">None.</span>'}</section>
+      <section><div class="label">Learnings</div>${c.learnings.length ? `<ul class="plain">${c.learnings.filter((l) => l.status !== 'retired').map((l) => `<li>${esc(l.what)} <span class="muted">· ${esc(l.kind)}, ${esc(l.status)} · ${fmtDate(l.date)}${l.source_job ? ' · ' + esc(l.source_job) : ''}</span></li>`).join('')}</ul>` : '<span class="muted">None yet.</span>'}</section>
+      <section><div class="label">Changes</div><ul class="plain">${c.changes.map((x) => `<li><span class="mono">v${esc(x.version)}</span> ${fmtDate(x.date)} · ${esc(x.change)}</li>`).join('') || '<li class="muted">None.</li>'}</ul></section>
+    </aside></div>`;
+  }
+
+  function renderCredits(m) {
+    const month = monthIST();
+    const rowsHtml = m.clients.map((c) => {
+      const ledger = c.jobs.flatMap((j) => j.ledger);
+      const thisMonth = ledger.filter((l) => String(l.at || '').startsWith(month)).reduce((s, l) => s + (l.amount || 0), 0);
+      const all = ledger.reduce((s, l) => s + (l.amount || 0), 0);
+      const open = c.jobs.filter((j) => j.status === 'active');
+      return `<tr><td>${esc(c.name)}</td><td class="num">${thisMonth}</td><td class="num">${all}</td><td class="num">${open.reduce((s, j) => s + (j.credits_used || 0), 0)} / ${open.reduce((s, j) => s + (j.credits_budget || 0), 0)}</td></tr>`;
+    }).join('');
+    const jobRows = m.jobs.filter((j) => j.status === 'active').sort((a, b) => (b.credits_used || 0) - (a.credits_used || 0)).map((j) => {
+      const pct = j.credits_budget ? Math.min(100, (j.credits_used / j.credits_budget) * 100) : 0;
+      return `<tr><td><button class="btn" data-job="${esc(j.job_id)}" data-goto="jobs"><span class="id">${esc(j.job_id)}</span></button></td><td>${esc(j.title)}</td><td class="num">${j.credits_used || 0} / ${j.credits_budget || 0}</td><td style="min-width:120px"><div class="meter"><i class="${j.credits_used > j.credits_budget ? 'over' : ''}" style="width:${pct}%"></i></div></td></tr>`;
+    }).join('');
+    return `<div class="panel"><section><h2>Credits by client</h2><div class="muted">This month = ${esc(month)}, India time.</div>
+      <div class="tablewrap"><table><thead><tr><th>Client</th><th class="num">This month</th><th class="num">All time</th><th class="num">Open jobs: used / budget</th></tr></thead><tbody>${rowsHtml || '<tr><td colspan="4" class="muted">No clients yet.</td></tr>'}</tbody></table></div></section>
+      <section><h2>Open jobs</h2><div class="tablewrap"><table><thead><tr><th>Job</th><th>Title</th><th class="num">Used / budget</th><th>Budget used</th></tr></thead><tbody>${jobRows || '<tr><td colspan="4" class="muted">No open jobs.</td></tr>'}</tbody></table></div></section></div>`;
+  }
+
+  function render() {
+    renderSource(); renderNotices(); renderNav();
+    const main = document.getElementById('main');
+    const hasData = Object.keys(state.raw).length > 0;
+    if (!hasData) { if (state.source !== 'loading') main.innerHTML = '<div class="empty">No data loaded yet.</div>'; return; }
+    const m = model();
+    main.innerHTML = state.view === 'clients' ? renderClients(m) : state.view === 'credits' ? renderCredits(m) : renderJobs(m);
+    bind();
+  }
+
+  function bind() {
+    const f = state.filter;
+    for (const b of document.querySelectorAll('[data-stat]')) b.onclick = () => { const k = b.dataset.stat;
+      if (k === 'overdue') f.overdue = !f.overdue; else f.waiting = f.waiting === k ? '' : k; render(); };
+    const sel = (id, key) => { const el = document.getElementById(id); if (el) el.onchange = () => { f[key] = el.value; render(); }; };
+    sel('f-client', 'client'); sel('f-assignee', 'assignee'); sel('f-type', 'type'); sel('f-waiting', 'waiting');
+    const cl = document.getElementById('f-closed'); if (cl) cl.onchange = () => { f.closed = cl.checked; render(); };
+    for (const c of document.querySelectorAll('[data-job]')) c.onclick = () => { location.hash = 'job-' + c.dataset.job; };
+    for (const c of document.querySelectorAll('[data-client]')) c.onclick = () => { location.hash = 'client-' + c.dataset.client; };
+    const x = document.getElementById('close-detail'); if (x) x.onclick = () => { location.hash = 'jobs'; };
+    const y = document.getElementById('close-client'); if (y) y.onclick = () => { location.hash = 'clients'; };
+  }
+
+  function route() {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (h.startsWith('job-')) { state.view = 'jobs'; state.job = h.slice(4); }
+    else if (h.startsWith('client-')) { state.view = 'clients'; state.client = h.slice(7); }
+    else if (h === 'clients') { state.view = 'clients'; state.client = null; }
+    else if (h === 'credits') { state.view = 'credits'; }
+    else { state.view = 'jobs'; state.job = null; }
+    render();
+    const d = document.getElementById('detail'); if (d && h.startsWith('job-') && window.innerWidth < 1040) d.scrollIntoView({ block: 'start' });
+  }
+
+  // ── data sources ──────────────────────────────────────────
+  function startLive(mcp) {
+    state.source = 'live'; mcpRef = mcp; render();
+    for (const [tab, range] of Object.entries(TABS)) {
+      mcp.watchTool(cfg.sheets_server, 'get_values', { spreadsheetId: cfg.spreadsheet_id, range }, (ev) => {
+        if (ev.type === 'data') {
+          const values = ev.result?.payload?.values;
+          state.raw[tab] = Array.isArray(values) ? values : [];
+          delete state.errors[tab];
+          state.updatedAt = ev.result?.cache?.storedAt || Date.now();
+        } else {
+          state.errors[tab] = ev.error || { code: 'upstream_error', message: 'Unknown error' };
+          if (['needs_reauth', 'server_not_connected', 'blocked_by_policy', 'approval_required', 'not_in_manifest', 'selection_required'].includes(state.errors[tab].code)) delete state.raw[tab];
+        }
+        render();
+      }, { refetchInterval: Math.max(30000, Number(cfg.refresh_ms) || 60000) });
+    }
+  }
+
+  async function allowOnce() {
+    if (!mcpRef) return;
+    try {
+      await mcpRef.callTool(cfg.sheets_server, 'get_values', { spreadsheetId: cfg.spreadsheet_id, range: TABS.Jobs });
+      state.errors = {};
+      await mcpRef.invalidate(cfg.sheets_server).catch(() => {});
+    } catch (e) { state.errors.Jobs = e; }
+    render();
+  }
+
+  function loadSampleObject(obj) {
+    if (!obj || typeof obj.tabs !== 'object') throw new Error('Not a sample-data.json file');
+    state.raw = obj.tabs; state.errors = {}; state.updatedAt = null; render();
+  }
+
+  async function startSample(reason) {
+    state.source = 'sample'; state.sampleReason = reason; mcpRef = null; render();
+    try {
+      const r = await fetch('sample-data.json'); if (!r.ok) throw new Error(String(r.status));
+      loadSampleObject(await r.json());
+    } catch (e) {
+      state.sampleReason = `${reason} <div class="row"><button class="btn primary" id="pick">Open sample-data.json</button><span class="muted">Your browser blocks loading it automatically from a local file.</span></div>`;
+      render();
+      const input = document.getElementById('sample-file');
+      const pick = document.getElementById('pick'); if (pick) pick.onclick = () => input.click();
+      input.onchange = async () => { try { loadSampleObject(JSON.parse(await input.files[0].text())); state.sampleReason = reason; render(); } catch (err) { state.sampleReason = `That file isn't sample-data.json (${esc(err.message)}).`; render(); } };
+    }
+  }
+
+  async function boot() {
+    window.addEventListener('hashchange', route);
+    route();
+    const configured = typeof cfg.spreadsheet_id === 'string' && cfg.spreadsheet_id && !cfg.spreadsheet_id.startsWith('<');
+    let mcp = null;
+    if (window.claude && typeof window.claude.use === 'function') { try { mcp = await window.claude.use('mcp'); } catch (e) { mcp = null; } }
+    if (mcp && configured) startLive(mcp);
+    else if (!configured) startSample('This copy of the page has no spreadsheet ID yet, so it shows fictional sample data.');
+    else startSample('Mock mode: live data is available only inside the Claude app with the Google Sheets connector. Showing fictional sample data.');
+  }
+  boot();
+})();
+</script>

@@ -9,7 +9,9 @@
   },
   "scripts": {
     "validate": "node scripts/validate.mjs",
-    "new-skill": "node scripts/new-skill.mjs"
+    "new-skill": "node scripts/new-skill.mjs",
+    "build:sheet-setup": "node scripts/build-sheet-setup.mjs",
+    "build:sample-data": "node scripts/build-sample-data.mjs"
   },
   "devDependencies": {
     "ajv": "^8.20.0",

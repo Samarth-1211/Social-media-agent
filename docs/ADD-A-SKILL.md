@@ -67,4 +67,5 @@ If the skill produces creative output, add test briefs and a rubric in `evals/` 
 | 8 | `${CLAUDE_PLUGIN_ROOT}/library/...` and `/skills/...` links point to real files |
 | 9 | `SKILL.md` at most 200 lines; description at most 200 characters, one line |
 | 10 | Frontmatter keys limited to those claude.ai accepts |
+| 11 | Storage: the sheet layout covers every schema field; examples and sample data survive the Sheets round trip; generated setup and sample files are current; tracker page stages match `stages.yaml` |
 | + | `claude plugin validate` on the marketplace and the plugin (if the CLI is installed) |

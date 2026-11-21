@@ -115,6 +115,7 @@ const c7 = check(7, 'Schemas compile; presets validate');
 const c8 = check(8, '${CLAUDE_PLUGIN_ROOT}/library and /skills links resolve');
 const c9 = check(9, `SKILL.md <= ${MAX_SKILL_LINES} lines; description <= ${MAX_DESCRIPTION} chars`);
 const c10 = check(10, 'Frontmatter keys accepted by claude.ai uploads');
+const c11 = check(11, 'Storage: layout covers schemas, records round-trip, generated files current');
 
 for (const plugin of plugins) {
   const P = plugin.dir;
@@ -351,6 +352,65 @@ for (const plugin of plugins) {
     }
   }
   c8.notes.push(`${plugin.name}: ${linkCount} library link(s) checked`);
+
+  // ── 11. Storage layer (only for plugins that have one) ──
+  const layoutPath = path.join(P, 'library', 'storage', 'sheet-layout.json');
+  if (isFile(layoutPath)) {
+    const codec = await import(new URL('./lib/sheet-codec.mjs', import.meta.url));
+    const { layout, encodeRecord, decodeAll, normalise, headerRows } = codec;
+    // a) every top-level schema property is stored somewhere
+    for (const rec of ['client', 'job', 'team']) {
+      const schemaFile = path.join(P, 'library', 'contracts', `${rec}.schema.json`);
+      if (!isFile(schemaFile)) continue;
+      const props = Object.keys(JSON.parse(readText(schemaFile)).properties);
+      const covered = new Set();
+      for (const t of layout.tabs.filter((x) => x.record === rec)) {
+        if (t.kind === 'record') t.columns.forEach((c) => covered.add((c.field ?? c.key).split('.')[0]));
+        else covered.add(t.field.split('.')[0]);
+      }
+      for (const p of props) if (!covered.has(p)) c11.errors.push(`sheet-layout.json: ${rec}.${p} has no column or tab`);
+    }
+    // b) examples and sample data survive encode → Sheets strings → decode, and stay valid
+    const sim = (cell) => (cell === '' ? '' : typeof cell === 'string' ? cell.replace(/^'/, '') : typeof cell === 'boolean' ? (cell ? 'TRUE' : 'FALSE') : String(cell));
+    const exDir = path.join(P, 'library', 'contracts', 'examples');
+    for (const rec of ['client', 'job', 'team', 'config']) {
+      const f = path.join(exDir, `${rec}.example.json`);
+      if (!isFile(f)) continue;
+      const data = JSON.parse(readText(f));
+      const tabs = headerRows();
+      for (const [tab, rows] of Object.entries(encodeRecord(rec, data))) tabs[tab] = tabs[tab].concat(rows.map((r) => r.map(sim)));
+      let back;
+      try { back = decodeAll(tabs); } catch (e) { c11.errors.push(`${rec}.example.json: ${e.message}`); continue; }
+      const got = rec === 'config' ? back.config : back[{ client: 'clients', job: 'jobs', team: 'team' }[rec]][0];
+      if (JSON.stringify(normalise(got)) !== JSON.stringify(normalise(data))) c11.errors.push(`${rec}.example.json does not survive the Sheets round trip`);
+    }
+    const samplePath = path.join(P, 'library', 'storage', 'tracker-page', 'sample-data.json');
+    let sampleBack = null;
+    if (isFile(samplePath)) {
+      try { sampleBack = decodeAll(JSON.parse(readText(samplePath)).tabs); } catch (e) { c11.errors.push(`sample-data.json: ${e.message.split(' (got')[0]}`); }
+    }
+    if (sampleBack) {
+      const back = sampleBack;
+      for (const [rec, list] of [['client', back.clients], ['job', back.jobs], ['team', back.team]]) {
+        const v = contractValidators.get(rec);
+        list.forEach((r, i) => { if (v && !v(r)) c11.errors.push(`sample-data.json: ${rec} #${i + 1} invalid: ${v.errors.map((e) => `${e.instancePath} ${e.message}`).join('; ')}`); });
+      }
+      c11.notes.push(`${plugin.name}: sample data ${back.clients.length} clients, ${back.jobs.length} jobs`);
+    }
+    // c) generated files are current
+    for (const script of ['build-sheet-setup.mjs', 'build-sample-data.mjs']) {
+      const res = spawnSync(process.execPath, [path.join(ROOT, 'scripts', script), '--check'], { encoding: 'utf8' });
+      if (res.status !== 0) c11.errors.push(`${script} --check: ${(res.stderr || res.stdout).trim()}`);
+    }
+    // d) tracker page stage list matches stages.yaml
+    const pagePath = path.join(P, 'library', 'storage', 'tracker-page', 'index.html');
+    if (isFile(pagePath) && isFile(stagesPath)) {
+      const m = readText(pagePath).match(/const STAGES = (\[[^\]]*\])/);
+      const pageStages = m ? JSON.parse(m[1].replace(/'/g, '"')) : [];
+      const yamlStages = (YAML.parse(readText(stagesPath)).stages || []).map((s) => s.id);
+      if (JSON.stringify(pageStages) !== JSON.stringify(yamlStages)) c11.errors.push('tracker-page/index.html STAGES list does not match stages.yaml order');
+    }
+  }
 }
 
 // ── Report ──────────────────────────────────────────────────────────

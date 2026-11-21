@@ -1,0 +1,286 @@
+{
+  "$comment": "Layout of the 'TDM Studio Database' Google Sheet. Single source of truth for setup, the storage operations, the tracker page and dev scripts. Row 1 of every data tab holds the column keys below, in this order. Cell formats: text = plain string; number/integer; boolean = TRUE/FALSE; timestamp = ISO 8601 text with offset; date = YYYY-MM-DD text; list = one item per line in the cell; json = compact JSON text. Empty cell = null / empty list.",
+  "version": 1,
+  "database_title": "TDM Studio Database",
+  "folder_title": "TDM Studio",
+  "test_database_title": "TDM Studio TEST Database",
+  "test_folder_title": "TDM Studio TEST",
+  "tabs": [
+    {
+      "name": "Dashboard",
+      "kind": "formulas",
+      "purpose": "Read-only overview built with formulas; never written by skills except at setup."
+    },
+    {
+      "name": "Jobs",
+      "kind": "record",
+      "record": "job",
+      "key": ["job_id"],
+      "columns": [
+        { "key": "job_id", "type": "text" },
+        { "key": "client_id", "type": "text" },
+        { "key": "type", "type": "text", "options": ["video", "poster"] },
+        { "key": "title", "type": "text" },
+        { "key": "track", "type": "text", "options": ["quick", "full"] },
+        { "key": "status", "type": "text", "options": ["active", "paused", "delivered", "cancelled"] },
+        { "key": "current_stage", "type": "text" },
+        { "key": "waiting_on", "type": "text", "options": ["admin", "editor", "client", "none"] },
+        { "key": "next_action", "type": "text" },
+        { "key": "assignee", "type": "text" },
+        { "key": "deadline", "type": "date" },
+        { "key": "style_preset", "type": "text" },
+        { "key": "credits_budget", "type": "number", "field": "credits.budget" },
+        { "key": "credits_warn_at", "type": "number", "field": "credits.warn_at" },
+        { "key": "credits_used", "type": "number", "field": "credits.used" },
+        { "key": "revision_round", "type": "integer" },
+        { "key": "version", "type": "integer" },
+        { "key": "created_at", "type": "timestamp" },
+        { "key": "updated_at", "type": "timestamp" }
+      ]
+    },
+    {
+      "name": "Clients",
+      "kind": "record",
+      "record": "client",
+      "key": ["client_id"],
+      "columns": [
+        { "key": "client_id", "type": "text" },
+        { "key": "client_code", "type": "text" },
+        { "key": "name", "type": "text" },
+        { "key": "status", "type": "text", "options": ["active", "inactive"] },
+        { "key": "business_type", "type": "text" },
+        { "key": "city", "type": "text" },
+        { "key": "contact_person", "type": "text" },
+        { "key": "decision_maker", "type": "json" },
+        { "key": "whatsapp", "type": "text" },
+        { "key": "files_folder_url", "type": "text" },
+        { "key": "onboarding_source", "type": "text", "options": ["interview", "material", "mixed"] },
+        { "key": "languages", "type": "list" },
+        { "key": "platforms", "type": "list" },
+        { "key": "posting_frequency", "type": "text" },
+        { "key": "audience", "type": "json" },
+        { "key": "tone_of_voice", "type": "json" },
+        { "key": "words", "type": "json" },
+        { "key": "visual_identity", "type": "json" },
+        { "key": "do", "type": "list" },
+        { "key": "dont", "type": "list" },
+        { "key": "references", "type": "json" },
+        { "key": "festival_calendar", "type": "json" },
+        { "key": "price_points", "type": "json" },
+        { "key": "revision_cap", "type": "integer" },
+        { "key": "next_job_number", "type": "integer" },
+        { "key": "confidence", "type": "json" },
+        { "key": "version", "type": "integer" },
+        { "key": "created_at", "type": "timestamp" },
+        { "key": "updated_at", "type": "timestamp" }
+      ]
+    },
+    {
+      "name": "Questions",
+      "kind": "child",
+      "record": "client",
+      "field": "open_questions",
+      "parent_key": "client_id",
+      "key": ["client_id", "seq"],
+      "filter": { "status": "open" },
+      "columns": [
+        { "key": "client_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "question", "type": "text" },
+        { "key": "recommendation", "type": "text" },
+        { "key": "priority", "type": "text", "options": ["high", "medium", "low"] },
+        { "key": "field", "type": "text" },
+        { "key": "status", "type": "text", "options": ["open", "answered", "dropped"], "storage_only": true },
+        { "key": "answer", "type": "text", "storage_only": true }
+      ]
+    },
+    {
+      "name": "Learnings",
+      "kind": "child",
+      "record": "client",
+      "field": "learnings",
+      "parent_key": "client_id",
+      "key": ["client_id", "seq"],
+      "columns": [
+        { "key": "client_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "date", "type": "date" },
+        { "key": "kind", "type": "text", "options": ["liked", "rejected", "decision", "correction"] },
+        { "key": "what", "type": "text" },
+        { "key": "evidence", "type": "text" },
+        { "key": "applies_to", "type": "text" },
+        { "key": "status", "type": "text", "options": ["active", "watch", "retired"] },
+        { "key": "source_job", "type": "text" }
+      ]
+    },
+    {
+      "name": "Feedback",
+      "kind": "child",
+      "record": "job",
+      "field": "client_feedback",
+      "parent_key": "job_id",
+      "key": ["feedback_id"],
+      "columns": [
+        { "key": "feedback_id", "type": "text" },
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "received_at", "type": "timestamp" },
+        { "key": "round", "type": "integer" },
+        { "key": "about_stage", "type": "text" },
+        { "key": "about_version", "type": "integer" },
+        { "key": "from", "type": "text" },
+        { "key": "raw", "type": "text" },
+        { "key": "recorded_by", "type": "text" },
+        { "key": "over_cap", "type": "boolean" },
+        { "key": "items", "type": "json" },
+        { "key": "conflicts", "type": "json" },
+        { "key": "routing", "type": "json" },
+        { "key": "messages", "type": "json" },
+        { "key": "learnings_suggested", "type": "list" }
+      ]
+    },
+    {
+      "name": "Gates",
+      "kind": "child",
+      "record": "job",
+      "field": "gates",
+      "parent_key": "job_id",
+      "key": ["job_id", "seq"],
+      "columns": [
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "stage", "type": "text" },
+        { "key": "kind", "type": "text", "options": ["stage", "budget"] },
+        { "key": "owner_role", "type": "text", "options": ["admin", "editor", "client"] },
+        { "key": "status", "type": "text", "options": ["pending", "approved", "changes_requested", "sent_back"] },
+        { "key": "shown_outputs", "type": "json" },
+        { "key": "requested_at", "type": "timestamp" },
+        { "key": "decided_by", "type": "text" },
+        { "key": "decided_by_role", "type": "text", "options": ["admin", "editor", "designer"] },
+        { "key": "decided_at", "type": "timestamp" },
+        { "key": "sent_back_to", "type": "text" },
+        { "key": "note", "type": "text" }
+      ]
+    },
+    {
+      "name": "Credits",
+      "kind": "child",
+      "record": "job",
+      "field": "credits.ledger",
+      "parent_key": "job_id",
+      "key": ["job_id", "seq"],
+      "columns": [
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "client_id", "type": "text", "storage_only": true },
+        { "key": "at", "type": "timestamp" },
+        { "key": "stage", "type": "text" },
+        { "key": "amount", "type": "number" },
+        { "key": "estimate", "type": "number" },
+        { "key": "tier", "type": "text", "options": ["draft", "final", "other"] },
+        { "key": "tool", "type": "text" },
+        { "key": "description", "type": "text" },
+        { "key": "approved_by", "type": "text" },
+        { "key": "by", "type": "text" }
+      ]
+    },
+    {
+      "name": "Outputs",
+      "kind": "child-map",
+      "record": "job",
+      "field": "outputs",
+      "parent_key": "job_id",
+      "map_key": "field",
+      "key": ["job_id", "field"],
+      "columns": [
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "field", "type": "text", "storage_only": true },
+        { "key": "version", "type": "integer" },
+        { "key": "summary", "type": "text" },
+        { "key": "files", "type": "list" },
+        { "key": "schema", "type": "text" },
+        { "key": "stage", "type": "text" },
+        { "key": "by", "type": "text" },
+        { "key": "updated_at", "type": "timestamp" },
+        { "key": "data", "type": "json" }
+      ]
+    },
+    {
+      "name": "StageHistory",
+      "kind": "child",
+      "record": "job",
+      "field": "stage_history",
+      "parent_key": "job_id",
+      "key": ["job_id", "seq"],
+      "columns": [
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "stage", "type": "text" },
+        { "key": "status", "type": "text", "options": ["in_progress", "done", "skipped", "reopened", "failed"] },
+        { "key": "started_at", "type": "timestamp" },
+        { "key": "finished_at", "type": "timestamp" },
+        { "key": "by", "type": "text" },
+        { "key": "note", "type": "text" }
+      ]
+    },
+    {
+      "name": "Log",
+      "kind": "child",
+      "record": "job",
+      "field": "log",
+      "parent_key": "job_id",
+      "key": ["job_id", "seq"],
+      "keep_last": 20,
+      "columns": [
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "at", "type": "timestamp" },
+        { "key": "by", "type": "text" },
+        { "key": "kind", "type": "text", "options": ["event", "gate", "ruling", "error", "credit", "feedback"] },
+        { "key": "message", "type": "text" }
+      ]
+    },
+    {
+      "name": "ClientChanges",
+      "kind": "child",
+      "record": "client",
+      "field": "changelog",
+      "parent_key": "client_id",
+      "key": ["client_id", "version"],
+      "order": "newest_first",
+      "columns": [
+        { "key": "client_id", "type": "text", "storage_only": true },
+        { "key": "version", "type": "integer" },
+        { "key": "date", "type": "date" },
+        { "key": "by", "type": "text" },
+        { "key": "sections", "type": "list" },
+        { "key": "change", "type": "text" }
+      ]
+    },
+    {
+      "name": "Team",
+      "kind": "record",
+      "record": "team",
+      "key": ["handle"],
+      "columns": [
+        { "key": "handle", "type": "text" },
+        { "key": "name", "type": "text" },
+        { "key": "role", "type": "text", "options": ["admin", "editor", "designer"] },
+        { "key": "email", "type": "text" },
+        { "key": "active", "type": "boolean" },
+        { "key": "added_at", "type": "timestamp" },
+        { "key": "version", "type": "integer" },
+        { "key": "updated_at", "type": "timestamp" }
+      ]
+    },
+    {
+      "name": "Config",
+      "kind": "key-value",
+      "record": "config",
+      "columns": [
+        { "key": "key", "type": "text" },
+        { "key": "value", "type": "text" }
+      ],
+      "$comment": "One row per config property. Objects (credit_policy) are stored as JSON text; numbers as numbers; nulls as empty cells."
+    }
+  ]
+}
