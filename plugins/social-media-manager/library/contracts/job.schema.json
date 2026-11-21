@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:tdm:social-media-manager:contracts:job",
   "title": "Job",
-  "description": "One production job (a video or a poster) for one client. Source of truth for progress, gates, credits and outputs.",
+  "description": "One production job (a video or a poster) for one client. Logical record: the storage layer maps it to Google Sheets rows (library/storage/). Source of truth for progress, gates, credits, feedback and outputs.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -13,6 +13,8 @@
     "track",
     "status",
     "current_stage",
+    "waiting_on",
+    "next_action",
     "stage_history",
     "gates",
     "credits",
@@ -26,9 +28,8 @@
   ],
   "properties": {
     "job_id": {
-      "description": "<CLIENTCODE>-<NN>, e.g. HOL-03. Number is per client and grows past 99.",
-      "type": "string",
-      "pattern": "^[A-Z]{3}-[0-9]{2,}$"
+      "description": "<CLIENTCODE>-<NN>, e.g. HOL-03. Number comes from client.next_job_number and grows past 99.",
+      "$ref": "#/$defs/jobId"
     },
     "client_id": { "$ref": "#/$defs/slug" },
     "type": { "enum": ["video", "poster"] },
@@ -40,14 +41,22 @@
     },
     "status": {
       "description": "Overall job state. Stage-level progress lives in current_stage and stage_history.",
-      "enum": ["active", "paused", "waiting_on_client", "delivered", "cancelled"]
+      "enum": ["active", "paused", "delivered", "cancelled"]
     },
 
-    "current_stage": {
-      "description": "A stage id from stages.yaml.",
-      "$ref": "#/$defs/stageId"
+    "current_stage": { "$ref": "#/$defs/stageId" },
+    "waiting_on": {
+      "description": "Who the job is waiting on right now: the owner of the pending gate, or 'none' while a stage is running or the job is closed. Kept in sync by record_gate; drives the status board.",
+      "enum": ["admin", "editor", "client", "none"]
+    },
+    "next_action": {
+      "description": "The single next action, one line. Rewritten on every stage or gate change.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
     },
     "stage_history": {
+      "description": "Append-only. Entries are never removed; a reopened stage gets a new entry.",
       "type": "array",
       "items": {
         "type": "object",
@@ -64,37 +73,32 @@
       }
     },
     "gates": {
+      "description": "Append-only. A reopened or re-shown stage gets a new gate entry.",
       "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["stage", "owner_role", "status"],
-        "properties": {
-          "stage": { "$ref": "#/$defs/stageId" },
-          "owner_role": { "enum": ["admin", "editor", "client"] },
-          "status": { "enum": ["pending", "approved", "changes_requested"] },
-          "decided_by": { "type": ["string", "null"] },
-          "decided_at": { "$ref": "#/$defs/nullableTimestamp" },
-          "note": { "type": "string" }
-        }
-      }
+      "items": { "$ref": "#/$defs/gate" }
     },
 
     "assignee": {
       "description": "Team member handle responsible for the job.",
       "type": ["string", "null"]
     },
-    "deadline": {
-      "type": ["string", "null"],
-      "format": "date"
-    },
+    "deadline": { "type": ["string", "null"], "format": "date" },
 
     "credits": {
       "type": "object",
       "additionalProperties": false,
       "required": ["budget", "used", "ledger"],
       "properties": {
-        "budget": { "type": "number", "minimum": 0 },
+        "budget": {
+          "description": "Hard cap. Spending beyond it needs an admin-approved budget gate.",
+          "type": "number",
+          "minimum": 0
+        },
+        "warn_at": {
+          "description": "Soft limit: tell the assignee when used + estimate passes it. Null for none.",
+          "type": ["number", "null"],
+          "minimum": 0
+        },
         "used": { "type": "number", "minimum": 0 },
         "ledger": {
           "type": "array",
@@ -106,8 +110,11 @@
               "at": { "$ref": "#/$defs/timestamp" },
               "stage": { "$ref": "#/$defs/stageId" },
               "amount": { "type": "number", "description": "Credits spent (positive) or refunded (negative)." },
+              "estimate": { "type": ["number", "null"], "description": "The estimate shown before spending." },
+              "tier": { "enum": ["draft", "final", "other"], "description": "draft = cheapest model first; final = approved upgrade (credit policy)." },
+              "tool": { "type": "string", "description": "Service and model used, e.g. higgsfield/<model>." },
               "description": { "type": "string" },
-              "tool": { "type": "string", "description": "Service or model used, e.g. higgsfield/<model>." },
+              "approved_by": { "type": ["string", "null"], "description": "Handle of whoever approved an upgrade or an over-budget spend." },
               "by": { "$ref": "#/$defs/person" }
             }
           }
@@ -121,32 +128,10 @@
       "propertyNames": { "$ref": "#/$defs/fieldName" },
       "additionalProperties": { "$ref": "#/$defs/output" }
     },
+
     "client_feedback": {
       "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["received_at", "round", "raw"],
-        "properties": {
-          "received_at": { "$ref": "#/$defs/timestamp" },
-          "round": { "type": "integer", "minimum": 0 },
-          "raw": { "type": "string", "description": "The client's reply as received (no phone numbers)." },
-          "recorded_by": { "$ref": "#/$defs/person" },
-          "changes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["item", "target_stage"],
-              "properties": {
-                "item": { "type": "string" },
-                "target_stage": { "$ref": "#/$defs/stageId" },
-                "status": { "enum": ["open", "done", "declined"] }
-              }
-            }
-          }
-        }
-      }
+      "items": { "$ref": "#/$defs/feedback" }
     },
     "revision_round": {
       "description": "Client revision rounds used so far; compare with client.revision_cap.",
@@ -155,7 +140,7 @@
     },
 
     "log": {
-      "description": "Most recent events, newest last. Keep only the last 20.",
+      "description": "Most recent events, newest last. The job record keeps only the last 20.",
       "type": "array",
       "maxItems": 20,
       "items": {
@@ -165,6 +150,10 @@
         "properties": {
           "at": { "$ref": "#/$defs/timestamp" },
           "by": { "$ref": "#/$defs/person" },
+          "kind": {
+            "description": "ruling = a call made on someone's behalf (what, why, cost if wrong), for the gate owner to review.",
+            "enum": ["event", "gate", "ruling", "error", "credit", "feedback"]
+          },
           "message": { "type": "string" }
         }
       }
@@ -180,27 +169,164 @@
   },
   "$defs": {
     "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "jobId": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
     "stageId": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
     "fieldName": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
     "timestamp": { "type": "string", "format": "date-time" },
     "nullableTimestamp": { "type": ["string", "null"], "format": "date-time" },
     "person": { "type": "string", "description": "Team member handle, or 'client' or 'system'." },
+
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage", "kind", "owner_role", "status", "requested_at"],
+      "properties": {
+        "stage": { "$ref": "#/$defs/stageId" },
+        "kind": {
+          "description": "stage = the stage's own gate; budget = admin approval to spend beyond the job budget.",
+          "enum": ["stage", "budget"]
+        },
+        "owner_role": { "enum": ["admin", "editor", "client"] },
+        "status": { "enum": ["pending", "approved", "changes_requested", "sent_back"] },
+        "shown_outputs": {
+          "description": "Output versions shown for approval, e.g. {\"script\": 2}. An approval covers only these versions; if an output changes afterwards, the gate is re-requested.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/fieldName" },
+          "additionalProperties": { "type": "integer", "minimum": 1 }
+        },
+        "requested_at": { "$ref": "#/$defs/timestamp" },
+        "decided_by": { "type": ["string", "null"], "description": "Handle of the approver; for client gates, the team member who recorded the client's decision." },
+        "decided_by_role": { "enum": ["admin", "editor", "designer", null] },
+        "decided_at": { "$ref": "#/$defs/nullableTimestamp" },
+        "sent_back_to": { "description": "Stage to reopen when status is sent_back.", "anyOf": [{ "$ref": "#/$defs/stageId" }, { "type": "null" }] },
+        "note": { "type": "string" }
+      }
+    },
+
     "output": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["updated_at"],
+      "required": ["version", "updated_at"],
       "properties": {
-        "data": { "description": "Inline structured content, validated against the field's schema when one exists." },
+        "version": { "type": "integer", "minimum": 1, "description": "Increments each time the stage rewrites this output." },
+        "data": {
+          "description": "Inline structured content, validated against the field's schema when one exists. Placeholder stages write {placeholder: true, note}.",
+          "anyOf": [{ "$ref": "#/$defs/placeholder" }, { "type": "object" }, { "type": "array" }, { "type": "string" }]
+        },
         "files": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Paths or URLs of files produced (relative to the job's outputs/ folder in files mode)."
+          "description": "Links or paths of files produced (Google Drive links in the job's folder)."
         },
         "summary": { "type": "string" },
         "schema": { "type": "string", "description": "Schema file the data follows, e.g. brief.schema.json." },
         "stage": { "$ref": "#/$defs/stageId" },
         "by": { "$ref": "#/$defs/person" },
         "updated_at": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "placeholder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["placeholder", "note"],
+      "properties": {
+        "placeholder": { "const": true },
+        "note": { "type": "string", "description": "e.g. 'script not built yet'." }
+      }
+    },
+
+    "feedback": {
+      "description": "One client reply (possibly several WhatsApp messages), triaged by client-feedback.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feedback_id", "received_at", "round", "about_stage", "raw", "items", "conflicts"],
+      "properties": {
+        "feedback_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}-F[0-9]+$", "description": "<job_id>-F<n>, e.g. HOL-03-F2." },
+        "received_at": { "$ref": "#/$defs/timestamp" },
+        "round": { "type": "integer", "minimum": 0 },
+        "about_stage": { "$ref": "#/$defs/stageId" },
+        "about_version": {
+          "description": "Version of the output the client was looking at. Lower than the current version = feedback on an old version.",
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "from": { "type": "string", "description": "Name or role of the person at the client. Never a phone number." },
+        "raw": { "type": "string", "description": "The client's messages exactly as received, minus phone numbers." },
+        "recorded_by": { "$ref": "#/$defs/person" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["n", "quote", "label"],
+            "properties": {
+              "n": { "type": "integer", "minimum": 1 },
+              "quote": { "type": "string", "description": "The client's exact words for this item. Never paraphrased away." },
+              "from": { "type": "string" },
+              "label": { "enum": ["in_scope", "clarification", "change_request", "not_actionable", "duplicate"] },
+              "change": { "type": "string", "description": "The concrete change, in team language." },
+              "interpretations": {
+                "description": "For vague notes: 2-3 concrete readings.",
+                "type": "array",
+                "maxItems": 3,
+                "items": { "type": "string" }
+              },
+              "question": { "type": "string", "description": "One short question for the client (clarification items)." },
+              "target_stage": { "anyOf": [{ "$ref": "#/$defs/stageId" }, { "type": "null" }] },
+              "duplicate_of": {
+                "description": "Item n in this reply, or '<feedback_id>#<n>' for an earlier one.",
+                "anyOf": [{ "type": "integer", "minimum": 1 }, { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}-F[0-9]+#[0-9]+$" }, { "type": "null" }]
+              },
+              "status": { "enum": ["open", "done", "declined", "asked"] }
+            }
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "items", "note"],
+            "properties": {
+              "type": { "enum": ["contradiction", "old_version", "multiple_voices"] },
+              "items": { "type": "array", "items": { "type": "integer", "minimum": 1 } },
+              "note": { "type": "string" },
+              "resolution": { "type": ["string", "null"], "description": "Filled once the client or admin decides. Never chosen silently." }
+            }
+          }
+        },
+        "routing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status"],
+          "properties": {
+            "proposed_stage": { "anyOf": [{ "$ref": "#/$defs/stageId" }, { "type": "null" }] },
+            "status": { "enum": ["proposed", "confirmed", "rejected", "not_needed"] },
+            "confirmed_by": { "type": ["string", "null"] },
+            "confirmed_at": { "$ref": "#/$defs/nullableTimestamp" }
+          }
+        },
+        "over_cap": { "type": "boolean", "description": "True if this round exceeds client.revision_cap." },
+        "messages": {
+          "description": "WhatsApp-ready drafts. Over-cap and change-order messages need admin approval before sending.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["purpose", "language", "text"],
+            "properties": {
+              "purpose": { "enum": ["clarification", "confirmation", "change_order", "extra_round"] },
+              "language": { "enum": ["Hindi", "English", "Hinglish"] },
+              "text": { "type": "string" },
+              "needs_admin_approval": { "type": "boolean" },
+              "approved_by": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "learnings_suggested": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
       }
     }
   }

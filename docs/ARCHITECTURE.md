@@ -13,7 +13,19 @@ Claude Code only scans `skills/<name>/SKILL.md` one level deep. Each group folde
 
 **Vendor rule.** Borrowed third-party material goes in `vendor/`, copied from a pinned commit with its licence, recorded in `ATTRIBUTION.md` and never edited. We adapt it in our own skills. See `plugins/social-media-manager/vendor/README.md`.
 
-**Storage switch.** Skills save clients and jobs only through the storage layer (`library/storage/`), which has two backends: a tracker page in the Claude app, or local files in `.tdm-studio/`. Data never goes inside the plugin folder, because it is replaced on update. Details: `STORAGE.md`, filled in Prompt 2.
+**Storage.** Skills save clients and jobs only through the storage layer (`library/storage/`).
+- The data store is a **Google Sheet ("TDM Studio Database") in a Google Drive folder**, shared with the team and editable from mobile.
+- A read-only tracker page in the Claude app shows the same data.
+- Local `.tdm-studio/` files are for backup only.
+- Data never goes inside the plugin folder, because it is replaced on update.
+- Details: `STORAGE.md` and `decisions/0002-storage-google-sheets.md`.
+
+**Skill handoffs.** The docs describe no way for one skill to invoke another. Skills share work through:
+- storage operations in `library/storage/`;
+- shared templates in `library/templates/`;
+- for a full handoff, an instruction to read and follow another skill's file, e.g. `${CLAUDE_PLUGIN_ROOT}/skills/brand/brand-keeper/SKILL.md`. The validator checks these links.
+
+**Credits.** Generation follows a cheapest-first credit policy with per-job budgets. See `decisions/0003-credit-policy.md`.
 
 **Versioning.**
 - **Plugin:** semver in `plugin.json` plus `CHANGELOG.md`. Users stay on the installed version until `version` changes, so **every release bumps it**.

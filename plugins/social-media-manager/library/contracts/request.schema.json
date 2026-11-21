@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:request",
+  "title": "Request",
+  "description": "What the intake stage writes: the job request in the requester's words, plus the defaults the producer proposed (each stated with a reason). Stored in job.outputs.request.data. The admin approves it at the intake gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id",
+    "client_id",
+    "type",
+    "title",
+    "raw_request",
+    "requested_by",
+    "requested_at",
+    "deliverables",
+    "track",
+    "budget",
+    "assumptions"
+  ],
+  "properties": {
+    "job_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "type": { "enum": ["video", "poster"] },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "raw_request": {
+      "description": "The ask exactly as given (chat text, forwarded client message, voice-note transcript). No phone numbers.",
+      "type": "string",
+      "minLength": 1
+    },
+    "requested_by": { "type": "string", "description": "Team member handle who brought the request." },
+    "requested_at": { "type": "string", "format": "date-time" },
+    "occasion": { "type": ["string", "null"], "description": "Festival, launch or event, if any." },
+    "deliverables": {
+      "description": "Rough list; the brief stage makes it exact. e.g. 'Instagram reel 9:16 ~20s', 'WhatsApp status poster'.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "deadline": { "type": ["string", "null"], "format": "date" },
+    "assignee": { "type": ["string", "null"], "description": "Proposed team member handle." },
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposed", "reason"],
+      "properties": {
+        "proposed": { "enum": ["quick", "full"] },
+        "reason": { "type": "string", "description": "One line, shown at the intake gate." },
+        "chosen": { "enum": ["quick", "full", null], "description": "Set when the admin approves or overrides." }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["credits"],
+      "properties": {
+        "credits": { "type": "number", "minimum": 0, "description": "Hard cap, default from config by job type." },
+        "warn_at": { "type": ["number", "null"], "minimum": 0 },
+        "reason": { "type": "string", "description": "Why this budget, if not the default." }
+      }
+    },
+    "style_preset": { "type": ["string", "null"] },
+    "references": { "type": "array", "items": { "type": "string" } },
+    "assumptions": {
+      "description": "Every default filled in without being told (deadline, assignee, track, budget), so the admin can correct it.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" }
+  }
+}

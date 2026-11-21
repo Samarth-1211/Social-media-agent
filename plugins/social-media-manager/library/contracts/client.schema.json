@@ -2,18 +2,22 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:tdm:social-media-manager:contracts:client",
   "title": "Client",
-  "description": "A client's brand profile. Every field the agency learns is marked confirmed or guessed in `confidence`.",
+  "description": "A client's brand profile, maintained by brand-keeper and read (as the short brand brief) by every stage. Every profile field is marked confirmed or guessed in `confidence`, with its basis. Logical record: the storage layer maps it to Google Sheets rows.",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "client_id",
     "client_code",
     "name",
+    "status",
     "business_type",
     "city",
     "languages",
+    "revision_cap",
+    "next_job_number",
     "confidence",
     "open_questions",
+    "learnings",
     "version",
     "changelog",
     "created_at",
@@ -21,24 +25,39 @@
   ],
   "properties": {
     "client_id": {
-      "description": "Stable kebab-case id, e.g. holi-cafe.",
-      "type": "string",
-      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      "description": "Stable kebab-case id, e.g. shubh-laundry.",
+      "$ref": "#/$defs/slug"
     },
     "client_code": {
-      "description": "Three capital letters used in job ids, e.g. HOL.",
+      "description": "Three capital letters used in job ids, e.g. SHL. Unique across clients.",
       "type": "string",
       "pattern": "^[A-Z]{3}$"
     },
     "name": { "type": "string", "minLength": 1 },
-    "business_type": { "type": "string", "description": "e.g. cafe, salon, real estate developer." },
+    "status": { "enum": ["active", "inactive"] },
+    "business_type": { "type": "string", "description": "e.g. laundry, real estate developer, clothing store, travel agency." },
     "city": { "type": "string" },
     "contact_person": { "type": ["string", "null"] },
+    "decision_maker": {
+      "description": "Who has the final say on approvals at the client. Feedback from others without them is a multiple_voices conflict.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
     "whatsapp": {
-      "description": "E.164 number, e.g. +919812345678. Never copy into evals or examples.",
+      "description": "E.164 number, e.g. +919812345678. Never copy into evals, examples, logs or learnings.",
       "type": ["string", "null"],
       "pattern": "^\\+[1-9][0-9]{7,14}$"
     },
+    "files_folder_url": {
+      "description": "Google Drive folder holding the client's logo, references and brand material.",
+      "type": ["string", "null"]
+    },
+    "onboarding_source": { "enum": ["interview", "material", "mixed", null] },
 
     "languages": {
       "type": "array",
@@ -47,10 +66,10 @@
       "items": { "enum": ["Hindi", "English", "Hinglish"] }
     },
     "platforms": {
-      "description": "Where the client posts, e.g. instagram, facebook, youtube, linkedin, whatsapp-status.",
+      "description": "Where the client posts, e.g. instagram, facebook, youtube, linkedin, whatsapp-status, google-business.",
       "type": "array",
       "uniqueItems": true,
-      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+      "items": { "$ref": "#/$defs/slug" }
     },
     "posting_frequency": { "type": ["string", "null"], "description": "e.g. '3 reels + 2 posters per week'." },
 
@@ -61,7 +80,12 @@
         "summary": { "type": "string" },
         "age_range": { "type": "string" },
         "locations": { "type": "array", "items": { "type": "string" } },
-        "interests": { "type": "array", "items": { "type": "string" } }
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "customer_words": {
+          "description": "How the client's customers describe the need or the business, in their own words (often Hinglish).",
+          "type": "array",
+          "items": { "type": "string" }
+        }
       }
     },
     "tone_of_voice": {
@@ -69,8 +93,54 @@
       "additionalProperties": false,
       "properties": {
         "summary": { "type": "string" },
-        "traits": { "type": "array", "items": { "type": "string" } },
-        "sample_lines": { "type": "array", "items": { "type": "string" } }
+        "attributes": {
+          "description": "3-5 voice attributes. The doesnt_mean column is what makes them usable.",
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "means", "doesnt_mean"],
+            "properties": {
+              "name": { "type": "string" },
+              "means": { "type": "string" },
+              "doesnt_mean": { "type": "string" },
+              "example": { "type": "string", "description": "A real line from the client's material, if any." }
+            }
+          }
+        },
+        "by_platform": {
+          "description": "How the tone shifts per platform; the voice stays the same.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["platform", "note"],
+            "properties": {
+              "platform": { "type": "string" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "words": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "use": { "type": "array", "items": { "type": "string" }, "description": "Terms the brand owns or always uses." },
+        "never_use": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["word", "reason"],
+            "properties": {
+              "word": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        }
       }
     },
     "visual_identity": {
@@ -102,10 +172,7 @@
             }
           }
         },
-        "logo_ref": {
-          "description": "Path or URL of the logo file.",
-          "type": ["string", "null"]
-        }
+        "logo_ref": { "type": ["string", "null"], "description": "Drive link or path of the logo file." }
       }
     },
     "do": { "type": "array", "items": { "type": "string" } },
@@ -117,8 +184,8 @@
         "additionalProperties": false,
         "required": ["ref"],
         "properties": {
-          "ref": { "type": "string", "description": "URL or file path." },
-          "kind": { "enum": ["liked", "competitor", "own-past-work", "inspiration"] },
+          "ref": { "type": "string", "description": "URL or Drive link." },
+          "kind": { "enum": ["liked", "competitor", "own-past-work", "inspiration", "avoid"] },
           "note": { "type": "string" }
         }
       }
@@ -139,7 +206,7 @@
     },
 
     "price_points": {
-      "description": "Prices the client is happy to show in creatives.",
+      "description": "Prices the client is happy to show in creatives. Admin-only field.",
       "type": "array",
       "items": {
         "type": "object",
@@ -154,48 +221,77 @@
       }
     },
     "revision_cap": {
-      "description": "Client revision rounds included per job.",
+      "description": "Client revision rounds included per job. Admin-only field.",
       "type": "integer",
       "minimum": 0,
       "default": 2
     },
+    "next_job_number": {
+      "description": "Number for the client's next job id. Read and incremented in the same save as job creation.",
+      "type": "integer",
+      "minimum": 1
+    },
 
     "learnings": {
+      "description": "What the team found out by shipping. About 20 active entries; retire instead of deleting.",
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["date", "kind", "what"],
+        "required": ["date", "kind", "what", "status"],
         "properties": {
           "date": { "type": "string", "format": "date" },
-          "kind": { "enum": ["liked", "rejected"] },
-          "what": { "type": "string" },
-          "source_job": { "type": ["string", "null"], "pattern": "^[A-Z]{3}-[0-9]{2,}$" }
+          "kind": { "enum": ["liked", "rejected", "decision", "correction"] },
+          "what": { "type": "string", "description": "One sentence, specific enough to change a draft." },
+          "evidence": { "type": "string", "description": "The job, the client's words, or the result behind it." },
+          "applies_to": { "type": "string", "description": "e.g. reels, posters, captions, all." },
+          "status": { "enum": ["active", "watch", "retired"] },
+          "source_job": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" }, { "type": "null" }] }
         }
       }
     },
 
     "confidence": {
-      "description": "Marks each profile field as confirmed by the client or guessed by us.",
+      "description": "Per profile field: confirmed (said or approved by the client, admin or an editor) or guessed (inferred), plus where it came from.",
       "type": "object",
       "propertyNames": {
         "enum": [
-          "name", "business_type", "city", "contact_person", "whatsapp",
+          "name", "business_type", "city", "contact_person", "decision_maker", "whatsapp",
           "languages", "platforms", "posting_frequency",
-          "audience", "tone_of_voice", "visual_identity",
+          "audience", "tone_of_voice", "words", "visual_identity",
           "do", "dont", "references", "festival_calendar",
           "price_points", "revision_cap"
         ]
       },
-      "additionalProperties": { "enum": ["confirmed", "guessed"] }
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status"],
+        "properties": {
+          "status": { "enum": ["confirmed", "guessed"] },
+          "basis": { "type": "string", "description": "Where the value came from, e.g. 'client said on call 12 Nov', 'inferred from Instagram bio'." }
+        }
+      }
     },
     "open_questions": {
+      "description": "Every question carries a recommendation, so it is 'confirm or override', never a dead end.",
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["question", "recommendation", "priority"],
+        "properties": {
+          "question": { "type": "string" },
+          "recommendation": { "type": "string" },
+          "priority": { "enum": ["high", "medium", "low"], "description": "high = blocks work; medium = improves quality; low = nice to have." },
+          "field": { "type": ["string", "null"] }
+        }
+      }
     },
 
     "version": { "type": "integer", "minimum": 1 },
     "changelog": {
+      "description": "Newest first. One entry per real change; typo fixes don't bump the version.",
       "type": "array",
       "items": {
         "type": "object",
@@ -205,11 +301,15 @@
           "version": { "type": "integer", "minimum": 1 },
           "date": { "type": "string", "format": "date" },
           "by": { "type": "string" },
-          "change": { "type": "string" }
+          "sections": { "type": "array", "items": { "type": "string" } },
+          "change": { "type": "string", "description": "What changed and why, one line." }
         }
       }
     },
     "created_at": { "type": "string", "format": "date-time" },
     "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
   }
 }

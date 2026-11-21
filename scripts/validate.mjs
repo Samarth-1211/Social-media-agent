@@ -112,7 +112,7 @@ const c4 = check(4, 'Registered groups exist, contain skills, and every group wi
 const c5 = check(5, 'Non-planned stages point to existing skills');
 const c6 = check(6, 'Every stage read is written earlier on each (job_type, track) path');
 const c7 = check(7, 'Schemas compile; presets validate');
-const c8 = check(8, '${CLAUDE_PLUGIN_ROOT}/library links resolve');
+const c8 = check(8, '${CLAUDE_PLUGIN_ROOT}/library and /skills links resolve');
 const c9 = check(9, `SKILL.md <= ${MAX_SKILL_LINES} lines; description <= ${MAX_DESCRIPTION} chars`);
 const c10 = check(10, 'Frontmatter keys accepted by claude.ai uploads');
 
@@ -225,6 +225,7 @@ for (const plugin of plugins) {
       if (!KEBAB.test(st.skill ?? '')) c5.errors.push(`${at}: skill must be a kebab-case folder name`);
       if (!STAGE_STATUS.has(st.status)) c5.errors.push(`${at}: status must be planned | placeholder | active`);
       if (!GATES.has(st.gate)) c5.errors.push(`${at}: gate must be admin | editor | client | none`);
+      if (typeof st.credit_spend !== 'boolean') c5.errors.push(`${at}: credit_spend must be true or false`);
       for (const k of ['reads', 'optional_reads', 'writes', 'tracks', 'job_types']) {
         if (!Array.isArray(st[k])) c5.errors.push(`${at}: "${k}" must be a list`);
       }
@@ -233,13 +234,15 @@ for (const plugin of plugins) {
       for (const f of [...(st.reads ?? []), ...(st.optional_reads ?? []), ...(st.writes ?? [])]) {
         if (!/^[a-z][a-z0-9_]*$/.test(f)) c5.errors.push(`${at}: field "${f}" must be snake_case`);
       }
-      if (st.status !== 'planned') {
+      // planned: skipped. placeholder: run by the producer, no skill folder needed. active: skill must exist.
+      if (st.status === 'active') {
         const s = skills.find((x) => x.name === st.skill);
-        if (!s) c5.errors.push(`${at} is ${st.status} but skill "${st.skill}" does not exist`);
+        if (!s) c5.errors.push(`${at} is active but skill "${st.skill}" does not exist`);
         else if (s.group !== st.group) c5.errors.push(`${at}: skill "${st.skill}" is in group "${s.group}", not "${st.group}"`);
       }
     }
-    c5.notes.push(`${plugin.name}: ${stages.length} stages (${stages.filter((s) => s.status !== 'planned').length} non-planned)`);
+    const count = (s) => stages.filter((x) => x.status === s).length;
+    c5.notes.push(`${plugin.name}: ${stages.length} stages (${count('active')} active, ${count('placeholder')} placeholder, ${count('planned')} planned)`);
 
     // 6: per (job_type, track) path
     for (const jt of JOB_TYPES) {
@@ -277,6 +280,7 @@ for (const plugin of plugins) {
     ...walkFiles(path.join(P, 'library', 'presets')).filter((f) => f.endsWith('.schema.json')),
   ];
   let presetValidator = null;
+  const contractValidators = new Map(); // "job" -> validate fn (from library/contracts/job.schema.json)
   for (const f of schemaFiles) {
     const schema = readJson(f, c7);
     if (!schema) continue;
@@ -284,11 +288,37 @@ for (const plugin of plugins) {
     try {
       const v = ajv.compile(schema);
       if (path.basename(f) === '_preset.schema.json') presetValidator = v;
+      else contractValidators.set(path.basename(f, '.schema.json'), v);
     } catch (e) {
       c7.errors.push(`${rel(f)}: does not compile (${e.message})`);
     }
   }
   c7.notes.push(`${plugin.name}: ${schemaFiles.length} schemas compiled`);
+
+  // Examples: library/contracts/examples/<name>.example.json must validate against <name>.schema.json.
+  // For job examples, each non-placeholder output's data must validate against <field>.schema.json if it exists.
+  const reportErrors = (file, where, errors) => {
+    for (const err of errors) c7.errors.push(`${rel(file)}: ${where}${err.instancePath || '/'} ${err.message}`);
+  };
+  const exampleFiles = walkFiles(path.join(P, 'library', 'contracts', 'examples')).filter((f) => f.endsWith('.example.json'));
+  for (const f of exampleFiles) {
+    const name = path.basename(f, '.example.json');
+    const v = contractValidators.get(name);
+    if (!v) {
+      c7.errors.push(`${rel(f)}: no ${name}.schema.json to validate against`);
+      continue;
+    }
+    const data = readJson(f, c7);
+    if (!data) continue;
+    if (!v(data)) reportErrors(f, '', v.errors);
+    if (name === 'job' && data.outputs && typeof data.outputs === 'object') {
+      for (const [field, out] of Object.entries(data.outputs)) {
+        const fv = contractValidators.get(field);
+        if (fv && out?.data && out.data.placeholder !== true && !fv(out.data)) reportErrors(f, `outputs.${field}.data`, fv.errors);
+      }
+    }
+  }
+  c7.notes.push(`${plugin.name}: ${exampleFiles.length} examples validated`);
   const presetFiles = walkFiles(path.join(P, 'library', 'presets')).filter(
     (f) => /\.(ya?ml|json)$/.test(f) && !f.endsWith('.schema.json'),
   );
@@ -310,7 +340,7 @@ for (const plugin of plugins) {
   c7.notes.push(`${plugin.name}: ${presetFiles.length} presets validated`);
 
   // ── 8. Library links ──
-  const linkRe = /\$\{CLAUDE_PLUGIN_ROOT\}\/(library\/[^\s)\]"'`<>|*]+)/g;
+  const linkRe = /\$\{CLAUDE_PLUGIN_ROOT\}\/((?:library|skills)\/[^\s)\]"'`<>|*]+)/g;
   let linkCount = 0;
   for (const f of [...walkFiles(skillsRoot), ...walkFiles(path.join(P, 'agents'))]) {
     if (!/\.(md|ya?ml|json|txt)$/.test(f)) continue;

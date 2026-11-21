@@ -1,0 +1,96 @@
+{
+  "client_id": "shubh-laundry",
+  "client_code": "SHL",
+  "name": "Shubh Laundry & Dry Clean",
+  "status": "active",
+  "business_type": "laundry and dry cleaning, pickup and delivery",
+  "city": "Indore",
+  "contact_person": "Neha (owner)",
+  "decision_maker": { "name": "Neha", "role": "owner" },
+  "whatsapp": "+910000000001",
+  "files_folder_url": null,
+  "onboarding_source": "mixed",
+  "languages": ["Hinglish", "Hindi"],
+  "platforms": ["instagram", "whatsapp-status", "google-business"],
+  "posting_frequency": "3 reels + 2 posters per week",
+  "audience": {
+    "summary": "Working couples and students in Vijay Nagar and Bhawarkua who don't have time to wash or iron.",
+    "age_range": "20-40",
+    "locations": ["Vijay Nagar", "Bhawarkua", "Palasia"],
+    "interests": ["convenience", "office wear", "wedding season outfits"],
+    "customer_words": ["kapde time pe chahiye", "press wala nahi aaya", "saree ka dry clean safe hai na?"]
+  },
+  "tone_of_voice": {
+    "summary": "Friendly neighbourhood helper, quick and reliable.",
+    "attributes": [
+      { "name": "Helpful", "means": "Solves a real daily hassle in one line", "doesnt_mean": "Lecturing about fabric care", "example": "Kapde humein do, weekend aapka." },
+      { "name": "Local", "means": "Indore references, Hinglish, area names", "doesnt_mean": "Slang that older customers won't get" },
+      { "name": "Trustworthy", "means": "Clear prices, pickup times, care for costly clothes", "doesnt_mean": "Fake urgency or 'only today' pressure" }
+    ],
+    "by_platform": [
+      { "platform": "instagram", "note": "Light, quick, one joke at most." },
+      { "platform": "whatsapp-status", "note": "Offer first, price and number visible." }
+    ]
+  },
+  "words": {
+    "use": ["pickup-drop free", "same-day press"],
+    "never_use": [{ "word": "cheap", "reason": "Owner wants value, not cheap image" }]
+  },
+  "visual_identity": {
+    "colours": [
+      { "name": "Fresh blue", "hex": "#1E88E5", "use": "primary" },
+      { "name": "White", "hex": "#FFFFFF", "use": "background" }
+    ],
+    "fonts": [{ "name": "Poppins", "use": "headings" }],
+    "logo_ref": null
+  },
+  "do": ["Show pickup van and folded clothes", "Mention free pickup above ₹299"],
+  "dont": ["Show dirty clothes close-up", "Compare with named competitors"],
+  "references": [{ "ref": "https://www.instagram.com/example-reference/", "kind": "liked", "note": "Clean before/after transitions" }],
+  "festival_calendar": [
+    { "occasion": "Diwali", "date": null, "priority": "high", "note": "Pre-Diwali curtain and sofa cleaning offer" },
+    { "occasion": "Wedding season", "date": "November-February", "priority": "high", "note": "Saree and sherwani dry clean" }
+  ],
+  "price_points": [{ "item": "Wash + iron per kg", "price": 89, "currency": "INR" }],
+  "revision_cap": 2,
+  "next_job_number": 2,
+  "learnings": [
+    {
+      "date": "2026-11-18",
+      "kind": "liked",
+      "what": "Owner prefers price on the first frame of offer reels.",
+      "evidence": "SHL-01 feedback: \"price pehle dikhao\"",
+      "applies_to": "reels",
+      "status": "watch",
+      "source_job": "SHL-01"
+    }
+  ],
+  "confidence": {
+    "name": { "status": "confirmed", "basis": "client said, onboarding 2026-11-10" },
+    "business_type": { "status": "confirmed", "basis": "client said" },
+    "city": { "status": "confirmed", "basis": "client said" },
+    "languages": { "status": "confirmed", "basis": "admin approved" },
+    "audience": { "status": "guessed", "basis": "inferred from Google Business reviews" },
+    "tone_of_voice": { "status": "guessed", "basis": "inferred from past Instagram captions" },
+    "visual_identity": { "status": "confirmed", "basis": "logo file colours, approved by owner" },
+    "festival_calendar": { "status": "guessed", "basis": "standard Indore calendar suggestion" },
+    "price_points": { "status": "confirmed", "basis": "admin entered from rate card" },
+    "revision_cap": { "status": "confirmed", "basis": "default 2, admin approved" }
+  },
+  "open_questions": [
+    {
+      "question": "Do they want Hindi-only posters for WhatsApp status?",
+      "recommendation": "Hinglish headline, Hindi offer line: matches their past statuses.",
+      "priority": "medium",
+      "field": "languages"
+    }
+  ],
+  "version": 3,
+  "changelog": [
+    { "version": 3, "date": "2026-11-18", "by": "samarth", "sections": ["learnings"], "change": "Added price-first learning from SHL-01 feedback." },
+    { "version": 2, "date": "2026-11-12", "by": "samarth", "sections": ["visual_identity"], "change": "Confirmed colours from logo file." },
+    { "version": 1, "date": "2026-11-10", "by": "samarth", "sections": ["all"], "change": "Initial profile from onboarding call and Instagram." }
+  ],
+  "created_at": "2026-11-10T10:00:00+05:30",
+  "updated_at": "2026-11-18T16:20:00+05:30"
+}

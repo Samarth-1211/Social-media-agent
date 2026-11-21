@@ -1,0 +1,30 @@
+{
+  "job_id": "SHL-01",
+  "client_id": "shubh-laundry",
+  "type": "video",
+  "title": "Diwali curtain & sofa cleaning offer reel",
+  "raw_request": "Neha ji ka Diwali offer reel chahiye: curtain aur sofa cleaning 20% off, 25 Nov tak.",
+  "requested_by": "samarth",
+  "requested_at": "2026-11-15T11:00:00+05:30",
+  "occasion": "Diwali",
+  "deliverables": [
+    "Instagram reel 9:16 ~20s"
+  ],
+  "deadline": "2026-11-25",
+  "assignee": "ravi",
+  "track": {
+    "proposed": "quick",
+    "reason": "Simple offer reel in an existing style.",
+    "chosen": "quick"
+  },
+  "budget": {
+    "credits": 200,
+    "warn_at": null
+  },
+  "style_preset": null,
+  "references": [],
+  "assumptions": [
+    "Assignee Ravi: he made their last reel.",
+    "Budget: video default 200."
+  ]
+}

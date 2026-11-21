@@ -1,0 +1,70 @@
+{
+  "job_id": "SHL-01",
+  "client_id": "shubh-laundry",
+  "type": "video",
+  "title": "Diwali curtain & sofa cleaning offer reel",
+  "track": "quick",
+  "style_preset": null,
+  "status": "active",
+  "current_stage": "script",
+  "waiting_on": "editor",
+  "next_action": "Ravi to approve the script (placeholder) or request changes.",
+  "stage_history": [
+    { "stage": "intake", "status": "done", "started_at": "2026-11-15T11:00:00+05:30", "finished_at": "2026-11-15T11:20:00+05:30", "by": "samarth" },
+    { "stage": "brief", "status": "done", "started_at": "2026-11-15T11:20:00+05:30", "finished_at": "2026-11-15T12:05:00+05:30", "by": "samarth" },
+    { "stage": "concept", "status": "done", "started_at": "2026-11-15T12:05:00+05:30", "finished_at": "2026-11-15T12:40:00+05:30", "by": "ravi" },
+    { "stage": "script", "status": "in_progress", "started_at": "2026-11-15T12:40:00+05:30", "finished_at": null, "by": "ravi" }
+  ],
+  "gates": [
+    { "stage": "intake", "kind": "stage", "owner_role": "admin", "status": "approved", "shown_outputs": { "request": 1 }, "requested_at": "2026-11-15T11:15:00+05:30", "decided_by": "samarth", "decided_by_role": "admin", "decided_at": "2026-11-15T11:20:00+05:30", "sent_back_to": null },
+    { "stage": "brief", "kind": "stage", "owner_role": "admin", "status": "approved", "shown_outputs": { "brief": 1 }, "requested_at": "2026-11-15T12:00:00+05:30", "decided_by": "samarth", "decided_by_role": "admin", "decided_at": "2026-11-15T12:05:00+05:30", "sent_back_to": null },
+    { "stage": "concept", "kind": "stage", "owner_role": "admin", "status": "approved", "shown_outputs": { "concept": 1 }, "requested_at": "2026-11-15T12:35:00+05:30", "decided_by": "samarth", "decided_by_role": "admin", "decided_at": "2026-11-15T12:40:00+05:30", "sent_back_to": null },
+    { "stage": "script", "kind": "stage", "owner_role": "editor", "status": "pending", "shown_outputs": { "script": 1 }, "requested_at": "2026-11-15T12:45:00+05:30", "decided_by": null, "decided_by_role": null, "decided_at": null, "sent_back_to": null }
+  ],
+  "assignee": "ravi",
+  "deadline": "2026-11-25",
+  "credits": { "budget": 200, "warn_at": null, "used": 0, "ledger": [] },
+  "outputs": {
+    "request": {
+      "version": 1,
+      "schema": "request.schema.json",
+      "stage": "intake",
+      "by": "samarth",
+      "summary": "Diwali offer reel, 9:16 ~20s, quick track, budget 200",
+      "data": {
+        "job_id": "SHL-01",
+        "client_id": "shubh-laundry",
+        "type": "video",
+        "title": "Diwali curtain & sofa cleaning offer reel",
+        "raw_request": "Neha ji ka Diwali offer reel chahiye: curtain aur sofa cleaning 20% off, 25 Nov tak.",
+        "requested_by": "samarth",
+        "requested_at": "2026-11-15T11:00:00+05:30",
+        "occasion": "Diwali",
+        "deliverables": ["Instagram reel 9:16 ~20s"],
+        "deadline": "2026-11-25",
+        "assignee": "ravi",
+        "track": { "proposed": "quick", "reason": "Simple offer reel in an existing style.", "chosen": "quick" },
+        "budget": { "credits": 200, "warn_at": null },
+        "style_preset": null,
+        "references": [],
+        "assumptions": ["Assignee Ravi: he made their last reel.", "Budget: video default 200."]
+      },
+      "updated_at": "2026-11-15T11:15:00+05:30"
+    },
+    "brief": { "version": 1, "stage": "brief", "by": "system", "data": { "placeholder": true, "note": "brief not built yet" }, "updated_at": "2026-11-15T12:00:00+05:30" },
+    "concept": { "version": 1, "stage": "concept", "by": "system", "data": { "placeholder": true, "note": "concept not built yet" }, "updated_at": "2026-11-15T12:35:00+05:30" },
+    "script": { "version": 1, "stage": "script", "by": "system", "data": { "placeholder": true, "note": "script not built yet" }, "updated_at": "2026-11-15T12:45:00+05:30" }
+  },
+  "client_feedback": [],
+  "revision_round": 0,
+  "log": [
+    { "at": "2026-11-15T11:15:00+05:30", "by": "samarth", "kind": "ruling", "message": "Proposed quick track: repeat offer format. Cost if wrong: switch to full adds style-bible and casting." },
+    { "at": "2026-11-15T11:20:00+05:30", "by": "samarth", "kind": "gate", "message": "intake approved by samarth (admin)." },
+    { "at": "2026-11-15T12:05:00+05:30", "by": "samarth", "kind": "gate", "message": "brief approved by samarth (admin)." },
+    { "at": "2026-11-15T12:40:00+05:30", "by": "samarth", "kind": "gate", "message": "concept approved by samarth (admin)." },
+    { "at": "2026-11-15T12:45:00+05:30", "by": "system", "kind": "event", "message": "script placeholder written; waiting on editor (ravi)." }
+  ],
+  "version": 9,
+  "created_at": "2026-11-15T11:00:00+05:30",
+  "updated_at": "2026-11-15T12:45:00+05:30"
+}

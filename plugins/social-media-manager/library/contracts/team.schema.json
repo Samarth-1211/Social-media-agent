@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:team",
+  "title": "Team member",
+  "description": "One person on the TDM team. Collected at first-run setup and stored in the data store (Team tab), never inside the plugin. Roles drive who may approve which gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["handle", "name", "role", "email", "active", "version", "updated_at"],
+  "properties": {
+    "handle": {
+      "description": "Short kebab-case id used in job records, e.g. samarth, ravi-editor.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "role": {
+      "description": "admin approves admin gates and budget overruns; editor and designer approve editor gates on jobs assigned to them.",
+      "enum": ["admin", "editor", "designer"]
+    },
+    "email": {
+      "description": "Used to share the TDM Studio Drive folder and to identify the person. Never put in evals or examples.",
+      "type": "string",
+      "format": "email"
+    },
+    "active": { "type": "boolean" },
+    "added_at": { "type": "string", "format": "date-time" },
+    "version": { "type": "integer", "minimum": 1 },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

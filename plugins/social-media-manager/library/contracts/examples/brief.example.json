@@ -1,0 +1,28 @@
+{
+  "job_id": "SHL-01",
+  "client_id": "shubh-laundry",
+  "type": "video",
+  "client_version": 3,
+  "objective": "Get curtain and sofa cleaning bookings before Diwali through a 20% off offer.",
+  "occasion": "Diwali",
+  "audience": "Families in Vijay Nagar and Palasia preparing their homes for Diwali.",
+  "key_message": "Ghar Diwali-ready, bina mehnat: curtain and sofa cleaning 20% off till 25 Nov.",
+  "offer": "20% off curtain and sofa cleaning, till 25 Nov",
+  "cta": "WhatsApp karo, free pickup",
+  "language": "Hinglish",
+  "tone": "Helpful, festive, no fake urgency",
+  "deliverables": [
+    { "platform": "instagram", "format": "reel", "aspect_ratio": "9:16", "duration_sec": 20, "count": 1 }
+  ],
+  "mandatories": ["Logo end card", "Offer validity date", "Free pickup line"],
+  "avoid": ["Dirty-clothes close-ups", "'Cheap'"],
+  "references": [],
+  "style_preset": null,
+  "deadline": "2026-11-25",
+  "credit_budget": 200,
+  "success_measure": "WhatsApp enquiries in the week after posting",
+  "assumptions": ["Price shown on the first frame, from the SHL-01 learning (watch)."],
+  "open_questions": [],
+  "version": 1,
+  "updated_at": "2026-11-15T12:00:00+05:30"
+}

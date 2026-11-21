@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:config",
+  "title": "Config",
+  "description": "Agency-wide settings, stored in the data store (Config tab). Created at first-run setup.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "storage_mode",
+    "default_language",
+    "default_revision_cap",
+    "default_credit_budget_video",
+    "default_credit_budget_poster",
+    "credit_policy",
+    "version",
+    "updated_at"
+  ],
+  "properties": {
+    "storage_mode": {
+      "description": "google-sheets = the shared TDM Studio sheet on Google Drive (default); files = local JSON in data_folder (backup and offline only).",
+      "enum": ["google-sheets", "files"]
+    },
+    "spreadsheet_id": {
+      "description": "Google Sheets id of 'TDM Studio Database'.",
+      "type": ["string", "null"]
+    },
+    "drive_folder_id": {
+      "description": "Google Drive id of the 'TDM Studio' folder (holds the sheet, Clients/ and Jobs/).",
+      "type": ["string", "null"]
+    },
+    "tracker_page_url": {
+      "description": "claude.ai URL of the read-only 'TDM Social Media Tracker' page, if published.",
+      "type": ["string", "null"]
+    },
+    "data_folder": {
+      "description": "Files mode only: data folder, default .tdm-studio in the project.",
+      "type": ["string", "null"]
+    },
+    "default_language": { "enum": ["Hindi", "English", "Hinglish"] },
+    "default_revision_cap": { "type": "integer", "minimum": 0, "default": 2 },
+    "default_credit_budget_video": { "type": "number", "minimum": 0, "default": 200 },
+    "default_credit_warn_video": { "type": ["number", "null"], "minimum": 0, "default": null },
+    "default_credit_budget_poster": { "type": "number", "minimum": 0, "default": 28 },
+    "default_credit_warn_poster": { "type": ["number", "null"], "minimum": 0, "default": 20 },
+    "credit_policy": {
+      "description": "How generation stages spend credits: as little as possible. See docs/decisions/0003-credit-policy.md.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estimate_before_spend", "start_tier", "draft_variations", "upgrade_approver", "prompt_check_before_spend"],
+      "properties": {
+        "prompt_check_before_spend": {
+          "description": "Check every generation prompt against the brief before spending.",
+          "type": "boolean",
+          "default": true
+        },
+        "estimate_before_spend": {
+          "description": "Show the cost estimate before every generation.",
+          "type": "boolean",
+          "default": true
+        },
+        "start_tier": {
+          "description": "draft = cheapest model, lowest resolution, shortest length first.",
+          "enum": ["draft", "final"],
+          "default": "draft"
+        },
+        "draft_variations": {
+          "description": "Variations per draft generation.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "upgrade_approver": {
+          "description": "Who must approve upgrading a draft to a higher-cost model: editor (assigned editor or admin) or admin.",
+          "enum": ["editor", "admin"],
+          "default": "editor"
+        }
+      }
+    },
+    "version": { "type": "integer", "minimum": 1 },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

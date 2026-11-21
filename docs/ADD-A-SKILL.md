@@ -41,7 +41,7 @@ Rules for the name:
 ## 3. Wire it up
 
 1. **Register the group.** If it isn't registered yet, add `"./skills/<group>"` to `"skills"` in `plugins/social-media-manager/.claude-plugin/plugin.json`. Unregistered groups don't load.
-2. **Update `stages.yaml`.** Point the stage's `skill` at the new folder and set `status` to `placeholder` or `active`. Check `reads`, `writes` and `gate`.
+2. **Update `stages.yaml`.** Point the stage's `skill` at the new folder and set `status` to `active`. Check `reads`, `writes` and `gate`.
 3. **Release.** Bump `version` in `plugin.json` and add an entry to the plugin `CHANGELOG.md` and to the skill's `CHANGELOG.md`.
 
 ## 4. Check it
@@ -61,10 +61,10 @@ If the skill produces creative output, add test briefs and a rubric in `evals/` 
 | 2 | Every skill folder has `SKILL.md`: frontmatter `name` = folder, real `description`, all 7 sections |
 | 3 | Skill folder names unique across groups |
 | 4 | Registered groups exist and have skills; every group with skills is registered |
-| 5 | Non-`planned` stages point to an existing skill in their group |
+| 5 | `active` stages point to an existing skill in their group; every stage has `credit_spend` true or false |
 | 6 | Each `reads` field is written earlier on every (job type, track) path, or is `client` |
-| 7 | All schemas compile; presets validate against `_preset.schema.json` |
-| 8 | `${CLAUDE_PLUGIN_ROOT}/library/...` links point to real files |
+| 7 | All schemas compile; every `examples/*.example.json` validates against its schema; presets validate against `_preset.schema.json` |
+| 8 | `${CLAUDE_PLUGIN_ROOT}/library/...` and `/skills/...` links point to real files |
 | 9 | `SKILL.md` at most 200 lines; description at most 200 characters, one line |
 | 10 | Frontmatter keys limited to those claude.ai accepts |
 | + | `claude plugin validate` on the marketplace and the plugin (if the CLI is installed) |

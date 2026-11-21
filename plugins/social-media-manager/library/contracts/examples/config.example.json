@@ -1,0 +1,22 @@
+{
+  "storage_mode": "google-sheets",
+  "spreadsheet_id": "EXAMPLE-SPREADSHEET-ID",
+  "drive_folder_id": "EXAMPLE-FOLDER-ID",
+  "tracker_page_url": null,
+  "data_folder": null,
+  "default_language": "Hinglish",
+  "default_revision_cap": 2,
+  "default_credit_budget_video": 200,
+  "default_credit_warn_video": null,
+  "default_credit_budget_poster": 28,
+  "default_credit_warn_poster": 20,
+  "credit_policy": {
+    "prompt_check_before_spend": true,
+    "estimate_before_spend": true,
+    "start_tier": "draft",
+    "draft_variations": 1,
+    "upgrade_approver": "editor"
+  },
+  "version": 1,
+  "updated_at": "2026-11-10T09:00:00+05:30"
+}

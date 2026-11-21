@@ -1,0 +1,10 @@
+{
+  "handle": "ravi",
+  "name": "Ravi",
+  "role": "editor",
+  "email": "ravi@example.com",
+  "active": true,
+  "added_at": "2026-11-10T09:00:00+05:30",
+  "version": 1,
+  "updated_at": "2026-11-10T09:00:00+05:30"
+}
