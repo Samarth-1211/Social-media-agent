@@ -44,7 +44,7 @@ Every operation reads before it writes. "Record" means the logical record in `li
 | `create_job` | client, type, title, track, deadline, assignee, budget | new job record | Takes the job number from the client's `next_job_number` and increments it in the same step. |
 | `get_job` | `job_id` | job record | Rebuilds the record from the Jobs row plus its rows in the child tabs. |
 | `list_jobs` | filter: client, assignee, `waiting_on`, status, overdue | job summaries | Light read: Jobs tab only. |
-| `update_job` | changed fields and outputs, `expected_version` | new version | Producer only for stage and gate state; other skills only for their own outputs. |
+| `update_job` | changed fields and outputs, `expected_version` | new version | Producer only for stage and gate state. `client-feedback` only for `client_feedback` and `revision_round`. Stage skills only for their own outputs. |
 | `record_gate` | `job_id`, stage, kind, and either "request" or a decision (`approved`, `changes_requested`, `sent_back`) by a handle, note, `sent_back_to` | updated gate | Checks permission (§3); a decision applies only to a gate that is still pending. Also updates `waiting_on`, `next_action` and the log. |
 | `add_credit_entry` | `job_id`, stage, amount, estimate, tier, tool, description, `approved_by` | new `credits.used` | Appends to the ledger and updates `credits_used` together. |
 | `append_log` | `job_id`, kind, message, by | none | Append-only. The job record shows the last 20 entries; the sheet keeps them all. |

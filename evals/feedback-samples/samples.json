@@ -1,0 +1,569 @@
+[
+ {
+  "id": "01-praise-only",
+  "title": "Praise only on the final reel",
+  "covers": [
+   "praise-only"
+  ],
+  "ctx": {
+   "job": "SHL-01 · Shubh Laundry · Diwali curtain & sofa cleaning offer reel (video, quick)",
+   "path": "video-quick",
+   "pending_gate": "client-final-approval (client), showing master v1",
+   "decision_maker": "Neha (owner)",
+   "languages": "Hinglish, Hindi",
+   "revision_round": 1,
+   "revision_cap": 2,
+   "earlier_feedback": "SHL-01-F1 (round 1, on script v1): \"offer pehle dikhao\" → done",
+   "approved": "brief: 20% off curtain and sofa cleaning till 25 Nov",
+   "from": "Neha"
+  },
+  "reply": "Bahut badhiya bana hai 👌 Thank you Ravi ji aur poori team 🙏",
+  "expected": {
+   "items": [
+    {
+     "key": "Bahut badhiya",
+     "labels": [
+      "not_actionable"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     null
+    ],
+    "status": [
+     "not_needed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    0
+   ],
+   "note": "Approval only: hand back to producer to record the client gate as approved. The thanks may be a second not_actionable item."
+  }
+ },
+ {
+  "id": "02-vague-attractive-missing",
+  "title": "Two vague notes on a poster draft",
+  "covers": [
+   "vague"
+  ],
+  "ctx": {
+   "job": "KSB-01 · Kesar Boutique · Navratri collection poster (poster, quick)",
+   "path": "poster",
+   "pending_gate": "client-poster-approval (client), showing poster_drafts v1 (one draft)",
+   "decision_maker": "Kavita Jain (owner)",
+   "languages": "Hinglish, Hindi",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief: Navratri collection launch, maroon and gold, real local models",
+   "from": "Kavita"
+  },
+  "reply": "Design accha hai par thoda aur attractive banao. Aur kuch missing lag raha hai.",
+  "expected": {
+   "items": [
+    {
+     "key": "Design accha",
+     "labels": [
+      "not_actionable"
+     ]
+    },
+    {
+     "key": "attractive",
+     "labels": [
+      "clarification"
+     ]
+    },
+    {
+     "key": "missing",
+     "labels": [
+      "clarification"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     null
+    ],
+    "status": [
+     "not_needed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    0
+   ],
+   "note": "Each vague note needs 2-3 interpretations and one question. Nothing routed yet."
+  }
+ },
+ {
+  "id": "03-vague-plus-clear",
+  "title": "A vague note and a clear change on the final reel",
+  "covers": [
+   "vague"
+  ],
+  "ctx": {
+   "job": "GKR-01 · Ghar Ki Rasoi · Monthly plan intro reel (video, quick)",
+   "path": "video-quick",
+   "pending_gate": "client-final-approval (client), showing master v1",
+   "decision_maker": "Sunita Sharma (owner)",
+   "languages": "Hinglish",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief: introduce monthly plans, no prices shown, end with \"Order on WhatsApp\"",
+   "from": "Sunita"
+  },
+  "reply": "Video theek hai but premium feel nahi aa raha. Aur last mein \"Order on WhatsApp\" wali line 2 second aur rakho.",
+  "expected": {
+   "items": [
+    {
+     "key": "premium",
+     "labels": [
+      "clarification"
+     ]
+    },
+    {
+     "key": "2 second",
+     "labels": [
+      "in_scope"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     "captions-motion",
+     "finish",
+     "assemble"
+    ],
+    "status": [
+     "proposed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    1
+   ],
+   "note": "\"Video theek hai\" may be split out as not_actionable. The end line is on-screen text (captions-motion) or the end card (finish); either route is accepted."
+  }
+ },
+ {
+  "id": "04-contradiction",
+  "title": "Contradicting background instructions",
+  "covers": [
+   "conflict"
+  ],
+  "ctx": {
+   "job": "SHL-02 · Shubh Laundry · Wedding season saree dry-clean poster (poster, quick)",
+   "path": "poster",
+   "pending_gate": "client-poster-approval (client), showing poster_drafts v1 (one draft, light-grey background)",
+   "decision_maker": "Neha (owner)",
+   "languages": "Hinglish, Hindi",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief: wedding season saree and sherwani dry clean, free pickup above ₹299",
+   "from": "Neha"
+  },
+  "reply": "Logo thoda bada karo. Background white rakho, clean lagega. Aur background mein blue colour bhar do, brand colour hai na.",
+  "expected": {
+   "items": [
+    {
+     "key": "Logo",
+     "labels": [
+      "in_scope"
+     ]
+    },
+    {
+     "key": "white",
+     "labels": [
+      "in_scope",
+      "clarification"
+     ]
+    },
+    {
+     "key": "blue",
+     "labels": [
+      "in_scope",
+      "clarification"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "type": "contradiction"
+    }
+   ],
+   "routing": {
+    "stage": [
+     "poster-drafts"
+    ],
+    "status": [
+     "proposed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    1
+   ],
+   "note": "White vs blue is held until Neha chooses; the logo change is routed."
+  }
+ },
+ {
+  "id": "05-multiple-voices",
+  "title": "Sales head asks for a change, director approves",
+  "covers": [
+   "conflict"
+  ],
+  "ctx": {
+   "job": "NRH-01 · Narmada Heights · Navratri site-visit offer reel (video, full)",
+   "path": "video-full",
+   "pending_gate": "client-script-approval (client), showing script v1 and localised_script v1",
+   "decision_maker": "Mr. Agrawal (director)",
+   "languages": "Hindi, English",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief: Navratri site-visit offer, \"starting at\" pricing only, RERA number on every creative",
+   "from": "Mr. Tiwari (sales head) and Mr. Agrawal (director), forwarded together"
+  },
+  "reply": "Mr. Tiwari: Script mein \"limited flats left\" wali line daal do, urgency chahiye.\nMr. Agrawal: Script mere taraf se approved hai.",
+  "expected": {
+   "items": [
+    {
+     "key": "limited flats",
+     "labels": [
+      "in_scope",
+      "change_request",
+      "clarification"
+     ]
+    },
+    {
+     "key": "approved hai",
+     "labels": [
+      "not_actionable"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "type": "multiple_voices"
+    }
+   ],
+   "routing": {
+    "stage": [
+     null,
+     "script"
+    ],
+    "status": [
+     "not_needed",
+     "proposed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    0,
+    1
+   ],
+   "note": "Tiwari is not the decision maker: his item waits for Mr. Agrawal. Never pick a side. A contradiction flag as well is fine. Round change not scored strictly."
+  }
+ },
+ {
+  "id": "06-old-version",
+  "title": "Feedback on yesterday's version after v2 was sent",
+  "covers": [
+   "conflict",
+   "old-version"
+  ],
+  "ctx": {
+   "job": "SHL-01 · Shubh Laundry · Diwali curtain & sofa cleaning offer reel (video, quick)",
+   "path": "video-quick",
+   "pending_gate": "client-final-approval (client), showing master v2 (sent today 11:00). v1 was sent yesterday.",
+   "decision_maker": "Neha (owner)",
+   "languages": "Hinglish, Hindi",
+   "revision_round": 1,
+   "revision_cap": 2,
+   "earlier_feedback": "SHL-01-F2 (round 1, on master v1, from Neha): #1 \"logo chhota hai\" → logo bigger, done in v2; #2 \"music loud hai\" → softer music, done in v2",
+   "approved": "brief: 20% off curtain and sofa cleaning",
+   "from": "Neha (refers to \"kal wala video\", i.e. yesterday's v1)"
+  },
+  "reply": "Kal wala video dekha. Logo chhota hai, bada karo. Aur music bahut loud hai.",
+  "expected": {
+   "items": [
+    {
+     "key": "Logo",
+     "labels": [
+      "duplicate",
+      "in_scope",
+      "clarification"
+     ]
+    },
+    {
+     "key": "music",
+     "labels": [
+      "duplicate",
+      "in_scope",
+      "clarification"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "type": "old_version"
+    }
+   ],
+   "routing": {
+    "stage": [
+     null
+    ],
+    "status": [
+     "not_needed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    0
+   ],
+   "note": "Both points were done in v2: ask Neha to check the new version. Nothing routed, no new round."
+  }
+ },
+ {
+  "id": "07-over-cap",
+  "title": "Third round on a two-round cap",
+  "covers": [
+   "over-cap"
+  ],
+  "ctx": {
+   "job": "KSB-01 · Kesar Boutique · Navratri collection poster (poster, quick)",
+   "path": "poster",
+   "pending_gate": "client-poster-approval (client), showing poster_drafts v3",
+   "decision_maker": "Kavita Jain (owner)",
+   "languages": "Hinglish, Hindi",
+   "revision_round": 2,
+   "revision_cap": 2,
+   "earlier_feedback": "KSB-01-F1 (round 1, v1), KSB-01-F2 (round 2, v2), all items done",
+   "approved": "brief: Navratri collection launch",
+   "from": "Kavita"
+  },
+  "reply": "Font change karo, ye wala purana lagta hai. Aur \"Navratri Special\" ko \"Festive Special\" kar do.",
+  "expected": {
+   "items": [
+    {
+     "key": "Font",
+     "labels": [
+      "in_scope",
+      "clarification"
+     ]
+    },
+    {
+     "key": "Festive Special",
+     "labels": [
+      "in_scope",
+      "change_request",
+      "clarification"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     "poster-drafts",
+     "brief"
+    ],
+    "status": [
+     "proposed"
+    ]
+   },
+   "over_cap": true,
+   "round_change": [
+    1
+   ],
+   "note": "Round 3 > cap 2: over_cap true, extra_round message drafted for admin approval; only the admin confirms routing. \"Festive Special\" may also be a clarification (wording only, or repositioning the collection beyond Navratri): both readings are reasonable (rubric widened 22 Nov after run 2)."
+  }
+ },
+ {
+  "id": "08-change-request",
+  "title": "New offer and a new language version",
+  "covers": [
+   "change-request"
+  ],
+  "ctx": {
+   "job": "SHL-01 · Shubh Laundry · Diwali curtain & sofa cleaning offer reel (video, quick)",
+   "path": "video-quick",
+   "pending_gate": "client-script-approval (client), showing script v1",
+   "decision_maker": "Neha (owner)",
+   "languages": "Hinglish, Hindi",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief (approved by admin): 20% off curtain and sofa cleaning till 25 Nov; one Hinglish reel",
+   "from": "Neha"
+  },
+  "reply": "Script theek hai. Bas offer 20% ki jagah 25% kar do, aur ek Marathi version bhi chahiye.",
+  "expected": {
+   "items": [
+    {
+     "key": "Script theek",
+     "labels": [
+      "not_actionable"
+     ]
+    },
+    {
+     "key": "25%",
+     "labels": [
+      "change_request"
+     ]
+    },
+    {
+     "key": "Marathi",
+     "labels": [
+      "change_request"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     "brief"
+    ],
+    "status": [
+     "proposed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    1
+   ],
+   "note": "Both are new work against the approved brief: change_order draft for admin approval; only the admin confirms."
+  }
+ },
+ {
+  "id": "09-voice-note",
+  "title": "Long voice-note transcript with several changes",
+  "covers": [
+   "voice-note"
+  ],
+  "ctx": {
+   "job": "NRH-01 · Narmada Heights · Navratri site-visit offer reel (video, full)",
+   "path": "video-full",
+   "pending_gate": "client-final-approval (client), showing master v1",
+   "decision_maker": "Mr. Agrawal (director)",
+   "languages": "Hindi, English",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief: Navratri site-visit offer, RERA number on every creative",
+   "from": "Mr. Agrawal (voice note, transcribed)"
+  },
+  "reply": "Haan dekha video, achha bana hai, bas teen chaar cheezein. Ek, starting mein jo drone shot hai wo thoda lamba rakho. Do, RERA number neeche chhota dikh raha hai, usse bada karo. Teen, voice-over mein \"Narmada Heights\" ka naam do baar bolo. Aur haan, music theek hai.",
+  "expected": {
+   "items": [
+    {
+     "key": "achha bana",
+     "labels": [
+      "not_actionable"
+     ]
+    },
+    {
+     "key": "drone",
+     "labels": [
+      "in_scope"
+     ]
+    },
+    {
+     "key": "RERA",
+     "labels": [
+      "in_scope"
+     ]
+    },
+    {
+     "key": "do baar",
+     "labels": [
+      "in_scope"
+     ]
+    },
+    {
+     "key": "music theek",
+     "labels": [
+      "not_actionable"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     "script"
+    ],
+    "status": [
+     "proposed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    1
+   ],
+   "note": "Earliest routed stage is script (voice-over line). Drone shot → assemble (or clips/storyboard); RERA → captions-motion or finish."
+  }
+ },
+ {
+  "id": "10-duplicate-english",
+  "title": "English reply that repeats itself",
+  "covers": [
+   "duplicate",
+   "english"
+  ],
+  "ctx": {
+   "job": "GKR-02 · Ghar Ki Rasoi · Student half-tiffin poster (poster, quick)",
+   "path": "poster",
+   "pending_gate": "client-poster-approval (client), showing poster_drafts v1",
+   "decision_maker": "Sunita Sharma (owner)",
+   "languages": "Hinglish",
+   "revision_round": 0,
+   "revision_cap": 2,
+   "earlier_feedback": "none",
+   "approved": "brief: half tiffin for students and PGs, no prices",
+   "from": "Sunita (wrote in English)"
+  },
+  "reply": "Hi, change the headline to \"Ghar jaisa khana, roz fresh\". Also the photo looks dull, make it brighter. And again, please do change that headline like I said.",
+  "expected": {
+   "items": [
+    {
+     "key": "change the headline to",
+     "labels": [
+      "in_scope"
+     ]
+    },
+    {
+     "key": "brighter",
+     "labels": [
+      "in_scope"
+     ]
+    },
+    {
+     "key": "again",
+     "labels": [
+      "duplicate"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "routing": {
+    "stage": [
+     "poster-drafts"
+    ],
+    "status": [
+     "proposed"
+    ]
+   },
+   "over_cap": false,
+   "round_change": [
+    1
+   ],
+   "note": "Client message draft in English."
+  }
+ }
+]

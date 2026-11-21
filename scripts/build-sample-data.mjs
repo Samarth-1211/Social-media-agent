@@ -74,9 +74,9 @@ const job2 = {
     { stage: 'client-poster-approval', status: 'in_progress', started_at: '2026-11-17T12:00:00+05:30', finished_at: null, by: 'pooja' },
   ],
   gates: [
-    { stage: 'intake', kind: 'stage', owner_role: 'admin', status: 'approved', requested_at: '2026-11-16T10:05:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-16T10:10:00+05:30' },
-    { stage: 'brief', kind: 'stage', owner_role: 'admin', status: 'approved', requested_at: '2026-11-16T10:25:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-16T10:30:00+05:30' },
-    { stage: 'concept', kind: 'stage', owner_role: 'admin', status: 'approved', requested_at: '2026-11-16T10:55:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-16T11:00:00+05:30' },
+    { stage: 'intake', kind: 'stage', owner_role: 'admin', status: 'approved', shown_outputs: { request: 1 }, requested_at: '2026-11-16T10:05:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-16T10:10:00+05:30' },
+    { stage: 'brief', kind: 'stage', owner_role: 'admin', status: 'approved', shown_outputs: { brief: 1 }, requested_at: '2026-11-16T10:25:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-16T10:30:00+05:30' },
+    { stage: 'concept', kind: 'stage', owner_role: 'admin', status: 'approved', shown_outputs: { concept: 1 }, requested_at: '2026-11-16T10:55:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-16T11:00:00+05:30' },
     { stage: 'poster-drafts', kind: 'stage', owner_role: 'editor', status: 'approved', shown_outputs: { poster_drafts: 1 }, requested_at: '2026-11-17T11:50:00+05:30', decided_by: 'pooja', decided_by_role: 'designer', decided_at: '2026-11-17T12:00:00+05:30' },
     { stage: 'client-poster-approval', kind: 'stage', owner_role: 'client', status: 'pending', shown_outputs: { poster_drafts: 1 }, requested_at: '2026-11-17T12:05:00+05:30' },
   ],
@@ -93,6 +93,8 @@ const job2 = {
   },
   outputs: {
     request: { version: 1, stage: 'intake', by: 'samarth', summary: 'Saree dry-clean poster for wedding season, Instagram 4:5', updated_at: '2026-11-16T10:05:00+05:30', data: { placeholder: true, note: 'sample' } },
+    brief: { version: 1, stage: 'brief', by: 'system', summary: 'placeholder', updated_at: '2026-11-16T10:25:00+05:30', data: { placeholder: true, note: 'brief not built yet' } },
+    concept: { version: 1, stage: 'concept', by: 'system', summary: 'placeholder', updated_at: '2026-11-16T10:55:00+05:30', data: { placeholder: true, note: 'concept not built yet' } },
     poster_drafts: { version: 1, stage: 'poster-drafts', by: 'system', summary: 'Two drafts (placeholder stage)', updated_at: '2026-11-17T12:00:00+05:30', data: { placeholder: true, note: 'poster-drafts not built yet' } },
   },
   client_feedback: [],
@@ -128,6 +130,7 @@ const job3 = {
   deadline: '2026-12-05',
   credits: { budget: 200, used: 0, ledger: [] },
   outputs: {
+    request: { version: 1, stage: 'intake', by: 'samarth', summary: 'Navratri site-visit offer reel, full track, budget 200', updated_at: '2026-11-20T11:25:00+05:30', data: { placeholder: true, note: 'sample' } },
     brief: { version: 1, stage: 'brief', by: 'system', updated_at: '2026-11-20T12:00:00+05:30', data: { placeholder: true, note: 'brief not built yet' } },
   },
   client_feedback: [],

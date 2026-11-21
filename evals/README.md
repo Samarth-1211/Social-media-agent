@@ -24,6 +24,8 @@ How we check that skills produce good work, and that changes don't make them wor
 
 Use `results/*.local.md` for scratch runs. They are git-ignored.
 
+**client-feedback (S7):** `node evals/run-feedback-samples.mjs run` then `node evals/run-feedback-samples.mjs score`. Samples and expectations live in `feedback-samples/samples.json`; `render` rewrites the readable `.md` files. Raw outputs go to `results/feedback-runs.local/` (git-ignored).
+
 ## Privacy rules
 
 - **Never put real client phone or WhatsApp numbers in evals.** Use obviously fake ones, e.g. `+910000000001`.

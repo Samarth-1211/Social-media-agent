@@ -10,3 +10,4 @@ Thumbs.db
 
 # Local-only eval results
 evals/results/*.local.md
+evals/results/*.local/

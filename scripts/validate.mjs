@@ -407,6 +407,17 @@ for (const plugin of plugins) {
         const v = contractValidators.get(rec);
         list.forEach((r, i) => { if (v && !v(r)) c11.errors.push(`sample-data.json: ${rec} #${i + 1} invalid: ${v.errors.map((e) => `${e.instancePath} ${e.message}`).join('; ')}`); });
       }
+      // jobs are consistent with stages.yaml: every stage marked done (and the current stage) has its required reads,
+      // and every done stage's writes exist (the producer refuses to run a stage whose reads are missing)
+      if (isFile(stagesPath)) {
+        const byId = new Map((YAML.parse(readText(stagesPath)).stages || []).map((s) => [s.id, s]));
+        for (const j of back.jobs) {
+          const outs = new Set(Object.keys(j.outputs || {}));
+          const done = (j.stage_history || []).filter((h) => h.status === 'done').map((h) => h.stage);
+          for (const st of done) for (const w of byId.get(st)?.writes || []) if (!outs.has(w)) c11.errors.push(`sample-data.json: ${j.job_id} marks ${st} done but has no outputs.${w}`);
+          for (const r of byId.get(j.current_stage)?.reads || []) if (r !== 'client' && !outs.has(r)) c11.errors.push(`sample-data.json: ${j.job_id} is at ${j.current_stage}, which reads ${r}, but outputs.${r} is missing`);
+        }
+      }
       c11.notes.push(`${plugin.name}: sample data ${back.clients.length} clients, ${back.jobs.length} jobs`);
     }
     // c) generated files are current
