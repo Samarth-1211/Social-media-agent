@@ -1,0 +1,17 @@
+{
+  "name": "social-media-manager",
+  "version": "0.0.1",
+  "description": "Social media production system for TDM Groups: video and poster jobs, client brands, approvals.",
+  "author": {
+    "name": "TDM Groups"
+  },
+  "repository": "https://github.com/<github-owner>/tdm-plugins",
+  "keywords": [
+    "social-media",
+    "video-production",
+    "poster-design",
+    "marketing-agency",
+    "approvals",
+    "brand-management"
+  ]
+}

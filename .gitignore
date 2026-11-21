@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local job and client data (never commit client data)
+.tdm-studio/
+
+# Local-only eval results
+evals/results/*.local.md

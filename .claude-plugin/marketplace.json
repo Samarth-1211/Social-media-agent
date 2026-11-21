@@ -1,0 +1,14 @@
+{
+  "name": "tdm-plugins",
+  "description": "TDM Groups' internal Claude plugins.",
+  "owner": {
+    "name": "TDM Groups"
+  },
+  "plugins": [
+    {
+      "name": "social-media-manager",
+      "source": "./plugins/social-media-manager",
+      "description": "Social media production system for TDM Groups: video and poster jobs, client brands, approvals."
+    }
+  ]
+}
