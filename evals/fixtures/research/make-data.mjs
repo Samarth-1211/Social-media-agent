@@ -93,7 +93,7 @@ if (scenario === 'new') {
 }
 
 // ── validate everything before writing ──
-const ajv = new Ajv2020({ strict: true, allErrors: true }); addFormats(ajv);
+const ajv = new Ajv2020({ strict: true, allErrors: true }); addFormats(ajv); ajv.addKeyword({ keyword: 'x-version', schemaType: 'number' });
 for (const f of fs.readdirSync(C).filter((x) => x.endsWith('.schema.json'))) ajv.addSchema(JSON.parse(fs.readFileSync(path.join(C, f), 'utf8')));
 const v = (name, rec) => { const fn = ajv.getSchema(`urn:tdm:social-media-manager:contracts:${name}`); if (!fn(rec)) throw new Error(`${name} invalid: ${JSON.stringify(fn.errors.slice(0, 3))}`); };
 v('config', config); team.forEach((t) => v('team', t)); clients.forEach((c) => v('client', c)); insights.forEach((i) => v('insight', i)); tasks.forEach((t) => v('task', t)); jobs.forEach((j) => v('job', j));

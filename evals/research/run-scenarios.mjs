@@ -100,7 +100,7 @@ function load(dir) {
 }
 
 // ── checks shared by every run ──
-const ajv = new Ajv2020({ strict: true, allErrors: true }); addFormats(ajv);
+const ajv = new Ajv2020({ strict: true, allErrors: true }); addFormats(ajv); ajv.addKeyword({ keyword: 'x-version', schemaType: 'number' });
 for (const s of fs.readdirSync(path.join(PLUGIN, 'library/contracts')).filter((x) => x.endsWith('.schema.json'))) ajv.addSchema(readJson(path.join(PLUGIN, 'library/contracts', s)));
 const schema = (n) => ajv.getSchema(`urn:tdm:social-media-manager:contracts:${n}`);
 const sim = (cell) => (cell === '' ? '' : typeof cell === 'string' ? cell.replace(/^'/, '') : typeof cell === 'boolean' ? (cell ? 'TRUE' : 'FALSE') : String(cell));
