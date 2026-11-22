@@ -93,7 +93,7 @@ The `brief` stage saves its output with `update_job`, like every stage, plus two
 | Version file | `Jobs/<job_id>/brief/brief-v<n>.json` | One file per brief version, never overwritten. It holds the whole `brief` data. |
 | Client-question mirror | `BriefQuestions` rows for the job | A copy of `brief.data.client_questions`, rewritten on every brief save. The brief JSON stays the source of truth. Never delete a row: a question that's no longer needed gets status `dropped`. |
 
-**Waiting on the client without a gate.** While the brief is `awaiting-client`, the brief stage itself sets the job's `waiting_on` to `client` and `next_action` to "<assignee> to paste <client>'s reply to the <n> brief questions (sent <date>)". No gate is recorded. This is the only time a stage skill writes `waiting_on`. As soon as the answers are parsed, the stage sets `waiting_on` back to `none`, and the normal admin gate follows.
+**Waiting on the client without a gate.** While the brief is `awaiting-client`, the brief stage itself sets the job's `waiting_on` to `client` and `next_action` to "Brief: waiting for client reply (sent <date>): <assignee> to paste <client>'s answers to <n> questions.". No gate is recorded. This is the only time a stage skill writes `waiting_on`. As soon as the answers are parsed, the stage sets `waiting_on` back to `none`, and the normal admin gate follows.
 
 **A typed answer in the sheet counts.** If someone types an answer into a `BriefQuestions` row from their phone, the brief reads it as the client's answer on its next run, then rewrites the mirror from the brief.
 

@@ -29,6 +29,8 @@
 # so approval stages declare no `writes`.
 #
 # intake is run by `producer` (control/producer), which is built, so it is `active`.
+# brief is run by `brief` (pre-production/brief), active on feat/brief. At the merge with the
+# market researcher it also gains optional_reads: [research] (see docs/merge-notes/feat-brief.md).
 
 version: 2
 
@@ -49,7 +51,7 @@ stages:
   - id: brief
     group: pre-production
     skill: brief
-    status: placeholder
+    status: active
     reads: [client, request]
     optional_reads: []
     writes: [brief]

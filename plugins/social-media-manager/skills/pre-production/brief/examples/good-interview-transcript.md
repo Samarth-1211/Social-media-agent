@@ -32,7 +32,7 @@ Namaste Neha ji! Winter kambal-razai offer video ke liye 2 cheezein confirm karn
 Bas "1 haan, 2 nahi" ya sahi value likh dein. Reply aate hi video shuru kar denge 🙏
 ```
 
-Saved as brief v1, `awaiting-client`. Client questions 1 and 2 are `open`, with `asked_at` 21 Nov 10:40. The job is `waiting_on: client`, and `next_action` is "Ravi to paste Neha ji's reply to the 2 brief questions (sent 21 Nov)." No gate. The sheet's BriefQuestions tab now has 2 open rows. After 24 hours they show on the Dashboard.
+Saved as brief v1, `awaiting-client`. Client questions 1 and 2 are `open`, with `asked_at` 21 Nov 10:40. The job is `waiting_on: client`, and `next_action` is "Brief: waiting for client reply (sent 21 Nov): Ravi to paste Neha ji's answers to 2 questions." No gate. The sheet's BriefQuestions tab now has 2 open rows. After 24 hours they show on the Dashboard.
 
 ```
 Claude: Message upar hai, Neha ji ko bhej dijiye. Reply aaye toh yahin paste kar dena.

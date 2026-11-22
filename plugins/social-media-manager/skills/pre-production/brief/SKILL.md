@@ -93,6 +93,8 @@ Never write other outputs, gates (except auto-approve), client records or tracke
     - a log line: "brief v<n>: <0 / n> questions, ready".
     
     Re-read it and confirm every write is there. Then go to the gate (§Gate) with the card.
+    
+    **When the producer runs you,** this save *is* the producer's "save the writes" step (stage-running §5.3): hand back the saved version so the producer only verifies it (§6) and doesn't write a second version.
 
 11. **Changes later** (client feedback routed to `brief` by `client-feedback` and the producer, or a person's change):
     1. read the routed items through storage (the job's `client_feedback`);
@@ -122,7 +124,7 @@ Never write other outputs, gates (except auto-approve), client records or tracke
 
 ## Gate
 
-**Admin** (`stages.yaml`). Request it the normal way: `record_gate` with `shown_outputs: {brief: <version>}`, and the card in the gate message. The producer's gate rules apply: only the admin decides, approval covers only the version shown, and any change means a new version and a new gate.
+**Admin** (`stages.yaml`). The producer requests it (`record_gate`, `shown_outputs: {brief: <version>}`); give it the card for the gate message. While the brief is `awaiting-client` there is **no gate yet**: tell the producer to stop with the stage `in_progress` and `waiting_on: client`. The gate comes after the reply is read and the self-check passes. The producer's gate rules apply: only the admin decides, approval covers only the version shown, and any change means a new version and a new gate.
 
 **Auto-approve** only when `config.brief_auto_approve_repeat` is true (default **false**) **and** all of these hold:
 1. the job is on the quick track;

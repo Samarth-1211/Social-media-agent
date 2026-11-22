@@ -151,7 +151,7 @@ const job4 = {
   status: 'active',
   current_stage: 'brief',
   waiting_on: 'client',
-  next_action: "Ravi to paste Neha ji's reply to the 2 brief questions (sent 21 Nov).",
+  next_action: "Brief: waiting for client reply (sent 21 Nov): Ravi to paste Neha ji's answers to 2 questions.",
   stage_history: [
     { stage: 'intake', status: 'done', started_at: '2026-11-21T10:00:00+05:30', finished_at: '2026-11-21T10:15:00+05:30', by: 'samarth' },
     { stage: 'brief', status: 'in_progress', started_at: '2026-11-21T10:15:00+05:30', finished_at: null, by: 'ravi' },

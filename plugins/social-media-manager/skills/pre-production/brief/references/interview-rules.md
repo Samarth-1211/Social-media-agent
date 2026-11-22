@@ -47,7 +47,7 @@ Use it for blockers only the client knows. Write **one** message (`${CLAUDE_SKIL
 
 Then:
 1. Save the brief with `status: awaiting-client`. Fill `client_questions` (`status: open`, `asked_at` from `get_now`). The storage layer mirrors them to `BriefQuestions`.
-2. Set the job's `waiting_on: client` and `next_action`: "<assignee> to paste <client>'s reply to the <n> brief questions (sent <date>)". No gate yet. (Storage README §5.)
+2. Set the job's `waiting_on: client` and `next_action`: "Brief: waiting for client reply (sent <date>): <assignee> to paste <client>'s answers to <n> questions." No gate yet. (Storage README §5.) The status board, the catch-up card and the Dashboard all show this line as is.
 3. Give the message to the team member to send. We never send it ourselves.
 
 **When a reply is pasted, read it as answers to brief questions only if this job's brief is `awaiting-client`.** Otherwise it's ordinary client feedback and not ours.

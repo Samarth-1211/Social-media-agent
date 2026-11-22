@@ -34,7 +34,12 @@ The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, sepa
 | `library/contracts/examples/brief.example.json` (M4) | `self_check` gains the 5 remaining checklist ids (array items only) | The example follows the 10-line checklist |
 | `scripts/build-sample-data.mjs` (M4) | SHL-03 `self_check` lists all 10 checklist ids | Same |
 
-_Later milestones add rows here (stages.yaml, README, CHANGELOGs)._
+| `library/contracts/stages.yaml` (M5) | `brief` `status: placeholder` → `active`; a 2-line comment above the stages | The producer runs the brief after intake (after research once merged). No `optional_reads: [research]` here (§2.1). |
+| `library/storage/README.md` (M5) | The awaiting-client `next_action` wording now starts "Brief: waiting for client reply (sent <date>): …" | The Dashboard's open-jobs view and the tracker catch-up card show `next_action` as is, so the status reads "Brief: waiting for client reply" with no tracker edit |
+| `scripts/build-sample-data.mjs` (M5) | SHL-03 `next_action` uses that wording | Same |
+| `skills/pre-production/README.md` (M5) | `brief` row → active; "Brief handoff" section (which `downstream` part each later stage reads) | Handoff available to the next stages |
+
+_Later milestones add rows here (README, CHANGELOGs)._
 
 ## 2. To do at merge
 
@@ -61,7 +66,32 @@ _Later milestones add rows here (stages.yaml, README, CHANGELOGs)._
 - **Auto-approve vs the producer's gate rules.** `producer` says never to pass a gate on someone's behalf. The brief's auto-approve (off by default) records a `system` decision, which storage README §5 allows. Check in the combined test (B12) that the producer accepts it rather than re-requesting the admin gate. If not, propose a one-line exception in `producer/references/gate-rules.md` at merge.
 - **The producer and an awaiting-client brief.** The producer is unchanged. The brief skill tells it not to request the gate while the brief is `awaiting-client` (README §5). Confirm in S3/B5 that the producer doesn't force the gate early.
 
-## 4. Proposed for merge phase (not applied)
+## 4. Proposed diffs to protected files (M5, awaiting the admin's decision)
+
+The brief's "waiting on the client without a gate" state (storage README §5) meets two protected rules. Neither is applied.
+
+### 4a. Producer: don't request the gate while a stage waits on the client
+
+Without it, the producer's step "any other gate → request it" would ask the admin to approve a brief that is still waiting for the client's answers.
+
+`skills/control/producer/references/stage-running.md` §7:
+```diff
+ | `none` | Close the history row (`done`, `finished_at`). Log it. Run the next stage in the same turn, without asking. |
+ | `admin`, `editor`, `client` | `record_gate` request (`gate-rules.md` §1). Stop and show the gate message. |
++| Stage skill says it is **waiting on the client** (e.g. brief `awaiting-client`) | Don't request the gate. Keep the history row `in_progress`, keep the skill's `waiting_on: client` and `next_action`, and stop. When the reply is pasted, run the same stage skill again; it ends with its normal gate. |
+```
+
+### 4b. Tracker catch-up: no false data-check warning
+
+Without it, the catch-up card for a brief waiting on the client shows "Data check: waiting_on says client but the open gate is none".
+
+`skills/control/tracker/references/catch-up.md`, "Checks before showing":
+```diff
+-| `waiting_on` equals the pending gate's owner role (or `none` with no pending gate) | Show the card, plus a line: "Data check: waiting_on says X but the open gate is Y; ask the admin or producer to fix." |
++| `waiting_on` equals the pending gate's owner role (or `none` with no pending gate; or `client` with no pending gate while the job's brief is `awaiting-client`) | Show the card, plus a line: "Data check: waiting_on says X but the open gate is Y; ask the admin or producer to fix." |
+```
+
+## 5. Proposed for merge phase (not applied)
 
 ### Tracker status board: show "Brief: waiting for client reply"
 
