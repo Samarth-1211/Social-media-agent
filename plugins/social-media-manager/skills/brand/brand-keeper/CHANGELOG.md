@@ -1,5 +1,11 @@
 # Changelog: brand-keeper
 
+## Unreleased (0.2.0-alpha.1)
+
+### Changed
+- A new client queues its first research run (trigger onboarding) and starts it where subagents work.
+- Competitors are part of the profile; research adds them as guessed and records strikes through save_client.
+
 ## 0.1.0 - 2026-11-22
 
 ### Added

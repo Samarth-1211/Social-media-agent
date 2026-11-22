@@ -51,10 +51,10 @@ The job always moves on to `brief` in the same turn.
 ## 5. Scheduled run
 
 - **Where:** a cloud scheduled task (runs with the laptop off and includes the account's connectors), created by the admin. Setup and the exact prompt are in the plugin README ("Scheduled research").
-- **Cadence:** weekly, Monday 02:30 India time. Each run:
+- **Cadence:** weekly, Monday 02:30 India time. The person working is `system` (no "Who's working?", no Team lookup). Each run:
   1. Stops at once if `research_schedule_enabled` is false.
   2. **Festival check** (cheap, every week): queues festival runs (§1).
-  3. **Full refresh** only on the first run on or after the 24th of the month: for each client in `research_unattended_clients` (default all active), run the unattended methods (`monthly_refresh`, plus `festival` when it applies), save the sheet with its diff, and queue the Instagram step.
+  3. **Full refresh** only on the first run on or after the 24th of the month (the run checks the Insights tab: no sheet with trigger `schedule` created this calendar month yet): for each client in `research_unattended_clients` (default all active), run the unattended methods (`monthly_refresh`, plus `festival` when it applies), save the sheet with its diff, and queue the Instagram step.
   4. Also runs any `research-run` task that is due and needs no person.
   5. Cancels stale tasks (§3).
   6. Posts **one combined summary** (log line on each client's latest job, if any, plus the run's reply): per client one line on what changed, then the pending browser tasks.

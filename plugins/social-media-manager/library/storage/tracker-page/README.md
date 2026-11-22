@@ -4,7 +4,8 @@ A **read-only** page in the Claude app that shows the TDM Studio Database live. 
 - the jobs board by stage, with filters for client, assignee, type and "waiting on";
 - job detail: brief, gates, credits, feedback and log;
 - clients, with each field's confidence mark and open questions;
-- credits per client.
+- per client, **Latest insights** (read-only): the newest research sheet, its age, pending Instagram read, top findings per list with confidence and source, what changed, and the competitors in use (struck ones hidden);
+- credits per client (Higgsfield credits only; research money in USD/INR is never added in).
 
 Changes always happen through Claude. The page never writes.
 

@@ -52,6 +52,7 @@ Then save the start with `update_job`:
      | `assignee` | Whoever did this client's last job of this type (`list_jobs`); otherwise ask the admin. Posters go to a designer, videos to an editor. |
      | Budget | `config.default_credit_budget_<type>` and `default_credit_warn_<type>` (video 200, no warning; poster 28, warn at 20). |
      | `track` | See `track-selection.md`. |
+     | `urgent` | `false`. Propose `true` only if the ask says so ("urgent", "aaj hi chahiye") or the deadline is within 2 days; give the reason. Urgent jobs skip stages marked `skippable_if_urgent` (research). The admin decides at the intake gate and can change it any time ("SHL-01 urgent" / "not urgent"). |
 
    - Write every default you filled in into `assumptions`, one line each.
 5. **Create.** `create_job` with client, type, title, the proposed track, deadline, assignee and budget. Storage gives the job ID (`<CODE>-<NN>`) and opens the intake `stage_history` row.
@@ -60,7 +61,7 @@ Then save the start with `update_job`:
 8. **On approval:**
    - Set `request.data.track.chosen`.
    - Apply any edits the admin made while approving (track, budget, assignee, deadline). Those make `request` v2. Update the pending gate's `shown_outputs` to v2 before recording the decision, and put the edits in the gate `note`.
-   - Copy the chosen values onto the job (`track`, `credits.budget`, `credits.warn_at`, `assignee`, `deadline`).
+   - Copy the chosen values onto the job (`track`, `credits.budget`, `credits.warn_at`, `assignee`, `deadline`, `urgent`).
    - Close intake, and run on.
 
 ## 4. Placeholder stages
@@ -92,13 +93,31 @@ For each field in the stage's `writes`:
 3. The skill returns its `writes` fields. Save them with `update_job` as new output versions (`by` = the person running it).
 4. A credit-spending skill must pass the budget check (`gate-rules.md` §4) before **each** generation, and log each spend with `add_credit_entry`.
 
+## 5a. Stages with optional keys
+
+Some stages carry extra keys in `stages.yaml` (`docs/STAGE-CONTRACT.md`, "Optional stage keys"). Handle them **before** running the stage, in this order. Today only `research` uses them.
+
+1. **`skippable_if_urgent`** and `job.urgent` is true → don't run the stage.
+   - Write its output with status `skipped` and flag `no_fresh_research`, copying the latest sheet's handoff block if one exists (`get_latest_insight` → `get_insight`) and saying its age in `note`.
+   - Add a `stage_history` row with status `skipped` and note "urgent job".
+   - Run on.
+2. **`freshness_days`** (`config.freshness_days` overrides it) → `get_latest_insight` for the client:
+   - younger than the limit, no browser step pending → status `fresh`; copy its handoff block; don't run the skill;
+   - younger than the limit, browser step pending → status `partial` (with `non_blocking_partial`), flag `browser_step_pending`; copy what exists; offer the browser step in one line ("Instagram read for <client> is still queued (~10 min). Run it now, or carry on?"). Carry on unless they say run;
+   - older, or none → run the skill (§5). It returns `refreshed` or `new` (`partial` if its browser part was queued).
+3. **`spend_gate`** → the skill tells you if its plan includes paid work above `config.research_auto_approve_limit`. Then open a `spend` gate (`gate-rules.md` §4b) **before** the paid part runs; the free part doesn't wait.
+4. **`non_blocking_partial`** → a `partial` result is done for the pipeline: the job moves on in the same turn.
+
+**Saving the research output.** Write `outputs.research` (`research.schema.json`) and, in the same `update_job`, its copies on the job: `research_status` and `insight_id`. Log one line ("research: reused SHL-I202611-1 (fresh, 12 days)"). Add each cost line the skill returned with `add_credit_entry` (its `provider` and `currency`; free lines are 0 and never count against the credit budget).
+
 ## 6. Verify before advancing
 
 After saving, call `get_job` again. Check:
 1. every `writes` field is present at the version you just wrote;
 2. each non-placeholder field validates against `library/contracts/<field>.schema.json`, where that file exists;
 3. the `stage_history` row and any gate row you wrote are there;
-4. the counts of `gates` and `stage_history` rows haven't dropped (storage README §3.3).
+4. the counts of `gates` and `stage_history` rows haven't dropped (storage README §3.3);
+5. for `research`: `research_status` and `insight_id` on the job equal those in `outputs.research.data`.
 
 Only then say the stage is done. If a check fails, log an `error`, report it and stop. "The tool said saved" is not evidence.
 

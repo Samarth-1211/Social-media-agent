@@ -18,6 +18,9 @@ Fill it from a fresh `list_jobs`. Leave out empty groups, except that the summar
 - …
 
 Paused: {job_id} {title} (if any)
+
+**Research ({p})** (only if any browser steps are pending)
+- Research: Instagram read pending for {client} (~{minutes} min, needs browser)
 {Data checks: one line per problem (if any)}
 ```
 

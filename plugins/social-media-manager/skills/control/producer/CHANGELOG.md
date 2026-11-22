@@ -1,5 +1,13 @@
 # Changelog: producer
 
+## Unreleased (0.2.0-alpha.1)
+
+### Changed
+- Handles optional stage keys (`stage-running.md` §5a): reuse research while fresh, skip it on urgent jobs, carry on with partial research, spend gate before paid runs (`gate-rules.md` §4b).
+- Intake proposes `urgent` (default no); new commands: urgent / not urgent, research hand-off.
+- Saves `outputs.research` with its job copies (`research_status`, `insight_id`) and ledger lines with provider and currency.
+- Path counts updated: video quick 15, full 22, poster 8.
+
 ## 0.1.0 - 2026-11-22
 
 ### Added

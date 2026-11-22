@@ -29,6 +29,7 @@ No stage contract fields. The tracker is not a stage in `stages.yaml`.
 
 - **No job or client fields.** Never write stage, gate, output, credit or feedback data.
 - **Admin only:** team members (`save_team`), config (`save_config`), first-run setup, and import.
+- **Research tasks:** festival `research-run` tasks (`save_task`) at the start of a session. Nothing else about research; running it belongs to `research-methods`.
 - **Export:** backup files in the local data folder.
 
 ## Steps
@@ -37,6 +38,9 @@ No stage contract fields. The tracker is not a stage in `stages.yaml`.
    1. Choose the backend and say it in one line.
    2. Find the database.
    3. Ask "Who's working?" once.
+   4. **Research queue** (one light read of the Tasks and Clients tabs):
+      - for each active client's `festival_calendar` occasion 14 days or fewer away with no pending or done festival task, create a `research-run` task (trigger `festival`, `occasion`, `due`) with `save_task`;
+      - if a browser is available and `research-browser-step` tasks are pending, offer them once, using `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/research-methods/templates/pending-browser-task.md` §2. A yes hands to `research-methods`; "not now" means don't ask again this session.
 
    If no database exists, offer first-run setup (`${CLAUDE_PLUGIN_ROOT}/library/storage/setup.md`); only the admin may run it.
 
@@ -49,6 +53,7 @@ No stage contract fields. The tracker is not a stage in `stages.yaml`.
    | "status <client>", "<client> ke jobs" | Client view | status-views.md |
    | "my jobs", "<name> ke jobs" | Assignee view | status-views.md |
    | "credits", "is mahine kitne credits" | Credits view | status-views.md |
+   | "research status", "pending research", "<client> research" | Research view | status-views.md §6 |
    | "where is <job>", "continue <job>", "catch me up", "<job> ka kya hua" | Catch-up card | `${CLAUDE_SKILL_DIR}/references/catch-up.md` → `${CLAUDE_SKILL_DIR}/templates/catch-up-card.md` |
    | "show <job> in full" | Full job record | `${CLAUDE_PLUGIN_ROOT}/library/templates/job-record.md` |
    | "add <person> to the team", "remove <person>" | Team change (admin) | `${CLAUDE_SKILL_DIR}/references/concurrency.md` |
@@ -100,7 +105,7 @@ No stage contract fields. The tracker is not a stage in `stages.yaml`.
 - **Fresh data.** Every number comes from a read made for this answer.
 - **Boards are complete.** Every open job appears exactly once, under the right group.
 - **Overdue** = status `active` and deadline before today (India time).
-- **Credits this month** = ledger entries whose timestamp falls in the current India month.
+- **Credits this month** = ledger entries whose timestamp falls in the current India month and whose `currency` is `credits` (or empty). Money (USD, INR) is shown separately, never added to credits.
 - **Catch-up cards are exact.** They match the record: the last completed stage, the pending gate with the person's name, the last 3 log lines, credits, and the next action word for word.
 - **Templates are followed exactly.** Good and bad outputs: `${CLAUDE_SKILL_DIR}/examples/`.
 - **Placeholders are labelled** "placeholder", never presented as real work.

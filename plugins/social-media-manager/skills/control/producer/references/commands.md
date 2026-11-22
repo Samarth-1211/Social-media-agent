@@ -29,6 +29,8 @@ What people type, who may do it, and what the producer does. They write in Engli
 | **pause**: "pause SHL-01", "SHL-01 hold pe rakho" | the assignee or an admin | `status` = `paused`; keep `current_stage` and any pending gate. `next_action` = "Paused by <name>: <reason>. Say 'resume SHL-01'." |
 | **resume**: "resume SHL-01" | the assignee or an admin | `status` = `active`. Restore `waiting_on` and `next_action` from the pending gate (or "Say 'next' to run <stage>"). |
 | **cancel**: "cancel SHL-01" | admin | Ask once: "Cancel SHL-01 (<title>)? Outputs and history are kept; it can't be resumed." On yes: `status` = `cancelled`, `waiting_on` = `none`, close the open history row with status `failed` and note "cancelled", and log it. Never delete rows. |
+| **urgent**: "SHL-01 urgent", "not urgent", "ye urgent hai" | admin | Set `urgent`; log a ruling. If set before `research` runs, that stage will be skipped (and flagged for the brief). |
+| **research**: "research <client>", "refresh research", "Instagram read kar do", "strike <competitor>" | anyone (strikes: the assignee or an admin) | Hand to `research-methods`. Outside a job it doesn't move any job. |
 | **job card**: "SHL-01 card", "job card dikhao" | anyone | `templates/job-card.md` from a fresh read. |
 | **status, board, credits, overdue** | anyone | Hand to `tracker`. |
 

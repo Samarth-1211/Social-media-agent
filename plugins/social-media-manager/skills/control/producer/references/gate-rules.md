@@ -36,6 +36,7 @@ The session person's handle and role come from the Team tab (storage README §1.
 | `editor` | the job's `assignee` (editor or designer), or an admin | "Sorry <name>, this one is for <assignee name> (assigned to <job>) or <admin name>." |
 | `client` | the job's `assignee` or an admin, **recording the client's own reply** | "Only <assignee name> or <admin name> can record <client>'s decision, from the client's message." |
 | `budget` | `role: admin` | "Only <admin name> can approve spending beyond the budget." |
+| `spend` | `role: admin` | "Only <admin name> can approve spending money on <what>." |
 
 Rules:
 - **Not in the Team tab, or `active: false`:** they can't decide any gate. "I can't record approvals from you yet; <admin name> can add you to the team."
@@ -84,6 +85,18 @@ Run this **before** every `credit_spend: true` stage, and before every single ge
 5. **After spending,** log every spend with `add_credit_entry`: amount, estimate, tier, tool, a description, and `approved_by` for `final`-tier upgrades. Read back that `credits.used` went up by exactly that amount.
 
 **Logging a spend after the fact** ("I already made 2 drafts in Higgsfield, 6 credits"): record it truthfully with `add_credit_entry`, even if it takes the job over budget. If it does, open a budget gate before any further spend and tell the admin.
+
+## 4b. The spend gate (real money, before it is spent)
+
+For stages with `spend_gate: admin` (today: `research`, only when Apify is enabled). Money here is USD or INR, never Higgsfield credits, so the credit budget check (§4) doesn't apply to it.
+
+1. The stage skill shows its plan with an estimate (amount and currency).
+2. Estimate ≤ `config.research_auto_approve_limit` → no gate; it runs. (The default limit is 0, so any paid run asks.)
+3. Above it → `record_gate` request: `kind: spend`, `owner_role: admin`, `stage` = the stage, `shown_outputs: {}`, note "<what>: estimate <amount> <currency> > auto-approve limit <limit>". The free part of the stage runs meanwhile; only the paid part waits.
+   - **Approve** (admin only): the paid part runs; log a `ruling` ("Apify run for SHL approved by samarth: est. 0.43 USD").
+   - **Changes:** the skill brings a smaller plan and a new estimate.
+   - Nobody approves before the stage finishes its free part → the paid part is queued as a task and the stage completes as `partial`; the gate closes as `changes_requested` with note "queued".
+4. After the run, the skill's cost lines go to the ledger with `provider: apify` and the currency; the real cost, not the estimate.
 
 ## 5. Client gates
 

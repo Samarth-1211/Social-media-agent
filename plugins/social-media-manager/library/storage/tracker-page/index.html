@@ -129,13 +129,17 @@ footer { font-size: 0.78rem; color: var(--muted); }
 
 <script>
 (() => {
-  // Pipeline order, from library/contracts/stages.yaml (v2).
+  // Pipeline order, from library/contracts/stages.yaml (v3).
   const STAGES = ['intake','research','brief','concept','hooks','script','localise','client-script-approval','style-bible','casting','storyboard','production-plan','clips','voice-music','qa-clips','assemble','captions-motion','audio-mix','finish','resolve-export','client-final-approval','poster-drafts','client-poster-approval','poster-final','delivery'];
   // Tabs read, and the A1 range of each (columns from sheet-layout.json).
-  const TABS = { Jobs: 'Jobs!A1:S', Clients: 'Clients!A1:AC', Questions: 'Questions!A1:H', Learnings: 'Learnings!A1:I', ClientChanges: 'ClientChanges!A1:F', Gates: 'Gates!A1:M', Credits: 'Credits!A1:L', Outputs: 'Outputs!A1:J', StageHistory: 'StageHistory!A1:H', Log: 'Log!A1:F', Feedback: 'Feedback!A1:O', Team: 'Team!A1:H' };
-  const JSON_COLS = new Set(['decision_maker','audience','tone_of_voice','words','visual_identity','references','festival_calendar','price_points','confidence','shown_outputs','items','conflicts','routing','messages','data']);
-  const LIST_COLS = new Set(['languages','platforms','do','dont','files','sections','learnings_suggested']);
-  const NUM_COLS = new Set(['credits_budget','credits_warn_at','credits_used','revision_round','version','seq','amount','estimate','round','about_version','revision_cap','next_job_number']);
+  const TABS = { Jobs: 'Jobs!A1:V', Clients: 'Clients!A1:AG', Questions: 'Questions!A1:H', Learnings: 'Learnings!A1:I', ClientChanges: 'ClientChanges!A1:F', Gates: 'Gates!A1:M', Credits: 'Credits!A1:N', Outputs: 'Outputs!A1:J', StageHistory: 'StageHistory!A1:H', Log: 'Log!A1:F', Feedback: 'Feedback!A1:O', Team: 'Team!A1:H', Insights: 'Insights!A1:U', InsightFindings: 'InsightFindings!A1:O', Tasks: 'Tasks!A1:T' };
+  const JSON_COLS = new Set(['decision_maker','audience','tone_of_voice','words','visual_identity','references','festival_calendar','price_points','confidence','shown_outputs','items','conflicts','routing','messages','data','competitors','meta','methods_used','cost','competitors_analysed','own_account','diff_vs_previous','pending_browser_step','downstream','details']);
+  const LIST_COLS = new Set(['languages','platforms','do','dont','files','sections','learnings_suggested','situation','not_read','raw_files','used_in_jobs','methods']);
+  const NUM_COLS = new Set(['credits_budget','credits_warn_at','credits_used','revision_round','version','seq','amount','estimate','round','about_version','revision_cap','next_job_number','estimate_minutes']);
+  // Research: finding lists shown in the client panel, in this order (insight.schema.json findings).
+  const FINDING_LISTS = [['pain_points', 'Pain points'], ['working_angles', 'Working angles'], ['outlier_hooks', 'Outlier hooks'], ['timely_hooks', 'Timely hooks'], ['customer_phrases', 'Customer phrases'], ['competitors_overdo', 'Competitors overdo (avoid)'], ['proof_points', 'Proof points'], ['visual_cliches', 'Visual clichés (avoid)'], ['competitor_ads', 'Competitor ads']];
+  const CONF_ORDER = { strong: 0, some: 1, weak: 2 };
+  const isCredits = (l) => !l.currency || l.currency === 'credits';
 
   let cfg = {};
   try { cfg = JSON.parse(document.getElementById('tracker-config').textContent); } catch (e) { cfg = {}; }
@@ -152,8 +156,11 @@ footer { font-size: 0.78rem; color: var(--muted); }
     return new Intl.DateTimeFormat('en-IN', { timeZone: IST, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).format(d); };
   const fmtDate = (ymd) => { if (!ymd) return ''; const d = new Date(ymd + 'T12:00:00+05:30'); if (isNaN(d)) return esc(ymd);
     return new Intl.DateTimeFormat('en-IN', { timeZone: IST, day: 'numeric', month: 'short' }).format(d); };
-  const cell = (key, v) => {
+  // Same column name, different type per tab: InsightFindings.confidence is a word, Clients.confidence is JSON.
+  const TEXT_IN_TAB = { InsightFindings: new Set(['confidence']) };
+  const cell = (key, v, tab) => {
     if (v === undefined || v === '') return null;
+    if (TEXT_IN_TAB[tab]?.has(key)) return v;
     if (JSON_COLS.has(key)) { try { return JSON.parse(v); } catch (e) { return { _invalid: v }; } }
     if (LIST_COLS.has(key)) return String(v).split('\n');
     if (NUM_COLS.has(key)) { const n = Number(String(v).replace(/,/g, '')); return isNaN(n) ? null : n; }
@@ -163,7 +170,7 @@ footer { font-size: 0.78rem; color: var(--muted); }
   const rows = (tab) => {
     const vals = state.raw[tab]; if (!Array.isArray(vals) || !vals.length) return [];
     const head = vals[0];
-    return vals.slice(1).filter((r) => r.some((x) => x !== '')).map((r) => Object.fromEntries(head.map((k, i) => [k, cell(k, r[i])])));
+    return vals.slice(1).filter((r) => r.some((x) => x !== '')).map((r) => Object.fromEntries(head.map((k, i) => [k, cell(k, r[i], tab)])));
   };
   const bySeq = (a, b) => (a.seq ?? 0) - (b.seq ?? 0);
   const stageIndex = (s) => { const i = STAGES.indexOf(s); return i < 0 ? 999 : i; };
@@ -183,7 +190,14 @@ footer { font-size: 0.78rem; color: var(--muted); }
       client: clientById[j.client_id], gates: gates[j.job_id] || [], history: hist[j.job_id] || [], ledger: credits[j.job_id] || [],
       log: (logs[j.job_id] || []).slice(-20), outputs: outs[j.job_id] || [], feedback: fb[j.job_id] || [],
       overdue: j.status === 'active' && j.deadline && j.deadline < today }));
-    for (const c of clients) { c.questions = (qs[c.client_id] || []).filter((q) => q.status === 'open'); c.learnings = ls[c.client_id] || []; c.changes = (ch[c.client_id] || []).slice().reverse(); c.jobs = jobs.filter((j) => j.client_id === c.client_id); }
+    const findings = group('InsightFindings', 'insight_id');
+    const insights = rows('Insights').map((i) => ({ ...i, findings: findings[i.insight_id] || [] }));
+    const tasks = rows('Tasks');
+    for (const c of clients) {
+      c.questions = (qs[c.client_id] || []).filter((q) => q.status === 'open'); c.learnings = ls[c.client_id] || []; c.changes = (ch[c.client_id] || []).slice().reverse(); c.jobs = jobs.filter((j) => j.client_id === c.client_id);
+      c.insight = insights.filter((i) => i.client_id === c.client_id).sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))[0] || null;
+      c.tasks = tasks.filter((t) => t.client_id === c.client_id && t.status === 'pending');
+    }
     return { team, clients, clientById, jobs };
   }
   const who = (m, h) => (h && m.team[h] ? esc(m.team[h].name) : esc(h || '—'));
@@ -306,7 +320,8 @@ footer { font-size: 0.78rem; color: var(--muted); }
     const list = `<div class="clients">${m.clients.map((c) => `<button class="card" data-client="${esc(c.client_id)}" aria-current="${state.client === c.client_id}">
       <span class="meta"><span class="id">${esc(c.client_code)}</span><span>${esc(c.status)}</span></span><span class="title">${esc(c.name)}</span>
       <span class="meta"><span>${esc(c.business_type)}</span><span>${esc(c.city)}</span></span>
-      <span class="meta"><span>${c.jobs.filter((j) => j.status === 'active').length} open jobs</span>${c.questions.length ? `<span class="prio-medium">${c.questions.length} open question${c.questions.length > 1 ? 's' : ''}</span>` : ''}</span></button>`).join('') || '<div class="empty">No clients yet.</div>'}</div>`;
+      <span class="meta"><span>${c.jobs.filter((j) => j.status === 'active').length} open jobs</span>${c.questions.length ? `<span class="prio-medium">${c.questions.length} open question${c.questions.length > 1 ? 's' : ''}</span>` : ''}</span>
+      <span class="meta"><span>${c.insight ? `research ${ageDays(c.insight.created_at)} days old` : 'no research yet'}</span>${c.tasks.some((t) => t.needs_browser) ? '<span class="prio-medium">Instagram read pending</span>' : ''}</span></button>`).join('') || '<div class="empty">No clients yet.</div>'}</div>`;
     const c = state.client && m.clientById[state.client];
     if (!c) return list;
     const guessed = Object.entries(c.confidence || {}).filter(([, v]) => v.status === 'guessed').map(([k, v]) => `${esc(k)} <span class="muted">(${esc(v.basis)})</span>`);
@@ -329,16 +344,45 @@ footer { font-size: 0.78rem; color: var(--muted); }
       <section><div class="label">Guessed fields (unconfirmed)</div>${guessed.length ? `<ul class="plain">${guessed.map((g) => `<li><span class="conf-g">?</span> ${g}</li>`).join('')}</ul>` : '<span class="muted">Everything recorded is confirmed.</span>'}</section>
       <section><div class="label">Open questions</div>${c.questions.length ? `<ul class="plain">${c.questions.map((q) => `<li><span class="prio-${esc(q.priority)}">${esc(q.priority)}</span> ${esc(q.question)}<div class="muted">Recommended: ${esc(q.recommendation)}</div></li>`).join('')}</ul>` : '<span class="muted">None.</span>'}</section>
       <section><div class="label">Learnings</div>${c.learnings.length ? `<ul class="plain">${c.learnings.filter((l) => l.status !== 'retired').map((l) => `<li>${esc(l.what)} <span class="muted">· ${esc(l.kind)}, ${esc(l.status)} · ${fmtDate(l.date)}${l.source_job ? ' · ' + esc(l.source_job) : ''}</span></li>`).join('')}</ul>` : '<span class="muted">None yet.</span>'}</section>
+      ${renderInsights(c)}
       <section><div class="label">Changes</div><ul class="plain">${c.changes.map((x) => `<li><span class="mono">v${esc(x.version)}</span> ${fmtDate(x.date)} · ${esc(x.change)}</li>`).join('') || '<li class="muted">None.</li>'}</ul></section>
     </aside></div>`;
+  }
+
+  // Latest insights: read-only. Struck findings are left out; pinned first, then strong, some, weak.
+  const ageDays = (iso) => { const d = new Date(iso); return isNaN(d) ? '?' : Math.max(0, Math.floor((Date.now() - d.getTime()) / 86400000)); };
+  function renderInsights(c) {
+    const comps = (c.competitors || []).filter((k) => !k.struck);
+    const compLine = comps.length ? `<div class="muted">Competitors: ${comps.map((k) => `${esc(k.handle)} <span class="mono">${esc(k.group)}</span>${k.confidence === 'guessed' ? ' <span class="conf-g">?</span>' : ''}`).join(' · ')}</div>` : '';
+    const taskLines = c.tasks.map((t) => `<li><span class="prio-medium">pending</span> ${t.kind === 'research-browser-step' ? `Instagram read (~${esc(t.estimate_minutes ?? '?')} min, needs browser)` : `Research run (${esc(t.trigger)}${t.occasion ? ': ' + esc(t.occasion) : ''})`}${t.due ? ' · due ' + fmtDate(t.due) : ''}</li>`).join('');
+    const i = c.insight;
+    if (!i) return `<section><div class="label">Latest insights</div><span class="muted">No research yet.</span>${compLine}${taskLines ? `<ul class="plain">${taskLines}</ul>` : ''}</section>`;
+    const live = i.findings.filter((f) => !f.struck);
+    const lists = FINDING_LISTS.map(([cat, label]) => {
+      const items = live.filter((f) => f.category === cat).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (CONF_ORDER[a.confidence] ?? 3) - (CONF_ORDER[b.confidence] ?? 3)).slice(0, 3);
+      if (!items.length) return '';
+      return `<div><b>${esc(label)}</b><ul class="plain">${items.map((f) => {
+        const d = f.details || {};
+        const extra = cat === 'outlier_hooks' ? ` <span class="mono">${esc(d.multiple)}x · ${esc(d.formula || '')}</span>` : cat === 'customer_phrases' && f.language ? ` <span class="muted">(${esc(f.language)})</span>` : '';
+        return `<li>${f.pinned ? '📌 ' : ''}${esc(f.text)}${extra} <span class="muted">· ${esc(f.confidence)} · ${esc(f.source)}</span></li>`;
+      }).join('')}</ul></div>`;
+    }).join('');
+    const pending = i.pending_browser_step?.pending ? `<div class="prio-medium">Instagram read pending (${esc((i.pending_browser_step.methods || []).join(', '))})</div>` : '';
+    const diff = i.diff_vs_previous?.summary ? `<div class="muted">Since last time: ${esc(i.diff_vs_previous.summary)}</div>` : '<div class="muted">First sheet (baseline).</div>';
+    return `<section><div class="label">Latest insights</div>
+      <div class="meta"><span class="id">${esc(i.insight_id)}</span><span>v${esc(i.version)} · ${fmtTime(i.created_at)} · ${ageDays(i.created_at)} days old · ${esc(i.mode)}</span></div>
+      ${pending}<div>${esc(i.summary || '')}</div>${diff}${lists || '<span class="muted">No findings.</span>'}
+      ${(i.not_read || []).length ? `<div class="muted">Not read: ${esc(i.not_read.join('; '))}</div>` : ''}${compLine}
+      ${taskLines ? `<ul class="plain">${taskLines}</ul>` : ''}
+      <div class="muted">Read-only. Pin or strike findings by asking Claude, or in the InsightFindings tab.</div></section>`;
   }
 
   function renderCredits(m) {
     const month = monthIST();
     const rowsHtml = m.clients.map((c) => {
       const ledger = c.jobs.flatMap((j) => j.ledger);
-      const thisMonth = ledger.filter((l) => String(l.at || '').startsWith(month)).reduce((s, l) => s + (l.amount || 0), 0);
-      const all = ledger.reduce((s, l) => s + (l.amount || 0), 0);
+      const thisMonth = ledger.filter((l) => isCredits(l) && String(l.at || '').startsWith(month)).reduce((s, l) => s + (l.amount || 0), 0);
+      const all = ledger.filter(isCredits).reduce((s, l) => s + (l.amount || 0), 0);
       const open = c.jobs.filter((j) => j.status === 'active');
       return `<tr><td>${esc(c.name)}</td><td class="num">${thisMonth}</td><td class="num">${all}</td><td class="num">${open.reduce((s, j) => s + (j.credits_used || 0), 0)} / ${open.reduce((s, j) => s + (j.credits_budget || 0), 0)}</td></tr>`;
     }).join('');
@@ -346,7 +390,7 @@ footer { font-size: 0.78rem; color: var(--muted); }
       const pct = j.credits_budget ? Math.min(100, (j.credits_used / j.credits_budget) * 100) : 0;
       return `<tr><td><button class="btn" data-job="${esc(j.job_id)}" data-goto="jobs"><span class="id">${esc(j.job_id)}</span></button></td><td>${esc(j.title)}</td><td class="num">${j.credits_used || 0} / ${j.credits_budget || 0}</td><td style="min-width:120px"><div class="meter"><i class="${j.credits_used > j.credits_budget ? 'over' : ''}" style="width:${pct}%"></i></div></td></tr>`;
     }).join('');
-    return `<div class="panel"><section><h2>Credits by client</h2><div class="muted">This month = ${esc(month)}, India time.</div>
+    return `<div class="panel"><section><h2>Credits by client</h2><div class="muted">This month = ${esc(month)}, India time. Higgsfield credits only; research money (USD/INR) is never added in.</div>
       <div class="tablewrap"><table><thead><tr><th>Client</th><th class="num">This month</th><th class="num">All time</th><th class="num">Open jobs: used / budget</th></tr></thead><tbody>${rowsHtml || '<tr><td colspan="4" class="muted">No clients yet.</td></tr>'}</tbody></table></div></section>
       <section><h2>Open jobs</h2><div class="tablewrap"><table><thead><tr><th>Job</th><th>Title</th><th class="num">Used / budget</th><th>Budget used</th></tr></thead><tbody>${jobRows || '<tr><td colspan="4" class="muted">No open jobs.</td></tr>'}</tbody></table></div></section></div>`;
   }

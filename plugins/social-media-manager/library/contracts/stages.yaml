@@ -40,7 +40,8 @@
 # so approval stages declare no `writes`.
 #
 # intake is run by `producer` (control/producer), which is built, so it is `active`.
-# research becomes `active` when pre-production/research-methods ships (Group 2a, M4).
+# research is run by `research-methods` (pre-production), which may hand its unattended part
+# to the `market-researcher` subagent.
 
 version: 3
 
@@ -64,7 +65,7 @@ stages:
   - id: research
     group: pre-production
     skill: research-methods
-    status: placeholder
+    status: active
     reads: [client, request]
     optional_reads: []
     writes: [research]

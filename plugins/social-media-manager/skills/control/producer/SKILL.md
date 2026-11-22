@@ -54,13 +54,13 @@ Never write another stage's outputs, and never change client records.
    2. Read the brand brief.
    3. Ask only for what you can't default, all in one message.
    4. `create_job`, then write `request` v1.
-   5. Propose a track, budget, assignee and deadline, each with a one-line reason. Log the track choice as a `ruling`.
+   5. Propose a track, budget, assignee, deadline and `urgent` (default no), each with a one-line reason. Log the track choice as a `ruling`.
    6. Stop at the admin gate.
 
 5. **Run stages** with `${CLAUDE_SKILL_DIR}/references/stage-running.md`:
    1. Take the next stage on the job's path (type and track); skip `planned` stages with a one-line notice.
    2. Check it may start: job `active`, no pending gate, every `reads` field present.
-   3. Before a `credit_spend` stage, run the budget check (step 7).
+   3. Before a `credit_spend` stage, run the budget check (step 7). Before a stage with optional keys (`freshness_days`, `skippable_if_urgent`, `non_blocking_partial`, `spend_gate`), follow `stage-running.md` §5a: today that is `research`, which is reused while fresh, skipped on urgent jobs, never blocks, and asks the admin before any paid run.
    4. Run it: write placeholder outputs, or follow the stage skill's `SKILL.md`.
    5. Save it, then verify it (step 8).
    6. `gate: none` → mark it done and run the next stage in the same turn, without asking. Any other gate → step 6.
@@ -117,6 +117,7 @@ The producer *runs* gates; it never decides them. Who may decide (storage README
 | `editor` | The assigned editor or designer, or the admin |
 | `client` | The assignee or admin, recording the client's own reply |
 | `budget` | The admin only |
+| `spend` | The admin only (real money, e.g. a paid Apify run; `gate-rules.md` §4b) |
 | `none` | Nobody; runs on |
 
 The producer's own `intake` stage stops at an **admin** gate. The admin approves the request with its track, budget, assignee and deadline, and may change any of them while approving.

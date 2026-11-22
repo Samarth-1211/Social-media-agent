@@ -44,11 +44,24 @@ Resolve the client by code, ID or name (ask if several match). Then show:
 
 | Section | What it shows |
 |---|---|
-| This month by client | The sum of ledger `amount` for entries whose `at` starts with the current India `YYYY-MM`, grouped by the job's client. |
+| This month by client | The sum of ledger `amount` for entries whose `at` starts with the current India `YYYY-MM` **and whose `currency` is `credits` or empty**, grouped by the job's client. |
+| Money this month | Ledger entries in USD or INR (research with Apify), by client and provider. Never added to credits. Leave the section out when there are none. |
 | Open jobs | `used` / `budget`, sorted by percentage used. Flag any above `warn_at` or above `budget`. |
 | Tier split | Draft vs final credits this month, so the cheapest-first policy is visible. |
 
 Read the Credits tab for the ledger; `credits_used` on the Jobs row is the running total. If they disagree for a job, flag it (SKILL.md step 6).
+
+## 6. Research
+
+Read the Tasks tab (`list_tasks`, status `pending`) and, per active client, `get_latest_insight`.
+
+| Section | What it shows |
+|---|---|
+| Pending browser steps | One line per client: "Research: Instagram read pending for <client> (~<n> min, needs browser) · since <date>". Oldest first. |
+| Queued runs | `research-run` tasks: festival runs with their occasion and `due`, onboarding runs. |
+| Sheets | Per client: latest `insight_id`, its date and age in days, and "stale" if older than `freshness_days`; "no research yet" if none. |
+
+The status board shows the pending browser steps as its last group, "Research" (one line per client), only when there are any.
 
 ## Empty states
 
@@ -57,6 +70,7 @@ Read the Credits tab for the ledger; `credits_used` on the Jobs row is the runni
 | Board | "No open jobs. Start one with producer: new job." |
 | Overdue | "Nothing overdue." |
 | Credits | "No credits spent this month." |
+| Research | "No research waiting. Every active client has a sheet under <freshness_days> days old." (or list the ones without) |
 
 ## Big lists
 
