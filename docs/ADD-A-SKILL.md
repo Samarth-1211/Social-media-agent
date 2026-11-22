@@ -68,4 +68,5 @@ If the skill produces creative output, add test briefs and a rubric in `evals/` 
 | 9 | `SKILL.md` at most 200 lines; description at most 200 characters, one line |
 | 10 | Frontmatter keys limited to those claude.ai accepts |
 | 11 | Storage: the sheet layout covers every schema field; examples and sample data survive the Sheets round trip; generated setup and sample files are current; tracker page stages match `stages.yaml` |
+| 12 | Brief: each text field agrees with its `*_detail` (price, action and channel, audience); platform variants match the master; research, readiness and question rules hold; the `BriefQuestions` mirror matches each brief |
 | + | `claude plugin validate` on the marketplace and the plugin (if the CLI is installed) |

@@ -26,6 +26,7 @@ Default folder: `${CLAUDE_PROJECT_DIR}/.tdm-studio/` (or `config.data_folder`). 
         ├── job.json            job record (full: gates, history, credits, feedback, outputs; log = last 20)
         ├── job.md              readable view, regenerated on every save (library/templates/job-record.md)
         ├── log-full.json       every log entry, append-only (the sheet's Log tab, for this job)
+        ├── brief/              layout v2: brief-v<n>.json, one file per brief version, never overwritten
         └── outputs/            files produced by stages
 ```
 
@@ -60,3 +61,10 @@ Admin only. Confirm the target sheet by title before writing.
 - `get_now` in files mode: read the computer's clock (for example `date -Iseconds` in a shell) and convert it to India time. If no clock is available, ask.
 - Regenerate `client.md` and `job.md`, and update both `index.json` files, on every save.
 - `job.json` keeps only the last 20 log entries, so **append every log entry to `jobs/<job_id>/log-full.json` as well**. That file plays the part of the sheet's Log tab; import uses it, when present, to restore the full log.
+
+## Brief files (layout v2)
+
+- **Saving a brief** in files mode: write `job.json` as usual, then `jobs/<job_id>/brief/brief-v<n>.json` with the whole brief data. Never overwrite an existing version file.
+- **No questions file.** In files mode the client questions live only in `job.json` (`outputs.brief.data.client_questions`). The sheet's `BriefQuestions` tab is a mirror of that list, so nothing more is needed.
+- **Export** copies each job's `Jobs/<job_id>/brief/` files from Drive into `jobs/<job_id>/brief/` when Google Drive is connected. Otherwise it writes the current version only, and says so in `export-report.md`.
+- **Import** rebuilds the `BriefQuestions` rows from each job's brief (`google-sheets.md` §7, step 3) and uploads the `brief/` files to `Jobs/<job_id>/brief/`.

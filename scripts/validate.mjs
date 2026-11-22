@@ -13,6 +13,8 @@
 //  8  every ${CLAUDE_PLUGIN_ROOT}/library/... link inside skills/agents points to a real file
 //  9  SKILL.md <= 200 lines; description <= 200 chars, one line
 // 10  frontmatter keys limited to those claude.ai skill uploads accept
+// 11  storage: layout covers schemas, records round-trip, generated files current
+// 12  brief text/detail pairs agree (offer/offer_detail, cta/cta_detail, audience/audience_detail), variants and mirrors consistent
 // Then: `claude plugin validate` on the marketplace and each plugin, if the CLI is available.
 
 import fs from 'node:fs';
@@ -116,6 +118,7 @@ const c8 = check(8, '${CLAUDE_PLUGIN_ROOT}/library and /skills links resolve');
 const c9 = check(9, `SKILL.md <= ${MAX_SKILL_LINES} lines; description <= ${MAX_DESCRIPTION} chars`);
 const c10 = check(10, 'Frontmatter keys accepted by claude.ai uploads');
 const c11 = check(11, 'Storage: layout covers schemas, records round-trip, generated files current');
+const c12 = check(12, 'Brief pairs agree; variants and BriefQuestions mirror consistent');
 
 for (const plugin of plugins) {
   const P = plugin.dir;
@@ -276,6 +279,8 @@ for (const plugin of plugins) {
   // ── 7. Schemas and presets ──
   const ajv = new Ajv2020({ strict: true, allErrors: true });
   addFormats(ajv);
+  // x-version: schema revision number (annotation only). v2 marks schemas extended additively on feat/brief.
+  ajv.addKeyword({ keyword: 'x-version', schemaType: 'number' });
   const schemaFiles = [
     ...walkFiles(path.join(P, 'library', 'contracts')).filter((f) => f.endsWith('.schema.json')),
     ...walkFiles(path.join(P, 'library', 'presets')).filter((f) => f.endsWith('.schema.json')),
@@ -434,6 +439,95 @@ for (const plugin of plugins) {
       if (JSON.stringify(pageStages) !== JSON.stringify(yamlStages)) c11.errors.push('tracker-page/index.html STAGES list does not match stages.yaml order');
     }
   }
+
+  // ── 12. Brief pairs, variants, mirror ──
+  // Pair rule (docs/decisions/0004-brief-field-pairs.md): when a *_detail field is present it is the
+  // source of truth, and its text field (generated from it on save) must agree with it.
+  const CHANNEL_WORDS = {
+    whatsapp: /whats\s?app|व्हाट्सएप|वॉट्सऐप|व्हाट्सऐप/i,
+    call: /call|phone|फ़ोन|फोन|कॉल/i,
+    visit: /visit|aao|aaiye|aayiye|padhar|pahunch|shop|store|site|office|branch|आइए|आइये|पधार|पहुँच/i,
+    dm: /\bdm\b|message|msg|inbox|मैसेज/i,
+    website: /website|link|\.com|\.in\b|वेबसाइट/i,
+    form: /form|register|फॉर्म/i,
+  };
+  const hasPrice = (text, price) => {
+    const flat = String(text).replace(/(\d),(?=\d)/g, '$1');
+    return new RegExp(`(^|[^\d.])${String(price).replace('.', '\.')}(?![\d])`).test(flat);
+  };
+  const checkBrief = (b, where) => {
+    if (!b || typeof b !== 'object' || b.placeholder === true) return;
+    const err = (m) => c12.errors.push(`${where}: ${m}`);
+    const od = b.offer_detail;
+    if (od && typeof od === 'object') {
+      if (typeof b.offer !== 'string' || !b.offer) err('offer_detail is set but offer (its generated text) is empty');
+      else if (od.price != null && !hasPrice(b.offer, od.price)) err(`offer "${b.offer}" does not show offer_detail.price ${od.price}`);
+      else if (od.price == null && /(₹|rs\.?\s?)\s?\d/i.test(b.offer)) err(`offer "${b.offer}" shows a price but offer_detail.price is null`);
+      if (od.profile_match === 'differs' && !(b.open_questions ?? []).some((q) => /price|₹|daam|rate/i.test(q))) err('offer_detail.profile_match is differs, but no open question flags the price');
+    }
+    const cd = b.cta_detail;
+    if (cd && typeof cd === 'object') {
+      if (typeof b.cta !== 'string' || !b.cta) err('cta_detail is set but cta (its generated text) is empty');
+      else {
+        if (!b.cta.toLowerCase().includes(cd.action.toLowerCase())) err(`cta "${b.cta}" does not contain cta_detail.action "${cd.action}"`);
+        const re = CHANNEL_WORDS[cd.channel];
+        if (re && !re.test(b.cta)) err(`cta "${b.cta}" does not name the ${cd.channel} channel`);
+      }
+    }
+    const ad = b.audience_detail;
+    if (ad && typeof ad === 'object' && !(b.audience ?? '').toLowerCase().includes(ad.who.toLowerCase())) err('audience does not contain audience_detail.who');
+    if (b.writing_script && b.language && (b.language === 'English') !== (b.writing_script === 'english')) err(`language ${b.language} and writing_script ${b.writing_script} disagree`);
+    // platform variants vs master
+    const dels = b.deliverables ?? [];
+    for (const [i, d] of dels.entries()) {
+      const differs = (b.aspect_ratio && d.aspect_ratio !== b.aspect_ratio) || (b.duration_sec != null && d.duration_sec != null && d.duration_sec !== b.duration_sec);
+      if (differs && !d.changes_from_master) err(`deliverables[${i}] (${d.platform} ${d.format}) differs from the master but has no changes_from_master`);
+    }
+    if (Array.isArray(b.platforms)) {
+      const a = [...new Set(dels.map((d) => d.platform))].sort().join(',');
+      if ([...b.platforms].sort().join(',') !== a) err(`platforms [${b.platforms}] do not match the deliverables' platforms [${a}]`);
+    }
+    // research, readiness, questions
+    if (b.research?.status === 'skipped' && !b.research.skip_reason) err('research.status is skipped but skip_reason is empty');
+    if (b.ready_for_production === true && (!(b.self_check ?? []).length || b.self_check.some((c) => !c.pass))) err('ready_for_production is true but a self_check failed or none ran');
+    if (['ready', 'approved'].includes(b.status) && b.ready_for_production !== true) err(`status ${b.status} needs ready_for_production true`);
+    const cq = b.client_questions ?? [];
+    if (new Set(cq.map((q) => q.n)).size !== cq.length) err('client_questions numbers (n) repeat');
+    if (b.status === 'awaiting-client' && !cq.some((q) => q.status === 'open')) err('status awaiting-client but no client question is open');
+  };
+  const exBriefPath = path.join(P, 'library', 'contracts', 'examples', 'brief.example.json');
+  let briefCount = 0;
+  if (isFile(exBriefPath)) { checkBrief(JSON.parse(readText(exBriefPath)), 'brief.example.json'); briefCount++; }
+  const exJobPath = path.join(P, 'library', 'contracts', 'examples', 'job.example.json');
+  if (isFile(exJobPath)) { checkBrief(JSON.parse(readText(exJobPath)).outputs?.brief?.data, 'job.example.json outputs.brief'); briefCount++; }
+  const samplePath12 = path.join(P, 'library', 'storage', 'tracker-page', 'sample-data.json');
+  if (isFile(layoutPath) && isFile(samplePath12)) {
+    const { decodeAll: dec, layout: lay } = await import(new URL('./lib/sheet-codec.mjs', import.meta.url));
+    const tabs = JSON.parse(readText(samplePath12)).tabs;
+    let back = null;
+    try { back = dec(tabs); } catch { /* reported by check 11 */ }
+    const bv = contractValidators.get('brief');
+    for (const j of back?.jobs ?? []) {
+      const b = j.outputs?.brief?.data;
+      if (!b || b.placeholder) continue;
+      briefCount++;
+      if (bv && !bv(b)) c12.errors.push(`sample-data.json: ${j.job_id} brief invalid: ${bv.errors.map((e) => `${e.instancePath} ${e.message}`).join('; ')}`);
+      checkBrief(b, `sample-data.json ${j.job_id} brief`);
+      if (b.status === 'awaiting-client' && j.waiting_on !== 'client') c12.errors.push(`sample-data.json: ${j.job_id} brief is awaiting-client but waiting_on is ${j.waiting_on}`);
+      // mirror tabs: rows must equal the brief's list
+      for (const t of lay.tabs.filter((x) => x.kind === 'mirror' && x.record === 'job')) {
+        const rows = tabs[t.name] ?? [];
+        const keys = rows[0] ?? [];
+        const mine = rows.slice(1).filter((r) => r[keys.indexOf(t.parent_key)] === j.job_id);
+        const list = t.field.split('.').reduce((o, k) => (o == null ? undefined : o[k]), j) ?? [];
+        const sig = (n, st) => `${n}:${st}`;
+        const want = list.map((q) => sig(q.n, q.status)).sort().join(' ');
+        const got = mine.map((r) => sig(Number(r[keys.indexOf('n')]), r[keys.indexOf('status')])).sort().join(' ');
+        if (want !== got) c12.errors.push(`sample-data.json: ${j.job_id} ${t.name} rows [${got}] do not mirror ${t.field} [${want}]`);
+      }
+    }
+  }
+  c12.notes.push(`${plugin.name}: ${briefCount} brief(s) checked`);
 }
 
 // ── Report ──────────────────────────────────────────────────────────

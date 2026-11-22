@@ -53,3 +53,9 @@ Things I could not test from Claude Code. Please check in the Claude app:
 4. `${CLAUDE_PLUGIN_ROOT}` links in skills resolve on claude.ai and in the desktop app (open since Prompt 1).
 5. `get_now` in the app: the connector's write-then-read of `Config!E1` returns the current time (it does in Claude Code).
 6. **Installing the plugin** on claude.ai and in the desktop app: the exact steps (open point in `docs/ARCHITECTURE.md`). Then run the S10 checklist in `evals/scenarios/group1.md`.
+
+## Layout v2 (feat/brief)
+
+Additive only. A new `BriefQuestions` tab mirrors each brief's client questions, for the Dashboard block "Brief: waiting for client reply". There are three brief Config rows, and `system` is added to the Gates `decided_by_role` dropdown. Brief versions are also saved as Drive files at `Jobs/<id>/brief/brief-v<n>.json`. Existing databases are upgraded with `setup.md` §Upgrade, using `sheet-setup.json` `upgrades["2"]`.
+
+**Not yet verified on a real sheet:** the upgrade on TDM Studio TEST Database, the Dashboard query's text comparison of `asked_at`, and the Drive version-file write. These belong to the combined test phase after the merge.

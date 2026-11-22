@@ -18,5 +18,8 @@
     "upgrade_approver": "editor"
   },
   "version": 1,
-  "updated_at": "2026-11-10T09:00:00+05:30"
+  "updated_at": "2026-11-10T09:00:00+05:30",
+  "brief_auto_approve_repeat": false,
+  "brief_max_questions": 5,
+  "client_question_reminder_hours": 24
 }

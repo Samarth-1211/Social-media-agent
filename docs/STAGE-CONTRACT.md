@@ -81,3 +81,7 @@ Each `(job_type, track)` pair gives a path through the list:
 1. **Add or move a stage:** edit `stages.yaml` and run the validator. It tells you which paths break.
 2. **New contract field with structure:** add `<field>.schema.json` (draft 2020-12) and an example in `examples/`.
 3. **Changing a schema:** if existing records would fail, it's a breaking change. Bump the plugin minor version and describe the migration in `CHANGELOG.md`.
+
+## Schema versions
+
+A schema may carry `"x-version": <n>`, an annotation registered in the validator. An additive change (new optional fields, a widened enum) bumps it, and old records stay valid. A breaking change still follows "Changing a schema" above. A schema without `x-version` is version 1.

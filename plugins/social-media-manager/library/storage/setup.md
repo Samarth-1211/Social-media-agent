@@ -18,7 +18,7 @@ Wait for a yes.
 
 1. Read `${CLAUDE_PLUGIN_ROOT}/library/storage/sheet-setup.json`.
 2. Send **all** of `batch_requests` in one Google Sheets `update_spreadsheet` call, unchanged.
-   - This sets the time zone to India, renames the first tab to Dashboard, adds the 13 data tabs, and adds the bold frozen header rows, the protected header ranges and the dropdowns.
+   - This sets the time zone to India, renames the first tab to Dashboard, adds the 14 data tabs (13 in layout v1, plus BriefQuestions in v2), and adds the bold frozen header rows, the protected header ranges and the dropdowns.
    - It expects a brand-new sheet whose only tab has ID 0. If the call fails because tabs already exist, stop and report. Never delete tabs in an existing database.
 3. Send each entry of `values` with `update_values`, unchanged, except in the Config entry, where you replace:
    - `<SPREADSHEET_ID>` with `'` + the sheet ID;
@@ -60,3 +60,13 @@ Tell the admin:
 ## Test database
 
 For tests, use the folder **TDM Studio TEST** and the sheet **TDM Studio TEST Database** (titles in `sheet-layout.json`). Never run tests against the real database.
+
+## Upgrade an existing database to layout v2 (brief)
+
+Admin only. Run once per database (TEST first) when `sheet-layout.json` `version` is 2 but the sheet has no `BriefQuestions` tab.
+1. Confirm the target sheet by title. Read its tab names (`get_spreadsheet`, `fields: ["sheets.properties"]`): `BriefQuestions` must not exist yet, and no tab may have sheet ID 14. If either is untrue, stop and report.
+2. Send `upgrades["2"].batch_requests` from `sheet-setup.json` in one `update_spreadsheet` call. This adds the `BriefQuestions` tab (header, protection, status dropdown), adds bold to the Dashboard block and widens the Gates `decided_by_role` dropdown with `system`.
+3. Send each `upgrades["2"].values` entry. The `BriefQuestions` header and the Dashboard block go with `update_values`; the entry marked `append: true` (three brief Config rows) goes with `append_values`.
+4. Read back the `BriefQuestions` header row and the three Config rows. Log the upgrade in one line.
+
+Nothing existing is moved, renamed or deleted.

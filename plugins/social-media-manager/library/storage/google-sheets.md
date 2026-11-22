@@ -81,6 +81,7 @@ Row 1 of every data tab holds the column keys from `sheet-layout.json`, in order
 | Team | person | `handle` | team members |
 | Config | setting | `key` | config record (`credit_policy` is JSON) |
 | Dashboard | (formulas) | | Never written after setup |
+| BriefQuestions (layout v2) | brief client question | `job_id` + `n` | Nothing: a **mirror** of `outputs.brief.data.client_questions`, for the Dashboard and phone answers (§7) |
 
 Columns marked `storage_only` in the layout (row keys, `seq`, a question's `status` and `answer`) are not part of the logical record.
 
@@ -129,3 +130,20 @@ People may edit the sheet directly; that is expected.
 ## 6. Scale
 
 v1 reads whole tabs. That is fine for thousands of rows. If any tab passes about 5,000 rows, archive finished jobs to a separate "TDM Studio Archive <year>" sheet; the plan for that comes later.
+
+## 7. Brief records (layout v2)
+
+The sheet must be on layout v2 (it has a `BriefQuestions` tab). If it isn't, stop and ask the admin to run the upgrade in `setup.md` §Upgrade.
+
+**Saving a brief version** (one turn, after `get_now`):
+1. `update_job` as usual: write the brief into the job's Outputs row (`field` = `brief`), with `version` = the brief's `version`.
+2. **Version file.** In the database folder, find or create `Jobs/<job_id>/brief/`, using Drive `search_files` and then `create_file` (folder mime type `application/vnd.google-apps.folder`). Create `brief-v<n>.json` there with `create_file`, content type `application/json`, holding the whole brief data. Never overwrite an existing version file. Put its path in the Outputs row's `files`.
+3. **Mirror.** Read `BriefQuestions!A:L` and keep this job's rows.
+   - For each item in `client_questions`: update the row with the same `job_id` + `n` in place, or append it.
+   - A row whose `n` is no longer in the list: set its `status` to `dropped`.
+   - Cells are written as in §2 (`options` as a list, `blocking` as a boolean).
+4. Re-read the Outputs row and the mirror rows. The question numbers and statuses must match the brief (`README.md` §3 "verify").
+
+**Reading.** At the start of every brief run, read the job's `BriefQuestions` rows as well as the Outputs row. If a row has an `answer` while the brief's matching question is still `open`, someone typed the client's answer into the sheet: treat it as a client reply.
+
+**Dashboard.** The "Brief: waiting for client reply" block lists open questions older than `client_question_reminder_hours` (Config; default 24). It compares `asked_at` with the sheet clock, both in India time. Skills never write the Dashboard.

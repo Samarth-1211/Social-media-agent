@@ -3,6 +3,7 @@
   "$id": "urn:tdm:social-media-manager:contracts:config",
   "title": "Config",
   "description": "Agency-wide settings, stored in the data store (Config tab). Created at first-run setup.",
+  "x-version": 2,
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -77,6 +78,25 @@
       }
     },
     "version": { "type": "integer", "minimum": 1 },
-    "updated_at": { "type": "string", "format": "date-time" }
+    "updated_at": { "type": "string", "format": "date-time" },
+
+    "brief_auto_approve_repeat": {
+      "description": "Auto-approve a brief (no admin gate) only when: quick track, repeat format (same creative format and platforms, duration within 5 seconds, as a delivered and client-approved job for this client in the last 90 days), every essential confirmed, and the self-check passed. Logged as auto-approved.",
+      "type": "boolean",
+      "default": false
+    },
+    "brief_max_questions": {
+      "description": "Most questions the brief asks the team in one job (team mode).",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 5
+    },
+    "client_question_reminder_hours": {
+      "description": "Client questions open longer than this show as 'Brief: waiting for client reply' on the Dashboard.",
+      "type": "number",
+      "minimum": 1,
+      "default": 24
+    }
   }
 }

@@ -3,6 +3,8 @@
   "$id": "urn:tdm:social-media-manager:contracts:brief",
   "title": "Brief",
   "description": "The approved creative brief for one job. Written by the brief stage; stored in job.outputs.brief.data.",
+  "x-version": 2,
+  "$comment": "v2 (feat/brief) adds optional fields only; v1 records stay valid. Text/detail pairs (offer/offer_detail, cta/cta_detail, audience/audience_detail): the *_detail field is the source of truth when present, and the text field is generated from it on save. Validator check 12 confirms they agree. See docs/decisions/0004-brief-field-pairs.md.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -69,7 +71,11 @@
             "type": ["number", "null"],
             "minimum": 1
           },
-          "count": { "type": "integer", "minimum": 1, "default": 1 }
+          "count": { "type": "integer", "minimum": 1, "default": 1 },
+          "changes_from_master": {
+            "description": "v2: what this platform variant changes from the master brief (length, aspect ratio, hook timing, caption length, CTA button). Required by the self-check when aspect_ratio or duration_sec differ from the master. Message, offer, price and CTA never change.",
+            "type": ["string", "null"]
+          }
         }
       }
     },
@@ -110,6 +116,272 @@
     },
 
     "version": { "type": "integer", "minimum": 1 },
-    "updated_at": { "type": "string", "format": "date-time" }
+    "updated_at": { "type": "string", "format": "date-time" },
+
+    "status": {
+      "description": "draft = being written; awaiting-team / awaiting-client = blocking questions are out; ready = self-check passed, waiting at the admin gate; approved = gate approved (by the admin, or auto-approved under config.brief_auto_approve_repeat).",
+      "enum": ["draft", "awaiting-team", "awaiting-client", "ready", "approved"]
+    },
+    "changelog": {
+      "description": "One line per brief version, newest last. Each entry says what changed and why, and which later stages must be reviewed.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "at", "by", "change"],
+        "properties": {
+          "version": { "type": "integer", "minimum": 1 },
+          "at": { "type": "string", "format": "date-time" },
+          "by": { "type": "string", "description": "Team handle, or 'system'." },
+          "change": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "description": "e.g. 'client reply 2026-11-22', 'client-feedback FB-SHL-03-1'." },
+          "affected_stages": { "type": "array", "items": { "$ref": "#/$defs/slug" } }
+        }
+      }
+    },
+    "job_kind": {
+      "description": "Kind of job; decides which fields are blocking essentials (skills/pre-production/brief/references/essentials.md). general = none of the others.",
+      "enum": ["offer-reel", "brand-film", "launch", "festival", "poster", "general"]
+    },
+
+    "objective_label": {
+      "description": "Marketing label for `objective` (which stays in plain words): calls or WhatsApp → leads; shop visits → footfall; orders → sales; remember the brand → awareness; followers → growth; event attendance → event.",
+      "enum": ["leads", "footfall", "sales", "awareness", "growth", "event"]
+    },
+    "audience_detail": {
+      "description": "Structured audience. Source of truth for `audience` when present; `audience` is generated from it and must contain `who`.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["who"],
+      "properties": {
+        "who": { "type": "string", "minLength": 1 },
+        "where": { "type": "array", "items": { "type": "string" }, "description": "City or areas." },
+        "age_band": { "type": ["string", "null"], "description": "e.g. '25-45'." },
+        "language": { "enum": ["Hindi", "English", "Hinglish", null] }
+      }
+    },
+    "proof_points": {
+      "description": "Facts that back the message. Each needs a source; nothing invented (references/proof-and-claims.md).",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text", "source"],
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "source": { "enum": ["profile", "research", "client", "past-job"] },
+          "ref": { "type": ["string", "null"], "description": "Where exactly: profile field, insight finding id, client message date, job id." }
+        }
+      }
+    },
+    "offer_detail": {
+      "description": "Structured offer. Source of truth for `offer` when present; `offer` is generated from it and must show the same price.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["text", "profile_match"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "description": "The offer in plain words, e.g. 'Curtain + sofa cleaning 20% off'." },
+        "price": { "type": ["number", "null"], "minimum": 0, "description": "Exact price in rupees, if the offer shows one." },
+        "unit": { "type": ["string", "null"], "description": "e.g. 'per kg', 'per sofa set', 'onwards'." },
+        "validity": { "type": ["string", "null"], "format": "date", "description": "Last day of the offer." },
+        "conditions": { "type": "array", "items": { "type": "string" } },
+        "profile_match": {
+          "description": "How the price compares with the client's saved price_points: matches; differs (flagged in open_questions until confirmed); not-in-profile (new price, confirmed by the client or flagged).",
+          "enum": ["matches", "differs", "not-in-profile", "no-price"]
+        },
+        "profile_price": { "type": ["number", "null"], "description": "The saved price it was compared with, if any." }
+      }
+    },
+    "cta_detail": {
+      "description": "Structured call to action. Source of truth for `cta` when present; `cta` is generated from it, contains `action` and names the same channel.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["action", "channel"],
+      "properties": {
+        "action": { "type": "string", "minLength": 1, "description": "What the viewer does, in the video's language, e.g. 'WhatsApp karo'." },
+        "channel": { "enum": ["whatsapp", "call", "visit", "dm", "website", "form", "other"] },
+        "target": { "type": ["string", "null"], "description": "Label only, never a phone number, e.g. 'shop WhatsApp on end card', 'Vijay Nagar branch'." }
+      }
+    },
+    "creative_format": {
+      "description": "Video or poster format, chosen with references/objective-to-format.md.",
+      "enum": [
+        "talking-head", "ugc-testimonial", "demo-process", "before-after", "offer-card-motion",
+        "walkthrough", "festive-greeting", "explainer", "offer-poster", "info-poster", "greeting-poster"
+      ]
+    },
+    "platforms": {
+      "description": "Every platform in deliverables, listed once.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "aspect_ratio": {
+      "description": "Master aspect ratio. A deliverable that differs must say so in changes_from_master.",
+      "enum": ["9:16", "4:5", "1:1", "16:9", "3:4", "2:3"]
+    },
+    "duration_sec": {
+      "description": "Master length for video. A deliverable that differs must say so in changes_from_master.",
+      "type": ["number", "null"],
+      "minimum": 1
+    },
+    "writing_script": {
+      "description": "How on-screen text and captions are written: roman-hinglish (Hindi or Hinglish in Roman letters), devanagari, english. Named writing_script because `script` is the script stage's contract field.",
+      "enum": ["roman-hinglish", "devanagari", "english"]
+    },
+    "posting_date": { "type": ["string", "null"], "format": "date" },
+
+    "research": {
+      "description": "What the brief took from the research stage. Until the research stage exists on this branch, status is skipped with skip_reason 'research stage not built yet'. Expected input: skills/pre-production/brief/references/research-input.md.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["fresh", "partial", "skipped"] },
+        "insight_id": { "type": ["string", "null"] },
+        "angles_chosen": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+        "pain_points_used": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+        "customer_phrases_used": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+        "skip_reason": { "type": ["string", "null"], "description": "Why research was skipped (required when status is skipped)." },
+        "no_angle_reason": { "type": ["string", "null"], "description": "Why no research angle was used although research exists." }
+      }
+    },
+    "track_suggestion": {
+      "description": "Advisory only; the producer and admin decide the track.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track", "reason"],
+      "properties": {
+        "track": { "enum": ["quick", "full"] },
+        "reason": { "type": "string" }
+      }
+    },
+    "confidence": {
+      "description": "Per brief field: confirmed (said or approved by a person in this job, or confirmed in the client profile) or guessed (inferred), plus where it came from.",
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status", "basis"],
+        "properties": {
+          "status": { "enum": ["confirmed", "guessed"] },
+          "basis": { "type": "string", "description": "e.g. 'intake note', 'profile price_points (confirmed)', 'default for offer reels'." }
+        }
+      }
+    },
+    "client_questions": {
+      "description": "Questions only the client can answer, sent as one numbered WhatsApp message. Mirrored to the BriefQuestions tab for the Dashboard reminder; this list is the source of truth.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["n", "question", "guess", "field", "blocking", "status"],
+        "properties": {
+          "n": { "type": "integer", "minimum": 1, "description": "Number in the client message." },
+          "question": { "type": "string", "minLength": 1, "description": "As sent, in the client's language." },
+          "guess": { "type": "string", "description": "Our guess, shown with the question." },
+          "options": { "type": "array", "maxItems": 4, "items": { "type": "string" } },
+          "field": { "type": "string", "pattern": "^[a-z][a-z0-9_.]*$", "description": "Brief field the answer fills, e.g. offer_detail.price." },
+          "blocking": { "type": "boolean" },
+          "asked_at": { "type": ["string", "null"], "format": "date-time" },
+          "status": { "enum": ["draft", "open", "answered", "dropped"] },
+          "answer": { "type": ["string", "null"], "description": "Short paraphrase of the client's answer (no phone numbers)." },
+          "answered_at": { "type": ["string", "null"], "format": "date-time" }
+        }
+      }
+    },
+    "ready_for_production": {
+      "description": "True only when every self_check passed: an editor could start without asking anything.",
+      "type": "boolean"
+    },
+    "self_check": {
+      "description": "Results of checklists/ready-for-production.md.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check", "pass"],
+        "properties": {
+          "check": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "pass": { "type": "boolean" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "downstream": {
+      "description": "Handoff for later stages: what each one needs from this brief, so they don't re-derive it. shot_sourcing is for a future stage.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "concept": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "angle": { "type": ["string", "null"] },
+            "creative_format": { "type": ["string", "null"] },
+            "constraints": { "type": "array", "items": { "type": "string" } },
+            "notes": { "type": "string" }
+          }
+        },
+        "hooks": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pain_points": { "type": "array", "items": { "type": "string" } },
+            "customer_phrases": { "type": "array", "items": { "type": "string" } },
+            "timely_hook": { "type": ["string", "null"] },
+            "first_frame": { "type": ["string", "null"], "description": "What must be visible in the first frame, e.g. 'price', from a learning." },
+            "notes": { "type": "string" }
+          }
+        },
+        "script": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "duration_sec": { "type": ["number", "null"] },
+            "structure": { "type": "array", "items": { "type": "string" }, "description": "Beat outline from objective-to-format.md, e.g. 'hook 0-3s'." },
+            "offer_line": { "type": ["string", "null"] },
+            "cta_line": { "type": ["string", "null"] },
+            "must_say": { "type": "array", "items": { "type": "string" } },
+            "notes": { "type": "string" }
+          }
+        },
+        "localise": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "language": { "enum": ["Hindi", "English", "Hinglish", null] },
+            "writing_script": { "enum": ["roman-hinglish", "devanagari", "english", null] },
+            "keep_as_is": { "type": "array", "items": { "type": "string" }, "description": "Brand names, prices, addresses: never translated." },
+            "notes": { "type": "string" }
+          }
+        },
+        "shot_sourcing": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "person_on_camera": { "type": ["boolean", "null"] },
+            "locations": { "type": "array", "items": { "type": "string" } },
+            "must_show": { "type": "array", "items": { "type": "string" } },
+            "existing_footage": { "type": ["string", "null"] },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "id": { "type": ["string", "null"], "description": "Stable finding id from the insight, if any." },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    }
   }
 }

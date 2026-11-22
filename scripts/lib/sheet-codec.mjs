@@ -83,6 +83,17 @@ export function encodeRecord(record, data) {
           return encodeCell(c.type, item[c.key]);
         }),
       );
+    } else if (t.kind === 'mirror') {
+      // A copy of a list stored elsewhere in the record (layout v2, BriefQuestions). Encoded for the
+      // Dashboard; decodeAll ignores it, because the list's own home (e.g. the Outputs JSON) is the source of truth.
+      const items = getPath(data, t.field) ?? [];
+      out[t.name] = items.map((item) =>
+        t.columns.map((c) => {
+          if (c.key === t.parent_key) return encodeCell(c.type, data[t.parent_key]);
+          if (c.key === 'client_id' && c.storage_only) return encodeCell(c.type, data.client_id);
+          return encodeCell(c.type, item[c.key]);
+        }),
+      );
     } else if (t.kind === 'key-value') {
       out[t.name] = Object.entries(data).map(([k, v]) => {
         const prop = configSchema.properties[k];
