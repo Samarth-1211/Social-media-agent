@@ -40,7 +40,7 @@ const SPEND_GATES = new Set(['admin', 'none']);
 const STAGE_KEYS = new Set([
   'id', 'group', 'skill', 'status', 'reads', 'optional_reads', 'writes', 'gate', 'credit_spend', 'tracks', 'job_types',
   // optional (docs/STAGE-CONTRACT.md, "Optional stage keys")
-  'freshness_days', 'skippable_if_urgent', 'non_blocking_partial', 'spend_gate',
+  'freshness_days', 'skippable_if_urgent', 'non_blocking_partial', 'spend_gate', 'gate_label',
 ]);
 // Records the storage layer maps to Sheets tabs (besides config, a key-value tab).
 const STORED_RECORDS = ['client', 'job', 'team', 'insight', 'task'];
@@ -240,6 +240,11 @@ for (const plugin of plugins) {
       if (!KEBAB.test(st.skill ?? '')) c5.errors.push(`${at}: skill must be a kebab-case folder name`);
       if (!STAGE_STATUS.has(st.status)) c5.errors.push(`${at}: status must be planned | placeholder | active`);
       if (!GATES.has(st.gate)) c5.errors.push(`${at}: gate must be admin | editor | client | none`);
+      // gate_label (optional): kebab-case name for a gate that decides more than its own output, e.g. creative-pick
+      if (st.gate_label !== undefined) {
+        if (!KEBAB.test(String(st.gate_label))) c5.errors.push(`${at}: gate_label must be kebab-case`);
+        if (st.gate === 'none') c5.errors.push(`${at}: gate_label needs a gate other than none`);
+      }
       if (typeof st.credit_spend !== 'boolean') c5.errors.push(`${at}: credit_spend must be true or false`);
       for (const k of Object.keys(st)) if (!STAGE_KEYS.has(k)) c5.errors.push(`${at}: unknown key "${k}"`);
       if ('freshness_days' in st && !(Number.isInteger(st.freshness_days) && st.freshness_days >= 1)) c5.errors.push(`${at}: freshness_days must be a whole number of days, 1 or more`);

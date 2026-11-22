@@ -21,7 +21,7 @@ Logical record shapes: `${CLAUDE_PLUGIN_ROOT}/library/contracts/` (`client`, `jo
    3. If only file tools and a project folder are available (Claude Code offline), use **files** (`files-backup.md`), and warn that this data is on this computer only and not shared with the team.
    4. Otherwise, ask.
 2. **No database found** → run first-run setup (`setup.md`) before anything else.
-   **A database on an older layout** (no Insights tab, or no BriefQuestions tab) → tell the admin and offer the upgrade (`google-sheets.md` §7). Until it is done, research can't save; everything else works.
+   **A database on an older layout** (no Insights tab, no BriefQuestions tab, or no `hook_formula_id` column in Learnings) → tell the admin and offer the upgrade (`google-sheets.md` §7). Until it is done, research can't save; everything else works.
 3. **Identify the person.** The team shares one Claude account, so ask once: "Who's working: Samarth or an editor? Name?" Match the answer to the Team tab (name or handle).
    - Use that handle and role for the rest of the session.
    - In Claude Code, you may suggest the git `user.name` as the default.

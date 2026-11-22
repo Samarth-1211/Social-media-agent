@@ -217,7 +217,7 @@
         },
         "requested_at": { "$ref": "#/$defs/timestamp" },
         "decided_by": { "type": ["string", "null"], "description": "Handle of the approver; for client gates, the team member who recorded the client's decision." },
-        "decided_by_role": { "enum": ["admin", "editor", "designer", "system", null], "description": "system (v2) = auto-approved by a config rule, e.g. brief_auto_approve_repeat; decided_by is then 'system'." },
+        "decided_by_role": { "enum": ["admin", "editor", "designer", "system", null], "description": "system (v2) = auto-approved by a config rule, e.g. brief_auto_approve_repeat or creative_auto_pick_after_hours; decided_by is then 'system'." },
         "decided_at": { "$ref": "#/$defs/nullableTimestamp" },
         "sent_back_to": { "description": "Stage to reopen when status is sent_back.", "anyOf": [{ "$ref": "#/$defs/stageId" }, { "type": "null" }] },
         "note": { "type": "string" }

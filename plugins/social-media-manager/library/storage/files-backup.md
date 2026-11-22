@@ -33,7 +33,7 @@ Default folder: `${CLAUDE_PROJECT_DIR}/.tdm-studio/` (or `config.data_folder`). 
         ├── job.md              readable view, regenerated on every save (library/templates/job-record.md)
         ├── log-full.json       every log entry, append-only (the sheet's Log tab, for this job)
         ├── brief/              layout v3: brief-v<n>.json, one file per brief version, never overwritten
-        └── outputs/            files produced by stages
+        └── outputs/            files produced by stages (concept/concept-v<n>.json and hooks/hooks-v<n>.json hold the full concept and hooks records; job.json keeps the compact ones, as in the sheet)
 ```
 
 Records are the logical records from `library/contracts/`. They are validated before every save, exactly as in the sheet.

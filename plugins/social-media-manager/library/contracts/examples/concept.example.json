@@ -1,0 +1,168 @@
+{
+  "job_id": "SHL-03",
+  "client_id": "shubh-laundry",
+  "version": 1,
+  "track_mode": "full",
+  "inputs": { "client_version": 3, "request_version": 1, "brief_version": 1, "insight_id": null, "research_status": "skipped" },
+  "fallback_used": {
+    "brief": false,
+    "research": true,
+    "note": "No insight sheet for this client yet (research skipped): angles rest on the brief and the profile; competitor clichés are assumed."
+  },
+  "core_insight": {
+    "text": "Indore families want their wedding-season sarees fresh, but they won't hand a costly or family saree to a shop they can't see inside, because one bad dry clean can't be undone.",
+    "tension": "human",
+    "source": { "kind": "profile", "ref": "audience.customer_words[2]", "note": "Customers ask: \"saree ka dry clean safe hai na?\"" }
+  },
+  "raw_angles": [
+    { "id": "A1", "angle_type": "proof", "engine": "constraint-fanout", "text": "Show what actually happens to a saree inside the shop, step by step.", "status": "developed" },
+    { "id": "A2", "angle_type": "story", "engine": "narrative", "text": "A mother's wedding saree, cleaned for her daughter's wedding.", "status": "developed" },
+    { "id": "A3", "angle_type": "teach", "engine": "instructional", "text": "Questions to ask any dry cleaner before giving them a saree.", "status": "developed" },
+    { "id": "A4", "angle_type": "offer", "engine": "constraint-fanout", "text": "Wedding-season saree + sherwani combo.", "status": "backup", "note": "No combo price in the request or profile; needs one from Neha." },
+    { "id": "A5", "angle_type": "offer", "engine": "constraint-fanout", "text": "Flat discount card with a model in a saree.", "status": "removed", "removed_reason": "competitors_overdo", "note": "Assumed category cliché (no research on this branch)." },
+    { "id": "A6", "angle_type": "opinion", "engine": "response", "text": "Indore's cheapest saree dry clean.", "status": "removed", "removed_reason": "brief_avoid", "note": "Profile never_use 'cheap'; superlative can't be proved." },
+    { "id": "A7", "angle_type": "story", "engine": "narrative", "text": "Your saree gets ruined right before the wedding.", "status": "removed", "removed_reason": "ethics", "note": "Fear-mongering (persuasion-ethics.md)." }
+  ],
+  "concepts": [
+    {
+      "id": "C1",
+      "angle_ref": "A1",
+      "title": "Saree ka safar",
+      "logline": "A worried customer's silk saree goes through every careful step at Shubh's counter and comes back folded in tissue, so she never has to wonder what happens inside.",
+      "insight": {
+        "text": "People trust what they can see: showing the inside of the shop answers \"safe hai na?\" better than any promise.",
+        "source": { "kind": "profile", "ref": "audience.customer_words[2]" }
+      },
+      "angle_type": "proof",
+      "format": "process-reveal",
+      "mechanic": "implied-answer",
+      "creative_method": null,
+      "levers": [
+        { "lever_id": "L15", "name": "Show the process", "proof": "Real counter and care steps, shot at the shop. {{needed: Neha confirms the actual silk-saree care steps}}" },
+        { "lever_id": "L11", "name": "Convenience", "proof": "Free pickup above ₹299 (profile do-list)." }
+      ],
+      "story_spine": [
+        { "beat": "hook", "start_sec": 0, "end_sec": 2, "what_we_see": "Hands lift a silk saree out of the pickup bag onto the counter.", "what_we_hear": "Customer's question in voice-over." },
+        { "beat": "stake", "start_sec": 2, "end_sec": 6, "what_we_see": "A name tag is pinned to the saree.", "what_we_hear": "\"Yeh kisi ki shaadi ki saree hai.\"" },
+        { "beat": "proof", "start_sec": 6, "end_sec": 16, "what_we_see": "The confirmed care steps, one per cut.", "what_we_hear": "One short line per step." },
+        { "beat": "payoff", "start_sec": 16, "end_sec": 21, "what_we_see": "The saree handed back folded in tissue.", "what_we_hear": "\"Ab safe hai.\"" },
+        { "beat": "cta", "start_sec": 21, "end_sec": 25, "what_we_see": "End card: WhatsApp, free pickup above ₹299.", "what_we_hear": "\"WhatsApp karo, pickup free.\"" }
+      ],
+      "duration_sec": 25,
+      "producibility": {
+        "shots": [
+          { "beat": "hook", "what": "Saree out of pickup bag at the counter", "source": "phone-shoot" },
+          { "beat": "proof", "what": "Care steps in the cleaning area", "source": "client-footage" },
+          { "beat": "cta", "what": "End card with WhatsApp and pickup line", "source": "motion-graphics" }
+        ],
+        "difficulty": "low",
+        "credit_band": "none",
+        "credit_estimate": null,
+        "needs_from_client": ["One phone shoot at the shop (counter, tagging, folding)", "OK to show the cleaning area", "The real care steps for silk"],
+        "note": "No generation needed; all real footage builds trust."
+      },
+      "risks": [
+        { "kind": "production", "note": "A messy cleaning area would hurt trust.", "mitigation": "Shoot after a tidy-up; tight framing." }
+      ],
+      "why_this_client": "Answers the exact question Shubh's customers ask, in Hinglish, with Indore's own shop on screen; matches the 'Trustworthy' voice attribute.",
+      "why_not_higher": "Process reveals are common in the category; the tag-with-the-name detail is what makes it ours.",
+      "scores": { "brief_fit": 5, "insight_strength": 4, "distinctiveness": 4, "india_fit": 4, "brand_fit": 5, "producibility": 5, "risk": 1, "weighted": 44 },
+      "recommended": true
+    },
+    {
+      "id": "C2",
+      "angle_ref": "A2",
+      "title": "Maa ki saree",
+      "logline": "A mother wants her daughter to wear her own wedding saree, and Shubh gets it ready without losing what makes it hers.",
+      "insight": {
+        "text": "A wedding saree carries a family story; the fear isn't a stain, it's losing the memory.",
+        "source": { "kind": "assumption", "ref": null, "note": "Inferred from the wedding-season festival note; confirm with Neha." }
+      },
+      "angle_type": "story",
+      "format": "customer-story",
+      "mechanic": "contrast-without-comment",
+      "creative_method": null,
+      "levers": [
+        { "lever_id": "L10", "name": "Family benefit", "proof": "{{needed: a real customer willing to be filmed, or owner narration that doesn't claim to be a customer}}" },
+        { "lever_id": "L16", "name": "Real person", "proof": "Real customer on camera, with consent." }
+      ],
+      "story_spine": [
+        { "beat": "hook", "start_sec": 0, "end_sec": 3, "what_we_see": "An old saree box opened by older hands." },
+        { "beat": "turn", "start_sec": 3, "end_sec": 12, "what_we_see": "Hand-over at the counter; care at the shop." },
+        { "beat": "payoff", "start_sec": 12, "end_sec": 21, "what_we_see": "Daughter draped in it, mother adjusting the pallu." },
+        { "beat": "cta", "start_sec": 21, "end_sec": 25, "what_we_see": "End card with WhatsApp." }
+      ],
+      "duration_sec": 25,
+      "producibility": {
+        "shots": [
+          { "what": "Box and hands at home", "source": "phone-shoot" },
+          { "what": "Counter hand-over", "source": "client-footage" },
+          { "what": "Daughter in the saree", "source": "phone-shoot" }
+        ],
+        "difficulty": "med",
+        "credit_band": "none",
+        "credit_estimate": null,
+        "needs_from_client": ["A real customer family who agrees to be filmed"],
+        "note": "Never generate the family with AI and present them as real customers (ASCI 2026)."
+      },
+      "risks": [
+        { "kind": "cultural", "note": "Must stay warm, not about bridal pressure or dowry imagery.", "mitigation": "Focus on the mother-daughter moment." },
+        { "kind": "production", "note": "Depends on finding a willing customer before the deadline." }
+      ],
+      "why_this_client": "Wedding season is a high-priority occasion in Shubh's calendar; family warmth suits Indore audiences.",
+      "why_not_higher": "Hardest to produce; the insight is assumed until Neha confirms.",
+      "scores": { "brief_fit": 4, "insight_strength": 5, "distinctiveness": 4, "india_fit": 5, "brand_fit": 4, "producibility": 3, "risk": 2, "weighted": 41.5 },
+      "recommended": false
+    },
+    {
+      "id": "C3",
+      "angle_ref": "A3",
+      "title": "Dene se pehle 3 sawaal",
+      "logline": "Neha tells viewers the questions to ask any dry cleaner before handing over a saree, and Shubh answers all of them on camera.",
+      "insight": {
+        "text": "Customers don't know what to ask, so they choose by price; giving them the questions moves the choice to care.",
+        "source": { "kind": "assumption", "ref": null }
+      },
+      "angle_type": "teach",
+      "format": "pov",
+      "mechanic": "reframe",
+      "creative_method": null,
+      "levers": [
+        { "lever_id": "L08", "name": "Reciprocity", "proof": "Useful questions given free, before any ask." },
+        { "lever_id": "L02", "name": "Expertise", "proof": "Owner on camera. {{needed: Neha's real experience, no invented years}}" }
+      ],
+      "story_spine": [
+        { "beat": "hook", "start_sec": 0, "end_sec": 2, "what_we_see": "Neha at the counter holding a saree." },
+        { "beat": "teach", "start_sec": 2, "end_sec": 18, "what_we_see": "Three questions, each with a quick cutaway." },
+        { "beat": "payoff", "start_sec": 18, "end_sec": 22, "what_we_see": "\"Humse yeh teeno pucho.\"" },
+        { "beat": "cta", "start_sec": 22, "end_sec": 25, "what_we_see": "End card." }
+      ],
+      "duration_sec": 25,
+      "producibility": {
+        "shots": [{ "what": "Owner talking head at the counter", "source": "phone-shoot" }, { "what": "Three cutaways", "source": "client-footage" }],
+        "difficulty": "low",
+        "credit_band": "none",
+        "credit_estimate": null,
+        "needs_from_client": ["Neha comfortable on camera"]
+      },
+      "risks": [{ "kind": "brand", "note": "Must not imply other cleaners are careless (no disparaging)." }],
+      "why_this_client": "Uses the owner's own voice, which Indore customers trust more than an ad voice.",
+      "why_not_higher": "Least distinctive; teach reels are common.",
+      "scores": { "brief_fit": 4, "insight_strength": 4, "distinctiveness": 3, "india_fit": 4, "brand_fit": 4, "producibility": 5, "risk": 1, "weighted": 39.5 },
+      "recommended": false
+    }
+  ],
+  "recommended": { "concept_ref": "C1", "reason": "Answers the customers' own question with real footage, at no credit cost." },
+  "assumptions": ["No research yet: 'flat discount card' treated as a category cliché.", "C2 insight inferred; confirm with Neha."],
+  "self_check": {
+    "passed": true,
+    "items": [
+      { "id": "CC1", "ok": true, "note": "Three different angle types: proof, story, teach." },
+      { "id": "CC2", "ok": true, "note": "No invented proof: gaps marked {{needed}}." },
+      { "id": "CC3", "ok": true, "note": "All three need no credits." },
+      { "id": "CC4", "ok": true, "note": "Hinglish, Roman script." },
+      { "id": "CC5", "ok": true, "note": "Fear angle removed (A7); no AI customers." }
+    ]
+  },
+  "updated_at": "2026-11-21T15:00:00+05:30"
+}

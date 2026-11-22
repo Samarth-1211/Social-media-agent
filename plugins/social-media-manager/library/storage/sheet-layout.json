@@ -1,6 +1,6 @@
 {
   "$comment": "Layout of the 'TDM Studio Database' Google Sheet. Single source of truth for setup, the storage operations, the tracker page and dev scripts. Row 1 of every data tab holds the column keys below, in this order. Cell formats: text = plain string; number/integer; boolean = TRUE/FALSE; timestamp = ISO 8601 text with offset; date = YYYY-MM-DD text; list = one item per line in the cell; json = compact JSON text. Empty cell = null / empty list.",
-  "version": 3,
+  "version": 4,
   "database_title": "TDM Studio Database",
   "folder_title": "TDM Studio",
   "test_database_title": "TDM Studio TEST Database",
@@ -117,7 +117,10 @@
         { "key": "evidence", "type": "text" },
         { "key": "applies_to", "type": "text" },
         { "key": "status", "type": "text", "options": ["active", "watch", "retired"] },
-        { "key": "source_job", "type": "text" }
+        { "key": "source_job", "type": "text" },
+        { "key": "hook_formula_id", "type": "text", "since": 4 },
+        { "key": "angle_type", "type": "text", "options": ["proof", "teach", "opinion", "story", "offer"], "since": 4 },
+        { "key": "outcome", "type": "text", "options": ["worked", "flopped", "mixed", "untested"], "since": 4 }
       ]
     },
     {

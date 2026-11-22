@@ -73,6 +73,16 @@
       "applies_to": "reels",
       "status": "watch",
       "source_job": "SHL-01"
+    },
+    {
+      "date": "2026-11-21",
+      "kind": "rejected",
+      "what": "Neha dislikes 'stop doing X' openers on reels: they sound like a lecture to her customers.",
+      "evidence": "SHL-01 creative pick: \"yeh lecture jaisa lagta hai\"",
+      "applies_to": "reels",
+      "status": "active",
+      "source_job": "SHL-01",
+      "hook_formula_id": "H02"
     }
   ],
   "confidence": {

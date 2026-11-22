@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:concept",
+  "title": "Concept",
+  "x-version": 1,
+  "description": "Short-video concepts for one job, written by the concept stage (full track, video only) and stored in job.outputs.concept.data. Reads the brief (downstream.concept, proof_points, offer_detail, cta_detail, audience_detail, creative_format, writing_script, duration_sec) and, when present, research (downstream.concept_and_hooks). No gate of its own: the editor picks a concept together with a hook at the hooks stage's creative-pick gate. Large records: keep the compact record here and the full one in Drive (Jobs/<job_id>/concept/concept-v<n>.json).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["job_id", "client_id", "version", "track_mode", "fallback_used", "core_insight", "raw_angles", "concepts", "recommended", "self_check", "updated_at"],
+  "properties": {
+    "job_id": { "$ref": "#/$defs/jobId" },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "track_mode": {
+      "description": "full = concepts generated from the brief and research. quick-reuse = only when someone runs the concept skill by hand on a quick job: it records the client's last approved format instead of ideating (normally the quick track skips this stage and hooks records the reused format).",
+      "enum": ["full", "quick-reuse"]
+    },
+    "inputs": {
+      "description": "Which versions were read, so a later reader can tell whether the concepts are stale.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "client_version": { "type": ["integer", "null"], "minimum": 1 },
+        "request_version": { "type": ["integer", "null"], "minimum": 1 },
+        "brief_version": { "type": ["integer", "null"], "minimum": 1 },
+        "insight_id": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-I[0-9]{6}-[0-9]+$" }, { "type": "null" }] },
+        "research_status": { "enum": ["fresh", "partial", "refreshed", "new", "skipped", null] }
+      }
+    },
+    "fallback_used": { "$ref": "#/$defs/fallback" },
+    "core_insight": {
+      "description": "One sentence of human truth about this audience for this offer: '[audience] wants [X], but [Y] stands in the way, because [Z]'.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "source"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "tension": { "description": "cultural = what people say vs do; category = what the category promises vs delivers; human = what a person wants vs what stops them.", "enum": ["cultural", "category", "human", null] },
+        "source": { "$ref": "#/$defs/source" }
+      }
+    },
+    "raw_angles": {
+      "description": "The 6-8 angles generated before shortlisting, kept so the editor can ask for 'the one you dropped'.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "angle_type", "engine", "text", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^A[0-9]{1,2}$" },
+          "angle_type": { "$ref": "#/$defs/angleType" },
+          "engine": {
+            "description": "Which engine in concept/references/angle-engines.md (or creative-methods.md for brand films) produced it.",
+            "enum": ["consumption", "response", "curation", "instructional", "narrative", "constraint-fanout", "research-angle", "creative-method"]
+          },
+          "text": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["developed", "backup", "removed"] },
+          "removed_reason": { "enum": ["competitors_overdo", "brief_avoid", "ethics", "weak_hook", "duplicate", "not_producible", null] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "concepts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/concept" }
+    },
+    "recommended": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concept_ref", "reason"],
+      "properties": {
+        "concept_ref": { "$ref": "#/$defs/conceptId" },
+        "reason": { "type": "string", "minLength": 1, "description": "One line." }
+      }
+    },
+    "assumptions": {
+      "description": "Anything filled in without the brief or client saying it. Goes back to the brief's open questions after the merge.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "self_check": { "$ref": "#/$defs/selfCheck" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "jobId": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "conceptId": { "type": "string", "pattern": "^C[1-5]$" },
+    "angleType": {
+      "description": "proof = something that happened, with evidence; teach = one thing the viewer can do; opinion = a defensible position; story = a scene with a cost or a turn; offer = what is sold, said plainly.",
+      "enum": ["proof", "teach", "opinion", "story", "offer"]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "description": "research = a finding in the insight sheet; brief / profile / intake = said there; assumption = our inference (must also be listed in assumptions).", "enum": ["research", "brief", "profile", "intake", "assumption"] },
+        "ref": { "type": ["string", "null"], "description": "Finding id (e.g. pain_points[2] or its id), brief field, or profile field." },
+        "note": { "type": "string" }
+      }
+    },
+    "fallback": {
+      "description": "brief = the brief was missing or a placeholder, so the stage fell back to the intake request and the client profile; research = no usable research (missing, skipped with no sheet, or flagged no_fresh_research), so angles rest on the brief and profile only. Said in the pick message.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brief", "research"],
+      "properties": {
+        "brief": { "type": "boolean" },
+        "research": { "type": "boolean" },
+        "note": { "type": "string" }
+      }
+    },
+    "score": { "type": "integer", "minimum": 0, "maximum": 5 },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "logline", "insight", "angle_type", "format", "levers", "story_spine", "producibility", "risks", "why_this_client", "scores", "recommended"],
+      "properties": {
+        "id": { "$ref": "#/$defs/conceptId" },
+        "angle_ref": { "type": ["string", "null"], "pattern": "^A[0-9]{1,2}$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "logline": { "type": "string", "minLength": 1, "description": "One line: who, what they want, what stands in the way, what changes." },
+        "insight": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text", "source"],
+          "properties": {
+            "text": { "type": "string", "minLength": 1 },
+            "source": { "$ref": "#/$defs/source" }
+          }
+        },
+        "angle_type": { "$ref": "#/$defs/angleType" },
+        "format": {
+          "description": "From concept/references/concept-formats.md.",
+          "enum": ["pov", "before-after", "myth-vs-fact", "founder-story", "customer-story", "day-in-the-life", "process-reveal", "comparison", "festival-story", "local-pride", "ugc-testimonial", "demo"]
+        },
+        "mechanic": {
+          "description": "Optional story device (concept-formats.md).",
+          "enum": ["implied-answer", "social-witness", "trojan-horse", "reframe", "contrast-without-comment", null]
+        },
+        "creative_method": {
+          "description": "Brand films only: the method from creative-methods.md that produced the angle.",
+          "enum": ["sit-subtraction", "sit-multiplication", "sit-division", "sit-task-unification", "sit-attribute-dependency", "scamper", "triz-inversion", "triz-extraction", "bisociation", null]
+        },
+        "levers": {
+          "description": "1-2 levers from library/knowledge/india-consumer-psychology.md, each paired with the proof that backs it.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["lever_id", "name", "proof"],
+            "properties": {
+              "lever_id": { "type": "string", "pattern": "^L[0-9]{2}$" },
+              "name": { "type": "string" },
+              "proof": { "type": "string", "minLength": 1, "description": "The true, specific detail that backs the lever, with where it came from. '{{needed: ...}}' if the client must supply it." }
+            }
+          }
+        },
+        "story_spine": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["beat", "start_sec", "end_sec", "what_we_see"],
+            "properties": {
+              "beat": { "type": "string", "description": "e.g. hook, stake, proof, turn, payoff, cta." },
+              "start_sec": { "type": "number", "minimum": 0 },
+              "end_sec": { "type": "number", "minimum": 0 },
+              "what_we_see": { "type": "string" },
+              "what_we_hear": { "type": "string" }
+            }
+          }
+        },
+        "duration_sec": { "type": ["number", "null"], "minimum": 1 },
+        "producibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["shots", "difficulty", "credit_band"],
+          "properties": {
+            "shots": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["what", "source"],
+                "properties": {
+                  "beat": { "type": "string" },
+                  "what": { "type": "string" },
+                  "source": { "enum": ["ai", "client-footage", "phone-shoot", "motion-graphics", "stock"] }
+                }
+              }
+            },
+            "difficulty": { "enum": ["low", "med", "high"] },
+            "credit_band": { "description": "Bands defined in concept/references/producibility.md.", "enum": ["none", "low", "medium", "high"] },
+            "credit_estimate": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "required": ["min", "max"],
+              "properties": {
+                "min": { "type": "number", "minimum": 0 },
+                "max": { "type": "number", "minimum": 0 }
+              }
+            },
+            "needs_from_client": { "type": "array", "items": { "type": "string" } },
+            "note": { "type": "string" }
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "note"],
+            "properties": {
+              "kind": { "enum": ["brand", "cultural", "production", "legal"] },
+              "note": { "type": "string" },
+              "mitigation": { "type": "string" }
+            }
+          }
+        },
+        "why_this_client": { "type": "string", "minLength": 1, "description": "Why it fits this client's brand, language and city." },
+        "why_not_higher": { "type": "string", "description": "One line: what keeps it from a top score." },
+        "scores": {
+          "description": "0-5 each, rubric in concept/references/scoring.md. weighted = 2*brief_fit + 2*insight_strength + 1.5*distinctiveness + 1.5*india_fit + brand_fit + producibility + (5 - risk); max 50.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["brief_fit", "insight_strength", "distinctiveness", "india_fit", "brand_fit", "producibility", "risk", "weighted"],
+          "properties": {
+            "brief_fit": { "$ref": "#/$defs/score" },
+            "insight_strength": { "$ref": "#/$defs/score" },
+            "distinctiveness": { "$ref": "#/$defs/score" },
+            "india_fit": { "$ref": "#/$defs/score" },
+            "brand_fit": { "$ref": "#/$defs/score" },
+            "producibility": { "$ref": "#/$defs/score" },
+            "risk": { "$ref": "#/$defs/score" },
+            "weighted": { "type": "number", "minimum": 0, "maximum": 50 }
+          }
+        },
+        "recommended": { "type": "boolean" }
+      }
+    },
+    "selfCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "items"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "ok"],
+            "properties": {
+              "id": { "type": "string", "description": "Checklist item id, e.g. CC1." },
+              "ok": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
