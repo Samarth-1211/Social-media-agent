@@ -47,6 +47,10 @@ After changing `sheet-layout.json`, run both build scripts and `node scripts/val
 - **Money vs credits.** Ledger rows carry a `currency`. Only `credits` rows (and older rows with none) count in `credits_used`, against the job budget and on the Dashboard. Apify spend in USD is listed but never mixed in.
 - **Upgrading.** A v1 sheet is upgraded in place with `sheet-setup.json` → `upgrades` (`google-sheets.md` §7). Nothing existing moves, and old rows stay valid.
 - **Raw research data** lives in Drive (`Clients/<code>/research/<insight_id>/`) or the files-mode data folder, never in a cell and never in the plugin folder.
+- **Who writes research data.**
+  - In Claude Code and Cowork, the `market-researcher` subagent saves the insight sheet, its findings, raw files and tasks itself, then returns a 10-line summary. The `producer` writes the job's `research` output, `research_status`, `insight_id` and cost lines from that summary.
+  - **Without a subagent** (claude.ai chat, which ignores plugin agents), `research-methods` runs the same steps inline: raw captures go straight to Drive or the data folder, never into the chat; the chat shows only the summary; and the sheet records `ran_without_subagent: true`.
+  - The Instagram browser step always runs in the main session.
 - **Executable spec:** `scripts/lib/sheet-codec.mjs` handles the new `child-grouped` tab kind (InsightFindings). Check 11 round-trips the insight and task examples and the sample data, and cross-checks research records (job copies match the output; `downstream` holds only real, non-struck findings).
 
 ## Honest limits

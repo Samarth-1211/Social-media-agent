@@ -25,6 +25,17 @@ Claude Code only scans `skills/<name>/SKILL.md` one level deep. Each group folde
 - shared templates in `library/templates/`;
 - for a full handoff, an instruction to read and follow another skill's file, e.g. `${CLAUDE_PLUGIN_ROOT}/skills/brand/brand-keeper/SKILL.md`. The validator checks these links.
 
+**Subagents.** Plugin subagents live in `plugins/social-media-manager/agents/<name>.md` and load as `social-media-manager:<name>`. The first is `market-researcher` (Group 2a): it runs the unattended part of research in its own context so raw data never fills the main chat.
+- **Frontmatter** uses only keys the docs list for plugin agents: `name`, `description`, `model`, `maxTurns`, `skills`, `tools`. (`hooks`, `mcpServers` and `permissionMode` are ignored for plugin agents.)
+- **Verified in Claude Code on 2026-11-22** with a headless test:
+  - the agent loads under that name;
+  - single connector tool names in `tools` (e.g. `mcp__claude_ai_Meta_Ads__ads_library_search`) resolve, so claude.ai connectors reach the subagent;
+  - `skills: [research-methods]` preloads the skill;
+  - `${CLAUDE_PLUGIN_ROOT}` and `${CLAUDE_SKILL_DIR}` are replaced with real paths inside the agent and its preloaded skill.
+- **Where they load:** Claude Code and Cowork. **claude.ai chat ignores plugin agents**, so every skill that delegates also has an inline fallback that runs the same steps in the main conversation.
+- **No browser inside subagents:** browser use there is not documented, so any step that needs a person's browser runs in the main session.
+- **A skill hands work to a subagent** by instructing Claude to start it with the Agent tool when that tool can start it; otherwise the skill runs the same steps inline.
+
 **Credits.** Generation follows a cheapest-first credit policy with per-job budgets. See `decisions/0003-credit-policy.md`.
 
 **Versioning.**

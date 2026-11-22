@@ -7,6 +7,9 @@
 - Method registry (11 methods), router (tool check, situations, rules), automation (triggers, unattended vs attended, task queue, freshness check, weekly scheduled run, learning loop), caps, confidence rules, competitor discovery.
 - Method modules, each with the same 10 sections: `web-competitor-intel`, `meta-ad-library`, `trends`, `maps-review-reading`, `monthly-diff`, `own-account-audit`, `ig-outlier-read`, `ig-niche-pulse`, `ig-hook-classify`, `comment-reading`, `apify-optional`.
 - `m-apify-optional`: actor IDs, input fields, outputs and prices checked against Apify's own store pages and public API (2026-11-22).
+- Full `SKILL.md` (117 lines): stage, manual, scheduled and browser catch-up runs; delegation to the `market-researcher` subagent with an inline fallback; attended steps always in the main session; editor pins and strikes.
+- Templates: research plan, insight sheet (readable view), chat summary (with its result block), pending browser task. Checklist: before saving. Examples: good local service, good ad-heavy niche, bad invented stats (annotated).
+- `agents/market-researcher.md`: Sonnet, 40 turns, limited tools, preloads this skill. Loading verified in Claude Code (name, connector tools, preloaded skill, path variables).
 
 ### Credits (ideas adapted in our own words; nothing copied)
 - Jakeschincariol/instagram-agent-skill (`ig-viral`, `ig-audit`), MIT, `d03c56bb`.
