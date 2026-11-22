@@ -27,6 +27,8 @@ It answers five questions from the record alone. Never fill them from memory:
    | `client` | The client's `decision_maker.name`, from the brand brief, if set, else "the client". Add who records the reply: the assignee. |
    | `budget` (gate kind) | Always the admin. Add the amount asked for, if it's in the gate note. |
 
+   A pending creative pick (`gate_label: creative-pick`) is shown as "Creative pick (concept + hook) · waiting on <assignee>". If `config.creative_auto_pick_after_hours` is set, add one line "Auto-pick at <requested_at + n h> if no reply"; if that time has already passed, hand the job to `producer` for its auto-pick check before showing the card.
+
 3. If there is **no** pending gate, the job is running. Say "Running: <current_stage>" and who started it.
 4. Add, only when present:
    - **Deadline** — with "(overdue)" if past, India time.

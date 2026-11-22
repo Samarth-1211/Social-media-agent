@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:tdm:social-media-manager:contracts:client",
   "title": "Client",
+  "x-version": 2,
   "description": "A client's brand profile, maintained by brand-keeper and read (as the short brand brief) by every stage. Every profile field is marked confirmed or guessed in `confidence`, with its basis. Logical record: the storage layer maps it to Google Sheets rows.",
   "type": "object",
   "additionalProperties": false,
@@ -288,7 +289,19 @@
           "evidence": { "type": "string", "description": "The job, the client's words, or the result behind it." },
           "applies_to": { "type": "string", "description": "e.g. reels, posters, captions, all." },
           "status": { "enum": ["active", "watch", "retired"] },
-          "source_job": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" }, { "type": "null" }] }
+          "source_job": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" }, { "type": "null" }] },
+          "hook_formula_id": {
+            "description": "(v2) Hook formula this learning is about (hooks/references/formula-catalog.md), so hooks can boost or penalise it.",
+            "anyOf": [{ "type": "string", "pattern": "^H[0-9]{2}$" }, { "type": "null" }]
+          },
+          "angle_type": {
+            "description": "(v2) Concept angle type this learning is about.",
+            "enum": ["proof", "teach", "opinion", "story", "offer", null]
+          },
+          "outcome": {
+            "description": "(v2) How a post using this formula or angle did: worked / flopped / mixed / untested. Read by concept and hooks.",
+            "enum": ["worked", "flopped", "mixed", "untested", null]
+          }
         }
       }
     },

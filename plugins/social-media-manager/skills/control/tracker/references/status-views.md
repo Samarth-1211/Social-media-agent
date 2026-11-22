@@ -19,6 +19,7 @@ Within each group, sort by deadline (earliest first; no deadline last).
 
 Each job is one line: ID, title, client name, current stage, assignee, deadline. Mark a past deadline **OVERDUE**.
 If the job is at `brief` and waiting on the client (no pending gate), write the stage as "Brief: waiting for client reply (asked <date>)".
+If the pending gate is a creative pick (`hooks`, `gate_label: creative-pick`), write the stage as "Creative pick (concept + hook)".
 Mark it **REMIND** when the oldest open row in `BriefQuestions` for the job is older than `config.client_question_reminder_hours`.
 
 Above the groups, one summary line: "<n> open jobs · <a> admin · <e> editor · <c> client · <o> overdue".

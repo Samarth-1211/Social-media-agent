@@ -30,7 +30,7 @@ Who: Samarth (admin)
 Reply: "approve" · "changes: <what to change>" · "back to <earlier stage>"
 ```
 
-**Samarth:** approve → *(concept placeholder; admin gate)* **Samarth:** approve → *(script placeholder; editor gate. next_action: "Ravi to approve the script (placeholder) or request changes.")*
+**Samarth:** approve → *(quick track: no concept stage; hooks runs for the client's last approved format and stops at the creative-pick gate, editor)* **Samarth:** QA → *(creative pick recorded by samarth (admin); script placeholder; editor gate. next_action: "Ravi to approve the script (placeholder) or request changes.")*
 
 **Samarth:** I'm Ravi now.
 
@@ -81,8 +81,8 @@ Sorry Ravi, the finish gate needs the admin, Samarth. I've left it pending; Sama
 **Producer:** *(delivery approved; status delivered, waiting_on none; read back)*
 
 ```
-✓ SHL-03 delivered (all stages placeholders; nothing real was made).
-Path: ✓intake ✓brief ✓concept ✓script ✓client-script-approval ✓storyboard ✓clips ✓voice-music ✓qa-clips ✓assemble ✓captions-motion ✓finish ✓client-final-approval ✓delivery
+✓ SHL-03 delivered (hooks real; every later stage a placeholder, so nothing was produced).
+Path: ✓intake ✓research ✓brief ✓hooks ✓script ✓client-script-approval ✓storyboard ✓clips ✓voice-music ✓qa-clips ✓assemble ✓captions-motion ✓finish ✓client-final-approval ✓delivery
 Credits: 0 / 200
 Next: Delivered on 22 Nov. Nothing pending.
 ```

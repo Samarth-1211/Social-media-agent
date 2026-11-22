@@ -10,6 +10,9 @@
   "default_credit_warn_video": null,
   "default_credit_budget_poster": 28,
   "default_credit_warn_poster": 20,
+  "concepts_count": 3,
+  "hooks_per_concept": 8,
+  "creative_auto_pick_after_hours": null,
   "credit_policy": {
     "prompt_check_before_spend": true,
     "estimate_before_spend": true,

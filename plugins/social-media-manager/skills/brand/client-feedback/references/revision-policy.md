@@ -34,7 +34,8 @@ Route each actionable item to the stage that owns that part of the work, on the 
 | The item is about | Video stage | Poster stage |
 |---|---|---|
 | The offer, price, product, audience, deliverables (new or changed) | `brief` (usually a `change_request`) | `brief` |
-| The idea or story itself | `concept` | `concept` |
+| The idea or story itself | `concept` (full track); `hooks` (quick track: the reused format) | `poster-drafts` (no concept stage for posters) |
+| The opening: first frame, first line, on-screen hook text | `hooks` | — |
 | Spoken words, voice-over lines, claims | `script` (`localise` for a second-language version, full track) | — |
 | Scene order, which shots, what's shown | `storyboard` | — |
 | How a generated shot looks (person, location, product in the shot) | `clips` | — |
@@ -47,7 +48,7 @@ Route each actionable item to the stage that owns that part of the work, on the 
 
 - **Reopen the earliest stage** among the routed items; `producer` reruns everything after it.
 - **If the earliest stage is the one just shown** (e.g. poster feedback at `client-poster-approval` routes to `poster-drafts`, the stage that made what was shown), producer records `sent_back` to that stage.
-- **If the route would reopen a stage before an approved admin gate** (`brief`, `concept`), it's a `change_request`, and only the admin confirms it.
+- **If the route would reopen a stage before an approved admin gate** (`brief`) **or the approved creative pick** (`hooks`, editor gate: concept + hook), it's a `change_request`, and only the admin confirms it.
 - **A stage not on the path:** route to the nearest earlier stage on the path, and note it.
 
 ## 4. Polite out-of-scope handling

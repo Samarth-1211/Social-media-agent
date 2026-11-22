@@ -47,7 +47,7 @@ Never write another stage's outputs, and never change client records.
    - No job in focus and it's unclear which job → list the candidates (ID, title, stage) and ask. Never guess.
    - "status", "board", "credits" → hand to `tracker`.
 
-3. **Read fresh.** Before every move, call `get_job` and re-read `stages.yaml`. The record outranks memory. Take every timestamp from `get_now` (once per turn that writes); never guess the time. The first time a job comes up in a session, show `tracker`'s catch-up card first.
+3. **Read fresh.** Before every move, call `get_job` and re-read `stages.yaml`. The record outranks memory. Take every timestamp from `get_now` (once per turn that writes); never guess the time. The first time a job comes up in a session, show `tracker`'s catch-up card first. **Auto-pick check:** if the job's pending gate is a creative pick, `config.creative_auto_pick_after_hours` is set, and `get_now` − `requested_at` ≥ that many hours, run the auto-pick in `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/SKILL.md` §Gate first, then continue.
 
 4. **Intake (new job).** Follow `${CLAUDE_SKILL_DIR}/references/track-selection.md` and the intake steps in `${CLAUDE_SKILL_DIR}/references/stage-running.md` §3:
    1. Find the client. If it doesn't exist, hand to `brand-keeper` to onboard it first.
@@ -67,6 +67,7 @@ Never write another stage's outputs, and never change client records.
 
 6. **Gates.** Follow `${CLAUDE_SKILL_DIR}/references/gate-rules.md`:
    - **Stop at every gate.** Record a pending gate whose `shown_outputs` are the exact versions shown. Then show `${CLAUDE_SKILL_DIR}/templates/gate-message.md`: what is being approved, who must approve (by name), and the options (approve / changes / back to a stage).
+   - **Creative pick** (`gate_label: creative-pick`): the hooks skill shows the pick and reads the reply (`gate-rules.md` §3).
    - **Check permission before recording any decision.** If the wrong person decides, refuse politely, name who must approve, and leave the gate pending.
    - **Never pass a gate on someone's behalf,** even if they "said yes on the phone".
    - **Approve:** record it, close the stage, run on (step 5).

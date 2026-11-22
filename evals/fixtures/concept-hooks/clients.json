@@ -1,0 +1,98 @@
+{
+ "$comment": "Eval clients for concept + hooks (C1-F1). shubh-laundry and narmada-heights are taken from ../brief/clients.json with the overrides below; saanjh-ethnic is new. Fictional; fake WhatsApp numbers only.",
+ "from_brief_fixtures": {
+  "shubh-laundry": {
+   "next_job_number": 30,
+   "learnings_add": [
+    {
+     "date": "2026-11-21",
+     "kind": "rejected",
+     "what": "Neha dislikes 'stop doing X' openers on reels: they sound like a lecture to her customers.",
+     "evidence": "SHL-01 creative pick: \"yeh lecture jaisa lagta hai\"",
+     "applies_to": "reels",
+     "status": "active",
+     "source_job": "SHL-01",
+     "hook_formula_id": "H02"
+    },
+    {
+     "date": "2026-11-28",
+     "kind": "decision",
+     "what": "Price-first offer card on frame 1 brought the most WhatsApp enquiries of any SHL reel so far.",
+     "evidence": "SHL-01 results: enquiries in the week after posting, compared with the client's previous reels",
+     "applies_to": "reels",
+     "status": "active",
+     "source_job": "SHL-01",
+     "hook_formula_id": "H30",
+     "angle_type": "offer",
+     "outcome": "worked"
+    },
+    {
+     "date": "2026-12-02",
+     "kind": "decision",
+     "what": "The contrarian 'sab kehte hain…' opener got views but almost no enquiries; customers commented that it felt like an argument.",
+     "evidence": "SHL-05 results and comments",
+     "applies_to": "reels",
+     "status": "active",
+     "source_job": "SHL-05",
+     "hook_formula_id": "H21",
+     "angle_type": "opinion",
+     "outcome": "flopped"
+    }
+   ]
+  },
+  "narmada-heights": { "next_job_number": 16 }
+ },
+ "clients": [
+  {
+   "client_id": "saanjh-ethnic",
+   "client_code": "SJE",
+   "name": "Saanjh Ethnic Wear",
+   "status": "active",
+   "business_type": "women's ethnic wear boutique with in-house tailoring",
+   "city": "Bhopal",
+   "contact_person": "Farah (co-owner)",
+   "decision_maker": { "name": "Farah", "role": "co-owner" },
+   "whatsapp": "+910000000003",
+   "files_folder_url": null,
+   "onboarding_source": "interview",
+   "languages": ["Hinglish", "Hindi"],
+   "platforms": ["instagram", "whatsapp-status"],
+   "posting_frequency": "4 reels per week in festival season",
+   "audience": {
+    "summary": "Women 22-45 in MP Nagar, Arera Colony and Kolar Road buying festive and wedding outfits; many come with a sister or friend.",
+    "age_range": "22-45",
+    "locations": ["MP Nagar", "Arera Colony", "Kolar Road"],
+    "interests": ["festive outfits", "custom fitting", "matching sets for sisters"],
+    "customer_words": ["fitting perfect chahiye", "Diwali tak ready ho jayega na?", "behen ke saath matching"]
+   },
+   "tone_of_voice": {
+    "summary": "Warm, confident, like a friend with good taste.",
+    "attributes": [
+     { "name": "Warm", "means": "Talks like a friend helping you choose", "doesnt_mean": "Over-familiar or 'babe' talk" },
+     { "name": "Confident", "means": "Knows fit and fabric; says it plainly", "doesnt_mean": "Bragging or 'No.1' claims" }
+    ]
+   },
+   "words": { "use": ["custom fitting", "Saanjh"], "never_use": [{ "word": "slim dikhoge", "reason": "Owners refuse body-shaming language" }] },
+   "visual_identity": { "colours": [{ "name": "Saanjh maroon", "hex": "#7A1F3D", "use": "primary" }], "fonts": [], "logo_ref": null },
+   "do": ["Show real customers only with consent", "Show the tailoring table"],
+   "dont": ["Body-shaming or 'slim' language", "Compare with named stores"],
+   "references": [],
+   "festival_calendar": [{ "occasion": "Diwali and Bhai Dooj", "date": null, "priority": "high", "note": "Festive kurta sets, sister matching sets" }],
+   "price_points": [{ "item": "Festive kurta set with custom fitting", "price": 1499, "currency": "INR" }],
+   "revision_cap": 2,
+   "next_job_number": 4,
+   "learnings": [],
+   "confidence": {
+    "name": { "status": "confirmed", "basis": "co-owner interview" },
+    "audience": { "status": "confirmed", "basis": "co-owner interview" },
+    "price_points": { "status": "confirmed", "basis": "co-owner interview" },
+    "revision_cap": { "status": "confirmed", "basis": "default 2, admin approved" }
+   },
+   "open_questions": [],
+   "version": 1,
+   "changelog": [{ "version": 1, "date": "2026-12-01", "by": "samarth", "sections": ["all"], "change": "Initial profile from interview." }],
+   "created_at": "2026-12-01T11:00:00+05:30",
+   "updated_at": "2026-12-01T11:00:00+05:30"
+  }
+ ]
+}

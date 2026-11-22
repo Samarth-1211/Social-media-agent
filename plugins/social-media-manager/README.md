@@ -2,7 +2,7 @@
 
 Claude as TDM Groups' social media production team: video jobs, poster jobs, client brand profiles and approvals, run stage by stage with human gates.
 
-**Status: 0.2.0-alpha.2, Group 1 + Group 2a (market researcher and brief).**
+**Status: 0.2.0-alpha.2, Group 1 + Group 2a (market researcher and brief).** Unreleased on `feat/concept-hooks`: concept and hooks (Group 2a, agents 3 + 4).
 - **Working now:**
   - jobs from intake to delivery, with real approvals and budget checks;
   - client profiles;
@@ -10,7 +10,9 @@ Claude as TDM Groups' social media production team: video jobs, poster jobs, cli
   - status boards and catch-up;
   - **market research**: an insight sheet per client (competitors, Meta ads, reviews, trends, Instagram outliers, the client's own account), refreshed weekly by a scheduled task, reused while fresh, never blocking a job. Its findings are handed to the brief and later stages.
   - **briefs** that draft themselves after research and ask only what's missing, in plain words (one WhatsApp message when only the client knows).
-- **Not built yet:** the other creative stages (concept, script, storyboard, generation, edit, posters). They run as **placeholders** for now, and no Higgsfield credits are spent. Later groups replace them one by one.
+  - **concepts** (full track): three insight-led, scored short-video concepts built on Indian consumer psychology, producible mostly with real footage.
+  - **hooks**: three-layer hooks (first frame, spoken line, on-screen text) in natural Hinglish, Hindi or English, scored and self-critiqued; the editor picks **concept + hook in one reply** ("2B").
+- **Not built yet:** the other creative stages (script, storyboard, generation, edit, posters). They run as **placeholders** for now, and no Higgsfield credits are spent. Later groups replace them one by one.
 
 ## Skills
 
@@ -22,6 +24,8 @@ Claude as TDM Groups' social media production team: video jobs, poster jobs, cli
 | `client-feedback` | brand | Turning a client's WhatsApp reply into a change list, the stage to reopen, and a reply draft |
 | `research-methods` | pre-production | Market research per client: competitors, ads, reviews, trends, Instagram outliers. Hands its unattended part to the `market-researcher` subagent where subagents load (Claude Code, Cowork); runs inline in claude.ai chat. |
 | `brief` | pre-production | The job's creative brief: drafted by itself after intake (after research), asks only what's missing, in plain words; reads the client's reply to brief questions |
+| `concept` | pre-production | Three insight-led short-video concepts from the brief and research, each a different angle, scored with one recommended (full track; no gate of its own) |
+| `hooks` | pre-production | 8–10 three-layer hooks per concept (or for the reused format on the quick track), scored and critiqued; runs the editor's creative pick (concept + hook) |
 
 You don't need to name the skill: just say what you want, in English, Hindi or Hinglish. Each skill can also be called directly as `/social-media-manager:<skill>`.
 
@@ -97,12 +101,29 @@ The brief starts by itself once research is done (or skipped). Most of the time 
 
 Client questions unanswered for 24 hours show on the sheet Dashboard. The brief never invents a price, number or claim: it shows a `[CLIENT TO CONFIRM]` placeholder and asks.
 
+**Concepts and hooks (concept, hooks)**
+
+Both start by themselves after the brief is approved. On the full track you get three concepts, each with its top 3 hooks, in one message; on the quick track, the top hooks for the client's last approved format. Nothing is asked while they're written.
+
+| Say | What happens | Who |
+|---|---|---|
+| "concept SHL-03" / "concepts dobara" | Writes (or rewrites) three concepts: one insight, three different angles, scores, a recommendation | assignee, admin |
+| "hooks SHL-03" | Writes hooks for each concept and shows the creative pick | assignee, admin |
+| "2B" / "concept 2 hook B" / "ok" (= the ⭐ pair) | Picks concept 2 with hook 2B; the other two become backups; script runs next | the assigned editor, or admin |
+| "1 with 3A" | Concept 1 with hook 3A, adapted to fit (shown before it's recorded) | the assigned editor, or admin |
+| "mix 1 and 3" | Merges the two concepts; shows the merged outline to confirm | the assigned editor, or admin |
+| "more hooks like 2A" | Five more hooks in the same style, then the pick again | the assigned editor, or admin |
+| "none, make it funnier" | Back to concepts with that direction | the assigned editor, or admin |
+| "2B but say 'pickup free'" | Picks 2B with your edit to the line | the assigned editor, or admin |
+
+Hooks never invent a number, review or deadline; anything the client must supply shows as `{{needed}}`. If `creative_auto_pick_after_hours` is set in Config (off by default), the ⭐ pair is picked automatically after that many hours without a reply, and logged as `system`.
+
 **Who approves what**
 
 | Gate | Approver |
 |---|---|
-| intake, brief, concept, production plan, finish, final poster, delivery | admin (Samarth) |
-| script, localise, style bible, casting, storyboard, voice & music, QA, edit stages, poster drafts | the assigned editor or designer, or admin |
+| intake, brief, production plan, finish, final poster, delivery | admin (Samarth) |
+| creative pick (concept + hook), script, localise, style bible, casting, storyboard, voice & music, QA, edit stages, poster drafts | the assigned editor or designer, or admin |
 | client approvals | the assignee or admin, from the client's own message |
 | going over a job's credit budget | admin |
 | paid research (Apify, only if switched on) above the auto-approve limit | admin |
@@ -118,7 +139,7 @@ The brief can be auto-approved only if the admin turns on `brief_auto_approve_re
    - offers to share the folder with each person, asking each time.
 3. **Higgsfield** (needed from the generation group onward): each person signs in to their own Higgsfield account the first time a Higgsfield tool is used. In Claude Code: `/mcp`, then authenticate `higgsfield`.
 4. **Tracker page:** say "publish the tracker page" for a read-only board that works on phones too.
-5. **Existing database, brief update** (admin, once): say "upgrade the TDM Studio sheet". It brings an older sheet to layout v3: the research tabs (v2) and the BriefQuestions tab, a Dashboard block and three Config rows (v3) (`library/storage/google-sheets.md` §7). Run it on the TEST sheet first.
+5. **Existing database, brief update** (admin, once): say "upgrade the TDM Studio sheet". It brings an older sheet to layout v4: the research tabs (v2); the BriefQuestions tab, a Dashboard block and three Config rows (v3); three Learnings columns and three creative Config rows for concept and hooks (v4) (`library/storage/google-sheets.md` §7). Run it on the TEST sheet first.
 
 Data lives in the Google Sheet (the source of truth), never inside the plugin folder; updating the plugin never touches it. Without Google, Claude Code can work in files mode (`.tdm-studio/`, this computer only).
 
@@ -177,8 +198,9 @@ Do the "Scheduled run" in references/automation.md §5, against the Google Sheet
 | Folder | What it holds |
 |---|---|
 | `skills/<group>/<skill>/` | One folder per skill. Groups: control, brand, pre-production, generation, quality, post-production, delivery. Each group's README lists its skills. |
-| `library/contracts/` | `stages.yaml` (the pipeline: 25 stages; `intake`, `research` and `brief` active, the rest placeholders) and the JSON schemas |
+| `library/contracts/` | `stages.yaml` (the pipeline: 25 stages; `intake`, `research`, `brief`, `concept` and `hooks` active, the rest placeholders) and the JSON schemas |
 | `library/storage/` | How data is saved: Google Sheets layout and rules, setup, backups, tracker page |
+| `library/knowledge/` | Shared know-how: `india-consumer-psychology.md` (evidence on Indian buyers, levers L01–L20, audience variants, language), used by concept, hooks and later script and localise |
 | `library/templates/` | Shared views: job record, client record, brand brief |
 | `agents/` | Subagents: `market-researcher` (runs research in its own context) |
 | `.mcp.json` | The Higgsfield remote MCP server |

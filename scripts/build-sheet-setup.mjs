@@ -152,6 +152,13 @@ const BRIEF_CONFIG = [
   ['client_question_reminder_hours', 24],
 ];
 
+// Concept + hooks settings (layout v4). Also appended to existing sheets by the v3 → v4 upgrade.
+const CREATIVE_CONFIG = [
+  ['concepts_count', 3],
+  ['hooks_per_concept', 8],
+  ['creative_auto_pick_after_hours', ''],
+];
+
 // Config defaults (ADR 0003). spreadsheet_id and drive_folder_id are filled in by setup.
 const configRows = [
   ['storage_mode', "'google-sheets"],
@@ -168,6 +175,7 @@ const configRows = [
   ['credit_policy', `'${JSON.stringify({ prompt_check_before_spend: true, estimate_before_spend: true, start_tier: 'draft', draft_variations: 1, upgrade_approver: 'editor' })}`],
   ...RESEARCH_CONFIG,
   ...BRIEF_CONFIG,
+  ...CREATIVE_CONFIG,
   ['version', 1],
   ['updated_at', '<NOW>'],
 ].map(([k, v]) => [`'${k}`, v]);
@@ -178,7 +186,7 @@ export const CLOCK_FORMULA = '=TEXT(NOW(),"yyyy-mm-dd")&"T"&TEXT(NOW(),"HH:mm:ss
 values.push({ range: 'Config!D1:E1', values: [["'clock (do not edit)", CLOCK_FORMULA]] });
 
 // ── Upgrades for sheets built with an older layout ──────────────────
-// A sheet is on layout v1 if it has no Insights tab, and on v2 if it has Insights but no BriefQuestions tab. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
+// A sheet is on layout v1 if it has no Insights tab, on v2 if it has Insights but no BriefQuestions tab, and on v3 if its Learnings tab has no hook_formula_id column. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
 // batch_requests in one batch update, then each values entry with update values, then each append entry with append values.
 // Nothing existing moves: new columns go after the last column of their tab, new tabs after the last tab.
 function upgrade(from, to) {
@@ -225,7 +233,7 @@ function upgrade(from, to) {
     vals.push(briefDashboard);
     reqs.push(briefDashboardWiden, briefDashboardBold);
   }
-  const newConfig = { 2: RESEARCH_CONFIG, 3: BRIEF_CONFIG }[to] ?? [];
+  const newConfig = { 2: RESEARCH_CONFIG, 3: BRIEF_CONFIG, 4: CREATIVE_CONFIG }[to] ?? [];
   return { from, to, batch_requests: reqs, values: vals, append: [{ range: 'Config!A1', values: newConfig.map(([k, v]) => [`'${k}`, v]) }] };
 }
 
@@ -234,7 +242,7 @@ const out = {
   layout_version: layout.version,
   batch_requests: requests,
   values,
-  upgrades: [upgrade(1, 2), upgrade(2, 3)],
+  upgrades: [upgrade(1, 2), upgrade(2, 3), upgrade(3, 4)],
 };
 const text = JSON.stringify(out, null, 1) + '\n';
 

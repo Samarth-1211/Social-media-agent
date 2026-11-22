@@ -2,6 +2,23 @@
 
 All notable changes to the `social-media-manager` plugin. Versions follow semver (see `docs/ARCHITECTURE.md`, Versioning).
 
+## [Unreleased] - feat/concept-hooks
+
+Group 2a, agents 3 + 4: concept and hooks, the India-first creative engine. Built on 0.2.0-alpha.2; no version bump on the branch (suggested 0.3.0-alpha.1 at merge, `docs/merge-notes/feat-concept-hooks.md`). Contracts change additively; v3 sheets upgrade in place to layout v4.
+
+### Added
+- `pre-production/concept` skill (full track, video, no gate): one sourced core insight, 6–8 raw angles from four engines (creative methods for brand films), filters for competitors-overdo, brief avoid, lever misuse and the hook test, three concepts of different angle types with story spines, levers backed by real proof, producibility and risks, a 7-criterion weighted score and one recommendation.
+- `pre-production/hooks` skill (quick + full, editor gate `creative-pick`): 8–10 three-layer hooks per concept with formula, visual-led, proof and customer-phrase minimums; weighted scoring with a weakest-link cap and client learnings (worked +3, flopped/rejected −3); a critique pass; top 3 per concept; the combined creative pick from natural replies; optional auto-pick; the `downstream` handoff for script, localise and shot sourcing.
+- One hook formula catalogue (H01–H30, cross-referenced to the source catalogues) and an India hook bank (91 hooks across seven niches, Hinglish, Hindi and English).
+- `library/knowledge/india-consumer-psychology.md`: dated evidence on Indian (Tier 2/3) buyers, insight starters, clichés to retire, levers L01–L20 with misuse limits, hypotheses HY1–HY9, audience variants, language rules.
+- Contracts: `concept.schema.json` and `hooks.schema.json` (new, `x-version` 1); `config.schema.json` (`x-version` 3): `concepts_count`, `hooks_per_concept`, `creative_auto_pick_after_hours`; `client.schema.json` (`x-version` 2): learnings carry `hook_formula_id`, `angle_type`, `outcome`.
+- Stage key `gate_label` (validator check 5). Storage layout v4 (Learnings columns, creative Config rows, `upgrades` v3 → v4); full concept and hooks records in Drive `Jobs/<id>/concept|hooks/`. Decision record 0006.
+- Evals (written, not run): `evals/fixtures/concept-hooks/`, `evals/concept-hooks-fixtures.mjs`, `evals/scenarios/concept-hooks.md` (C1–F1), `evals/rubrics/concept-hooks.md`.
+
+### Changed
+- Pipeline (decision 0006): `concept` runs on the full track for video only, with no gate; `hooks` runs on both video tracks with the editor's creative-pick gate; `script` reads `hooks` (concept optional); `poster-drafts` reads `concept` only optionally.
+- Example SHL-01 gains a quick-track hooks record (v1 shown, v2 picked).
+
 ## [0.2.0-alpha.2] - 2026-11-22
 
 Group 2a, agent 2: the brief, merged with the market researcher (`docs/merge-notes/feat-brief.md`). Contracts change additively; v2 sheets upgrade in place to layout v3.

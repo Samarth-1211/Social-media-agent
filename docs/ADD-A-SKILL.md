@@ -61,7 +61,7 @@ If the skill produces creative output, add test briefs and a rubric in `evals/` 
 | 2 | Every skill folder has `SKILL.md`: frontmatter `name` = folder, real `description`, all 7 sections |
 | 3 | Skill folder names unique across groups |
 | 4 | Registered groups exist and have skills; every group with skills is registered |
-| 5 | `active` stages point to an existing skill in their group; every stage has `credit_spend` true or false; optional stage keys (`freshness_days`, `skippable_if_urgent`, `non_blocking_partial`, `spend_gate`) have valid values; unknown keys are rejected |
+| 5 | `active` stages point to an existing skill in their group; every stage has `credit_spend` true or false; optional stage keys (`freshness_days`, `skippable_if_urgent`, `non_blocking_partial`, `spend_gate`, `gate_label`) have valid values (`gate_label`: kebab-case, only with a gate other than `none`); unknown keys are rejected |
 | 6 | Each `reads` field is written earlier on every (job type, track) path, or is `client` |
 | 7 | All schemas compile; every `examples/*.example.json` validates against its schema; presets validate against `_preset.schema.json` |
 | 8 | `${CLAUDE_PLUGIN_ROOT}/library/...` and `/skills/...` links point to real files |

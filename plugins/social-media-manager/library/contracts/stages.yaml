@@ -35,6 +35,9 @@
 #   spend_gate            admin | none: who approves BEFORE the stage spends real money
 #                         (not Higgsfield credits); auto-approved at or below
 #                         config.research_auto_approve_limit
+#   gate_label            kebab-case name for a gate that decides more than its own stage's
+#                         output (only with a gate other than none), e.g. creative-pick on hooks:
+#                         the editor picks concept + hook in one decision. Shown in gate messages.
 #
 # A stage only reads and writes its declared fields. Gate decisions live in job.gates[],
 # so approval stages declare no `writes`.
@@ -43,6 +46,8 @@
 # research is run by `research-methods` (pre-production), which may hand its unattended part
 # to the `market-researcher` subagent.
 # brief is run by `brief` (pre-production/brief); it reads the research output when present.
+# concept (full track, video) and hooks (both video tracks) are pre-production skills; the
+# hooks gate is the combined creative pick (decision 0006).
 
 version: 3
 
@@ -94,34 +99,35 @@ stages:
   - id: concept
     group: pre-production
     skill: concept
-    status: placeholder
+    status: active
     reads: [client, brief]
-    optional_reads: []
+    optional_reads: [research]
     writes: [concept]
-    gate: admin
+    gate: none
     credit_spend: false
-    tracks: [quick, full]
-    job_types: [video, poster]
+    tracks: [full]
+    job_types: [video]
 
   # ── Video: pre-production ────────────────────────────────────────
   - id: hooks
     group: pre-production
     skill: hooks
-    status: placeholder
-    reads: [brief, concept]
-    optional_reads: []
+    status: active
+    reads: [client, brief]
+    optional_reads: [concept, research]
     writes: [hooks]
-    gate: none
+    gate: editor
+    gate_label: creative-pick
     credit_spend: false
-    tracks: [full]
+    tracks: [quick, full]
     job_types: [video]
 
   - id: script
     group: pre-production
     skill: script
     status: placeholder
-    reads: [client, brief, concept]
-    optional_reads: [hooks]
+    reads: [client, brief, hooks]
+    optional_reads: [concept]
     writes: [script]
     gate: editor
     credit_spend: false
@@ -315,8 +321,8 @@ stages:
     group: generation
     skill: poster-design
     status: placeholder
-    reads: [client, brief, concept]
-    optional_reads: []
+    reads: [client, brief]
+    optional_reads: [concept]
     writes: [poster_drafts]
     gate: editor
     credit_spend: true

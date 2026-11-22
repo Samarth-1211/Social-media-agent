@@ -1,0 +1,100 @@
+{
+  "job_id": "SHL-03",
+  "client_id": "shubh-laundry",
+  "version": 1,
+  "track_mode": "full",
+  "concept_version": 1,
+  "reused_format": null,
+  "fallback_used": {
+    "brief": false,
+    "research": true,
+    "note": "No insight sheet yet, so no research customer phrases or outlier hooks: the profile's customer_words were used."
+  },
+  "hooks": [
+    {
+      "id": "1A", "concept_ref": "C1", "formula_id": "H17",
+      "layers": { "visual": "Hands unfold a silk saree on the counter; a name tag is pinned to it.", "spoken": "Aapki saree counter pe aate hi sabse pehle yeh hota hai.", "text": "Saree aate hi, pehla kaam" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": ["visual-led"],
+      "scores": { "clarity": 4, "curiosity": 4, "relevance": 4, "specificity": 3, "india_fit": 4, "payoff": 5, "brand_safety": 5, "weighted": 45, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "1B", "concept_ref": "C1", "formula_id": "H28",
+      "layers": { "visual": "Camera walks from the counter into the cleaning area.", "spoken": "Wedding saree ka dry clean, andar kya hota hai, dikhate hain.", "text": "Andar kya hota hai?" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": ["visual-led"],
+      "scores": { "clarity": 4, "curiosity": 5, "relevance": 4, "specificity": 3, "india_fit": 4, "payoff": 5, "brand_safety": 5, "weighted": 47, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "1C", "concept_ref": "C1", "formula_id": "H15",
+      "layers": { "visual": "A customer's WhatsApp message on screen: \"saree ka dry clean safe hai na?\"", "spoken": "\"Saree ka dry clean safe hai na?\" Yeh sawaal roz aata hai. Jawab dekh lo.", "text": "Saree safe hai na?" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": ["customer-phrase"],
+      "source_refs": ["profile: audience.customer_words[2]"],
+      "scores": { "clarity": 5, "curiosity": 4, "relevance": 5, "specificity": 4, "india_fit": 5, "payoff": 5, "brand_safety": 5, "weighted": 51.5, "capped": false },
+      "boost_note": null, "critique_note": "Rewrite of 1D: kept the trust promise, dropped the unprovable superlative.", "rewritten_from": "1D", "status": "top"
+    },
+    {
+      "id": "1D", "concept_ref": "C1", "formula_id": "H25",
+      "layers": { "visual": "Logo over a folded saree.", "spoken": "Indore ka sabse safe saree dry clean.", "text": "Indore ka sabse safe" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": [],
+      "scores": { "clarity": 4, "curiosity": 1, "relevance": 3, "specificity": 1, "india_fit": 3, "payoff": 2, "brand_safety": 1, "weighted": 24.5, "capped": true },
+      "boost_note": null, "critique_note": "Brand-first and an unprovable superlative (ASCI Ch. I); replaced by 1C.", "rewritten_from": null, "status": "replaced"
+    },
+    {
+      "id": "2A", "concept_ref": "C2", "formula_id": "H20",
+      "layers": { "visual": "An old saree box opens; older hands lift the saree.", "spoken": "…aur yeh wahi saree hai jo maa ne apni shaadi mein pehni thi.", "text": "Maa ki shaadi wali saree" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": ["visual-led"],
+      "scores": { "clarity": 4, "curiosity": 5, "relevance": 4, "specificity": 4, "india_fit": 5, "payoff": 4, "brand_safety": 5, "weighted": 48.5, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "2B", "concept_ref": "C2", "formula_id": "H26",
+      "layers": { "visual": "Mother holds the saree against her daughter in a mirror.", "spoken": "Beti ki shaadi hai, aur maa chahti hai woh yahi saree pehne.", "text": "Beti ki shaadi, maa ki saree" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": ["visual-led"],
+      "scores": { "clarity": 4, "curiosity": 4, "relevance": 5, "specificity": 3, "india_fit": 5, "payoff": 4, "brand_safety": 5, "weighted": 46.5, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "2C", "concept_ref": "C2", "formula_id": "H13",
+      "layers": { "visual": "Split frame: the same saree dull and creased, then fresh in window light.", "spoken": "Wahi saree. Bas thodi si care.", "text": "Same saree, shaadi ready" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": ["visual-led"],
+      "scores": { "clarity": 5, "curiosity": 3, "relevance": 4, "specificity": 3, "india_fit": 4, "payoff": 4, "brand_safety": 5, "weighted": 43.5, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "3A", "concept_ref": "C3", "formula_id": "H10",
+      "layers": { "visual": "Neha at the counter, holding up a saree.", "spoken": "Saree dry clean ke liye de rahe ho? Pehle yeh teen sawaal pucho.", "text": "Dene se pehle 3 sawaal" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": [],
+      "scores": { "clarity": 5, "curiosity": 4, "relevance": 5, "specificity": 4, "india_fit": 4, "payoff": 5, "brand_safety": 5, "weighted": 50, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "3B", "concept_ref": "C3", "formula_id": "H11",
+      "layers": { "visual": "Three fingers raised; the third one tapped.", "spoken": "Teen sawaal. Teesra koi nahi puchta.", "text": "3 sawaal. Teesra zaroori." },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": [],
+      "scores": { "clarity": 4, "curiosity": 5, "relevance": 4, "specificity": 3, "india_fit": 4, "payoff": 5, "brand_safety": 5, "weighted": 47, "capped": false },
+      "boost_note": null, "critique_note": null, "rewritten_from": null, "status": "top"
+    },
+    {
+      "id": "3C", "concept_ref": "C3", "formula_id": "H07",
+      "layers": { "visual": "Neha shakes her head gently at a creased saree.", "spoken": "Saree kharab hui toh galti aapki nahi thi. Sawaal galat the.", "text": "Galti aapki nahi thi" },
+      "language": "Hinglish", "writing_script": "roman-hinglish", "tags": [],
+      "scores": { "clarity": 3, "curiosity": 4, "relevance": 4, "specificity": 2, "india_fit": 3, "payoff": 4, "brand_safety": 4, "weighted": 37.5, "capped": false },
+      "boost_note": null, "critique_note": "Vague (no concrete noun); kept as third because C3 had no stronger option.", "rewritten_from": null, "status": "top"
+    }
+  ],
+  "top_per_concept": { "C1": ["1C", "1B", "1A"], "C2": ["2A", "2B", "2C"], "C3": ["3A", "3B", "3C"] },
+  "recommended": { "concept_ref": "C1", "hook_id": "1C", "reason": "Customers' own question as the hook, answered by real footage at no credit cost." },
+  "pick": { "status": "pending", "concept_ref": null, "hook_id": null, "backups": [], "mix_note": null, "reply": null, "decided_by": null, "decided_by_role": null, "decided_at": null, "auto": false },
+  "downstream": null,
+  "assumptions": ["Hook counts trimmed to the top 3 per concept in this example; the stage writes 8-10 per concept."],
+  "self_check": {
+    "passed": true,
+    "items": [
+      { "id": "HC1", "ok": true, "note": "Formula variety across the shortlist." },
+      { "id": "HC2", "ok": true, "note": "All three layers; text ≤ 6 words." },
+      { "id": "HC3", "ok": true, "note": "No invented numbers; superlative removed." }
+    ]
+  },
+  "updated_at": "2026-11-21T15:30:00+05:30"
+}

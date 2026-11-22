@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:hooks",
+  "title": "Hooks",
+  "x-version": 1,
+  "description": "Hooks for one job plus the editor's combined creative pick (concept + hook), written by the hooks stage (quick and full tracks, video) and stored in job.outputs.hooks.data. The gate is the creative-pick gate. downstream carries everything script, localise and shot-sourcing need, so they never re-read concept. Large records: keep the compact record here and the full one in Drive (Jobs/<job_id>/hooks/hooks-v<n>.json).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["job_id", "client_id", "version", "track_mode", "fallback_used", "hooks", "top_per_concept", "recommended", "pick", "self_check", "updated_at"],
+  "properties": {
+    "job_id": { "$ref": "#/$defs/jobId" },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "track_mode": {
+      "description": "full = hooks for each concept from the concept stage; quick-reuse = quick track, hooks for the client's last approved format (reused_format).",
+      "enum": ["full", "quick-reuse"]
+    },
+    "concept_version": { "type": ["integer", "null"], "minimum": 1, "description": "outputs.concept version the hooks were written for (full track)." },
+    "reused_format": {
+      "description": "Quick track only: the format reused from the client's last approved job (concept/references/quick-track-reuse.md).",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["format", "angle_type", "source"],
+      "properties": {
+        "format": { "type": "string" },
+        "angle_type": { "$ref": "#/$defs/angleType" },
+        "structure": { "type": "array", "items": { "type": "string" }, "description": "Beat outline, e.g. 'price card 0-2s'." },
+        "source_job": { "anyOf": [{ "$ref": "#/$defs/jobId" }, { "type": "null" }] },
+        "source": { "description": "last-approved-job = a delivered, client-approved job; brief = the brief's creative_format; profile = a learning or the profile.", "enum": ["last-approved-job", "brief", "profile"] },
+        "note": { "type": "string" }
+      }
+    },
+    "fallback_used": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brief", "research"],
+      "properties": {
+        "brief": { "type": "boolean" },
+        "research": { "type": "boolean" },
+        "note": { "type": "string" }
+      }
+    },
+    "hooks": {
+      "description": "Every hook written, including replaced ones (status says which survived). If the record passes 40,000 characters, the sheet Outputs cell keeps only status top (storage: compact record); the Drive file always keeps all.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 60,
+      "items": { "$ref": "#/$defs/hook" }
+    },
+    "top_per_concept": {
+      "description": "The top 3 hook ids per concept, best first. Key = concept id (C1-C5), or Q on the quick track.",
+      "type": "object",
+      "propertyNames": { "pattern": "^(C[1-5]|Q)$" },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 3,
+        "items": { "$ref": "#/$defs/hookId" }
+      }
+    },
+    "recommended": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hook_id", "reason"],
+      "properties": {
+        "concept_ref": { "anyOf": [{ "$ref": "#/$defs/conceptId" }, { "type": "null" }] },
+        "hook_id": { "$ref": "#/$defs/hookId" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "pick": {
+      "description": "The editor's combined decision at the creative-pick gate. Recorded through record_gate; this block mirrors it so later stages read it here.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "description": "pending = waiting for the editor; picked = decided; redo = the editor asked for more or different hooks/concepts (the stage reruns).", "enum": ["pending", "picked", "redo"] },
+        "concept_ref": { "anyOf": [{ "$ref": "#/$defs/conceptId" }, { "type": "null" }] },
+        "hook_id": { "anyOf": [{ "$ref": "#/$defs/hookId" }, { "type": "null" }] },
+        "backups": { "type": "array", "maxItems": 2, "items": { "$ref": "#/$defs/hookId" } },
+        "mix_note": { "type": ["string", "null"], "description": "For 'mix 1 and 3' style picks: what is taken from which concept." },
+        "reply": { "type": ["string", "null"], "description": "The editor's reply as written, e.g. '2B' or 'concept 1 with hook C'." },
+        "decided_by": { "type": ["string", "null"], "description": "Handle, or 'system' for an auto-pick." },
+        "decided_by_role": { "enum": ["admin", "editor", "designer", "system", null] },
+        "decided_at": { "type": ["string", "null"], "format": "date-time" },
+        "auto": { "type": "boolean", "description": "True when config.creative_auto_pick_after_hours picked the recommended pair." }
+      }
+    },
+    "downstream": {
+      "description": "Filled once pick.status is picked. What script, localise and shot-sourcing read.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["concept", "hook", "backup_hooks", "script_notes", "implied_assets", "learning"],
+      "properties": {
+        "concept": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["angle_type", "format", "story_spine"],
+          "properties": {
+            "id": { "anyOf": [{ "$ref": "#/$defs/conceptId" }, { "type": "null" }] },
+            "title": { "type": "string" },
+            "logline": { "type": "string" },
+            "insight": { "type": "string" },
+            "angle_type": { "$ref": "#/$defs/angleType" },
+            "format": { "type": "string" },
+            "story_spine": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["beat", "what_we_see"],
+                "properties": {
+                  "beat": { "type": "string" },
+                  "start_sec": { "type": "number", "minimum": 0 },
+                  "end_sec": { "type": "number", "minimum": 0 },
+                  "what_we_see": { "type": "string" },
+                  "what_we_hear": { "type": "string" }
+                }
+              }
+            },
+            "levers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["lever_id", "proof"],
+                "properties": {
+                  "lever_id": { "type": "string", "pattern": "^L[0-9]{2}$" },
+                  "name": { "type": "string" },
+                  "proof": { "type": "string" }
+                }
+              }
+            },
+            "producibility": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "difficulty": { "enum": ["low", "med", "high"] },
+                "credit_band": { "enum": ["none", "low", "medium", "high"] },
+                "shots": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["what", "source"],
+                    "properties": {
+                      "beat": { "type": "string" },
+                      "what": { "type": "string" },
+                      "source": { "enum": ["ai", "client-footage", "phone-shoot", "motion-graphics", "stock"] }
+                    }
+                  }
+                }
+              }
+            },
+            "risks": { "type": "array", "items": { "type": "string" } },
+            "mix_note": { "type": ["string", "null"] }
+          }
+        },
+        "hook": { "$ref": "#/$defs/hookRef" },
+        "backup_hooks": { "type": "array", "maxItems": 2, "items": { "$ref": "#/$defs/hookRef" } },
+        "script_notes": {
+          "description": "Do/don't for the script, from the brief, the brand profile and the limits in hooks anti-patterns. Always includes paying off the hook's promise before the halfway mark.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["do", "dont"],
+          "properties": {
+            "do": { "type": "array", "items": { "type": "string" } },
+            "dont": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "implied_assets": {
+          "description": "Assets the pick needs, e.g. real shop counter shot, customer testimonial, price card.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["asset", "source"],
+            "properties": {
+              "asset": { "type": "string" },
+              "source": { "enum": ["ai", "client-footage", "phone-shoot", "motion-graphics", "stock"] },
+              "must_be_real": { "type": "boolean", "description": "True for anything shown as a real customer, place or result (ASCI 2026 AI guideline)." },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "language": { "enum": ["Hindi", "English", "Hinglish", null] },
+        "writing_script": { "enum": ["roman-hinglish", "devanagari", "english", null] },
+        "learning": {
+          "description": "Learning-loop fields. outcome stays untested until a later stage (or the admin) records how the post did.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hook_formula_id", "angle_type", "outcome"],
+          "properties": {
+            "hook_formula_id": { "$ref": "#/$defs/formulaId" },
+            "angle_type": { "$ref": "#/$defs/angleType" },
+            "outcome": { "enum": ["untested", "worked", "flopped", "mixed"] },
+            "evidence": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "self_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "items"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "ok"],
+            "properties": {
+              "id": { "type": "string", "description": "Checklist item id, e.g. HC1." },
+              "ok": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "jobId": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "conceptId": { "type": "string", "pattern": "^C[1-5]$" },
+    "hookId": { "type": "string", "pattern": "^([1-5]|Q)[A-L]$", "description": "Concept number + letter (2B = concept 2, hook B); Q + letter on the quick track." },
+    "formulaId": { "type": "string", "pattern": "^H[0-9]{2}$", "description": "Stable id in hooks/references/formula-catalog.md." },
+    "angleType": { "enum": ["proof", "teach", "opinion", "story", "offer"] },
+    "score": { "type": "integer", "minimum": 0, "maximum": 5 },
+    "layers": {
+      "description": "All three are required. text: max 6 words, readable with the sound off, inside the safe zone.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visual", "spoken", "text"],
+      "properties": {
+        "visual": { "type": "string", "minLength": 1, "description": "What is on screen in the first 1.5 s." },
+        "spoken": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "pattern": "^\\S+(\\s+\\S+){0,5}$" },
+        "audio": { "type": "string", "description": "Optional timing cue, e.g. 'beat drop on the cut'." }
+      }
+    },
+    "hookRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "formula_id", "layers"],
+      "properties": {
+        "id": { "$ref": "#/$defs/hookId" },
+        "formula_id": { "$ref": "#/$defs/formulaId" },
+        "layers": { "$ref": "#/$defs/layers" }
+      }
+    },
+    "hook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "concept_ref", "formula_id", "layers", "language", "scores", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/hookId" },
+        "concept_ref": { "anyOf": [{ "$ref": "#/$defs/conceptId" }, { "type": "null" }] },
+        "formula_id": { "$ref": "#/$defs/formulaId" },
+        "layers": { "$ref": "#/$defs/layers" },
+        "language": { "enum": ["Hindi", "English", "Hinglish"] },
+        "writing_script": { "enum": ["roman-hinglish", "devanagari", "english"] },
+        "tags": {
+          "description": "visual-led = the first frame does the work; proof = carries a real fact; customer-phrase = uses a real customer phrase from research or the profile; timely = festival or season.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["visual-led", "proof", "customer-phrase", "timely"] }
+        },
+        "source_refs": { "type": "array", "items": { "type": "string" }, "description": "Research finding ids, brief fields or profile fields the hook's facts come from." },
+        "scores": {
+          "description": "0-5 each, rubric in hooks/references/scoring.md. weighted = 2*clarity + 2*curiosity + 1.5*(relevance + specificity + india_fit + payoff) + brand_safety, plus the learnings adjustment; max 55 before adjustment. capped = the weakest-link rule applied.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["clarity", "curiosity", "relevance", "specificity", "india_fit", "payoff", "brand_safety", "weighted"],
+          "properties": {
+            "clarity": { "$ref": "#/$defs/score" },
+            "curiosity": { "$ref": "#/$defs/score" },
+            "relevance": { "$ref": "#/$defs/score" },
+            "specificity": { "$ref": "#/$defs/score" },
+            "india_fit": { "$ref": "#/$defs/score" },
+            "payoff": { "$ref": "#/$defs/score" },
+            "brand_safety": { "$ref": "#/$defs/score" },
+            "adjustment": { "type": "number", "minimum": -5, "maximum": 5, "description": "Learnings boost (+) or penalty (-)." },
+            "weighted": { "type": "number", "minimum": 0, "maximum": 60 },
+            "capped": { "type": "boolean" }
+          }
+        },
+        "boost_note": { "type": ["string", "null"], "description": "Which client learning moved the score, e.g. 'H07 worked on SHL-01 (+3)'." },
+        "critique_note": { "type": ["string", "null"], "description": "Diagnosis from the critique pass, e.g. 'brand-first; rewritten as 1F'." },
+        "rewritten_from": { "anyOf": [{ "$ref": "#/$defs/hookId" }, { "type": "null" }] },
+        "status": { "description": "top = in top_per_concept; kept = scored but not top 3; replaced = rewritten by the critique pass.", "enum": ["top", "kept", "replaced"] }
+      }
+    }
+  }
+}

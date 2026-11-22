@@ -40,6 +40,21 @@ We read these sources and rewrote their ideas in our own words. No text or files
 
 The brief's sources, and what we borrowed and left out, are in `docs/research/brief-sources.md`, in the repository.
 
+### Concept + hooks (detail in `docs/research/concept-hooks-sources.md`)
+
+| Source | Commit read | Licence | Ideas used in |
+|---|---|---|---|
+| [vyralcontent/content-skills](https://github.com/vyralcontent/content-skills), `viral-hooks`, `viral-instagram-reels`, `viral-short-form` | `349e495d97029a3e6303a7510e3f39c73f36d8fe` | MIT | `pre-production/hooks`: archetypes, three layers, Reels specifics, anti-patterns, critique pass |
+| [vyralcontent/content-skills](https://github.com/vyralcontent/content-skills), `viral-short-form-ideas` | `349e495d97029a3e6303a7510e3f39c73f36d8fe` | MIT | `pre-production/concept`: topic vs angle, constraint fan-out, one-topic-many-angles |
+| [Jakeschincariol/instagram-agent-skill](https://github.com/Jakeschincariol/instagram-agent-skill), `ig-reel`, `ig-plan` | `d03c56bb598be770c60b201f94237e5d1a4268a6` | MIT | `hooks`: 26 formulas (cross-referenced), scoring shape, safe zone; `concept`: proof/teach/opinion/story/offer angle types |
+| [sergebulaev/instagram-skills](https://github.com/sergebulaev/instagram-skills), `ig-hook-extractor` | `823c681b42be9ecff9f4db20eaf14d1ea45ec1a1` | MIT | `hooks`: IG1–IG10 cross-labels, classification confidence |
+| [calebvbi/creator-skills-samples](https://github.com/calebvbi/creator-skills-samples), `instagram-reels-script-writer` | `81c021176d4dd6158eed5f821088adb7b6eb8dc6` | CC BY 4.0 | `hooks`: "real numbers or no numbers", hook types, bad-script patterns. **Attribution:** "Instagram Reels Script Writer" by CreatorSkills (https://creatorskills.co), https://creatorskills.co/skills/instagram-reels-script-writer, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/); adapted and rewritten in our own words. |
+| [smixs/creative-director-skill](https://github.com/smixs/creative-director-skill), `creative-director` | `ac06eb255371da35d1db0a146dbfcca8c8857543` | CC BY 4.0 | `concept`: insight-first pipeline, tension types, SIT/SCAMPER/TRIZ/bisociation, brief-compliance check. **Attribution:** Serge Shima — github.com/smixs/creative-director-skill (https://sergeshima.com), CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/); a small subset adapted and rewritten in our own words. |
+| [0xhughs/director-skills](https://github.com/0xhughs/director-skills), `short-film-development` | `35ca0a2b4cd55b0668aa9ea0f40273324b774bb4` | MIT | `concept`: logline, premise, story spine, short-runtime rules |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills), `marketing-psychology` | `5b2b400eec1e7e1cec76245a715d0b0d4fd2a9c1` | MIT | `library/knowledge/india-consumer-psychology.md` (lever catalogue and misuse lines) |
+| [Salah-XD/equipt](https://github.com/Salah-XD/equipt) (Equipt), `plugins/equipt-business/agents/hindi-english-content-writer.md`, `instagram-reels-script-writer.md` | `6380fd246d95eedb65077f466d37534a557d48dc` | CC BY 4.0 (content under `plugins/`) | `hooks`: Roman vs Devanagari defaults, natural Hinglish, cringe list; refusals folded into the misuse lines. **Attribution:** adapted from "hindi-english-content-writer" and "instagram-reels-script-writer" by Equipt (https://github.com/salah-xd/equipt), CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/); rewritten in our own words. |
+| [Motion-Creative/skills](https://github.com/Motion-Creative/skills), `ad-concept-generator`; [Motion-Creative/motion-creative-plugin](https://github.com/Motion-Creative/motion-creative-plugin), `create-concepts`, `concept-engine` | `5d031702c7b8c7bbc8ac1b2dee9378e6f9f53db6`; `3ab85bfbbeee08d6ad77dee3850cce7c39fbc111` | MIT | `concept`: concept = hook + audience + angle + creative direction; strength criteria; variety rule; story mechanics |
+
 ## Tools used, not copied
 
 | Source | Read at | Licence | How we use it |

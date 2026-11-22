@@ -3,7 +3,7 @@
   "$id": "urn:tdm:social-media-manager:contracts:config",
   "title": "Config",
   "description": "Agency-wide settings, stored in the data store (Config tab). Created at first-run setup.",
-  "x-version": 2,
+  "x-version": 3,
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -43,6 +43,18 @@
     "default_credit_warn_video": { "type": ["number", "null"], "minimum": 0, "default": null },
     "default_credit_budget_poster": { "type": "number", "minimum": 0, "default": 28 },
     "default_credit_warn_poster": { "type": ["number", "null"], "minimum": 0, "default": 20 },
+    "concepts_count": {
+      "description": "(v3) Concepts the concept stage develops per job (full track).",
+      "type": "integer", "minimum": 1, "maximum": 5, "default": 3
+    },
+    "hooks_per_concept": {
+      "description": "(v3) Hooks generated per concept (or for the reused format on the quick track) before the top 3 are kept.",
+      "type": "integer", "minimum": 6, "maximum": 12, "default": 8
+    },
+    "creative_auto_pick_after_hours": {
+      "description": "(v3) If set, the recommended concept + hook is picked automatically when the creative-pick gate has had no reply for this many hours; logged as system. Null = off (default).",
+      "type": ["number", "null"], "minimum": 1, "default": null
+    },
     "credit_policy": {
       "description": "How generation stages spend credits: as little as possible. See docs/decisions/0003-credit-policy.md.",
       "type": "object",

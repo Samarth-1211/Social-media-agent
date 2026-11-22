@@ -14,7 +14,7 @@ Every item gets exactly one label. Decide in this order; the first that fits win
 
 When torn between `in_scope` and `change_request`, ask: **"Was this already decided and approved?"**
 - **Not decided yet, and it adjusts the shown work** → `in_scope`.
-- **It reverses an approved decision** (brief, concept, script approved at an earlier gate), **or adds something the brief didn't have** → `change_request`.
+- **It reverses an approved decision** (brief, the creative pick, script approved at an earlier gate), **or adds something the brief didn't have** → `change_request`.
 - **Can't tell from the record** → label it `clarification`, with the question for the admin, not the client: "Was the 25% offer agreed with the client before?"
 
 ## Writing `change`
