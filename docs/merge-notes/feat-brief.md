@@ -30,6 +30,10 @@ The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, sepa
 | `plugins/social-media-manager/.claude-plugin/plugin.json` | `"./skills/pre-production"` added to `skills` (M3) | The validator needs the group registered once `brief/` exists. The brief stage stays a `placeholder` until M5. |
 | `docs/decisions/0005-shared-rules-consolidation.md` | New (M3): proposal only | Prompt 4 §0.5: repeated confidence, plain-language and client-message rules |
 
+| `library/storage/README.md` (M4) | "Auto-approved brief gate" paragraph: the only case a gate is decided by `system` | Prompt 4 §4.8 |
+| `library/contracts/examples/brief.example.json` (M4) | `self_check` gains the 5 remaining checklist ids (array items only) | The example follows the 10-line checklist |
+| `scripts/build-sample-data.mjs` (M4) | SHL-03 `self_check` lists all 10 checklist ids | Same |
+
 _Later milestones add rows here (stages.yaml, README, CHANGELOGs)._
 
 ## 2. To do at merge
@@ -54,6 +58,7 @@ _Later milestones add rows here (stages.yaml, README, CHANGELOGs)._
   
   `client-feedback` is unchanged. If B5 fails after the merge (the reply lands in client-feedback), fix it then.
 - **Dashboard query on text timestamps.** The query compares `asked_at` text with a text cutoff built from `NOW()`. It works when every `asked_at` has the `+05:30` form; check it on the TEST sheet.
+- **Auto-approve vs the producer's gate rules.** `producer` says never to pass a gate on someone's behalf. The brief's auto-approve (off by default) records a `system` decision, which storage README §5 allows. Check in the combined test (B12) that the producer accepts it rather than re-requesting the admin gate. If not, propose a one-line exception in `producer/references/gate-rules.md` at merge.
 - **The producer and an awaiting-client brief.** The producer is unchanged. The brief skill tells it not to request the gate while the brief is `awaiting-client` (README §5). Confirm in S3/B5 that the producer doesn't force the gate early.
 
 ## 4. Proposed for merge phase (not applied)

@@ -61,7 +61,12 @@
     { "check": "offer-matches-profile", "pass": true, "note": "Percentage offer, no price shown." },
     { "check": "no-invented-claims", "pass": true },
     { "check": "research-angle-or-reason", "pass": true, "note": "Research skipped: stage not built yet." },
-    { "check": "variants-consistent", "pass": true }
+    { "check": "variants-consistent", "pass": true },
+    { "check": "essentials-confirmed", "pass": true },
+    { "check": "pairs-agree", "pass": true },
+    { "check": "language-consistent", "pass": true },
+    { "check": "mandatories-present", "pass": true, "note": "Price-first learning applied as the offer on the first frame." },
+    { "check": "downstream-complete", "pass": true }
   ],
   "downstream": {
     "concept": { "angle": "Ghar Diwali-ready, bina mehnat", "creative_format": "offer-card-motion", "constraints": ["No dirty-clothes close-ups", "Never say 'cheap'"] },

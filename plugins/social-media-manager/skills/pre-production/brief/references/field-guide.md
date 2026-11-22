@@ -114,7 +114,7 @@ Fill `research` from `research-input.md`. When there is no research output, writ
 
 ## Readiness and handoff
 
-- `self_check[]` and `ready_for_production` come from this skill's `checklists/ready-for-production.md`.
+- `self_check[]` and `ready_for_production` come from `${CLAUDE_SKILL_DIR}/checklists/ready-for-production.md`.
 - `downstream` gives each later stage only what it needs:
 
 | Block | Fill with |
@@ -134,4 +134,4 @@ Push back (or fix and say so) when you see:
 - **"Make it like [big brand]".** Ask which one thing to borrow: the pace, the humour, the look.
 - **Three messages.** Keep the one the CTA supports; move the rest to `avoid` or a later job.
 
-This skill's `examples/bad-vague-brief.md` shows these, annotated.
+`${CLAUDE_SKILL_DIR}/examples/bad-vague-brief.md` shows these, annotated.

@@ -96,3 +96,5 @@ The `brief` stage saves its output with `update_job`, like every stage, plus two
 **Waiting on the client without a gate.** While the brief is `awaiting-client`, the brief stage itself sets the job's `waiting_on` to `client` and `next_action` to "<assignee> to paste <client>'s reply to the <n> brief questions (sent <date>)". No gate is recorded. This is the only time a stage skill writes `waiting_on`. As soon as the answers are parsed, the stage sets `waiting_on` back to `none`, and the normal admin gate follows.
 
 **A typed answer in the sheet counts.** If someone types an answer into a `BriefQuestions` row from their phone, the brief reads it as the client's answer on its next run, then rewrites the mirror from the brief.
+
+**Auto-approved brief gate.** When `config.brief_auto_approve_repeat` is true and every condition in that setting's description holds, the brief stage may record the admin gate as approved with `decided_by: system`, `decided_by_role: system` and a note naming the rule. It also logs a `ruling`. Nothing else may decide a gate as `system`.

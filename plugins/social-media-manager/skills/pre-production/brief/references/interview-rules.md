@@ -24,7 +24,7 @@ Mixed blockers: ask the team first; whatever is left that only the client knows 
   3. **2–4 options**, the guess first, worded so "haan" takes it;
   4. "other": they can type anything.
 
-  Template: `templates/question.md` in this skill.
+  Template: `${CLAUDE_SKILL_DIR}/templates/question.md`.
 - **Use the ask-the-user tool when the app has one.** In Claude Code it is `AskUserQuestion`: one question per call, `multiSelect: false`, a `header` of 12 characters or fewer ("Price", "Channel"), and 2–4 options whose first label ends with "(guess)". The tool adds "Other" itself. Without such a tool, write the question as text with numbered options:
 
   ```
@@ -38,7 +38,7 @@ Mixed blockers: ask the team first; whatever is left that only the client knows 
 
 ## 3. Client mode (one WhatsApp message)
 
-Use it for blockers only the client knows. Write **one** message (`templates/client-whatsapp-questions.md`):
+Use it for blockers only the client knows. Write **one** message (`${CLAUDE_SKILL_DIR}/templates/client-whatsapp-questions.md`):
 - in the client's language and script (profile `languages`; Roman Hinglish if unsure);
 - a one-line greeting with the job in plain words ("Winter blanket offer video ke liye 2 cheezein confirm karni hain");
 - **numbered questions, each with a guess**, so the client can reply "1 haan, 2 nahi, ₹249";
