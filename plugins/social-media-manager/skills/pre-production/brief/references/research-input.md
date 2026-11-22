@@ -1,12 +1,10 @@
-# Research input: what the brief expects from research
+# Research input: what the brief reads from research
 
-The research stage is **not on this branch**. Until the merge, every brief writes:
+The `research` stage runs before the brief (`stages.yaml`: `brief` has `optional_reads: [research]`). Research never blocks the brief:
+- **No `research` output on the job** (an older job, or research didn't run) → `"research": { "status": "skipped", "skip_reason": "no research output on this job" }`.
+- **Research skipped itself** (an urgent job) → `status: skipped` with `skip_reason` = its `note`. If it attached an older sheet's `downstream`, you may still use it; say how old it is.
 
-```json
-"research": { "status": "skipped", "skip_reason": "research stage not built yet" }
-```
-
-This file describes the input the brief will read once the market researcher is merged. It was written against the researcher branch's contract (`research.schema.json` and the `downstream` definition in `insight.schema.json` on `group2a-market-researcher`, read 2026-11-22). **Re-check both at merge**; the merge notes list this as a to-do.
+The contracts are `research.schema.json` and the `downstream` definition in `insight.schema.json`.
 
 ## 1. Where it comes from
 
@@ -46,9 +44,7 @@ Each `downstream` item is `{ id: "F12", text, confidence: strong | some | weak, 
 - **If research exists but no angle fits** (e.g. it's all about saree care and this job is blankets), set `research.no_angle_reason`: "Research angles are about wedding dry-clean; this job is a winter blanket offer." The self-check needs either an angle or this reason.
 - Research is never a reason to ask a question. If it's thin, use the profile.
 
-## 4. To check at merge
+## 4. Express mode and the job
 
-1. `research.status` here has 3 values; research has 5. Keep the mapping in §2, or widen the brief enum (additive) to carry `refreshed` and `new`.
-2. The brief's `research` block and `job.research_status` (added by the researcher to the job) must agree.
-3. Add `optional_reads: [research]` to the `brief` stage. The researcher branch already has it; take that line when merging.
-4. Express mode reads `job.urgent` once it exists; here it uses the request's words and the deadline.
+- `job.urgent` true (set at intake) means express mode (`interview-rules.md` §4), and research is usually skipped.
+- `brief.research.status` must agree with `job.research_status`: `fresh` for fresh / refreshed / new, `partial`, or `skipped`.

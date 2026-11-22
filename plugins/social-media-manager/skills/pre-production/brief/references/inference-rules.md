@@ -59,7 +59,7 @@ Use these when nothing higher says otherwise. Always mark them `guessed`.
 - **Learnings.** Apply every `active` learning, and `watch` learnings too, each with one line in `assumptions` ("Price on the first frame: learning from SHL-01, watch"). Retired learnings are ignored.
 - **Open questions in the profile.** If the brief touches one, apply its recommendation and say so in one line. Don't re-ask the client something `brand-keeper` already has open; reference it instead.
 - **Customer phrases** go into `downstream.hooks.customer_phrases` exactly as written, never "improved".
-- **Research missing.** No `research` output on the job → `research: { status: "skipped", skip_reason: "research stage not built yet" }` (until the research stage exists; after the merge, use its own note).
+- **Research missing.** No `research` output on the job → `research: { status: "skipped", skip_reason: "no research output on this job" }`. Research skipped itself (urgent job) → `skipped` with its `note` as `skip_reason` (`research-input.md`).
 - **`marketing:campaign-plan`.** On the full track only, and only if that skill is available in this session, you may use it for help with objective, audience and message. Take only those three parts of its output. If it isn't available, skip it without mentioning it.
 
 ## 6. Safety

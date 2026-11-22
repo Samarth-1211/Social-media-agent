@@ -8,7 +8,7 @@
 |---|---|
 | Request (intake, approved) | "Neha ji ka Diwali offer reel chahiye: curtain aur sofa cleaning 20% off, 25 Nov tak." Deliverable "Instagram reel 9:16 ~20s". Deadline 25 Nov. Assignee Ravi. |
 | Brand brief (v3) | Working couples and students, Vijay Nagar / Bhawarkua / Palasia, 20–40; their words "kapde time pe chahiye". Hinglish first. Instagram, WhatsApp status, Google Business. Do: show the pickup van; free pickup above ₹299. Don't: dirty-clothes close-ups, named competitors; never "cheap". Learning (watch): price on the first frame of offer reels. |
-| Research | None on this branch → skipped |
+| Research | Skipped by research (urgent job, no insight sheet yet) |
 | Past jobs | None delivered yet |
 
 ## Draft (step 3), no questions
@@ -25,7 +25,7 @@
 | `creative_format` | offer-card-motion | default for offer reels; no footage on file | guessed |
 | `mandatories` | Logo end card; offer validity date; free pickup line | profile do + offer | confirmed |
 | `avoid` | Dirty-clothes close-ups; "Cheap" | profile don'ts | confirmed |
-| `research` | skipped, "research stage not built yet" | | |
+| `research` | skipped, with research's note as the reason | research output | |
 
 **Gap check (step 4):** offer-reel essentials are the objective, deliverables, duration, language, CTA channel, offer text and validity. The price isn't shown (a percentage offer). No blocker → **0 questions**.
 

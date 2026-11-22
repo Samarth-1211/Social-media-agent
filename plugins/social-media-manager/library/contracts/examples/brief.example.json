@@ -44,7 +44,7 @@
   "duration_sec": 20,
   "writing_script": "roman-hinglish",
   "posting_date": "2026-11-18",
-  "research": { "status": "skipped", "skip_reason": "research stage not built yet" },
+  "research": { "status": "skipped", "skip_reason": "Urgent job: research skipped and the client has no insight sheet yet." },
   "track_suggestion": { "track": "quick", "reason": "Repeat offer-reel format for this client." },
   "confidence": {
     "objective": { "status": "confirmed", "basis": "intake note" },
@@ -60,7 +60,7 @@
     { "check": "editor-can-start", "pass": true },
     { "check": "offer-matches-profile", "pass": true, "note": "Percentage offer, no price shown." },
     { "check": "no-invented-claims", "pass": true },
-    { "check": "research-angle-or-reason", "pass": true, "note": "Research skipped: stage not built yet." },
+    { "check": "research-angle-or-reason", "pass": true, "note": "Research skipped (urgent job, no insight sheet yet)." },
     { "check": "variants-consistent", "pass": true },
     { "check": "essentials-confirmed", "pass": true },
     { "check": "pairs-agree", "pass": true },

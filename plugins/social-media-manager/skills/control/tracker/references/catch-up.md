@@ -38,7 +38,7 @@ It answers five questions from the record alone. Never fill them from memory:
 
 | Check | If it fails |
 |---|---|
-| `waiting_on` equals the pending gate's owner role (or `none` with no pending gate) | Show the card, plus a line: "Data check: waiting_on says X but the open gate is Y; ask the admin or producer to fix." |
+| `waiting_on` equals the pending gate's owner role (or `none` with no pending gate; or `client` with no pending gate while the job's brief is `awaiting-client`) | Show the card, plus a line: "Data check: waiting_on says X but the open gate is Y; ask the admin or producer to fix." |
 | `next_action` mentions the current stage or the pending gate | If it clearly refers to an earlier stage, add: "next_action looks out of date." |
 | The job's status is `paused` or `cancelled` | Say so on the first line. |
 

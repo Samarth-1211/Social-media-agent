@@ -127,6 +127,7 @@ Only then say the stage is done. If a check fails, log an `error`, report it and
 |---|---|
 | `none` | Close the history row (`done`, `finished_at`). Log it. Run the next stage in the same turn, without asking. |
 | `admin`, `editor`, `client` | `record_gate` request (`gate-rules.md` §1). Stop and show the gate message. |
+| Stage skill says it is **waiting on the client** (e.g. brief `awaiting-client`) | Don't request the gate. Keep the history row `in_progress`, keep the skill's `waiting_on: client` and `next_action`, and stop. When the reply is pasted, run the same stage skill again; it ends with its normal gate. |
 
 A run of consecutive `gate: none` stages continues until the next gate, a failed check or a budget stop.
 

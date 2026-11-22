@@ -232,7 +232,7 @@
     "posting_date": { "type": ["string", "null"], "format": "date" },
 
     "research": {
-      "description": "What the brief took from the research stage. Until the research stage exists on this branch, status is skipped with skip_reason 'research stage not built yet'. Expected input: skills/pre-production/brief/references/research-input.md.",
+      "description": "What the brief took from the research stage (job.outputs.research). No research output → status skipped, skip_reason 'no research output on this job'. Mapping: skills/pre-production/brief/references/research-input.md.",
       "type": "object",
       "additionalProperties": false,
       "required": ["status"],

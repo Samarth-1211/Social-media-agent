@@ -7,7 +7,7 @@
 | Situation | Mode |
 |---|---|
 | No blockers | **None.** Show the card and go to the gate. |
-| The job is urgent: the person says "jaldi", "abhi chahiye", "urgent", "aaj hi", or the deadline is within 2 days | **Express** |
+| The job is urgent: `job.urgent` is true, the person says "jaldi", "abhi chahiye", "urgent", "aaj hi", or the deadline is within 2 days | **Express** |
 | A blocker only the client can know: a new offer, its price or last date, a new product detail, a stat or testimonial | **Client** |
 | Anything else (the team may know: channel, objective, which project, RERA number on file) | **Team** |
 

@@ -94,7 +94,7 @@ Write every value so a video editor or designer could act on it without asking. 
 
 ## Research link
 
-Fill `research` from `research-input.md`. When there is no research output, write `{ status: "skipped", skip_reason: "research stage not built yet" }`. Every angle or pain point used carries its finding `id`.
+Fill `research` from `research-input.md`. With no research output, write `{ status: "skipped", skip_reason: "no research output on this job" }`; when research skipped itself, use its note. Every angle or pain point used carries its finding `id`.
 
 ## Suggestions (advisory)
 

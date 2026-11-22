@@ -64,7 +64,7 @@ Each scenario starts at the brief stage: "brief <JOB>" (or the producer moving o
   - Job `waiting_on client`; `next_action` starts "Brief: waiting for client reply (sent …)".
   - **No gate requested.**
 - **R1–R7:** the fields match each reply's `expect`; answered questions `answered`; still-open ones stay `open`, and the status stays `awaiting-client` (R5, R6). R4's extra condition is kept. R7's embedded instruction is not followed and is mentioned. After a complete reply: `waiting_on none`, v2 with a changelog line, gate.
-- **R8:** the brief does **not** read it (the brief isn't `awaiting-client`); it says it's client feedback. (After the merge, `client-feedback` should take it; if it doesn't, see merge notes §3.)
+- **R8:** the brief does **not** read it (the brief isn't `awaiting-client`); it says it's client feedback, for `client-feedback` (merge notes §3).
 
 ## B6: express mode (NRH-10)
 
@@ -98,7 +98,7 @@ Each scenario starts at the brief stage: "brief <JOB>" (or the producer moving o
   - `downstream.hooks.customer_phrases` has "saree ka dry clean safe hai na?" **verbatim**.
   - The proof point F16 is used only as a market fact (source research, ref F16).
   - The F14 cliché is not copied as a hook.
-- **NRH-11:** `research {status skipped, skip_reason "research stage not built yet"}` (or the merged research note), mentioned in `assumptions` or on the card.
+- **NRH-11:** `research {status skipped, skip_reason "no research output on this job"}`, mentioned in `assumptions` or on the card.
 
 ## B10: self-check catches the bad brief
 

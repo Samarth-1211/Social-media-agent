@@ -1,5 +1,7 @@
 # Merge notes: `feat/brief`
 
+> **Merged 2026-11-22** into `integrate/research-brief` (from `group2a-market-researcher` at `v0.2.0-alpha.1`), released as **0.2.0-alpha.2**. Status of each item is marked **[done]** below.
+
 The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, separately from the market researcher (`group2a-market-researcher`, Prompt 3). Both get merged and tested together. This file lists every change to a shared file and every item left for the merge.
 
 ## 1. Shared-file changes (all additive)
@@ -48,17 +50,17 @@ The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, sepa
 
 ## 2. To do at merge
 
-1. **Research input.** The researcher branch already gives `brief` `optional_reads: [research]` in its `stages.yaml`; keep that line, plus this branch's `status: active`. Map its `research_status` (fresh / refreshed / new / partial / skipped) onto `brief.research.status` as in `references/research-input.md` §2, or widen the brief enum additively. Its `downstream.brief` lists are `pain_points`, `working_angles` and `timely_hooks`; customer phrases are under `downstream.localise`, proof points under `downstream.script`. Originally planned here: add `optional_reads: [research]` to the `brief` stage in `stages.yaml`. It wasn't added here because no stage writes `research` on this branch, so check 6 would fail. Then connect `brief.research` to the real insight schema, following `skills/pre-production/brief/references/research-input.md` (M3): map the insight's `downstream` fields onto `angles_chosen`, `pain_points_used`, `customer_phrases_used`, and the insight id onto `insight_id`. Until then, every brief writes `research.status = skipped` with `skip_reason` "research stage not built yet".
-2. **Version numbers.** Settle them at merge so alpha.1 (researcher) comes before alpha.2 (brief). This branch bumps no plugin version and adds no tag.
-3. **Numbering that will clash:**
+1. **[done]** **Research input.** The researcher branch already gives `brief` `optional_reads: [research]` in its `stages.yaml`; keep that line, plus this branch's `status: active`. Map its `research_status` (fresh / refreshed / new / partial / skipped) onto `brief.research.status` as in `references/research-input.md` §2, or widen the brief enum additively. Its `downstream.brief` lists are `pain_points`, `working_angles` and `timely_hooks`; customer phrases are under `downstream.localise`, proof points under `downstream.script`. Originally planned here: add `optional_reads: [research]` to the `brief` stage in `stages.yaml`. It wasn't added here because no stage writes `research` on this branch, so check 6 would fail. Then connect `brief.research` to the real insight schema, following `skills/pre-production/brief/references/research-input.md` (M3): map the insight's `downstream` fields onto `angles_chosen`, `pain_points_used`, `customer_phrases_used`, and the insight id onto `insight_id`. Until then, every brief writes `research.status = skipped` with `skip_reason` "research stage not built yet".
+2. **[done]** **Version numbers.** alpha.1 = researcher (tagged on its branch), alpha.2 = this merge. Settle them at merge so alpha.1 (researcher) comes before alpha.2 (brief). This branch bumps no plugin version and adds no tag.
+3. **[done]** **Numbering that will clash:** layout → v3 (`BriefQuestions` `since: 3`; upgrades v1→v2 research, v2→v3 brief; Gates `decided_by_role` via `options_changed: 3`); check 12 kept (the researcher added none); decision records 0004/0005 kept (the researcher added none); `plugin.json` has one `pre-production` entry; `x-version` stays 2 on job and config.
    - **`sheet-layout.json` `version` and `upgrades["2"]`:** the researcher also adds tabs (Insights, InsightFindings, Tasks). Either combine both sets into one v2 upgrade, or make whichever merges second v3. The same applies to the `since` value on new tabs.
    - **Validator check numbers:** if the researcher also added a check 12, renumber one, and fix `ADD-A-SKILL.md` and the header comment.
    - **`x-version`:** if both branches changed the same schema (likely `job.schema.json` and `config.schema.json`), the merged schema is still `x-version: 2`, with both sets of fields.
    - **Decision record numbers:** this branch adds `0004-*` and `0005-*`; if the researcher branch adds either number, renumber.
    - **`plugin.json` `skills`:** both branches register `./skills/pre-production`; keep a single entry.
-4. **`pending_tasks` vs `BriefQuestions`.** The researcher adds a pending-tasks area (`Tasks` tab, `tasks.json`). Decide at merge whether brief client questions become one kind of pending task, or stay a separate mirror. For one task list: `BriefQuestions` rows map to tasks of kind `client-reply`, with `job_id`, `asked_at`, `status`, and the question in the body. The Dashboard block then queries the tasks tab instead.
-5. **Job fields from the researcher.** The researcher adds `research_status`, `insight_id` and `urgent` to the job. At merge, the brief's express mode reads `job.urgent` (on this branch it uses the request words "jaldi" / "abhi chahiye" and a deadline within 2 days), and `brief.research` should agree with `job.research_status`.
-6. **Combined test phase.** Run the validator, the S7 feedback runner, one live S3 run on the TEST sheet (now including the v2 upgrade on TDM Studio TEST Database), B1–B15 (written in M6, not run), and `git diff --stat main` for the protected paths.
+4. **[decided: keep separate for now]** **`pending_tasks` vs `BriefQuestions`.** The researcher's Tasks tab holds research runs and browser steps; brief client questions stay in the `BriefQuestions` mirror. Revisit when another stage needs client questions. The researcher adds a pending-tasks area (`Tasks` tab, `tasks.json`). Decide at merge whether brief client questions become one kind of pending task, or stay a separate mirror. For one task list: `BriefQuestions` rows map to tasks of kind `client-reply`, with `job_id`, `asked_at`, `status`, and the question in the body. The Dashboard block then queries the tasks tab instead.
+5. **[done]** **Job fields from the researcher.** The brief reads `job.urgent` for express mode; `brief.research` follows `job.research_status` (`research-input.md` §4). The researcher adds `research_status`, `insight_id` and `urgent` to the job. At merge, the brief's express mode reads `job.urgent` (on this branch it uses the request words "jaldi" / "abhi chahiye" and a deadline within 2 days), and `brief.research` should agree with `job.research_status`.
+6. **[in progress]** **Combined test phase.** Run the validator, the S7 feedback runner, one live S3 run on the TEST sheet (now including the v2 upgrade on TDM Studio TEST Database), B1–B15 (written in M6, not run), and `git diff --stat main` for the protected paths.
 
 ## 3. Risks to re-check after merge
 
@@ -75,7 +77,7 @@ The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, sepa
 
 The brief's "waiting on the client without a gate" state (storage README §5) meets two protected rules. Neither is applied.
 
-**Decision (admin, 2026-11-22):** apply 4a and 4b at the merge phase, before the combined tests. Not on `feat/brief`.
+**Decision (admin, 2026-11-22):** apply 4a and 4b at the merge phase, before the combined tests. **[done]** applied on `integrate/research-brief`, together with §5.
 
 ### 4a. Producer: don't request the gate while a stage waits on the client
 
@@ -98,7 +100,7 @@ Without it, the catch-up card for a brief waiting on the client shows "Data chec
 +| `waiting_on` equals the pending gate's owner role (or `none` with no pending gate; or `client` with no pending gate while the job's brief is `awaiting-client`) | Show the card, plus a line: "Data check: waiting_on says X but the open gate is Y; ask the admin or producer to fix." |
 ```
 
-## 5. Proposed for merge phase (not applied)
+## 5. Proposed for merge phase **[done: applied with 4a/4b]**
 
 ### Tracker status board: show "Brief: waiting for client reply"
 
