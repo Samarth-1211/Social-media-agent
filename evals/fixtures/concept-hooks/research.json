@@ -1,0 +1,71 @@
+{
+ "$comment": "Research outputs seeded as job.outputs.research (research.schema.json, downstream = insight $defs/downstream). Fictional; sources anonymised. Finding ids F<n>.",
+ "outputs": {
+  "shl-winter-fresh": {
+   "research_status": "fresh",
+   "insight_id": "SHL-I261201-2",
+   "insight_version": 1,
+   "insight_date": "2026-12-01",
+   "flags": [],
+   "note": "Winter sheet from 1 Dec, reused (9 days old).",
+   "downstream": {
+    "brief": {
+     "pain_points": [
+      { "id": "F1", "text": "Blankets and razais are too heavy to wash at home", "confidence": "strong" },
+      { "id": "F2", "text": "Stored woollens smell musty when taken out in December", "confidence": "some" }
+     ],
+     "working_angles": [
+      { "id": "F3", "text": "Show the razai going in and coming back fluffed", "confidence": "strong" },
+      { "id": "F4", "text": "Winter-ready checklist for the first cold week", "confidence": "some" }
+     ],
+     "timely_hooks": [{ "id": "F5", "text": "First cold week of December", "confidence": "some" }]
+    },
+    "concept_and_hooks": {
+     "working_angles": [
+      { "id": "F3", "text": "Show the razai going in and coming back fluffed", "confidence": "strong" },
+      { "id": "F4", "text": "Winter-ready checklist for the first cold week", "confidence": "some" }
+     ],
+     "outlier_hooks": [
+      { "id": "F6", "text": "Mehmaan aa rahe aur razai mein se smell aa rahi hai", "confidence": "strong", "language": "Hinglish", "formula": "IG3", "multiple": 4.1 },
+      { "id": "F11", "text": "Before/after: flat blanket vs fluffed blanket, no words", "confidence": "some", "formula": "IG6", "multiple": 3.2 }
+     ],
+     "competitors_overdo": [
+      { "id": "F9", "text": "Flat discount card with snowflake graphics", "confidence": "strong" },
+      { "id": "F10", "text": "Stock photo of a family under a blanket", "confidence": "some" }
+     ]
+    },
+    "script": { "proof_points": [{ "id": "F12", "text": "Free pickup above ₹299 (client's own offer)", "confidence": "strong" }] },
+    "localise": {
+     "customer_phrases": [
+      { "id": "F7", "text": "razai ghar pe dhulti hi nahi", "confidence": "strong", "language": "Hinglish" },
+      { "id": "F8", "text": "sweater mein se smell aati hai", "confidence": "some", "language": "Hinglish" }
+     ]
+    },
+    "visuals": { "visual_cliches": [{ "id": "F13", "text": "Snowflake overlays and cartoon snowmen", "confidence": "strong" }] }
+   }
+  },
+  "nrh-partial": {
+   "research_status": "partial",
+   "insight_id": "NRH-I261125-1",
+   "insight_version": 1,
+   "insight_date": "2026-11-25",
+   "flags": ["browser_step_pending"],
+   "note": "Unattended part fresh; the Instagram read is still queued.",
+   "downstream": {
+    "brief": {
+     "pain_points": [{ "id": "F1", "text": "Fear that the project won't be delivered on time", "confidence": "strong" }],
+     "working_angles": [{ "id": "F4", "text": "Show the site, not the brochure", "confidence": "some" }],
+     "timely_hooks": []
+    },
+    "concept_and_hooks": {
+     "working_angles": [{ "id": "F4", "text": "Show the site, not the brochure", "confidence": "some" }],
+     "outlier_hooks": [],
+     "competitors_overdo": [{ "id": "F10", "text": "Drone over the towers with a sitar track and 'luxury living'", "confidence": "strong" }]
+    },
+    "script": { "proof_points": [] },
+    "localise": { "customer_phrases": [{ "id": "F8", "text": "RERA नंबर कहाँ देखें?", "confidence": "some", "language": "Hindi" }] },
+    "visuals": { "visual_cliches": [{ "id": "F13", "text": "Drone shot over the towers at sunset", "confidence": "strong" }] }
+   }
+  }
+ }
+}

@@ -1,6 +1,6 @@
 # Good: real-estate brand film, full track (fictional)
 
-**Job NRH-02**, Narmada Heights Developers, Jabalpur. Brief v2 (approved): `job_kind: brand-film`; awareness; families upgrading from rented flats, and NRIs buying for their parents; 60 s for YouTube and Instagram; Hindi with English moments; RERA number on every creative (mandatory); don't promise returns or appreciation. Profile: decision maker Mr. Agrawal (director); tone "assured and family-first"; specific facts only (RERA number, possession date, carpet area). Research (some): pain point `PP1` "fear the project won't be delivered on time" (strong); working angle `WA3` "show the site, not the brochure" (some); competitors overdo `CO2` "drone shot over the towers with sitar music" (strong).
+**Job NRH-02**, Narmada Heights Developers, Jabalpur. Brief v2 (approved): `job_kind: brand-film`; awareness; families upgrading from rented flats, and NRIs buying for their parents; 60 s for YouTube and Instagram; Hindi with English moments; RERA number on every creative (mandatory); don't promise returns or appreciation. Profile: decision maker Mr. Agrawal (director); tone "assured and family-first"; specific facts only (RERA number, possession date, carpet area). Research (some): pain point `F1` "fear the project won't be delivered on time" (strong); working angle `F4` "show the site, not the brochure" (some); competitors overdo `F10` "drone shot over the towers with sitar music" (strong).
 
 ## The pack
 
@@ -9,7 +9,7 @@ NRH-02 concepts v1 → hooks next
 
 Insight: Jabalpur families want to own instead of rent, but they've heard of projects
 that never got finished, so a brochure means nothing until they see the site and
-know who's building it. (research PP1)
+know who's building it. (research F1)
 
 C1 · Har mahine ki tasveer — the same spot on the site filmed on the same date every
      month: the building rises, a family watches it become theirs   43/50  proof · process-reveal ⭐
@@ -45,7 +45,7 @@ Scores: brief 5 · insight 5 · distinct 4 · India 4 · brand 5 · make 3 · ri
 
 ## Dropped angles
 
-- "Drone over the towers, sitar track, 'luxury living'" → `competitors_overdo` (`CO2`) and a borrowed-luxury cliché (psychology §4, L12 misuse).
+- "Drone over the towers, sitar track, 'luxury living'" → `competitors_overdo` (`F10`) and a borrowed-luxury cliché (psychology §4, L12 misuse).
 - "Best investment in Jabalpur, prices will double" → `brief_avoid` (the profile says no promises of returns).
 - "Joint family at the dining table in the new flat" → `weak_hook` plus a cliché; replaced by C2's dressing-room idea.
 - "Countdown: only 5 flats left" → removed: no inventory number in the brief (L07/L09 misuse).

@@ -1,0 +1,14 @@
+{
+ "$comment": "Scripted replies at SHL-03's pending creative pick (hooks.example.json: C1 1C/1B/1A, C2 2A/2B/2C, C3 3A/3B/3C; recommended C1 + 1C). Each runs on a fresh seed. `by` is who replies. Fictional.",
+ "replies": [
+  { "id": "P1", "by": "ravi", "text": "2B", "expect": { "gate": "approved", "pick": { "concept_ref": "C2", "hook_id": "2B", "backups": ["2A", "2C"] }, "hooks_version": 2 } },
+  { "id": "P2", "by": "ravi", "text": "concept 1 with hook C", "expect": { "gate": "approved", "pick": { "concept_ref": "C1", "hook_id": "1C" } } },
+  { "id": "P3", "by": "ravi", "text": "1 with 3A", "expect": { "gate": "approved", "pick": { "concept_ref": "C1", "hook_id": "3A" }, "mix_note": "hook from C3 adapted to C1; adapted line shown before recording" } },
+  { "id": "P4", "by": "ravi", "text": "mix 1 and 3", "then": "haan theek hai", "expect": { "gate": "approved after the confirmation", "pick": { "concept_ref": "C1" }, "mix_note": "C1 base (higher score) + the named C3 element; merged spine shown in 3 lines first" } },
+  { "id": "P5", "by": "ravi", "text": "more hooks like 2A", "expect": { "gate": "changes_requested", "hooks_version": 2, "new_hooks": "5 more for C2 in 2A's family (H20 mid-sentence story / story angle)", "pick": { "status": "pending" }, "then": "creative pick shown again and a new gate requested" } },
+  { "id": "P6", "by": "ravi", "text": "none, make it funnier", "expect": { "gate": "sent_back", "sent_back_to": "concept", "note_contains": "funnier" } },
+  { "id": "P7", "by": "ravi", "text": "theek hai", "expect": { "gate": "approved", "pick": { "concept_ref": "C1", "hook_id": "1C" } } },
+  { "id": "P8", "by": "pooja", "text": "2B", "expect": { "gate": "still pending", "refusal": "Pooja is not assigned to SHL-03 and not the admin: names Ravi or Samarth" } },
+  { "id": "P9", "by": "ravi", "text": "2B but text mein 'shaadi' ki jagah 'wedding' likho", "expect": { "gate": "approved", "pick": { "hook_id": "2B" }, "edit": "downstream.hook.layers.text uses 'wedding'; note records the edit" } }
+ ]
+}

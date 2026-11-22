@@ -1,6 +1,6 @@
 # Good: Hinglish hooks for a laundry offer (fictional)
 
-**Job SHL-04**, Shubh Laundry, Indore: concept **C1 "Ek bag, poora hafta"** (offer · demo) from `concept/examples/good-laundry-offer-concepts.md`. Facts allowed: ₹89/kg wash + iron, free pickup above ₹299 (profile); research `PP2` "weekends go into laundry and ironing" (strong), `CP1` "press wala nahi aaya" (strong); research `outlier_hooks` show H26 (relatable moment) strong in Indore home services. Learnings: **H02 rejected** by Neha ("lecture jaisa lagta hai", active); "price pehle dikhao" (watch, no formula id → reads as H30). Brief: Hinglish, Roman, 20 s, CTA "WhatsApp karo".
+**Job SHL-04**, Shubh Laundry, Indore: concept **C1 "Ek bag, poora hafta"** (offer · demo) from `concept/examples/good-laundry-offer-concepts.md`. Facts allowed: ₹89/kg wash + iron, free pickup above ₹299 (profile); research `F2` "weekends go into laundry and ironing" (strong), `F7` "press wala nahi aaya" (strong); research `outlier_hooks` show H26 (relatable moment) strong in Indore home services. Learnings: **H02 rejected** by Neha ("lecture jaisa lagta hai", active); "price pehle dikhao" (watch, no formula id → reads as H30). Brief: Hinglish, Roman, 20 s, CTA "WhatsApp karo".
 
 ## 1. The batch (C1, 8 hooks, before critique)
 
@@ -43,7 +43,7 @@ Tie between 1A and 1B: 1A is first because the price-first learning says this ow
 
 ## Why this is good
 
-- **The customers' own phrase** (`CP1`) beats anything we could write; it's used verbatim.
+- **The customers' own phrase** (`F7`) beats anything we could write; it's used verbatim.
 - **Every number is the client's** (₹89, ₹299); no invented speed, count or deadline.
 - **Two visual-led openers** and five formulas; the muted test passes for all three top hooks.
 - **Learnings did their job:** the owner's dislike of "stop doing" sank 1F; the price-first note lifted 1A.

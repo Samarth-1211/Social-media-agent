@@ -34,6 +34,10 @@ This file records every change to a shared file and every proposal for files thi
 | M6 | `skills/pre-production/hooks/SKILL.md` | At the pick: record the gate decision **first**, then save `pick` + `downstream` as `hooks` version + 1 (so gate-rules §3's version check passes). |
 | M6 | `library/contracts/examples/job.example.json` | SHL-01 `outputs.hooks` → version 2 (v1 shown at the pick, v2 records it); sample data regenerated. |
 | M6 | `skills/pre-production/README.md` | New section "Concept and hooks handoff": what script, localise, storyboard / shot sourcing and the learning loop read from `hooks.data.downstream`. |
+| M7 | `evals/fixtures/concept-hooks/**`, `evals/concept-hooks-fixtures.mjs`, `evals/scenarios/concept-hooks.md`, `evals/rubrics/concept-hooks.md` (new) | Fixtures (3 clients, 6 briefs incl. a planted bad brief, 2 research outputs, 7 scenario jobs + 1 past job, 9 pick replies), check/seed tool, scenarios C1–F1, rubric. Written, not run. |
+| M7 | `evals/README.md` | One line pointing to the concept + hooks suite. |
+| M7 | `skills/pre-production/hooks/SKILL.md` | Gate table: plain approval ("ok", "theek hai") = the recommended pair. |
+| M7 | concept and hooks `examples/*.md` | Fictional research ids renamed to the real `F<n>` pattern. |
 
 ## 2. Proposals for protected files (not applied here)
 

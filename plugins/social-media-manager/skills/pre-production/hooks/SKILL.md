@@ -72,6 +72,7 @@ Stage contract: reads `client`, `brief`; optionally `concept`, `research`. From 
 
 | Reply (any language, any case) | Do |
 |---|---|
+| "ok", "theek hai", "approve", "⭐ wala" | The recommended pair. |
 | "2B", "C2 B", "concept 2 hook B", "B" (quick: "QA", "A") | Pick concept 2 + hook 2B. Backups = the other two top hooks of that concept. |
 | "1 with C", "concept 1 with hook 3A" | Concept 1 with that hook. A hook from another concept → check its promise fits concept 1; adapt the wording if needed (show the adapted line), `mix_note`. |
 | "mix 1 and 3" | Merge: base = the higher-scoring concept, take the named element from the other. Show the merged spine in 3 lines + the best fitting hook; record on "haan"/"ok". |

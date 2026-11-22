@@ -29,8 +29,8 @@ Recommended: C2: most energetic.                                         ← ✗
 
 | Problem | Fix (see the good example) |
 |---|---|
-| Topic as insight | Sourced tension: time, not price (research `PP2`, `CP1`) |
-| Cliché | Real doorsteps and the real pickup bag; the research cliché (`CO1`) flipped |
+| Topic as insight | Sourced tension: time, not price (research `F2`, `F7`) |
+| Cliché | Real doorsteps and the real pickup bag; the research cliché (`F9`) flipped |
 | Invented proof | Only ₹89/kg and ₹299 from the profile; gaps as `{{needed}}` |
 | Same idea ×3 | offer/demo · story/pov · proof/before-after |
 | No reason | Scored on 7 criteria; a recommendation with a one-line reason |
