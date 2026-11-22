@@ -2,6 +2,33 @@
 
 All notable changes to the `social-media-manager` plugin. Versions follow semver (see `docs/ARCHITECTURE.md`, Versioning).
 
+## [0.2.0-alpha.2] - 2026-11-22
+
+Group 2a, agent 2: the brief, merged with the market researcher (`docs/merge-notes/feat-brief.md`). Contracts change additively; v2 sheets upgrade in place to layout v3.
+
+### Added
+- `pre-production/brief` skill:
+  - drafts the brief by itself after research, from the request, profile, research `downstream`, past jobs, festival calendar and defaults;
+  - asks only blocking essentials (team, client or express mode, at most `brief_max_questions`), in plain Hinglish, Hindi or English;
+  - one WhatsApp message for client-only questions, and reads the client's reply while the brief is `awaiting-client`;
+  - self-check "could an editor start without asking"; admin gate with optional auto-approve.
+
+  The `brief` stage is `active` and reads `research` when present.
+- Contracts (`x-version` 2, all additive):
+  - `brief.schema.json`: `status`, `changelog`, `job_kind`, `objective_label`, `*_detail` pairs, `proof_points`, `creative_format`, master format, `writing_script`, `research`, `confidence`, `client_questions`, `self_check`, `downstream`, `deliverables[].changes_from_master`;
+  - `config.schema.json`: `brief_auto_approve_repeat` (false), `brief_max_questions` (5), `client_question_reminder_hours` (24);
+  - `job.schema.json`: gate `decided_by_role` `system`.
+- Storage layout v3: `BriefQuestions` mirror tab, Dashboard block "Brief: waiting for client reply", brief Config rows, per-version brief files `Jobs/<id>/brief/brief-v<n>.json`, files-mode `brief/` folder, and `sheet-setup.json` → `upgrades` entry v2 → v3 for existing databases.
+- Validator check 12 (brief text/detail pairs, variants vs master, research and readiness rules, mirror); `x-version` keyword registered. Decision records 0004 (field pairs) and 0005 (shared-rules consolidation, proposed).
+- Evals (written, not run): `evals/fixtures/brief/`, `evals/brief-fixtures.mjs`, `evals/scenarios/brief.md` (B1–B15), `evals/rubrics/brief.md`.
+
+### Changed
+- Sample data: SHL-03 (brief waiting on the client).
+- `producer` and `tracker`: an active stage may wait on the client without a gate (brief `awaiting-client`); see merge notes §4.
+
+### Tested
+- TO BE FILLED by the combined test phase.
+
 ## [0.2.0-alpha.1] - 2026-11-22
 
 Group 2a: the market researcher. Research keeps an insight sheet per client with as little human work as possible and hands it to later stages. Contracts change additively; v1 sheets upgrade in place.

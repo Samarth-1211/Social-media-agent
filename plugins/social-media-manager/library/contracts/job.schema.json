@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:tdm:social-media-manager:contracts:job",
   "title": "Job",
+  "x-version": 2,
   "description": "One production job (a video or a poster) for one client. Logical record: the storage layer maps it to Google Sheets rows (library/storage/). Source of truth for progress, gates, credits, feedback and outputs.",
   "type": "object",
   "additionalProperties": false,
@@ -46,7 +47,7 @@
 
     "current_stage": { "$ref": "#/$defs/stageId" },
     "waiting_on": {
-      "description": "Who the job is waiting on right now: the owner of the pending gate, or 'none' while a stage is running or the job is closed. Kept in sync by record_gate; drives the status board.",
+      "description": "Who the job is waiting on right now: the owner of the pending gate, or 'none' while a stage is running or the job is closed. Kept in sync by record_gate; drives the status board. Exception (v2): while the brief waits on the client's answers (brief status awaiting-client), the brief stage sets 'client' with no pending gate.",
       "enum": ["admin", "editor", "client", "none"]
     },
     "next_action": {
@@ -216,7 +217,7 @@
         },
         "requested_at": { "$ref": "#/$defs/timestamp" },
         "decided_by": { "type": ["string", "null"], "description": "Handle of the approver; for client gates, the team member who recorded the client's decision." },
-        "decided_by_role": { "enum": ["admin", "editor", "designer", null] },
+        "decided_by_role": { "enum": ["admin", "editor", "designer", "system", null], "description": "system (v2) = auto-approved by a config rule, e.g. brief_auto_approve_repeat; decided_by is then 'system'." },
         "decided_at": { "$ref": "#/$defs/nullableTimestamp" },
         "sent_back_to": { "description": "Stage to reopen when status is sent_back.", "anyOf": [{ "$ref": "#/$defs/stageId" }, { "type": "null" }] },
         "note": { "type": "string" }

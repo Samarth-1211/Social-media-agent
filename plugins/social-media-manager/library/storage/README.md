@@ -21,7 +21,7 @@ Logical record shapes: `${CLAUDE_PLUGIN_ROOT}/library/contracts/` (`client`, `jo
    3. If only file tools and a project folder are available (Claude Code offline), use **files** (`files-backup.md`), and warn that this data is on this computer only and not shared with the team.
    4. Otherwise, ask.
 2. **No database found** → run first-run setup (`setup.md`) before anything else.
-   **A database on an older layout** (no Insights tab) → tell the admin and offer the upgrade (`google-sheets.md` §7). Until it is done, research can't save; everything else works.
+   **A database on an older layout** (no Insights tab, or no BriefQuestions tab) → tell the admin and offer the upgrade (`google-sheets.md` §7). Until it is done, research can't save; everything else works.
 3. **Identify the person.** The team shares one Claude account, so ask once: "Who's working: Samarth or an editor? Name?" Match the answer to the Team tab (name or handle).
    - Use that handle and role for the rest of the session.
    - In Claude Code, you may suggest the git `user.name` as the default.
@@ -92,3 +92,19 @@ Every operation reads before it writes. "Record" means the logical record in `li
 | Google tools missing or signed out | Say so and ask the user to connect Google Drive and Google Sheets. Offer files mode only for drafting, never as a silent switch. |
 | A write fails | Re-read, tell the user what was and wasn't saved, and retry once with a changed approach. After three failures, stop and report (log the error). |
 | A row doesn't match its schema (someone edited it by hand) | Show the field and the problem; ask before fixing. |
+
+## 5. Brief records (layout v3)
+
+The `brief` stage saves its output with `update_job`, like every stage, plus two extra writes in the same save. Backend steps: `google-sheets.md` §8, `files-backup.md` "Brief files".
+
+| Write | What | Rule |
+|---|---|---|
+| Brief output | `job.outputs.brief` (Outputs row) | The current version, as for every stage. `files` lists the version file below. |
+| Version file | `Jobs/<job_id>/brief/brief-v<n>.json` | One file per brief version, never overwritten. It holds the whole `brief` data. |
+| Client-question mirror | `BriefQuestions` rows for the job | A copy of `brief.data.client_questions`, rewritten on every brief save. The brief JSON stays the source of truth. Never delete a row: a question that's no longer needed gets status `dropped`. |
+
+**Waiting on the client without a gate.** While the brief is `awaiting-client`, the brief stage itself sets the job's `waiting_on` to `client` and `next_action` to "Brief: waiting for client reply (sent <date>): <assignee> to paste <client>'s answers to <n> questions.". No gate is recorded. This is the only time a stage skill writes `waiting_on`. As soon as the answers are parsed, the stage sets `waiting_on` back to `none`, and the normal admin gate follows.
+
+**A typed answer in the sheet counts.** If someone types an answer into a `BriefQuestions` row from their phone, the brief reads it as the client's answer on its next run, then rewrites the mirror from the brief.
+
+**Auto-approved brief gate.** When `config.brief_auto_approve_repeat` is true and every condition in that setting's description holds, the brief stage may record the admin gate as approved with `decided_by: system`, `decided_by_role: system` and a note naming the rule. It also logs a `ruling`. Nothing else may decide a gate as `system`.

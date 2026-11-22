@@ -1,0 +1,922 @@
+{
+ "$comment": "Delivered, client-approved past jobs for \"jaise pichli baar\" (B3) and auto-approve (B12). SHL-01 (20 s Instagram offer-card-motion, delivered 2026-11-24, inside 90 days of the 2026-12-08 eval clock). SHL-05 (15 s WhatsApp status, delivered 2026-08-20: 110 days old, outside the window). Fictional.",
+ "jobs": [
+  {
+   "job_id": "SHL-01",
+   "client_id": "shubh-laundry",
+   "type": "video",
+   "title": "Diwali curtain & sofa cleaning offer reel",
+   "track": "quick",
+   "status": "delivered",
+   "current_stage": "delivery",
+   "waiting_on": "none",
+   "next_action": "Delivered. Nothing pending.",
+   "stage_history": [
+    {
+     "stage": "intake",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "brief",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "concept",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "script",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "client-script-approval",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "storyboard",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "clips",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "voice-music",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "qa-clips",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "assemble",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "captions-motion",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "finish",
+     "status": "done",
+     "started_at": "2026-11-15T10:00:00+05:30",
+     "finished_at": "2026-11-15T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "client-final-approval",
+     "status": "done",
+     "started_at": "2026-11-24T10:00:00+05:30",
+     "finished_at": "2026-11-24T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "delivery",
+     "status": "done",
+     "started_at": "2026-11-24T10:00:00+05:30",
+     "finished_at": "2026-11-24T11:30:00+05:30",
+     "by": "ravi"
+    }
+   ],
+   "gates": [
+    {
+     "stage": "intake",
+     "kind": "stage",
+     "owner_role": "admin",
+     "status": "approved",
+     "shown_outputs": {
+      "request": 1
+     },
+     "requested_at": "2026-11-15T11:00:00+05:30",
+     "decided_by": "samarth",
+     "decided_by_role": "admin",
+     "decided_at": "2026-11-15T11:30:00+05:30"
+    },
+    {
+     "stage": "brief",
+     "kind": "stage",
+     "owner_role": "admin",
+     "status": "approved",
+     "shown_outputs": {
+      "brief": 1
+     },
+     "requested_at": "2026-11-15T11:00:00+05:30",
+     "decided_by": "samarth",
+     "decided_by_role": "admin",
+     "decided_at": "2026-11-15T11:30:00+05:30"
+    },
+    {
+     "stage": "client-final-approval",
+     "kind": "stage",
+     "owner_role": "client",
+     "status": "approved",
+     "shown_outputs": {
+      "master": 1
+     },
+     "requested_at": "2026-11-24T11:00:00+05:30",
+     "decided_by": "ravi",
+     "decided_by_role": "editor",
+     "decided_at": "2026-11-24T11:30:00+05:30",
+     "note": "Client: \"perfect hai, post kar do\""
+    },
+    {
+     "stage": "delivery",
+     "kind": "stage",
+     "owner_role": "admin",
+     "status": "approved",
+     "shown_outputs": {
+      "package": 1
+     },
+     "requested_at": "2026-11-24T11:00:00+05:30",
+     "decided_by": "samarth",
+     "decided_by_role": "admin",
+     "decided_at": "2026-11-24T11:30:00+05:30"
+    }
+   ],
+   "assignee": "ravi",
+   "deadline": "2026-11-24",
+   "credits": {
+    "budget": 200,
+    "used": 64,
+    "ledger": []
+   },
+   "outputs": {
+    "request": {
+     "version": 1,
+     "stage": "intake",
+     "by": "system",
+     "summary": "placeholder",
+     "updated_at": "2026-11-15T12:00:00+05:30",
+     "data": {
+      "placeholder": true,
+      "note": "intake not built yet"
+     }
+    },
+    "brief": {
+     "version": 1,
+     "stage": "brief",
+     "by": "ravi",
+     "schema": "brief.schema.json",
+     "summary": "Diwali curtain & sofa cleaning offer reel",
+     "updated_at": "2026-11-15T12:00:00+05:30",
+     "data": {
+      "job_id": "SHL-01",
+      "client_id": "shubh-laundry",
+      "type": "video",
+      "client_version": 3,
+      "objective": "Get curtain and sofa cleaning bookings before Diwali through a 20% off offer.",
+      "occasion": "Diwali",
+      "audience": "Families in Vijay Nagar and Palasia preparing their homes for Diwali.",
+      "key_message": "Ghar Diwali-ready, bina mehnat: curtain and sofa cleaning 20% off till 25 Nov.",
+      "offer": "20% off curtain and sofa cleaning, till 25 Nov",
+      "cta": "WhatsApp karo, free pickup",
+      "language": "Hinglish",
+      "tone": "Helpful, festive, no fake urgency",
+      "deliverables": [
+       {
+        "platform": "instagram",
+        "format": "reel",
+        "aspect_ratio": "9:16",
+        "duration_sec": 20,
+        "count": 1
+       }
+      ],
+      "mandatories": [
+       "Logo end card",
+       "Offer validity date",
+       "Free pickup line"
+      ],
+      "avoid": [
+       "Dirty-clothes close-ups",
+       "'Cheap'"
+      ],
+      "references": [],
+      "style_preset": null,
+      "deadline": "2026-11-25",
+      "credit_budget": 200,
+      "success_measure": "WhatsApp enquiries in the week after posting",
+      "assumptions": [
+       "Price shown on the first frame, from the SHL-01 learning (watch)."
+      ],
+      "open_questions": [],
+      "version": 1,
+      "updated_at": "2026-11-15T12:00:00+05:30",
+      "status": "approved",
+      "changelog": [
+       {
+        "version": 1,
+        "at": "2026-11-15T12:00:00+05:30",
+        "by": "ravi",
+        "change": "Drafted from the intake note and profile; no questions needed."
+       }
+      ],
+      "job_kind": "offer-reel",
+      "objective_label": "leads",
+      "audience_detail": {
+       "who": "Families in Vijay Nagar and Palasia",
+       "where": [
+        "Vijay Nagar",
+        "Palasia"
+       ],
+       "age_band": "25-45",
+       "language": "Hinglish"
+      },
+      "proof_points": [
+       {
+        "text": "Free pickup above ₹299",
+        "source": "profile",
+        "ref": "do"
+       }
+      ],
+      "offer_detail": {
+       "text": "20% off curtain and sofa cleaning",
+       "price": null,
+       "unit": null,
+       "validity": "2026-11-25",
+       "conditions": [],
+       "profile_match": "no-price",
+       "profile_price": null
+      },
+      "cta_detail": {
+       "action": "WhatsApp karo",
+       "channel": "whatsapp",
+       "target": "shop WhatsApp on the end card"
+      },
+      "creative_format": "offer-card-motion",
+      "platforms": [
+       "instagram"
+      ],
+      "aspect_ratio": "9:16",
+      "duration_sec": 20,
+      "writing_script": "roman-hinglish",
+      "posting_date": "2026-11-18",
+      "research": {
+       "status": "skipped",
+       "skip_reason": "research stage not built yet"
+      },
+      "track_suggestion": {
+       "track": "quick",
+       "reason": "Repeat offer-reel format for this client."
+      },
+      "confidence": {
+       "objective": {
+        "status": "confirmed",
+        "basis": "intake note"
+       },
+       "offer": {
+        "status": "confirmed",
+        "basis": "intake note (Neha ji)"
+       },
+       "cta": {
+        "status": "guessed",
+        "basis": "profile: customers enquire on WhatsApp"
+       },
+       "deadline": {
+        "status": "confirmed",
+        "basis": "intake note"
+       },
+       "duration_sec": {
+        "status": "guessed",
+        "basis": "default for offer reels"
+       },
+       "language": {
+        "status": "confirmed",
+        "basis": "profile languages (confirmed)"
+       }
+      },
+      "client_questions": [],
+      "ready_for_production": true,
+      "self_check": [
+       {
+        "check": "editor-can-start",
+        "pass": true
+       },
+       {
+        "check": "offer-matches-profile",
+        "pass": true,
+        "note": "Percentage offer, no price shown."
+       },
+       {
+        "check": "no-invented-claims",
+        "pass": true
+       },
+       {
+        "check": "research-angle-or-reason",
+        "pass": true,
+        "note": "Research skipped: stage not built yet."
+       },
+       {
+        "check": "variants-consistent",
+        "pass": true
+       },
+       {
+        "check": "essentials-confirmed",
+        "pass": true
+       },
+       {
+        "check": "pairs-agree",
+        "pass": true
+       },
+       {
+        "check": "language-consistent",
+        "pass": true
+       },
+       {
+        "check": "mandatories-present",
+        "pass": true,
+        "note": "Price-first learning applied as the offer on the first frame."
+       },
+       {
+        "check": "downstream-complete",
+        "pass": true
+       }
+      ],
+      "downstream": {
+       "concept": {
+        "angle": "Ghar Diwali-ready, bina mehnat",
+        "creative_format": "offer-card-motion",
+        "constraints": [
+         "No dirty-clothes close-ups",
+         "Never say 'cheap'"
+        ]
+       },
+       "hooks": {
+        "pain_points": [
+         "No time for Diwali cleaning"
+        ],
+        "customer_phrases": [
+         "kapde time pe chahiye"
+        ],
+        "timely_hook": "Diwali",
+        "first_frame": "The 20% off offer (learning from SHL-01, watch)"
+       },
+       "script": {
+        "duration_sec": 20,
+        "structure": [
+         "hook + offer 0-3s",
+         "problem 3-8s",
+         "service shown 8-15s",
+         "CTA end card 15-20s"
+        ],
+        "offer_line": "Curtain aur sofa cleaning 20% off, 25 Nov tak",
+        "cta_line": "WhatsApp karo, free pickup",
+        "must_say": [
+         "25 Nov tak",
+         "free pickup"
+        ]
+       },
+       "localise": {
+        "language": "Hinglish",
+        "writing_script": "roman-hinglish",
+        "keep_as_is": [
+         "Shubh Laundry",
+         "20%",
+         "25 Nov"
+        ]
+       },
+       "shot_sourcing": {
+        "person_on_camera": false,
+        "locations": [
+         "shop counter",
+         "pickup van"
+        ],
+        "must_show": [
+         "pickup van",
+         "folded curtains"
+        ],
+        "existing_footage": null
+       }
+      }
+     }
+    },
+    "master": {
+     "version": 1,
+     "stage": "finish",
+     "by": "system",
+     "summary": "placeholder",
+     "updated_at": "2026-11-24T12:00:00+05:30",
+     "data": {
+      "placeholder": true,
+      "note": "finish not built yet"
+     }
+    },
+    "package": {
+     "version": 1,
+     "stage": "delivery",
+     "by": "system",
+     "summary": "placeholder",
+     "updated_at": "2026-11-24T12:00:00+05:30",
+     "data": {
+      "placeholder": true,
+      "note": "delivery not built yet"
+     }
+    }
+   },
+   "client_feedback": [],
+   "revision_round": 0,
+   "log": [
+    {
+     "at": "2026-11-24T12:00:00+05:30",
+     "by": "samarth",
+     "kind": "gate",
+     "message": "delivered"
+    }
+   ],
+   "version": 30,
+   "created_at": "2026-11-15T09:00:00+05:30",
+   "updated_at": "2026-11-24T12:00:00+05:30"
+  },
+  {
+   "job_id": "SHL-05",
+   "client_id": "shubh-laundry",
+   "type": "video",
+   "title": "Free pickup status video",
+   "track": "quick",
+   "status": "delivered",
+   "current_stage": "delivery",
+   "waiting_on": "none",
+   "next_action": "Delivered. Nothing pending.",
+   "stage_history": [
+    {
+     "stage": "intake",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "brief",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "concept",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "script",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "client-script-approval",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "storyboard",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "clips",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "voice-music",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "qa-clips",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "assemble",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "captions-motion",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "finish",
+     "status": "done",
+     "started_at": "2026-08-12T10:00:00+05:30",
+     "finished_at": "2026-08-12T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "client-final-approval",
+     "status": "done",
+     "started_at": "2026-08-20T10:00:00+05:30",
+     "finished_at": "2026-08-20T11:30:00+05:30",
+     "by": "ravi"
+    },
+    {
+     "stage": "delivery",
+     "status": "done",
+     "started_at": "2026-08-20T10:00:00+05:30",
+     "finished_at": "2026-08-20T11:30:00+05:30",
+     "by": "ravi"
+    }
+   ],
+   "gates": [
+    {
+     "stage": "intake",
+     "kind": "stage",
+     "owner_role": "admin",
+     "status": "approved",
+     "shown_outputs": {
+      "request": 1
+     },
+     "requested_at": "2026-08-12T11:00:00+05:30",
+     "decided_by": "samarth",
+     "decided_by_role": "admin",
+     "decided_at": "2026-08-12T11:30:00+05:30"
+    },
+    {
+     "stage": "brief",
+     "kind": "stage",
+     "owner_role": "admin",
+     "status": "approved",
+     "shown_outputs": {
+      "brief": 1
+     },
+     "requested_at": "2026-08-12T11:00:00+05:30",
+     "decided_by": "samarth",
+     "decided_by_role": "admin",
+     "decided_at": "2026-08-12T11:30:00+05:30"
+    },
+    {
+     "stage": "client-final-approval",
+     "kind": "stage",
+     "owner_role": "client",
+     "status": "approved",
+     "shown_outputs": {
+      "master": 1
+     },
+     "requested_at": "2026-08-20T11:00:00+05:30",
+     "decided_by": "ravi",
+     "decided_by_role": "editor",
+     "decided_at": "2026-08-20T11:30:00+05:30",
+     "note": "Client: \"perfect hai, post kar do\""
+    },
+    {
+     "stage": "delivery",
+     "kind": "stage",
+     "owner_role": "admin",
+     "status": "approved",
+     "shown_outputs": {
+      "package": 1
+     },
+     "requested_at": "2026-08-20T11:00:00+05:30",
+     "decided_by": "samarth",
+     "decided_by_role": "admin",
+     "decided_at": "2026-08-20T11:30:00+05:30"
+    }
+   ],
+   "assignee": "ravi",
+   "deadline": "2026-08-20",
+   "credits": {
+    "budget": 200,
+    "used": 64,
+    "ledger": []
+   },
+   "outputs": {
+    "request": {
+     "version": 1,
+     "stage": "intake",
+     "by": "system",
+     "summary": "placeholder",
+     "updated_at": "2026-08-12T12:00:00+05:30",
+     "data": {
+      "placeholder": true,
+      "note": "intake not built yet"
+     }
+    },
+    "brief": {
+     "version": 1,
+     "stage": "brief",
+     "by": "ravi",
+     "schema": "brief.schema.json",
+     "summary": "Free pickup status video",
+     "updated_at": "2026-08-12T12:00:00+05:30",
+     "data": {
+      "job_id": "SHL-05",
+      "client_id": "shubh-laundry",
+      "type": "video",
+      "objective": "Get wash + iron orders on WhatsApp from people who see our status.",
+      "occasion": null,
+      "audience": "Families in Vijay Nagar and Palasia preparing their homes for Diwali.",
+      "key_message": "Kapde hum le jayenge, press karke wapas: ₹89/kg.",
+      "offer": "Free pickup above ₹299, wash + iron ₹89 per kg",
+      "cta": "WhatsApp karo, free pickup",
+      "language": "Hinglish",
+      "tone": "Helpful, festive, no fake urgency",
+      "deliverables": [
+       {
+        "platform": "whatsapp-status",
+        "format": "story",
+        "aspect_ratio": "9:16",
+        "duration_sec": 15,
+        "count": 1
+       }
+      ],
+      "mandatories": [
+       "Price on the first frame",
+       "Free pickup line",
+       "Captions on"
+      ],
+      "avoid": [
+       "Dirty-clothes close-ups",
+       "'Cheap'"
+      ],
+      "references": [],
+      "style_preset": null,
+      "deadline": "2026-08-18",
+      "credit_budget": 200,
+      "success_measure": "WhatsApp enquiries in the week after posting",
+      "assumptions": [
+       "Price shown on the first frame, from the SHL-01 learning (watch)."
+      ],
+      "open_questions": [],
+      "version": 1,
+      "updated_at": "2026-08-12T12:00:00+05:30",
+      "status": "approved",
+      "changelog": [
+       {
+        "version": 1,
+        "at": "2026-08-12T12:00:00+05:30",
+        "by": "ravi",
+        "change": "Drafted; no questions."
+       }
+      ],
+      "job_kind": "offer-reel",
+      "objective_label": "leads",
+      "audience_detail": {
+       "who": "Families in Vijay Nagar and Palasia",
+       "where": [
+        "Vijay Nagar",
+        "Palasia"
+       ],
+       "age_band": "25-45",
+       "language": "Hinglish"
+      },
+      "proof_points": [
+       {
+        "text": "Free pickup above ₹299",
+        "source": "profile",
+        "ref": "do"
+       }
+      ],
+      "offer_detail": {
+       "text": "Wash + iron, free pickup above ₹299",
+       "price": 89,
+       "unit": "per kg",
+       "validity": null,
+       "conditions": [
+        "Free pickup above ₹299"
+       ],
+       "profile_match": "matches",
+       "profile_price": 89
+      },
+      "cta_detail": {
+       "action": "WhatsApp karo",
+       "channel": "whatsapp",
+       "target": "shop WhatsApp on the end card"
+      },
+      "creative_format": "offer-card-motion",
+      "platforms": [
+       "whatsapp-status"
+      ],
+      "aspect_ratio": "9:16",
+      "duration_sec": 15,
+      "writing_script": "roman-hinglish",
+      "posting_date": "2026-08-18",
+      "research": {
+       "status": "skipped",
+       "skip_reason": "research stage not built yet"
+      },
+      "track_suggestion": {
+       "track": "quick",
+       "reason": "Repeat offer-reel format for this client."
+      },
+      "confidence": {
+       "objective": {
+        "status": "confirmed",
+        "basis": "intake note"
+       },
+       "offer": {
+        "status": "confirmed",
+        "basis": "intake note (Neha ji)"
+       },
+       "cta": {
+        "status": "guessed",
+        "basis": "profile: customers enquire on WhatsApp"
+       },
+       "deadline": {
+        "status": "confirmed",
+        "basis": "intake note"
+       },
+       "duration_sec": {
+        "status": "guessed",
+        "basis": "default for offer reels"
+       },
+       "language": {
+        "status": "confirmed",
+        "basis": "profile languages (confirmed)"
+       }
+      },
+      "client_questions": [],
+      "ready_for_production": true,
+      "self_check": [
+       {
+        "check": "editor-can-start",
+        "pass": true
+       },
+       {
+        "check": "offer-matches-profile",
+        "pass": true,
+        "note": "Percentage offer, no price shown."
+       },
+       {
+        "check": "no-invented-claims",
+        "pass": true
+       },
+       {
+        "check": "research-angle-or-reason",
+        "pass": true,
+        "note": "Research skipped: stage not built yet."
+       },
+       {
+        "check": "variants-consistent",
+        "pass": true
+       },
+       {
+        "check": "essentials-confirmed",
+        "pass": true
+       },
+       {
+        "check": "pairs-agree",
+        "pass": true
+       },
+       {
+        "check": "language-consistent",
+        "pass": true
+       },
+       {
+        "check": "mandatories-present",
+        "pass": true,
+        "note": "Price-first learning applied as the offer on the first frame."
+       },
+       {
+        "check": "downstream-complete",
+        "pass": true
+       }
+      ],
+      "downstream": {
+       "concept": {
+        "angle": "Ghar Diwali-ready, bina mehnat",
+        "creative_format": "offer-card-motion",
+        "constraints": [
+         "No dirty-clothes close-ups",
+         "Never say 'cheap'"
+        ]
+       },
+       "hooks": {
+        "pain_points": [
+         "No time for Diwali cleaning"
+        ],
+        "customer_phrases": [
+         "kapde time pe chahiye"
+        ],
+        "timely_hook": "Diwali",
+        "first_frame": "The 20% off offer (learning from SHL-01, watch)"
+       },
+       "script": {
+        "duration_sec": 20,
+        "structure": [
+         "hook + offer 0-3s",
+         "problem 3-8s",
+         "service shown 8-15s",
+         "CTA end card 15-20s"
+        ],
+        "offer_line": "Curtain aur sofa cleaning 20% off, 25 Nov tak",
+        "cta_line": "WhatsApp karo, free pickup",
+        "must_say": [
+         "25 Nov tak",
+         "free pickup"
+        ]
+       },
+       "localise": {
+        "language": "Hinglish",
+        "writing_script": "roman-hinglish",
+        "keep_as_is": [
+         "Shubh Laundry",
+         "20%",
+         "25 Nov"
+        ]
+       },
+       "shot_sourcing": {
+        "person_on_camera": false,
+        "locations": [
+         "shop counter",
+         "pickup van"
+        ],
+        "must_show": [
+         "pickup van",
+         "folded curtains"
+        ],
+        "existing_footage": null
+       }
+      }
+     }
+    },
+    "master": {
+     "version": 1,
+     "stage": "finish",
+     "by": "system",
+     "summary": "placeholder",
+     "updated_at": "2026-08-20T12:00:00+05:30",
+     "data": {
+      "placeholder": true,
+      "note": "finish not built yet"
+     }
+    },
+    "package": {
+     "version": 1,
+     "stage": "delivery",
+     "by": "system",
+     "summary": "placeholder",
+     "updated_at": "2026-08-20T12:00:00+05:30",
+     "data": {
+      "placeholder": true,
+      "note": "delivery not built yet"
+     }
+    }
+   },
+   "client_feedback": [],
+   "revision_round": 0,
+   "log": [
+    {
+     "at": "2026-08-20T12:00:00+05:30",
+     "by": "samarth",
+     "kind": "gate",
+     "message": "delivered"
+    }
+   ],
+   "version": 30,
+   "created_at": "2026-08-12T09:00:00+05:30",
+   "updated_at": "2026-08-20T12:00:00+05:30"
+  }
+ ]
+}

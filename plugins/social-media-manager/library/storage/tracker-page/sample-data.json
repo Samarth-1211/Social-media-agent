@@ -97,6 +97,30 @@
     "FALSE",
     "partial",
     "NRH-I202611-1"
+   ],
+   [
+    "SHL-03",
+    "shubh-laundry",
+    "video",
+    "Winter blanket cleaning offer reel",
+    "quick",
+    "active",
+    "brief",
+    "client",
+    "Brief: waiting for client reply (sent 22 Nov): Ravi to paste Neha ji's answers to 2 questions.",
+    "ravi",
+    "2026-11-30",
+    "",
+    "200",
+    "",
+    "0",
+    "0",
+    "4",
+    "2026-11-22T10:00:00+05:30",
+    "2026-11-22T10:40:00+05:30",
+    "FALSE",
+    "fresh",
+    "SHL-I202611-1"
    ]
   ],
   "Clients": [
@@ -160,7 +184,7 @@
     "[{\"occasion\":\"Diwali\",\"date\":null,\"priority\":\"high\",\"note\":\"Pre-Diwali curtain and sofa cleaning offer\"},{\"occasion\":\"Wedding season\",\"date\":\"November-February\",\"priority\":\"high\",\"note\":\"Saree and sherwani dry clean\"}]",
     "[{\"item\":\"Wash + iron per kg\",\"price\":89,\"currency\":\"INR\"}]",
     "2",
-    "3",
+    "4",
     "{\"name\":{\"status\":\"confirmed\",\"basis\":\"client said, onboarding 2026-11-10\"},\"business_type\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"city\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"languages\":{\"status\":\"confirmed\",\"basis\":\"admin approved\"},\"audience\":{\"status\":\"guessed\",\"basis\":\"inferred from Google Business reviews\"},\"tone_of_voice\":{\"status\":\"guessed\",\"basis\":\"inferred from past Instagram captions\"},\"visual_identity\":{\"status\":\"confirmed\",\"basis\":\"logo file colours, approved by owner\"},\"festival_calendar\":{\"status\":\"guessed\",\"basis\":\"standard Indore calendar suggestion\"},\"price_points\":{\"status\":\"confirmed\",\"basis\":\"admin entered from rate card\"},\"revision_cap\":{\"status\":\"confirmed\",\"basis\":\"default 2, admin approved\"},\"own_handle\":{\"status\":\"confirmed\",\"basis\":\"owner said, onboarding 2026-11-10\"},\"competitors\":{\"status\":\"guessed\",\"basis\":\"research discovery 2026-11-21; one confirmed by ravi, one struck (other city)\"}}",
     "3",
     "2026-11-10T10:00:00+05:30",
@@ -461,6 +485,21 @@
     "",
     "",
     ""
+   ],
+   [
+    "SHL-03",
+    "1",
+    "intake",
+    "stage",
+    "admin",
+    "approved",
+    "{\"request\":1}",
+    "2026-11-22T10:10:00+05:30",
+    "samarth",
+    "admin",
+    "2026-11-22T10:15:00+05:30",
+    "",
+    ""
    ]
   ],
   "Credits": [
@@ -701,6 +740,42 @@
     "system",
     "2026-11-20T12:00:00+05:30",
     "{\"placeholder\":true,\"note\":\"brief not built yet\"}"
+   ],
+   [
+    "SHL-03",
+    "request",
+    "1",
+    "Winter blanket cleaning offer reel, quick track, budget 200",
+    "",
+    "",
+    "intake",
+    "samarth",
+    "2026-11-22T10:10:00+05:30",
+    "{\"placeholder\":true,\"note\":\"sample\"}"
+   ],
+   [
+    "SHL-03",
+    "research",
+    "1",
+    "Fresh sheet SHL-I202611-1 reused",
+    "",
+    "research.schema.json",
+    "research",
+    "system",
+    "2026-11-22T10:16:00+05:30",
+    "{\"research_status\":\"fresh\",\"insight_id\":\"SHL-I202611-1\",\"insight_version\":2,\"insight_date\":\"2026-11-21\",\"flags\":[],\"note\":\"Reused the 21 Nov sheet (1 day old).\",\"downstream\":{\"brief\":{\"pain_points\":[{\"id\":\"F1\",\"text\":\"Customers fear delicate sarees coming back with colour bleed or lost zari; it is the most repeated complaint about local dry cleaners.\",\"confidence\":\"strong\"},{\"id\":\"F2\",\"text\":\"Pickup slots that are missed without a call are the second most common complaint.\",\"confidence\":\"some\"}],\"working_angles\":[{\"id\":\"F3\",\"text\":\"Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.\",\"confidence\":\"some\"}],\"timely_hooks\":[{\"id\":\"F6\",\"text\":\"Wedding season (Nov-Feb): pre-wedding outfit care and 'lehenga after the wedding' storage are searched and discussed now.\",\"confidence\":\"some\"}]},\"concept_and_hooks\":{\"working_angles\":[{\"id\":\"F3\",\"text\":\"Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.\",\"confidence\":\"some\"}],\"outlier_hooks\":[{\"id\":\"F4\",\"text\":\"Opens on a ruined silk dupatta held to camera with 'Ye galti mat karna' on screen; reveals the fix in 3 steps.\",\"confidence\":\"some\",\"formula\":\"IG9\",\"multiple\":4.2}],\"competitors_overdo\":[{\"id\":\"F5\",\"text\":\"Price-list carousels (per-piece rates on a coloured background): all four direct competitors post them weekly and their multiples stay under 1x.\",\"confidence\":\"strong\"}]},\"script\":{\"proof_points\":[{\"id\":\"F9\",\"text\":\"Customers trust a named person who handles silk ('bhaiya ne khud dekha'); reviews that mention a person score higher.\",\"confidence\":\"weak\"}]},\"localise\":{\"customer_phrases\":[{\"id\":\"F7\",\"text\":\"zari kharab ho gayi\",\"confidence\":\"some\",\"language\":\"Hinglish\"},{\"id\":\"F8\",\"text\":\"pickup time pe aate hi nahi\",\"confidence\":\"some\",\"language\":\"Hinglish\"}]},\"visuals\":{\"visual_cliches\":[{\"id\":\"F10\",\"text\":\"Stock photos of white shirts on hangers and washing-machine clip art; every direct competitor uses them.\",\"confidence\":\"strong\"}]}}}"
+   ],
+   [
+    "SHL-03",
+    "brief",
+    "1",
+    "Blanket cleaning offer reel; price and last date awaiting the client",
+    "Jobs/SHL-03/brief/brief-v1.json",
+    "brief",
+    "brief",
+    "ravi",
+    "2026-11-22T10:40:00+05:30",
+    "{\"job_id\":\"SHL-03\",\"client_id\":\"shubh-laundry\",\"type\":\"video\",\"client_version\":3,\"objective\":\"Get blanket and quilt cleaning orders on WhatsApp before winter.\",\"occasion\":\"Winter\",\"audience\":\"Families in Vijay Nagar and Bhawarkua taking out woollens for winter\",\"key_message\":\"Kambal aur razai ki dhulai, ghar se pickup.\",\"offer\":\"Blanket and quilt cleaning offer [CLIENT TO CONFIRM: price and last date]\",\"cta\":\"WhatsApp karo, free pickup\",\"language\":\"Hinglish\",\"tone\":\"Friendly neighbourhood helper, quick and reliable\",\"deliverables\":[{\"platform\":\"instagram\",\"format\":\"reel\",\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"count\":1},{\"platform\":\"whatsapp-status\",\"format\":\"story\",\"aspect_ratio\":\"9:16\",\"duration_sec\":15,\"count\":1,\"changes_from_master\":\"15s cut: offer and CTA only, no problem beat.\"}],\"mandatories\":[\"Price on the first frame\",\"Offer last date\",\"Free pickup line\",\"Captions on\"],\"avoid\":[\"Dirty-clothes close-ups\",\"The word cheap\"],\"references\":[],\"style_preset\":null,\"deadline\":\"2026-11-30\",\"credit_budget\":200,\"success_measure\":\"WhatsApp enquiries for blanket cleaning in the week after posting\",\"assumptions\":[\"Duration 20s: default for offer reels.\",\"WhatsApp status cut added: the client posts statuses (profile platforms).\"],\"open_questions\":[\"Blanket cleaning price per piece (asked the client).\",\"Offer last date (asked the client).\"],\"version\":1,\"updated_at\":\"2026-11-22T10:40:00+05:30\",\"status\":\"awaiting-client\",\"changelog\":[{\"version\":1,\"at\":\"2026-11-22T10:40:00+05:30\",\"by\":\"ravi\",\"change\":\"Drafted; 2 client questions sent on WhatsApp.\"}],\"job_kind\":\"offer-reel\",\"objective_label\":\"leads\",\"audience_detail\":{\"who\":\"Families in Vijay Nagar and Bhawarkua\",\"where\":[\"Vijay Nagar\",\"Bhawarkua\"],\"age_band\":\"25-45\",\"language\":\"Hinglish\"},\"proof_points\":[{\"text\":\"Free pickup above ₹299\",\"source\":\"profile\",\"ref\":\"do\"}],\"offer_detail\":{\"text\":\"Blanket and quilt cleaning offer\",\"price\":null,\"unit\":\"per piece\",\"validity\":null,\"conditions\":[],\"profile_match\":\"not-in-profile\",\"profile_price\":null},\"cta_detail\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"target\":\"shop WhatsApp on the end card\"},\"creative_format\":\"offer-card-motion\",\"platforms\":[\"instagram\",\"whatsapp-status\"],\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"writing_script\":\"roman-hinglish\",\"posting_date\":null,\"research\":{\"status\":\"fresh\",\"insight_id\":\"SHL-I202611-1\",\"angles_chosen\":[],\"pain_points_used\":[{\"id\":\"F2\",\"text\":\"Pickup slots that are missed without a call are the second most common complaint.\"}],\"customer_phrases_used\":[{\"id\":\"F8\",\"text\":\"pickup time pe aate hi nahi\"}],\"skip_reason\":null,\"no_angle_reason\":\"Research angles are about wedding saree care; this job is a winter blanket offer.\"},\"track_suggestion\":{\"track\":\"quick\",\"reason\":\"Same offer-reel format as SHL-01.\"},\"confidence\":{\"objective\":{\"status\":\"confirmed\",\"basis\":\"intake note\"},\"offer\":{\"status\":\"guessed\",\"basis\":\"blanket price not in profile price_points\"},\"cta\":{\"status\":\"confirmed\",\"basis\":\"same as SHL-01 (approved)\"},\"deadline\":{\"status\":\"confirmed\",\"basis\":\"intake note\"}},\"client_questions\":[{\"n\":1,\"question\":\"Kambal/razai dhulai ka rate kya rakhein? Per piece?\",\"guess\":\"₹349 per piece\",\"options\":[\"₹299\",\"₹349\",\"₹399\"],\"field\":\"offer_detail.price\",\"blocking\":true,\"asked_at\":\"2026-11-22T10:40:00+05:30\",\"status\":\"open\",\"answer\":null,\"answered_at\":null},{\"n\":2,\"question\":\"Offer kab tak chalega?\",\"guess\":\"30 Nov tak\",\"options\":[\"30 Nov tak\",\"15 Dec tak\",\"Poori sardi\"],\"field\":\"offer_detail.validity\",\"blocking\":true,\"asked_at\":\"2026-11-22T10:40:00+05:30\",\"status\":\"open\",\"answer\":null,\"answered_at\":null}],\"ready_for_production\":false,\"self_check\":[{\"check\":\"editor-can-start\",\"pass\":false,\"note\":\"Price and last date are with the client.\"},{\"check\":\"essentials-confirmed\",\"pass\":false,\"note\":\"offer_detail.price and validity open (client questions 1, 2).\"},{\"check\":\"offer-matches-profile\",\"pass\":false,\"note\":\"Blanket price not in profile; asked the client.\"},{\"check\":\"no-invented-claims\",\"pass\":true},{\"check\":\"research-angle-or-reason\",\"pass\":true,\"note\":\"No angle fits (saree-care sheet); pain point F2 and phrase F8 used.\"},{\"check\":\"variants-consistent\",\"pass\":true},{\"check\":\"pairs-agree\",\"pass\":true},{\"check\":\"language-consistent\",\"pass\":true},{\"check\":\"mandatories-present\",\"pass\":true},{\"check\":\"downstream-complete\",\"pass\":false,\"note\":\"Script offer line waits for the price.\"}]}"
    ]
   ],
   "StageHistory": [
@@ -843,6 +918,36 @@
     "",
     "ravi",
     ""
+   ],
+   [
+    "SHL-03",
+    "1",
+    "intake",
+    "done",
+    "2026-11-22T10:00:00+05:30",
+    "2026-11-22T10:15:00+05:30",
+    "samarth",
+    ""
+   ],
+   [
+    "SHL-03",
+    "2",
+    "research",
+    "done",
+    "2026-11-22T10:15:00+05:30",
+    "2026-11-22T10:16:00+05:30",
+    "system",
+    "fresh sheet reused (1 day old)"
+   ],
+   [
+    "SHL-03",
+    "3",
+    "brief",
+    "in_progress",
+    "2026-11-22T10:16:00+05:30",
+    "",
+    "ravi",
+    ""
    ]
   ],
   "Log": [
@@ -925,6 +1030,30 @@
     "system",
     "event",
     "brief placeholder written; waiting on admin."
+   ],
+   [
+    "SHL-03",
+    "1",
+    "2026-11-22T10:15:00+05:30",
+    "samarth",
+    "gate",
+    "intake approved (quick, budget 200)."
+   ],
+   [
+    "SHL-03",
+    "2",
+    "2026-11-22T10:16:00+05:30",
+    "system",
+    "event",
+    "research: fresh sheet reused."
+   ],
+   [
+    "SHL-03",
+    "3",
+    "2026-11-22T10:40:00+05:30",
+    "ravi",
+    "event",
+    "brief v1 drafted; 2 questions sent to the client; waiting on client."
    ]
   ],
   "ClientChanges": [
@@ -1103,6 +1232,18 @@
    [
     "updated_at",
     "2026-11-10T09:00:00+05:30"
+   ],
+   [
+    "brief_auto_approve_repeat",
+    "FALSE"
+   ],
+   [
+    "brief_max_questions",
+    "5"
+   ],
+   [
+    "client_question_reminder_hours",
+    "24"
    ]
   ],
   "Insights": [
@@ -1562,6 +1703,50 @@
     "",
     "1",
     "2026-11-20T11:52:00+05:30"
+   ]
+  ],
+  "BriefQuestions": [
+   [
+    "job_id",
+    "client_id",
+    "n",
+    "field",
+    "question",
+    "guess",
+    "options",
+    "blocking",
+    "asked_at",
+    "status",
+    "answer",
+    "answered_at"
+   ],
+   [
+    "SHL-03",
+    "shubh-laundry",
+    "1",
+    "offer_detail.price",
+    "Kambal/razai dhulai ka rate kya rakhein? Per piece?",
+    "₹349 per piece",
+    "₹299\n₹349\n₹399",
+    "TRUE",
+    "2026-11-22T10:40:00+05:30",
+    "open",
+    "",
+    ""
+   ],
+   [
+    "SHL-03",
+    "shubh-laundry",
+    "2",
+    "offer_detail.validity",
+    "Offer kab tak chalega?",
+    "30 Nov tak",
+    "30 Nov tak\n15 Dec tak\nPoori sardi",
+    "TRUE",
+    "2026-11-22T10:40:00+05:30",
+    "open",
+    "",
+    ""
    ]
   ]
  }

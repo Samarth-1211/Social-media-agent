@@ -35,3 +35,4 @@ Use `results/*.local.md` for scratch runs. They are git-ignored.
 - No logins, tokens or Higgsfield account details.
 
 **market researcher (R1–R16):** `node evals/research/run-scenarios.mjs` runs 8 headless Sonnet sessions on fixtures (live tools switched off) and checks the saved data; `--check-only` re-checks saved outputs. Static checks: `node evals/research/validator-faults.cjs`, `node evals/research/methods-consistency.cjs`, and `node evals/research/tracker-page-render.cjs` (needs `npm i --no-save jsdom`). Details: `scenarios/market-researcher.md`.
+**brief (B1–B15):** fixtures in `fixtures/brief/` (`node evals/brief-fixtures.mjs check | seed | sheet-rows`), scenarios `scenarios/brief.md`, rubric `rubrics/brief.md`. Scenario steps in `scenarios/brief.md` (files mode via `seed`; B14 on the TEST sheet).

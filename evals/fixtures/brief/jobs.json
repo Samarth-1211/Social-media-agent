@@ -1,0 +1,189 @@
+{
+ "$comment": "One job per brief scenario, at the brief stage with intake approved. `request` is the approved request (request.schema.json). `research` names an entry in research.json to seed as job.outputs.research, or null. `config` overrides config.example.json for that run. Eval clock: 2026-12-08 (IST). Fictional.",
+ "defaults": {
+  "requested_by": "samarth",
+  "requested_at": "2026-12-08T10:00:00+05:30",
+  "budget": { "credits": 200, "warn_at": null },
+  "style_preset": null,
+  "references": [],
+  "assumptions": ["Budget: video default 200."]
+ },
+ "jobs": [
+  {
+   "scenario": "B1, B13, B14", "job_id": "SHL-11", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Winter office-wear wash + iron reel",
+    "raw_request": "Neha ji: office wear ke liye winter reel. Wash + iron ₹89/kg, ₹299 se upar free pickup, 31 Dec tak. Log WhatsApp pe order karein. 20 sec Insta reel + WhatsApp status bhi. Hinglish.",
+    "occasion": "Winter",
+    "deliverables": ["Instagram reel 9:16 20s", "WhatsApp status 9:16 15s"],
+    "deadline": "2026-12-15",
+    "track": { "proposed": "quick", "reason": "Offer reel in an existing style.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B2", "job_id": "SHL-12", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Blanket cleaning offer reel",
+    "raw_request": "Kambal-razai dhulai ka offer reel chahiye, offer 15 Jan tak. Insta reel.",
+    "occasion": "Winter",
+    "deliverables": ["Instagram reel 9:16 ~20s"],
+    "deadline": "2026-12-18",
+    "track": { "proposed": "quick", "reason": "Offer reel in an existing style.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B3", "job_id": "SHL-13", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Winter reel",
+    "raw_request": "Shubh ke liye winter mein ek reel chahiye.",
+    "occasion": "Winter",
+    "deliverables": ["Instagram reel"],
+    "deadline": "2026-12-20",
+    "track": { "proposed": "quick", "reason": "Short reel.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B4", "job_id": "SHL-14", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Palasia branch opening reel",
+    "raw_request": "Shubh ki nayi branch Palasia mein khul rahi hai, video banana hai.",
+    "deliverables": ["Instagram reel"],
+    "deadline": null,
+    "track": { "proposed": "quick", "reason": "Single launch reel.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B4b (cap 2)", "job_id": "SHL-24", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": { "brief_max_questions": 2 },
+   "request": {
+    "title": "Palasia branch opening reel (cap test)",
+    "raw_request": "Shubh ki nayi branch Palasia mein khul rahi hai, video banana hai.",
+    "deliverables": ["Instagram reel"],
+    "deadline": null,
+    "track": { "proposed": "quick", "reason": "Single launch reel.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B5", "job_id": "SHL-15", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Blanket offer reel (client to confirm)",
+    "raw_request": "Neha ji ne blanket cleaning offer bola hai, rate aur last date unse confirm karna hai.",
+    "occasion": "Winter",
+    "deliverables": ["Instagram reel 9:16 ~20s"],
+    "deadline": "2026-12-22",
+    "track": { "proposed": "quick", "reason": "Offer reel in an existing style.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B6", "job_id": "NRH-10", "client_id": "narmada-heights", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "New Year site-visit offer reel (urgent)",
+    "raw_request": "Kal tak chahiye! New Year site visit offer: booking pe ₹50,000 off, 5 Jan tak. Insta reel.",
+    "occasion": "New Year",
+    "deliverables": ["Instagram reel 9:16 ~20s"],
+    "deadline": "2026-12-09",
+    "track": { "proposed": "quick", "reason": "Urgent single reel.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B7", "job_id": "SHL-16", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Wash + iron price reel",
+    "raw_request": "Wash + iron ₹99/kg ka reel banao, 31 Dec tak, WhatsApp pe order.",
+    "deliverables": ["Instagram reel 9:16 20s"],
+    "deadline": "2026-12-16",
+    "track": { "proposed": "quick", "reason": "Offer reel in an existing style.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B8", "job_id": "SHL-17", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Trust reel",
+    "raw_request": "Ek reel jisme likho Indore ki No.1 laundry, 100% guarantee, 10,000+ happy customers. WhatsApp pe order.",
+    "deliverables": ["Instagram reel 9:16 20s"],
+    "deadline": "2026-12-19",
+    "track": { "proposed": "quick", "reason": "Single reel.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B9 (research fresh)", "job_id": "SHL-18", "client_id": "shubh-laundry", "type": "video", "track": "full", "assignee": "ravi", "research": "shl-fresh", "config": {},
+   "request": {
+    "title": "Wedding-season dry-clean reel",
+    "raw_request": "Shaadi season dry-clean reel, saree aur sherwani, WhatsApp pe orders.",
+    "occasion": "Wedding season",
+    "deliverables": ["Instagram reel 9:16 ~25s"],
+    "deadline": "2026-12-23",
+    "track": { "proposed": "full", "reason": "New angle worth hooks and localisation.", "chosen": "full" }
+   }
+  },
+  {
+   "scenario": "B9 (no research)", "job_id": "NRH-11", "client_id": "narmada-heights", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Phase 2 possession update reel",
+    "raw_request": "Phase 2 ka construction update reel: Tower B slab complete. RERA P-JBP-23-0456. Sample flat visit ke liye call karein.",
+    "deliverables": ["Instagram reel 9:16 ~30s"],
+    "deadline": "2026-12-20",
+    "track": { "proposed": "quick", "reason": "Single update reel.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B11", "job_id": "NRH-12", "client_id": "narmada-heights", "type": "video", "track": "full", "assignee": "ravi", "research": null, "config": {},
+   "request": {
+    "title": "Phase 2 sample-flat walkthrough (all platforms)",
+    "raw_request": "Phase 2 sample flat walkthrough: Insta reel 30 sec, Facebook reel, YouTube Short, aur Meta ad bhi chalana hai. Starting ₹35 lakh. RERA no. P-JBP-23-0456 (brochure). Site visit ke liye call karein.",
+    "deliverables": ["Instagram reel 9:16 30s", "Facebook reel", "YouTube Short", "Meta ad"],
+    "deadline": "2026-12-24",
+    "track": { "proposed": "full", "reason": "Four placements from one master.", "chosen": "full" }
+   }
+  },
+  {
+   "scenario": "B12a (auto-approve on, all conditions)", "job_id": "SHL-19", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": { "brief_auto_approve_repeat": true },
+   "request": {
+    "title": "Wash + iron offer reel (repeat of SHL-01 format)",
+    "raw_request": "SHL-01 jaisa offer reel: wash + iron ₹89/kg, 31 Dec tak, WhatsApp pe order, 18 sec Insta reel.",
+    "deliverables": ["Instagram reel 9:16 18s"],
+    "deadline": "2026-12-17",
+    "track": { "proposed": "quick", "reason": "Repeat of SHL-01 format.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B12b (auto-approve off)", "job_id": "SHL-20", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": { "brief_auto_approve_repeat": false },
+   "request": {
+    "title": "Wash + iron offer reel (repeat, setting off)",
+    "raw_request": "SHL-01 jaisa offer reel: wash + iron ₹89/kg, 31 Dec tak, WhatsApp pe order, 18 sec Insta reel.",
+    "deliverables": ["Instagram reel 9:16 18s"],
+    "deadline": "2026-12-17",
+    "track": { "proposed": "quick", "reason": "Repeat of SHL-01 format.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B12c (full track)", "job_id": "SHL-22", "client_id": "shubh-laundry", "type": "video", "track": "full", "assignee": "ravi", "research": null, "config": { "brief_auto_approve_repeat": true },
+   "request": {
+    "title": "Wash + iron offer reel (repeat, full track)",
+    "raw_request": "SHL-01 jaisa offer reel: wash + iron ₹89/kg, 31 Dec tak, WhatsApp pe order, 18 sec Insta reel.",
+    "deliverables": ["Instagram reel 9:16 18s"],
+    "deadline": "2026-12-17",
+    "track": { "proposed": "full", "reason": "Admin wants hooks this time.", "chosen": "full" }
+   }
+  },
+  {
+   "scenario": "B12d (only match older than 90 days)", "job_id": "SHL-21", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": { "brief_auto_approve_repeat": true },
+   "request": {
+    "title": "WhatsApp status pickup offer (repeat of SHL-05 format)",
+    "raw_request": "SHL-05 jaisa status video: free pickup ₹299 se upar, wash + iron ₹89/kg, 31 Dec tak, WhatsApp karo. 15 sec status.",
+    "deliverables": ["WhatsApp status 9:16 15s"],
+    "deadline": "2026-12-17",
+    "track": { "proposed": "quick", "reason": "Repeat of SHL-05 format.", "chosen": "quick" }
+   }
+  },
+  {
+   "scenario": "B12e (express)", "job_id": "SHL-23", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": { "brief_auto_approve_repeat": true },
+   "request": {
+    "title": "Wash + iron offer reel (repeat, urgent)",
+    "raw_request": "Jaldi, aaj hi chahiye: SHL-01 jaisa offer reel: wash + iron ₹89/kg, 31 Dec tak, WhatsApp pe order, 18 sec Insta reel.",
+    "deliverables": ["Instagram reel 9:16 18s"],
+    "deadline": "2026-12-08",
+    "track": { "proposed": "quick", "reason": "Repeat of SHL-01 format.", "chosen": "quick" }
+   }
+  }
+ ]
+}

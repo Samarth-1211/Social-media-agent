@@ -1,0 +1,49 @@
+{
+ "$comment": "B10: schema-valid but vague brief for SHL-13 (see skills/pre-production/brief/examples/bad-vague-brief.md). The self-check must fail it.",
+ "brief": {
+  "job_id": "SHL-13",
+  "client_id": "shubh-laundry",
+  "type": "video",
+  "objective": "Increase brand awareness and drive engagement this winter.",
+  "audience": "Everyone in Indore, 18-65.",
+  "key_message": "Best laundry in Indore! Premium quality, lowest prices, 100% satisfaction guaranteed. Also try our new saree dry-clean.",
+  "offer": "Blanket cleaning at just ₹199!! Limited time only.",
+  "cta": "Call / WhatsApp / DM / visit our website",
+  "language": "Hinglish",
+  "tone": "Trendy, viral, modern and premium",
+  "deliverables": [
+   {
+    "platform": "instagram",
+    "format": "reel",
+    "aspect_ratio": "9:16",
+    "duration_sec": 45,
+    "count": 1
+   },
+   {
+    "platform": "youtube",
+    "format": "short",
+    "aspect_ratio": "9:16",
+    "duration_sec": 60,
+    "count": 1
+   },
+   {
+    "platform": "facebook",
+    "format": "reel",
+    "aspect_ratio": "9:16",
+    "duration_sec": 30,
+    "count": 1
+   }
+  ],
+  "mandatories": [],
+  "avoid": [],
+  "references": [],
+  "style_preset": null,
+  "deadline": null,
+  "credit_budget": 200,
+  "success_measure": null,
+  "assumptions": [],
+  "open_questions": [],
+  "version": 1,
+  "updated_at": "2026-12-08T11:00:00+05:30"
+ }
+}

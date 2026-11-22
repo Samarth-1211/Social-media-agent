@@ -42,6 +42,7 @@
 # intake is run by `producer` (control/producer), which is built, so it is `active`.
 # research is run by `research-methods` (pre-production), which may hand its unattended part
 # to the `market-researcher` subagent.
+# brief is run by `brief` (pre-production/brief); it reads the research output when present.
 
 version: 3
 
@@ -81,7 +82,7 @@ stages:
   - id: brief
     group: pre-production
     skill: brief
-    status: placeholder
+    status: active
     reads: [client, request]
     optional_reads: [research]
     writes: [brief]

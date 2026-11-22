@@ -109,6 +109,28 @@ requests.push({
   },
 });
 
+// Dashboard, layout v3 (brief): client questions not answered within client_question_reminder_hours (default 24).
+const B = (k) => col('BriefQuestions', k);
+const bqRange = `BriefQuestions!A:${colLetter(tab('BriefQuestions').columns.length - 1)}`;
+const bqCutoff = 'NOW()-IFERROR(VLOOKUP("client_question_reminder_hours",Config!A:B,2,FALSE),24)/24';
+const bqCutoffText = `TEXT(${bqCutoff},"yyyy-mm-dd")&"T"&TEXT(${bqCutoff},"HH:mm:ss")`;
+const briefDashboard = {
+  range: 'Dashboard!X2:AA3',
+  values: [
+    ['Brief: waiting for client reply', '', '', ''],
+    [q(bqRange, `"select ${B('job_id')},${B('n')},${B('question')},${B('asked_at')} where ${B('status')}='open' and ${B('asked_at')} <> '' and ${B('asked_at')} < '"&${bqCutoffText}&"+05:30' order by ${B('asked_at')}"`, 'No client replies pending'), '', '', ''],
+  ],
+};
+const briefDashboardBold = {
+  repeatCell: {
+    range: { sheetId: 0, startRowIndex: 1, endRowIndex: 2, startColumnIndex: 23, endColumnIndex: 27 },
+    cell: { userEnteredFormat: { textFormat: { bold: true } } },
+    fields: 'userEnteredFormat.textFormat.bold',
+  },
+};
+values.push(briefDashboard);
+requests.push(briefDashboardBold);
+
 // Research settings (layout v2). Also appended to existing sheets by the v1 → v2 upgrade.
 const RESEARCH_CONFIG = [
   ['freshness_days', 30],
@@ -119,6 +141,13 @@ const RESEARCH_CONFIG = [
   ['apify_enabled', false],
   ['research_auto_approve_limit', 0],
   ['research_currency', "'USD"],
+];
+
+// Brief settings (layout v3). Also appended to existing sheets by the v2 → v3 upgrade.
+const BRIEF_CONFIG = [
+  ['brief_auto_approve_repeat', false],
+  ['brief_max_questions', 5],
+  ['client_question_reminder_hours', 24],
 ];
 
 // Config defaults (ADR 0003). spreadsheet_id and drive_folder_id are filled in by setup.
@@ -136,6 +165,7 @@ const configRows = [
   ['default_credit_warn_poster', 20],
   ['credit_policy', `'${JSON.stringify({ prompt_check_before_spend: true, estimate_before_spend: true, start_tier: 'draft', draft_variations: 1, upgrade_approver: 'editor' })}`],
   ...RESEARCH_CONFIG,
+  ...BRIEF_CONFIG,
   ['version', 1],
   ['updated_at', '<NOW>'],
 ].map(([k, v]) => [`'${k}`, v]);
@@ -146,7 +176,7 @@ export const CLOCK_FORMULA = '=TEXT(NOW(),"yyyy-mm-dd")&"T"&TEXT(NOW(),"HH:mm:ss
 values.push({ range: 'Config!D1:E1', values: [["'clock (do not edit)", CLOCK_FORMULA]] });
 
 // ── Upgrades for sheets built with an older layout ──────────────────
-// A sheet is on layout v1 if it has no Insights tab. The admin runs the upgrade once (google-sheets.md §7):
+// A sheet is on layout v1 if it has no Insights tab, and on v2 if it has Insights but no BriefQuestions tab. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
 // batch_requests in one batch update, then each values entry with update values, then each append entry with append values.
 // Nothing existing moves: new columns go after the last column of their tab, new tabs after the last tab.
 function upgrade(from, to) {
@@ -187,8 +217,14 @@ function upgrade(from, to) {
       if (c.options && (c.since === to || c.options_changed === to)) reqs.push(validation(sheetId, i, c.options));
     });
   });
-  vals.push({ range: 'Dashboard!A1:W3', values: dashboard });
-  return { from, to, batch_requests: reqs, values: vals, append: [{ range: 'Config!A1', values: RESEARCH_CONFIG.map(([k, v]) => [`'${k}`, v]) }] };
+  // Per-version extras: v2 rewrites the main Dashboard block; v3 adds the brief block beside it.
+  if (to === 2) vals.push({ range: 'Dashboard!A1:W3', values: dashboard });
+  if (to === 3) {
+    vals.push(briefDashboard);
+    reqs.push(briefDashboardBold);
+  }
+  const newConfig = { 2: RESEARCH_CONFIG, 3: BRIEF_CONFIG }[to] ?? [];
+  return { from, to, batch_requests: reqs, values: vals, append: [{ range: 'Config!A1', values: newConfig.map(([k, v]) => [`'${k}`, v]) }] };
 }
 
 const out = {
@@ -196,7 +232,7 @@ const out = {
   layout_version: layout.version,
   batch_requests: requests,
   values,
-  upgrades: [upgrade(1, 2)],
+  upgrades: [upgrade(1, 2), upgrade(2, 3)],
 };
 const text = JSON.stringify(out, null, 1) + '\n';
 

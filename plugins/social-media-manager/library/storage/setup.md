@@ -18,7 +18,7 @@ Wait for a yes.
 
 1. Read `${CLAUDE_PLUGIN_ROOT}/library/storage/sheet-setup.json`.
 2. Send **all** of `batch_requests` in one Google Sheets `update_spreadsheet` call, unchanged.
-   - This sets the time zone to India, renames the first tab to Dashboard, adds the 13 data tabs, and adds the bold frozen header rows, the protected header ranges and the dropdowns.
+   - This sets the time zone to India, renames the first tab to Dashboard, adds the 17 data tabs (13 in layout v1, Insights, InsightFindings and Tasks in v2, BriefQuestions in v3), and adds the bold frozen header rows, the protected header ranges and the dropdowns.
    - It expects a brand-new sheet whose only tab has ID 0. If the call fails because tabs already exist, stop and report. Never delete tabs in an existing database.
 3. Send each entry of `values` with `update_values`, unchanged, except in the Config entry, where you replace:
    - `<SPREADSHEET_ID>` with `'` + the sheet ID;
@@ -60,3 +60,7 @@ Tell the admin:
 ## Test database
 
 For tests, use the folder **TDM Studio TEST** and the sheet **TDM Studio TEST Database** (titles in `sheet-layout.json`). Never run tests against the real database.
+
+## Upgrade an existing database
+
+A sheet built with an older layout is upgraded in place, in order (v1 → v2 research, v2 → v3 brief): `google-sheets.md` §7, using `sheet-setup.json` → `upgrades`. Admin only, TEST sheet first. Nothing existing is moved, renamed or deleted.

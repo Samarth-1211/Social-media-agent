@@ -1,6 +1,6 @@
 {
   "$comment": "Layout of the 'TDM Studio Database' Google Sheet. Single source of truth for setup, the storage operations, the tracker page and dev scripts. Row 1 of every data tab holds the column keys below, in this order. Cell formats: text = plain string; number/integer; boolean = TRUE/FALSE; timestamp = ISO 8601 text with offset; date = YYYY-MM-DD text; list = one item per line in the cell; json = compact JSON text. Empty cell = null / empty list.",
-  "version": 2,
+  "version": 3,
   "database_title": "TDM Studio Database",
   "folder_title": "TDM Studio",
   "test_database_title": "TDM Studio TEST Database",
@@ -162,7 +162,7 @@
         { "key": "shown_outputs", "type": "json" },
         { "key": "requested_at", "type": "timestamp" },
         { "key": "decided_by", "type": "text" },
-        { "key": "decided_by_role", "type": "text", "options": ["admin", "editor", "designer"] },
+        { "key": "decided_by_role", "type": "text", "options": ["admin", "editor", "designer", "system"], "options_changed": 3 },
         { "key": "decided_at", "type": "timestamp" },
         { "key": "sent_back_to", "type": "text" },
         { "key": "note", "type": "text" }
@@ -376,6 +376,30 @@
         { "key": "done_by", "type": "text" },
         { "key": "version", "type": "integer" },
         { "key": "updated_at", "type": "timestamp" }
+      ]
+    },
+    {
+      "name": "BriefQuestions",
+      "kind": "mirror",
+      "since": 3,
+      "record": "job",
+      "field": "outputs.brief.data.client_questions",
+      "parent_key": "job_id",
+      "key": ["job_id", "n"],
+      "$comment": "Mirror of each job's brief client_questions (the Outputs brief JSON is the source of truth). Written with every brief save; never decoded into the job record. Feeds the Dashboard 'Brief: waiting for client reply' view. If a person types an answer here, the brief skill reads it as a client answer on its next run.",
+      "columns": [
+        { "key": "job_id", "type": "text", "storage_only": true },
+        { "key": "client_id", "type": "text", "storage_only": true },
+        { "key": "n", "type": "integer" },
+        { "key": "field", "type": "text" },
+        { "key": "question", "type": "text" },
+        { "key": "guess", "type": "text" },
+        { "key": "options", "type": "list" },
+        { "key": "blocking", "type": "boolean" },
+        { "key": "asked_at", "type": "timestamp" },
+        { "key": "status", "type": "text", "options": ["draft", "open", "answered", "dropped"] },
+        { "key": "answer", "type": "text" },
+        { "key": "answered_at", "type": "timestamp" }
       ]
     }
   ]

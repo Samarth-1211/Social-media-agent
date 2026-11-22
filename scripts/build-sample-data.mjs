@@ -13,7 +13,7 @@ const P = path.join(ROOT, 'plugins', 'social-media-manager', 'library');
 const OUT = path.join(P, 'storage', 'tracker-page', 'sample-data.json');
 const ex = (n) => JSON.parse(fs.readFileSync(path.join(P, 'contracts', 'examples', `${n}.example.json`), 'utf8'));
 
-const clientA = { ...ex('client'), next_job_number: 3 }; // SHL-01 and SHL-02 exist in the sample
+const clientA = { ...ex('client'), next_job_number: 4 }; // SHL-01, SHL-02 and SHL-03 exist in the sample
 const clientB = {
   client_id: 'narmada-heights',
   client_code: 'NRH',
@@ -280,6 +280,137 @@ const taskA = {
   updated_at: '2026-11-20T11:52:00+05:30',
 };
 
+// Layout v3 (brief): a brief waiting on the client's answers, after a fresh research reuse. waiting_on is 'client' with no
+// pending gate, and its client_questions are mirrored to the BriefQuestions tab (Dashboard reminder).
+const job4 = {
+  job_id: 'SHL-03',
+  client_id: 'shubh-laundry',
+  type: 'video',
+  title: 'Winter blanket cleaning offer reel',
+  track: 'quick',
+  status: 'active',
+  current_stage: 'brief',
+  waiting_on: 'client',
+  next_action: "Brief: waiting for client reply (sent 22 Nov): Ravi to paste Neha ji's answers to 2 questions.",
+  stage_history: [
+    { stage: 'intake', status: 'done', started_at: '2026-11-22T10:00:00+05:30', finished_at: '2026-11-22T10:15:00+05:30', by: 'samarth' },
+    { stage: 'research', status: 'done', started_at: '2026-11-22T10:15:00+05:30', finished_at: '2026-11-22T10:16:00+05:30', by: 'system', note: 'fresh sheet reused (1 day old)' },
+    { stage: 'brief', status: 'in_progress', started_at: '2026-11-22T10:16:00+05:30', finished_at: null, by: 'ravi' },
+  ],
+  gates: [
+    { stage: 'intake', kind: 'stage', owner_role: 'admin', status: 'approved', shown_outputs: { request: 1 }, requested_at: '2026-11-22T10:10:00+05:30', decided_by: 'samarth', decided_by_role: 'admin', decided_at: '2026-11-22T10:15:00+05:30' },
+  ],
+  assignee: 'ravi',
+  deadline: '2026-11-30',
+  urgent: false,
+  research_status: 'fresh',
+  insight_id: insightA.insight_id,
+  credits: { budget: 200, used: 0, ledger: [] },
+  outputs: {
+    request: { version: 1, stage: 'intake', by: 'samarth', summary: 'Winter blanket cleaning offer reel, quick track, budget 200', updated_at: '2026-11-22T10:10:00+05:30', data: { placeholder: true, note: 'sample' } },
+    research: {
+      version: 1, stage: 'research', by: 'system', schema: 'research.schema.json', updated_at: '2026-11-22T10:16:00+05:30',
+      summary: `Fresh sheet ${insightA.insight_id} reused`,
+      data: {
+        research_status: 'fresh', insight_id: insightA.insight_id, insight_version: insightA.version, insight_date: insightA.created_at.slice(0, 10),
+        flags: [], note: 'Reused the 21 Nov sheet (1 day old).',
+        downstream: insightA.downstream,
+      },
+    },
+    brief: {
+      version: 1,
+      stage: 'brief',
+      by: 'ravi',
+      summary: 'Blanket cleaning offer reel; price and last date awaiting the client',
+      files: ['Jobs/SHL-03/brief/brief-v1.json'],
+      schema: 'brief',
+      updated_at: '2026-11-22T10:40:00+05:30',
+      data: {
+        job_id: 'SHL-03',
+        client_id: 'shubh-laundry',
+        type: 'video',
+        client_version: 3,
+        objective: 'Get blanket and quilt cleaning orders on WhatsApp before winter.',
+        occasion: 'Winter',
+        audience: 'Families in Vijay Nagar and Bhawarkua taking out woollens for winter',
+        key_message: 'Kambal aur razai ki dhulai, ghar se pickup.',
+        offer: 'Blanket and quilt cleaning offer [CLIENT TO CONFIRM: price and last date]',
+        cta: 'WhatsApp karo, free pickup',
+        language: 'Hinglish',
+        tone: 'Friendly neighbourhood helper, quick and reliable',
+        deliverables: [
+          { platform: 'instagram', format: 'reel', aspect_ratio: '9:16', duration_sec: 20, count: 1 },
+          { platform: 'whatsapp-status', format: 'story', aspect_ratio: '9:16', duration_sec: 15, count: 1, changes_from_master: '15s cut: offer and CTA only, no problem beat.' },
+        ],
+        mandatories: ['Price on the first frame', 'Offer last date', 'Free pickup line', 'Captions on'],
+        avoid: ['Dirty-clothes close-ups', 'The word cheap'],
+        references: [],
+        style_preset: null,
+        deadline: '2026-11-30',
+        credit_budget: 200,
+        success_measure: 'WhatsApp enquiries for blanket cleaning in the week after posting',
+        assumptions: ['Duration 20s: default for offer reels.', 'WhatsApp status cut added: the client posts statuses (profile platforms).'],
+        open_questions: ['Blanket cleaning price per piece (asked the client).', 'Offer last date (asked the client).'],
+        version: 1,
+        updated_at: '2026-11-22T10:40:00+05:30',
+        status: 'awaiting-client',
+        changelog: [{ version: 1, at: '2026-11-22T10:40:00+05:30', by: 'ravi', change: 'Drafted; 2 client questions sent on WhatsApp.' }],
+        job_kind: 'offer-reel',
+        objective_label: 'leads',
+        audience_detail: { who: 'Families in Vijay Nagar and Bhawarkua', where: ['Vijay Nagar', 'Bhawarkua'], age_band: '25-45', language: 'Hinglish' },
+        proof_points: [{ text: 'Free pickup above ₹299', source: 'profile', ref: 'do' }],
+        offer_detail: { text: 'Blanket and quilt cleaning offer', price: null, unit: 'per piece', validity: null, conditions: [], profile_match: 'not-in-profile', profile_price: null },
+        cta_detail: { action: 'WhatsApp karo', channel: 'whatsapp', target: 'shop WhatsApp on the end card' },
+        creative_format: 'offer-card-motion',
+        platforms: ['instagram', 'whatsapp-status'],
+        aspect_ratio: '9:16',
+        duration_sec: 20,
+        writing_script: 'roman-hinglish',
+        posting_date: null,
+        research: {
+          status: 'fresh', insight_id: insightA.insight_id, angles_chosen: [],
+          pain_points_used: [{ id: 'F2', text: insightA.downstream.brief.pain_points.find((f) => f.id === 'F2').text }],
+          customer_phrases_used: [{ id: 'F8', text: 'pickup time pe aate hi nahi' }],
+          skip_reason: null, no_angle_reason: 'Research angles are about wedding saree care; this job is a winter blanket offer.',
+        },
+        track_suggestion: { track: 'quick', reason: 'Same offer-reel format as SHL-01.' },
+        confidence: {
+          objective: { status: 'confirmed', basis: 'intake note' },
+          offer: { status: 'guessed', basis: 'blanket price not in profile price_points' },
+          cta: { status: 'confirmed', basis: 'same as SHL-01 (approved)' },
+          deadline: { status: 'confirmed', basis: 'intake note' },
+        },
+        client_questions: [
+          { n: 1, question: 'Kambal/razai dhulai ka rate kya rakhein? Per piece?', guess: '₹349 per piece', options: ['₹299', '₹349', '₹399'], field: 'offer_detail.price', blocking: true, asked_at: '2026-11-22T10:40:00+05:30', status: 'open', answer: null, answered_at: null },
+          { n: 2, question: 'Offer kab tak chalega?', guess: '30 Nov tak', options: ['30 Nov tak', '15 Dec tak', 'Poori sardi'], field: 'offer_detail.validity', blocking: true, asked_at: '2026-11-22T10:40:00+05:30', status: 'open', answer: null, answered_at: null },
+        ],
+        ready_for_production: false,
+        self_check: [
+          { check: 'editor-can-start', pass: false, note: 'Price and last date are with the client.' },
+          { check: 'essentials-confirmed', pass: false, note: 'offer_detail.price and validity open (client questions 1, 2).' },
+          { check: 'offer-matches-profile', pass: false, note: 'Blanket price not in profile; asked the client.' },
+          { check: 'no-invented-claims', pass: true },
+          { check: 'research-angle-or-reason', pass: true, note: 'No angle fits (saree-care sheet); pain point F2 and phrase F8 used.' },
+          { check: 'variants-consistent', pass: true },
+          { check: 'pairs-agree', pass: true },
+          { check: 'language-consistent', pass: true },
+          { check: 'mandatories-present', pass: true },
+          { check: 'downstream-complete', pass: false, note: 'Script offer line waits for the price.' },
+        ],
+      },
+    },
+  },
+  client_feedback: [],
+  revision_round: 0,
+  log: [
+    { at: '2026-11-22T10:15:00+05:30', by: 'samarth', kind: 'gate', message: 'intake approved (quick, budget 200).' },
+    { at: '2026-11-22T10:16:00+05:30', by: 'system', kind: 'event', message: 'research: fresh sheet reused.' },
+    { at: '2026-11-22T10:40:00+05:30', by: 'ravi', kind: 'event', message: 'brief v1 drafted; 2 questions sent to the client; waiting on client.' },
+  ],
+  version: 4,
+  created_at: '2026-11-22T10:00:00+05:30',
+  updated_at: '2026-11-22T10:40:00+05:30',
+};
 const team = [
   { handle: 'samarth', name: 'Samarth', role: 'admin', email: 'admin@example.com', active: true, added_at: '2026-11-10T09:00:00+05:30', version: 1, updated_at: '2026-11-10T09:00:00+05:30' },
   ex('team'),
@@ -294,7 +425,7 @@ const add = (rec, data) => {
 };
 add('client', clientA);
 add('client', clientB);
-for (const j of [job1, job2, job3]) {
+for (const j of [job1, job2, job3, job4]) {
   // Credits rows carry client_id for the Dashboard.
   add('job', j);
 }
@@ -304,7 +435,7 @@ add('insight', insightA);
 add('insight', insightB);
 add('task', taskA);
 
-export const sampleRecords = { clients: [clientA, clientB], jobs: [job1, job2, job3], team, insights: [insightA, insightB], tasks: [taskA] };
+export const sampleRecords = { clients: [clientA, clientB], jobs: [job1, job2, job3, job4], team, insights: [insightA, insightB], tasks: [taskA] };
 
 const out = {
   $comment: 'GENERATED by scripts/build-sample-data.mjs. Fictional data in the exact shape Google Sheets get_values returns. Do not edit by hand.',

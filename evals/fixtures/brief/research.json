@@ -1,0 +1,106 @@
+{
+ "$comment": "Research outputs seeded as job.outputs.research for B9, in the researcher branch's research.schema.json shape (re-check at merge). Fictional; sources anonymised.",
+ "outputs": {
+  "shl-fresh": {
+   "research_status": "fresh",
+   "insight_id": "SHL-I261201-1",
+   "insight_version": 2,
+   "insight_date": "2026-12-01",
+   "flags": [],
+   "note": "Wedding-season sheet from 1 Dec, reused (7 days old).",
+   "downstream": {
+    "brief": {
+     "pain_points": [
+      {
+       "id": "F2",
+       "text": "Fear that a costly saree gets damaged in dry-clean",
+       "confidence": "strong"
+      },
+      {
+       "id": "F3",
+       "text": "Sherwani needed pressed the night before, shops are shut",
+       "confidence": "some"
+      }
+     ],
+     "working_angles": [
+      {
+       "id": "F5",
+       "text": "Show the gentle saree process step by step: trust through seeing",
+       "confidence": "strong"
+      },
+      {
+       "id": "F6",
+       "text": "Night-before rescue: pickup tonight, ready by morning",
+       "confidence": "some"
+      }
+     ],
+     "timely_hooks": [
+      {
+       "id": "F9",
+       "text": "Peak wedding dates in Indore fall 10-15 Dec",
+       "confidence": "some"
+      }
+     ]
+    },
+    "concept_and_hooks": {
+     "working_angles": [
+      {
+       "id": "F5",
+       "text": "Show the gentle saree process step by step: trust through seeing",
+       "confidence": "strong"
+      },
+      {
+       "id": "F6",
+       "text": "Night-before rescue: pickup tonight, ready by morning",
+       "confidence": "some"
+      }
+     ],
+     "outlier_hooks": [
+      {
+       "id": "F12",
+       "text": "POV: baraat kal hai aur sherwani pe daag",
+       "confidence": "some",
+       "formula": "POV + deadline",
+       "multiple": 3.1
+      }
+     ],
+     "competitors_overdo": [
+      {
+       "id": "F14",
+       "text": "Before/after stain close-ups",
+       "confidence": "some"
+      }
+     ]
+    },
+    "script": {
+     "proof_points": [
+      {
+       "id": "F16",
+       "text": "In reviews of 3 Vijay Nagar laundries, the top worry is saree safety (30 reviews read)",
+       "confidence": "some"
+      }
+     ]
+    },
+    "localise": {
+     "customer_phrases": [
+      {
+       "id": "F18",
+       "text": "saree ka dry clean safe hai na?",
+       "confidence": "strong",
+       "language": "Hinglish"
+      }
+     ]
+    },
+    "visuals": {
+     "visual_cliches": [
+      {
+       "id": "F20",
+       "text": "Washing-machine spin close-ups",
+       "confidence": "some"
+      }
+     ]
+    }
+   }
+  }
+ }
+}
