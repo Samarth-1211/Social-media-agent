@@ -1,6 +1,6 @@
 # Concept + hooks research: sources
 
-- **Read on:** 2026-11-22, for Group 2a agents 3 + 4 (`pre-production/concept`, `pre-production/hooks`, `library/knowledge/india-consumer-psychology.md`, `library/knowledge/persuasion-ethics.md`).
+- **Read on:** 2026-11-22, for Group 2a agents 3 + 4 (`pre-production/concept`, `pre-production/hooks`, `library/knowledge/india-consumer-psychology.md`). **Change 2026-11-22:** the admin dropped the separate `persuasion-ethics.md`; its few hard limits live as "misuse" lines in the psychology levers and in hooks `anti-patterns.md`. Where this file says "→ ethics", read that.
 - **Clones:** in `../_research/`, outside the repo (folder names in the table).
 - **What we did with them:** read the listed files fully and rewrote the rules in our own words. **Nothing was copied or vendored.** The two CC BY 4.0 sources carry the attribution line their licence asks for, here and in `plugins/social-media-manager/ATTRIBUTION.md`. Sources with no known licence are used for ideas only.
 - **How to read this:** one section per source: what we borrow (→ the file it feeds), then what we leave out and why. Indian consumer research and ASCI follow, then a summary of rules that changed because sources disagreed.
@@ -15,11 +15,11 @@
 | 6 | calebvbi/creator-skills-samples: `instagram-reels-script-writer` | `81c021176d4dd6158eed5f821088adb7b6eb8dc6` (2026-06-15) | CC BY 4.0 (stated in README; no LICENSE file) | adapt with attribution line | hooks: `anti-patterns`, `formula-catalog` (cross-labels) |
 | 7 | smixs/creative-director-skill: `creative-director` | `ac06eb255371da35d1db0a146dbfcca8c8857543` (2026-08-08) | CC BY 4.0 (LICENSE + NOTICE) | adapt with attribution line | concept: `creative-methods`, `scoring` |
 | 8 | 0xhughs/director-skills: `short-film-development` | `35ca0a2b4cd55b0668aa9ea0f40273324b774bb4` (2026-06-02) | MIT | adapt, credit | concept: `templates/concept-card.md` |
-| 9 | coreyhaines31/marketingskills: `marketing-psychology` | `5b2b400eec1e7e1cec76245a715d0b0d4fd2a9c1` (2026-11-19), skill v2.0.3 | MIT | adapt, credit | `library/knowledge/india-consumer-psychology.md` (levers), `persuasion-ethics.md` |
+| 9 | coreyhaines31/marketingskills: `marketing-psychology` | `5b2b400eec1e7e1cec76245a715d0b0d4fd2a9c1` (2026-11-19), skill v2.0.3 | MIT | adapt, credit | `library/knowledge/india-consumer-psychology.md` (levers and misuse lines) |
 | 10 | Salah-XD/equipt (Equipt): `instagram-reels-script-writer`, `hindi-english-content-writer` agents | `6380fd246d95eedb65077f466d37534a557d48dc` (2026-06-10) | CC BY 4.0 (`LICENSE-CONTENT`, everything under `plugins/`) | adapt with attribution line | hooks: `language-rules`, `anti-patterns`; ethics |
 | 11 | Motion-Creative/skills `ad-concept-generator`; Motion-Creative/motion-creative-plugin `create-concepts`, `concept-engine` | `5d031702c7b8c7bbc8ac1b2dee9378e6f9f53db6` (2026-03-11); `3ab85bfbbeee08d6ad77dee3850cce7c39fbc111` (2026-06-01) | MIT | adapt, credit (the plugin skills need paid Motion data: method ideas only) | concept: `scoring`, `concept-formats` |
 | 12 | Indian consumer research: Rukam Capital (2), Hakuhodo India | see §12 | publisher terms; cited, never copied | facts with dates | `india-consumer-psychology.md` |
-| 13 | ASCI Code + guidelines; CCPA dark-pattern guidelines | see §13 | public regulation; cited, never copied | rules with dates | `persuasion-ethics.md` |
+| 13 | ASCI Code + guidelines; CCPA dark-pattern guidelines | see §13 | public regulation; cited, never copied | rules with dates | lever misuse lines + hooks `anti-patterns.md` |
 
 ## CC BY 4.0 attribution lines (must stay wherever the adapted material lives)
 
@@ -88,7 +88,7 @@ Files read: `SKILL.md`, `hooks.json` (all 26 formulas, rules, classify order), `
 - **Running the Python scripts.** `python3` isn't on the team's Windows machines and scripts don't run on claude.ai. We apply the same checks in the prompt.
 - **`~/.claude/instagram/voice.md`, `swipe.md`, `log.md`.** Per-machine files; our equivalents are the client profile, the research insight and the client `learnings`.
 - **`/ig-human` humaniser pass and the beat sheet.** Script stage.
-- **Formula #23 "statistic" and #19 "deadline" as written.** Kept, but only with a sourced statistic and a real date (ethics file).
+- **Formula #23 "statistic" and #19 "deadline" as written.** Kept, but only with a sourced statistic and a real date (see hooks `anti-patterns.md`).
 
 ## 4. instagram-agent-skill `ig-plan` → concept `angle-engines`
 
@@ -120,12 +120,12 @@ Files read: `skills/ig-hook-extractor/SKILL.md`, `references/classification-rule
 Attribution line: see the top of this file.
 
 **Borrow**
-- **"Real numbers or no numbers."** → Hard rule in `anti-patterns.md`, `scoring.md` (specificity only scores with a real fact) and `persuasion-ethics.md`.
+- **"Real numbers or no numbers."** → Hard rule in `anti-patterns.md`, `scoring.md` (specificity only scores with a real fact) and the psychology file's misuse lines.
 - **Eight hook types** (contrarian statement, specific promise, relatable struggle, surprising stat, bold question, pattern interrupt, before/after teaser, authority statement). → Cross-reference column in the catalogue.
 - **Bad-script patterns:** lecture opener, slow burn, essay intro, vague promise, laundry list, talking at the viewer. → `anti-patterns.md`.
 - **One CTA, said once and shown once.** → Script do/don't notes in the hooks `downstream`.
 - **Show the visual of the first second, always.** → Every hook carries a `visual` layer.
-- **No health claims as blanket statements** (niche note). → Clinic/salon notes in `india-hook-bank.md` and the ethics file.
+- **No health claims as blanket statements** (niche note). → Clinic/salon notes in `india-hook-bank.md` and the lever misuse lines.
 
 **Leave out**
 - **Caption writing, audio suggestions, CTA tables by goal, length templates.** Caption, audio and script stages.
@@ -168,7 +168,7 @@ Files read: `SKILL.md` (all sections).
 
 **Borrow** (adapted for Indian small-business video, with Indian examples, in our own words)
 - Social proof / bandwagon, authority, reciprocity, liking/similarity, unity (shared identity), loss aversion, framing, contrast (before/after), anchoring, charm pricing, zero-price effect, mental accounting ("₹10 a day"), regret aversion and risk reversal, present bias (immediate benefit), status-quo bias (make switching easy), pratfall effect (admit a small flaw), peak-end, Zeigarnik (open loop), mere exposure, mimetic desire, paradox of choice (one offer). → The ~20-lever catalogue.
-- **"Only use scarcity when genuine"; "implement ethically".** → `persuasion-ethics.md`.
+- **"Only use scarcity when genuine"; "implement ethically".** → the misuse line on every lever.
 
 **Leave out**
 - **Foundational thinking models and growth models** (first principles, flywheel, network effects, North Star). Strategy, not creative levers.
@@ -184,7 +184,7 @@ Files read: `SKILL.md` (all sections).
 - **Roman Hinglish by default for digital;** Devanagari for older, Tier 3 or vernacular-first audiences, mass WhatsApp broadcasts; English with Hindi moments for metro business audiences. Tier 2/3 broad-market reels: Hindi-leaning Hinglish, Devanagari overlay is an option. Mixed script in one line is acceptable on a phone. → `language-rules.md` and the language section of `india-consumer-psychology.md` (marked as practice guidance, not research).
 - **How natural Hinglish works:** feelings in Hindi, technical and business words in English, connectors switch freely, sentence mix can flip line to line; never word-for-word translation; write for the ear, short spoken lines. → `language-rules.md`.
 - **Cringe list:** "Namaste friends"/"Hello bhaiyon aur behno", "5 amazing tips"/"you won't believe", "yaar" every other word, emoji rain, borrowed American slang, forced rhymes, moral-lesson endings, "bro" off-voice, TV-news openers ("Aaj hum aapko batane wale hain…"), late dance trends. → `anti-patterns.md` ("cringe" diagnosis in `critique-pass.md`).
-- **Refusals:** cringe bait built to provoke rage-shares; regional stereotyping; religious humour; medical/financial/legal claims that can't be backed. → `persuasion-ethics.md`.
+- **Refusals:** cringe bait built to provoke rage-shares; regional stereotyping; religious humour; medical/financial/legal claims that can't be backed. → hooks `anti-patterns.md`.
 - **Regional audiences get native writing, not translated Hindi.** → `language-rules.md` (out of scope note: Hindi belt only in v1).
 - **First 1.5 seconds decide** (matches our scoring criterion).
 
@@ -240,7 +240,7 @@ Findings are paraphrased; figures are kept with their context. **"Re-check by" i
 
 **What we leave out:** detailed platform shares (OTT, Telegram, gaming) and payment splits. Not creative levers.
 
-## 13. ASCI code and guidelines → `persuasion-ethics.md`
+## 13. ASCI code and guidelines → lever misuse lines, hooks `anti-patterns.md`
 
 Read on ascionline.in: the Code (https://www.ascionline.in/the-asci-code/, page metadata 2025-11-21) and the Guidelines page (https://www.ascionline.in/the-asci-code-guidelines/, metadata 2026-11-02). Neither shows a visible "last updated" line; dates below are the sign-off dates printed under each section. ASCI is self-regulatory (not a government regulator), but its Code binds TV ads through the Cable TV Rules and its decisions are widely followed online.
 
@@ -269,7 +269,7 @@ Read on ascionline.in: the Code (https://www.ascionline.in/the-asci-code/, page 
 | Numbers in hooks | vyral: odd, specific numbers feel measured. CreatorSkills and ig-reel: real numbers or none; never fabricate. | Real numbers from the brief, profile or research only. No invented or "rounded-off-to-look-real" numbers. |
 | On-screen text length | vyral 3–7 words, reels-hook 3–5, ig-reel ≤ 6 | ≤ 6 words (spec), 3–5 preferred. |
 | Imperative hooks ("Stop scrolling") | ig-reel lists Negative Command as a formula; vyral calls command openers high-variance. | Kept as a formula only when the habit is one the viewer recognises; "stop scrolling" itself is an anti-pattern. |
-| Urgency hooks | ig-reel #19 Deadline; marketing-psychology scarcity | Only with a real date or a real limit from the brief (`offer_detail.validity`). Otherwise banned (ethics). |
+| Urgency hooks | ig-reel #19 Deadline; marketing-psychology scarcity | Only with a real date or a real limit from the brief (`offer_detail.validity`). Otherwise not used. |
 | Refinement depth | creative-director recursive passes to 9+ | One scoring pass + one targeted fix (credit-minimal). |
 | AI-made people | Generation tools make "customers" easy | ASCI's 2026 AI guideline bans fake testimonials outright; AI people may appear only as clearly fictional or labelled, never as real customers. Real testimonials need real client footage. |
 | Evidence strength | Rukam samples are SEC A online; Hakuhodo is metro-only | India file marks each truth with its sample, and Tier 3 / rural claims that rest only on these as `hypothesis`. |

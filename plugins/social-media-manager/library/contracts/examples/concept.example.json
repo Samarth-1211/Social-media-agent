@@ -21,7 +21,7 @@
     { "id": "A4", "angle_type": "offer", "engine": "constraint-fanout", "text": "Wedding-season saree + sherwani combo.", "status": "backup", "note": "No combo price in the request or profile; needs one from Neha." },
     { "id": "A5", "angle_type": "offer", "engine": "constraint-fanout", "text": "Flat discount card with a model in a saree.", "status": "removed", "removed_reason": "competitors_overdo", "note": "Assumed category cliché (no research on this branch)." },
     { "id": "A6", "angle_type": "opinion", "engine": "response", "text": "Indore's cheapest saree dry clean.", "status": "removed", "removed_reason": "brief_avoid", "note": "Profile never_use 'cheap'; superlative can't be proved." },
-    { "id": "A7", "angle_type": "story", "engine": "narrative", "text": "Your saree gets ruined right before the wedding.", "status": "removed", "removed_reason": "ethics", "note": "Fear-mongering (persuasion-ethics.md)." }
+    { "id": "A7", "angle_type": "story", "engine": "narrative", "text": "Your saree gets ruined right before the wedding.", "status": "removed", "removed_reason": "ethics", "note": "Fear-mongering: misuse of L07 loss aversion (india-consumer-psychology.md)." }
   ],
   "concepts": [
     {

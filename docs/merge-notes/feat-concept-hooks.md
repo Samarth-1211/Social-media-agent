@@ -23,6 +23,7 @@ This file records every change to a shared file and every proposal for files thi
 | M2 | `library/storage/google-sheets.md` | "Concept and hooks records" paragraph (whole record in Drive `Jobs/<id>/<field>/<field>-v<n>.json`; the cell holds it whole under 40,000 characters, else a compact form); §7 v3 detection and the v3 → v4 upgrade steps. |
 | M2 | `library/storage/setup.md`, `README.md`, `files-backup.md` | Upgrade order and older-layout detection include v4; files-mode note on concept/hooks files. |
 | M2 | `docs/decisions/0006-creative-pick-and-quick-track.md` (new) | Decision record. |
+| M3 | `library/knowledge/india-consumer-psychology.md` (new) | Shared by concept, hooks, script, localise: dated evidence (T1–T9), insight starters, clichés to retire, levers L01–L20 with misuse limits, hypotheses HY1–HY9, audience variants, language. **`persuasion-ethics.md` was dropped by the admin (2026-11-22);** its hard limits are the lever misuse lines and hooks `anti-patterns.md`. |
 
 ## 2. Proposals for protected files (not applied here)
 

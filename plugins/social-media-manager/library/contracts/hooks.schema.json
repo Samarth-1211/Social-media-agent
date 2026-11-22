@@ -159,7 +159,7 @@
         "hook": { "$ref": "#/$defs/hookRef" },
         "backup_hooks": { "type": "array", "maxItems": 2, "items": { "$ref": "#/$defs/hookRef" } },
         "script_notes": {
-          "description": "Do/don't for the script, from ethics, brand and brief. Always includes paying off the hook's promise before the halfway mark.",
+          "description": "Do/don't for the script, from the brief, the brand profile and the limits in hooks anti-patterns. Always includes paying off the hook's promise before the halfway mark.",
           "type": "object",
           "additionalProperties": false,
           "required": ["do", "dont"],
