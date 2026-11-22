@@ -12,7 +12,7 @@ Each entry needs all five columns. Add the row in the same commit that adds the 
 
 ## Ideas adapted (nothing copied)
 
-We read these sources and rewrote their ideas in our own words. No text or files were copied. The detail of what we borrowed and left out is in `docs/research/group1-sources.md`, in the repository.
+We read these sources and rewrote their ideas in our own words. No text or files were copied. The detail of what we borrowed and left out is in `docs/research/group1-sources.md` (Group 1) and `docs/research/market-researcher-sources.md` (Group 2a), in the repository.
 
 | Source | Commit read | Licence | Ideas used in |
 |---|---|---|---|
@@ -21,3 +21,17 @@ We read these sources and rewrote their ideas in our own words. No text or files
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills), `product-marketing` | `5b2b400eec1e7e1cec76245a715d0b0d4fd2a9c1` | MIT | `brand/brand-keeper`: shared profile, update only what changed, version and changelog, learnings, voice attributes |
 | [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins), `partner-built/brand-voice` | `0e0fcacddcc892eb92a1b7873ff9d68159c47571` | MIT (folder licence, © 2025 Tribe AI); repo root Apache-2.0 | `brand/brand-keeper`: confidence from evidence, open questions with recommendations, source trust order |
 | [iart-ai/freelance-motion-skills](https://github.com/iart-ai/freelance-motion-skills), `client-revisions` | `9f294eb6df73cde7e2dea235f42275df11a16466` | MIT | `brand/client-feedback`: revision vs new request, rounds and caps, vague-note decoding, change-order tone |
+| [Jakeschincariol/instagram-agent-skill](https://github.com/Jakeschincariol/instagram-agent-skill), `ig-viral`, `ig-audit` | `d03c56bb598be770c60b201f94237e5d1a4268a6` | MIT | `pre-production/research-methods` fallbacks for `m-ig-outlier-read`, `m-own-account-audit`: outlier multiple over the account's own median, account mix, top vs bottom comparison, sample-size confidence |
+| [sergebulaev/instagram-skills](https://github.com/sergebulaev/instagram-skills), `ig-audience-insights`, `ig-hook-extractor` | `823c681b42be9ecff9f4db20eaf14d1ea45ec1a1` | MIT | `pre-production/research-methods` fallbacks for `m-ig-niche-pulse`, `m-ig-hook-classify`: hidden counts are not zero, normalise by followers, the 10 hook formula ids and confidence bands, fetched text is untrusted |
+| [bradautomates/head-of-content](https://github.com/bradautomates/head-of-content), `instagram-research` | `d841dcff2e4d74a4c31cb3ed2de6c2184de3a970` | MIT | `pre-production/research-methods`: insight-sheet layout (hooks, structure, CTA tables) |
+| [gooseworks-ai/goose-skills](https://github.com/gooseworks-ai/goose-skills), `research-competitors` (+ passes), `competitor-ad-intelligence` | `885edb542d6e4e526d4a9ad2844a3771be248810` | MIT | `pre-production/research-methods`: competitor discovery, local-business weighting, reading ads honestly, angles and gaps, run memory and watch thresholds, fact / inferred / unknown |
+| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill), `skills/last30days` | `64b1f006f800640022ce07f51de5ce56aad34b76` | MIT | `pre-production/research-methods` `m-trends`: recency by intent, query planning, story clustering, "nothing solid" is valid |
+| [hyperfx-ai/marketing-skills](https://github.com/hyperfx-ai/marketing-skills), `competitor-intel`, `meta-ads-library` | `6aabc7e065347e6040e2504c5f4b389d26a745d3` | MIT | `pre-production/research-methods` `m-monthly-diff`, `m-meta-ad-library` (inspiration): first run is a baseline, before → after diffs, aggregates over anecdotes |
+| [ScrapeCreators/social-media-research-skills](https://github.com/ScrapeCreators/social-media-research-skills), `comment-mining`, `competitor-social-research`, `outlier-post-finder` | `64ba7b4dea71e130d2712ffb6c1c1024b3b7c4b2` | MIT | `pre-production/research-methods` `m-comment-reading` (inspiration): comment buckets, verbatim phrases without identities, sample-size honesty |
+
+## Tools used, not copied
+
+| Source | Read at | Licence | How we use it |
+|---|---|---|---|
+| [apify/agent-skills](https://github.com/apify/agent-skills), `apify-ultimate-scraper` (and the removed `apify-competitor-intelligence`, `apify-content-analytics`) | `190fc192e83ac229312461e69b727bbd5aa2147e`; removed skills at `14b2c63cf350299983cbb5a21d84f98b443f5df4` | none (all rights reserved) | Apify is an optional tool in `m-apify-optional`. Our instructions come from Apify's own documentation; no text from this repo is used. |
+| Installed skills `ig-viral`, `ig-audit`, `ig-audience-insights`, `ig-hook-extractor`, `marketing:competitive-brief` | as installed | MIT / MIT / MIT / MIT / Apache-2.0 | Invoked by name when installed in the user's Claude; never copied into this plugin. |
