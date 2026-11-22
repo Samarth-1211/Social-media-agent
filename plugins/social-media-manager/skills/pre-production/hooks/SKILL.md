@@ -26,7 +26,7 @@ Stage contract: reads `client`, `brief`; optionally `concept`, `research`. From 
 ## Writes
 
 - `hooks` (job output) → `${CLAUDE_PLUGIN_ROOT}/library/contracts/hooks.schema.json`, through `update_job`, plus the full record in Drive `Jobs/<job_id>/hooks/hooks-v<n>.json` (`google-sheets.md` §4).
-- At the pick: `pick` and `downstream` in a new version of `hooks`, and the gate decision through `record_gate`.
+- At the pick: the gate decision through `record_gate`, then `pick` and `downstream` in a new version of `hooks`.
 - Log lines. Never other outputs, the brief, concepts (a redo goes back to the concept stage) or the client record. A learning goes to `brand-keeper` as a suggestion.
 
 ## Steps
@@ -79,7 +79,7 @@ Stage contract: reads `client`, `brief`; optionally `concept`, `research`. From 
 | "none", "make it funnier", "concept badlo" | `sent_back` to `concept` with the reason (full track); quick track: `changes_requested` and new hooks in that direction. |
 | Edits a line ("2B but say 'pickup free'") | Pick 2B with the edit applied to the hook layers; note it. |
 
-On a pick: write `pick` (`status: picked`, ids, `backups`, `reply`, `decided_by`, `decided_by_role`, `decided_at`, `auto: false`) and build `downstream` (`${CLAUDE_SKILL_DIR}/templates/hook-card.md` §Downstream): the chosen concept (spine, levers + proof, producibility, risks), the hook + 2 backups, script do/don't notes, implied assets (`must_be_real` for anything shown as real), language, and the learning fields (`hook_formula_id`, `angle_type`, `outcome: untested`). Save as a new version, then `record_gate` the decision (`approved`, note "creative pick: <concept> + <hook>") with `shown_outputs` = the versions shown. Run directly: finish the producer's way (`${CLAUDE_PLUGIN_ROOT}/skills/control/producer/SKILL.md` step 6) and run on to `script`.
+On a pick: write `pick` (`status: picked`, ids, `backups`, `reply`, `decided_by`, `decided_by_role`, `decided_at`, `auto: false`) and build `downstream` (`${CLAUDE_SKILL_DIR}/templates/hook-card.md` §Downstream): the chosen concept (spine, levers + proof, producibility, risks), the hook + 2 backups, script do/don't notes, implied assets (`must_be_real` for anything shown as real), language, and the learning fields (`hook_formula_id`, `angle_type`, `outcome: untested`). Order matters (gate rules §3 check the versions shown): **first** `record_gate` the decision (`approved`, note "creative pick: <concept> + <hook>") while `hooks` is still at the version shown; **then** save `pick` + `downstream` as `hooks` version + 1. That version records the editor's choice; it doesn't need a new gate. Run directly: finish the producer's way (`${CLAUDE_PLUGIN_ROOT}/skills/control/producer/SKILL.md` step 6) and run on to `script`.
 
 **Auto-pick** only when `config.creative_auto_pick_after_hours` is set (default null = off) and the gate has been pending that long (`requested_at` vs `get_now`) when the job is next opened: pick the recommended pair with `decided_by: system`, `decided_by_role: system`, `auto: true`; log a `ruling` "auto-picked after <n> h: <pair>". Never auto-pick a `redo`.
 

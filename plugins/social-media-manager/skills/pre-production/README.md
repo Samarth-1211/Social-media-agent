@@ -33,3 +33,20 @@ Rules for readers:
 - Prefer `offer_detail`, `cta_detail` and `audience_detail` for facts; the text fields `offer`, `cta` and `audience` are generated from them (`docs/decisions/0004-brief-field-pairs.md`).
 - Fields marked `guessed` in `confidence` are working assumptions: name them when they shape a choice.
 - If the brief's `version` changes after you ran, the brief's changelog lists your stage in `affected_stages`; the producer reopens you.
+
+## Concept and hooks handoff (for later stages)
+
+`concept` (full track only, no gate) → `hooks` (both video tracks, editor gate **creative-pick**). The editor picks a concept **and** a hook in one reply. After the pick, everything later stages need is in **`job.outputs.hooks.data.downstream`**: read that, not the concept record (`script` reads `hooks`; `concept` is only an optional read).
+
+| Stage | Reads `hooks.data.downstream.` | Holds |
+|---|---|---|
+| `script` | `concept`, `hook`, `backup_hooks`, `script_notes` | The chosen concept (logline, insight, angle, format, timed story spine, levers with their proof, risks; `mix_note` for a mixed pick), the hook's three layers + 2 backups, do/don't notes (pay off the hook before the halfway mark; real offer, date and CTA as given) |
+| `localise` | `hook.layers`, `language`, `writing_script` | Keep the hook's on-screen text ≤ 6 words in every version; customer phrases stay verbatim |
+| shot sourcing (future), `storyboard` | `concept.producibility`, `implied_assets` | Shots by source; anything `must_be_real` is filmed, never generated; AI shots of unbuilt things are labelled |
+| learning loop (future) | `learning` | `hook_formula_id`, `angle_type`, `outcome` (`untested` until results come in) → becomes a client `learnings` entry |
+
+Rules for readers:
+- `pick.status` must be `picked`; `pending` or `redo` means the creative pick isn't done, so stop.
+- On the quick track `downstream.concept.id` is null: the concept is the client's reused format (`reused_format`).
+- Shared knowledge for all creative stages: `library/knowledge/india-consumer-psychology.md` (levers L01–L20, audience variants, language). Hook formulas use the ids in `hooks/references/formula-catalog.md` (H01–H30).
+- If the brief changes after the pick and its changelog lists `concept` or `hooks` in `affected_stages`, the producer reopens them and the creative pick is asked again.

@@ -31,18 +31,44 @@ This file records every change to a shared file and every proposal for files thi
 | M5 | `skills/pre-production/hooks/**` (new) | The hooks skill: SKILL.md (with the creative-pick gate), 8 references (formula catalogue H01–H30, India hook bank 91 hooks, three layers, Reels specifics, language rules, anti-patterns, scoring, critique pass), 2 templates, checklist HC1–HC10, 3 examples, CHANGELOG. |
 | M5 | `library/contracts/stages.yaml` | hooks `status: placeholder` → `active`. |
 | M5 | `skills/pre-production/README.md` | hooks row: planned → active (unreleased). |
+| M6 | `skills/pre-production/hooks/SKILL.md` | At the pick: record the gate decision **first**, then save `pick` + `downstream` as `hooks` version + 1 (so gate-rules §3's version check passes). |
+| M6 | `library/contracts/examples/job.example.json` | SHL-01 `outputs.hooks` → version 2 (v1 shown at the pick, v2 records it); sample data regenerated. |
+| M6 | `skills/pre-production/README.md` | New section "Concept and hooks handoff": what script, localise, storyboard / shot sourcing and the learning loop read from `hooks.data.downstream`. |
 
 ## 2. Proposals for protected files (not applied here)
 
-| # | File | Proposal | Why |
-|---|---|---|---|
-| P1 | `docs/STAGE-CONTRACT.md` | Path table: video/quick now includes hooks and not concept (count unchanged), video/full unchanged, poster one stage shorter. List `gate_label` under optional stage keys. | Decision 0006; the admin chose merge-notes-only for docs. |
-| P2 | `docs/ADD-A-SKILL.md` | List `gate_label` among stage keys. | Same. |
-| P3 | `skills/control/producer/examples/good-full-run.md`, `bad-skipped-gate.md`, `templates/job-card.md` | Old flow (concept placeholder with an admin gate). Update to: concept (full only, no gate) → hooks (creative pick, editor). | Examples would teach the old gate. |
-| P4 | `skills/control/producer` (gate handling) | Filled in M6: hand replies on a pending `creative-pick` gate to the hooks skill's pick section; auto-pick check. | Producer is protected. |
-| P5 | `skills/control/tracker` | Filled in M6: status board shows "creative pick"; auto-pick check during catch-up; `good-catch-up.md` example mentions the old concept admin gate. | Tracker is protected. |
-| P6 | `skills/brand/client-feedback/references/revision-policy.md` | "The idea or story itself → `concept`" and "reopen a stage before an approved admin gate (`brief`, `concept`)": concept no longer has a gate; the approved creative decision is the `hooks` creative-pick (editor) gate. Route idea/story changes to `concept` (full) or `hooks` (quick), and treat reversing an approved creative pick as a `change_request`. | client-feedback is protected. |
-| P7 | Sample data (`scripts/build-sample-data.mjs`) and `job.example.json` | SHL-01 (quick) and the poster sample still show a `concept` stage with the old admin gate, from before decision 0006. Optionally remove those entries. | This branch adds; it doesn't rewrite history. |
+Proposed text for files this branch may not touch. **Without P4 the creative pick still works** when the editor replies inside a hooks session (the hooks skill records the decision itself); P4 makes it work when the reply reaches the producer.
+
+### P1 `docs/STAGE-CONTRACT.md`
+- Path table: video/quick "skips hooks, localise, …" → "skips **concept**, localise, style-bible, casting, production-plan, audio-mix, resolve-export" (14 stages, unchanged); poster: one fewer stage (no concept).
+- "Optional stage keys": add `gate_label`: "kebab-case name for a gate that decides more than its own stage's output; only with a gate other than none. Today: `hooks` → `creative-pick` (decision 0006)."
+
+### P2 `docs/ADD-A-SKILL.md`
+- In the list of stage keys, add `gate_label` (same wording as P1).
+
+### P3 producer examples and job card
+- `examples/good-full-run.md` line 33: "approve → *(concept placeholder; admin gate)* … approve → *(script …)*" → "approve → *(concept: 3 concepts, no gate)* → *(hooks: creative pick; editor gate)* **Ravi:** 2B → *(script placeholder; editor gate …)*". Path line 85: `✓intake ✓research ✓brief ✓concept ✓hooks ✓script …` for full; quick paths show `✓hooks` instead of `✓concept`.
+- `examples/bad-skipped-gate.md`: "concept stops at its own admin gate" → "hooks stops at the creative-pick gate"; table row "Ran concept without stopping at its admin gate" → "Ran past the creative pick without the editor's reply".
+- `templates/job-card.md` line 28 (quick): `✓intake ✓brief ⏸hooks script …`.
+
+### P4 producer: creative pick and auto-pick
+- `references/gate-rules.md` §1 step 4, add: "If the stage's skill has its own gate message (the `hooks` stage, `gate_label: creative-pick` → `skills/pre-production/hooks/templates/creative-pick.md`), show that instead. For `creative-pick`, `shown_outputs` = `{hooks: <v>}` plus `concept: <v>` on the full track."
+- `references/gate-rules.md` §3, before the decision table: "**Creative pick.** A reply on a pending gate with `gate_label: creative-pick` goes to `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/SKILL.md` §Gate, which reads it ('2B', '1 with 3A', 'mix 1 and 3', 'more like 2A', 'none, …'), records the decision and saves the pick. Plain approval ('ok', 'theek hai', 'approve') = the recommended pair. The pick's own version bump of `hooks` after the decision is expected and needs no new gate."
+- `references/stage-running.md` §7 table, add a row: "`editor` with `gate_label: creative-pick` | as above, but show the skill's creative-pick message".
+- `SKILL.md` step 1 (or `commands.md`, before acting on any job): "**Auto-pick check.** If the job's pending gate is a creative pick, `config.creative_auto_pick_after_hours` is set, and `get_now` − `requested_at` ≥ that many hours, run hooks §Gate auto-pick first, then continue."
+
+### P5 tracker
+- `references/status-views.md` after line 21: "If the pending gate has `gate_label: creative-pick`, write the stage as 'Creative pick (concept + hook)' and name the assignee."
+- `references/catch-up.md` step 2: same label; if `creative_auto_pick_after_hours` is set, add one line "Auto-pick at <requested_at + n h> if no reply". During catch-up, if that time has passed, run the producer's auto-pick check (P4) before showing the card.
+- `examples/good-catch-up.md`: "Last done: concept by Ravi … concept approved by samarth (admin)" → a hooks / creative-pick example.
+
+### P6 client-feedback `references/revision-policy.md`
+- Line 37: "The idea or story itself | `concept` | `concept`" → "| The idea or story itself | `concept` (full track) or `hooks` (quick track) | same |"; add "| The opening / first seconds | `hooks` | `hooks` |".
+- Line 50: "before an approved admin gate (`brief`, `concept`)" → "before an approved admin gate (`brief`) **or the approved creative pick** (`hooks`, editor): it's a `change_request`, and only the admin confirms it."
+- `labels.md` line 17: "(brief, concept, script approved …)" → "(brief, the creative pick, script approved …)".
+
+### P7 sample history (optional)
+SHL-01 (quick) and the poster sample in `scripts/build-sample-data.mjs` still show a `concept` stage with the old admin gate, from before decision 0006. Remove those entries if a clean sample matters; validation passes either way.
 
 ## 3. Reads
 
@@ -53,3 +79,23 @@ Final reads are already in `stages.yaml` (see §1); nothing left for the merge.
 - **No new Sheet tabs.** Concept and hooks are job outputs in the existing **Outputs** tab (`data` JSON), plus the full records in Drive.
 - **Layout v4:** three new Learnings columns and three Config rows. The TEST sheet (on v3) needs the v3 → v4 upgrade (`google-sheets.md` §7) before the combined test phase.
 - Sizes: the SHL-01 quick-track hooks record is about 8,200 characters; a full-track record (3 concepts × 8–10 hooks) can pass 30,000.
+
+## 5. Fallbacks (reviewed in M6)
+
+| Missing input | concept | hooks |
+|---|---|---|
+| Brief placeholder or missing | Request + profile; `fallback_used.brief` | Same; `fallback_used.brief` |
+| Research skipped / no sheet / `no_fresh_research` | Brief + profile; clichés become assumptions; `fallback_used.research` | No outlier formulas or research phrases; profile `customer_words` instead; `fallback_used.research` |
+| Research `partial` or `widened` | Use what exists; lower confidence one step | Same |
+| `concept` missing on the full track | (n/a) | Hooks for the brief's angle as one concept (`concept_ref: null`); says the concept stage didn't run |
+| No reusable format on the quick track | (n/a) | Brief `creative_format`, then profile (`quick-track-reuse.md`) |
+
+Each fallback is said in one line in the reply and recorded in `fallback_used`.
+
+## 6. Merge and test-phase checklist
+
+1. Merge `feat/concept-hooks` into `main` (it is already rebased on `fc3fde8`). Apply P1–P6 (P7 optional) in the same PR or a follow-up, as the admin decides.
+2. Version: suggest **0.3.0-alpha.1** (plugin.json, CHANGELOG, both skill CHANGELOGs from "Unreleased").
+3. Upgrade the TEST sheet v3 → v4 (`google-sheets.md` §7, `upgrades[2]`).
+4. Run the validator, then the scenarios in `evals/scenarios/concept-hooks.md` (written in M7) on the fixtures in `evals/fixtures/concept-hooks/`.
+5. Delete the local branch `backup/concept-hooks-on-v0.1.0`.
