@@ -1,0 +1,63 @@
+{
+ "note": "Hashtag scans, reels view (fixture, read 2026-11-28). likes -1 = hidden.",
+ "scans": {
+  "indorelaundry": {
+   "reels_found": 11,
+   "top": [
+    {
+     "owner": "ex_freshfold_indore",
+     "owner_followers": 4100,
+     "likes": 61,
+     "views": 900,
+     "format": "rate list",
+     "opening": "Rate list"
+    },
+    {
+     "owner": "indore_mom_diaries",
+     "owner_followers": 1800,
+     "likes": -1,
+     "views": 2400,
+     "format": "personal vlog",
+     "opening": "My laundry routine"
+    }
+   ]
+  },
+  "indorehomeservices": {
+   "reels_found": 64,
+   "top": [
+    {
+     "owner": "ex_indore_home_services",
+     "owner_followers": 9800,
+     "likes": 410,
+     "views": 8800,
+     "format": "problem then process",
+     "opening": "Ye galti mat karna"
+    },
+    {
+     "owner": "ex_tailor_point_indore",
+     "owner_followers": 5400,
+     "likes": 260,
+     "views": 4300,
+     "format": "how-to",
+     "opening": "Lehenga storage"
+    },
+    {
+     "owner": "ex_clean_home_indore",
+     "owner_followers": 3000,
+     "likes": 190,
+     "views": 3500,
+     "format": "before/after",
+     "opening": "Before vs after sofa"
+    },
+    {
+     "owner": "indore_mom_diaries",
+     "owner_followers": 1800,
+     "likes": 95,
+     "views": 2100,
+     "format": "personal vlog",
+     "opening": "Diwali cleaning with me"
+    }
+   ]
+  }
+ }
+}

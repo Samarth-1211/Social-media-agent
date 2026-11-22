@@ -12,7 +12,7 @@ Research should start by itself and never hold up a job. A person is needed for 
 | **Client onboarded** | `brand-keeper`, right after it saves a new client | A `research-run` task (trigger `onboarding`) is created. Where subagents work (Claude Code, Cowork) the unattended part starts at once in the background; otherwise it waits for the next run or the first job intake. |
 | **Job intake** | `producer`, at the `research` stage | Freshness check (§4). Runs, reuses or skips, never blocks. |
 | **Schedule** | The scheduled task (§5) | Unattended refresh of every client in `research_unattended_clients`; Instagram steps queued. |
-| **Festival in 14 days** | The scheduled task, and `tracker` at the start of a session | For each `festival_calendar` occasion 14 days or fewer away with no festival sheet yet: a `research-run` task (trigger `festival`, `occasion`, `due` = 14 days before). |
+| **Festival in 14 days** | The scheduled task, and `tracker` at the start of a session | For each `festival_calendar` occasion 14 days or fewer away with no festival sheet yet: a `research-run` task (trigger `festival`, `occasion`, `due` = the later of today and 14 days before the occasion). If a refresh in the same run already covers the occasion (situation `festival`), mark the task `done` at once. |
 | **Manual** | Anyone: "research <client>", "refresh research", "go deeper" | A run now, attended if a browser is open. |
 
 ## 2. Two run modes

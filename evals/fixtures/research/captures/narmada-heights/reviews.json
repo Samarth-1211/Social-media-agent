@@ -1,0 +1,49 @@
+{
+ "note": "Google reviews (fixture, 2026-11-28); names must never be stored.",
+ "businesses": [
+  {
+   "name": "Jabalpur Homes township (fictional)",
+   "rating": 3.9,
+   "review_count": 88,
+   "reviews": [
+    {
+     "reviewer": "Rakesh Tiwari",
+     "stars": 2,
+     "month": "2026-11",
+     "text": "possession kab milega, 8 mahine late hai"
+    },
+    {
+     "reviewer": "user",
+     "stars": 4,
+     "month": "2026-10",
+     "text": "Site visit achha tha, monthly photos bhejte hain."
+    },
+    {
+     "reviewer": "user",
+     "stars": 2,
+     "month": "2026-10",
+     "text": "Possession date baar baar badli."
+    }
+   ]
+  },
+  {
+   "name": "MP Realty Group project (fictional)",
+   "rating": 4.2,
+   "review_count": 150,
+   "reviews": [
+    {
+     "reviewer": "user",
+     "stars": 5,
+     "month": "2026-11",
+     "text": "RERA registered, sab documents clear diye."
+    },
+    {
+     "reviewer": "user",
+     "stars": 3,
+     "month": "2026-10",
+     "text": "Possession time pe nahi mila but quality theek."
+    }
+   ]
+  }
+ ]
+}

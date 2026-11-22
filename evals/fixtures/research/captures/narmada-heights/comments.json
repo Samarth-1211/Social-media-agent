@@ -1,0 +1,35 @@
+{
+ "note": "Visible comments (fixture, 2026-11-28); usernames must never be stored.",
+ "reels": {
+  "EXJH04": [
+   {
+    "user": "rakesh.t.jbp",
+    "text": "possession kab milega sach mein?"
+   },
+   {
+    "user": "user5511",
+    "text": "RERA number kya hai?"
+   },
+   {
+    "user": "user2209",
+    "text": "pichhle project mein 2 saal late tha"
+   }
+  ],
+  "EXHL09": [
+   {
+    "user": "user8830",
+    "text": "EMI kitni banegi 20 saal ki?"
+   },
+   {
+    "user": "user1188",
+    "text": "Jabalpur mein kaunsa bank best hai?"
+   }
+  ],
+  "EXIJ06": [
+   {
+    "user": "user4471",
+    "text": "handover se pehle checklist bhejo"
+   }
+  ]
+ }
+}

@@ -33,5 +33,5 @@ show('clients:narmada-heights', /Instagram read \(~10 min, needs browser\)/);
 show('credits', /Higgsfield credits only/);
 console.log('struck competitor hidden:', !out['clients:shubh-laundry'].includes('ex_bhopal_laundromat'));
 console.log('jobs view renders:', out.jobs.includes('NRH-01'));
-if (out['clients:shubh-laundry'].includes('ex_bhopal_laundromat') || !out.jobs.includes('NRH-01') || /[object Object]/.test(Object.values(out).join(' '))) failed++;
+if (out['clients:shubh-laundry'].includes('ex_bhopal_laundromat') || !out.jobs.includes('NRH-01') || Object.values(out).join(' ').includes('[object Object]')) failed++;
 process.exit(failed ? 1 : 0);

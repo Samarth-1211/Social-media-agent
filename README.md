@@ -48,11 +48,11 @@ Scenario scripts and pass criteria: [evals/scenarios/group1.md](evals/scenarios/
 In Claude Code:
 
 ```
-/plugin marketplace add <github-owner>/tdm-plugins
+/plugin marketplace add Samarth-1211/Social-media-agent
 /plugin install social-media-manager@tdm-plugins
 ```
 
-From a shell: `claude plugin marketplace add <github-owner>/tdm-plugins`, then `claude plugin install social-media-manager@tdm-plugins`.
+From a shell: `claude plugin marketplace add Samarth-1211/Social-media-agent`, then `claude plugin install social-media-manager@tdm-plugins`.
 
 - **Updates:** you get a new version when `version` changes in `plugin.json`.
 - **Higgsfield:** the first time a Higgsfield tool is used, each person signs in to their own Higgsfield account (`/mcp`, then authenticate `higgsfield`).

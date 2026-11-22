@@ -103,7 +103,7 @@ Some stages carry extra keys in `stages.yaml` (`docs/STAGE-CONTRACT.md`, "Option
    - Run on.
 2. **`freshness_days`** (`config.freshness_days` overrides it) → `get_latest_insight` for the client:
    - younger than the limit, no browser step pending → status `fresh`; copy its handoff block; don't run the skill;
-   - younger than the limit, browser step pending → status `partial` (with `non_blocking_partial`), flag `browser_step_pending`; copy what exists; offer the browser step in one line ("Instagram read for <client> is still queued (~10 min). Run it now, or carry on?"). Carry on unless they say run;
+   - younger than the limit, browser step pending → status `partial` (with `non_blocking_partial`), flag `browser_step_pending`; copy what exists. If a browser is available, offer it in one line ("Instagram read for <client> is still queued (~10 min). Run it now, or carry on?") and carry on unless they say run; if not, just say in one line that it stays queued;
    - older, or none → run the skill (§5). It returns `refreshed` or `new` (`partial` if its browser part was queued).
 3. **`spend_gate`** → the skill tells you if its plan includes paid work above `config.research_auto_approve_limit`. Then open a `spend` gate (`gate-rules.md` §4b) **before** the paid part runs; the free part doesn't wait.
 4. **`non_blocking_partial`** → a `partial` result is done for the pipeline: the job moves on in the same turn.

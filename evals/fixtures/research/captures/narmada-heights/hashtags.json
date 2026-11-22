@@ -1,0 +1,26 @@
+{
+ "note": "Hashtag scans, reels (fixture, 2026-11-28).",
+ "scans": {
+  "jabalpurproperty": {
+   "reels_found": 38,
+   "top": [
+    {
+     "owner": "ex_jabalpur_homes",
+     "owner_followers": 7200,
+     "likes": 300,
+     "views": 7400,
+     "format": "site update",
+     "opening": "Possession: sach"
+    },
+    {
+     "owner": "jabalpur_dad_vlogs",
+     "owner_followers": 900,
+     "likes": -1,
+     "views": 3000,
+     "format": "personal vlog",
+     "opening": "Our flat hunt"
+    }
+   ]
+  }
+ }
+}

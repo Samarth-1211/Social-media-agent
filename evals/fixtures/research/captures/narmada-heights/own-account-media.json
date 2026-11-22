@@ -1,0 +1,106 @@
+{
+ "note": "What the Meta Ads connector's Instagram media tool returned for the linked account ex_narmadaheights (fixture, last 90 days, reels). In this fixture the response includes metrics.",
+ "ig_account_id": "170000000000001",
+ "media": [
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN01/",
+   "date": "2026-09-09",
+   "caption": "Drone tour of Narmada Heights",
+   "views": 900,
+   "reach": 820,
+   "shares": 2,
+   "follows": 1,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN02/",
+   "date": "2026-09-17",
+   "caption": "Possession update: Tower B slab done",
+   "views": 4200,
+   "reach": 3900,
+   "shares": 61,
+   "follows": 22,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN03/",
+   "date": "2026-09-24",
+   "caption": "Luxury living awaits",
+   "views": 800,
+   "reach": 760,
+   "shares": 1,
+   "follows": 0,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN04/",
+   "date": "2026-10-01",
+   "caption": "RERA number and what it means",
+   "views": 2600,
+   "reach": 2400,
+   "shares": 33,
+   "follows": 9,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN05/",
+   "date": "2026-10-09",
+   "caption": "Navratri booking offer",
+   "views": 12000,
+   "reach": 11500,
+   "shares": 4,
+   "follows": 3,
+   "boosted": true
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN06/",
+   "date": "2026-10-18",
+   "caption": "Sample flat walkthrough",
+   "views": 1300,
+   "reach": 1200,
+   "shares": 6,
+   "follows": 2,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN07/",
+   "date": "2026-10-29",
+   "caption": "Possession update: Tower A handover",
+   "views": 3900,
+   "reach": 3600,
+   "shares": 48,
+   "follows": 17,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN08/",
+   "date": "2026-11-08",
+   "caption": "Amenities drone view",
+   "views": 950,
+   "reach": 900,
+   "shares": 2,
+   "follows": 1,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN09/",
+   "date": "2026-11-16",
+   "caption": "Home loan help desk at site",
+   "views": 1700,
+   "reach": 1600,
+   "shares": 12,
+   "follows": 4,
+   "boosted": false
+  },
+  {
+   "permalink": "https://www.instagram.com/reel/EXOWN10/",
+   "date": "2026-11-24",
+   "caption": "Luxury lobby reveal",
+   "views": 1000,
+   "reach": 950,
+   "shares": 3,
+   "follows": 1,
+   "boosted": false
+  }
+ ]
+}

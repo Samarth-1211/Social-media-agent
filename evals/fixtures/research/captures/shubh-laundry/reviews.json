@@ -1,0 +1,134 @@
+{
+ "note": "Google reviews read 2026-11-28 (fixture). Reviewer names appear as Google shows them; they must never be stored.",
+ "businesses": [
+  {
+   "name": "Freshfold Laundry, Vijay Nagar (fictional)",
+   "rating": 4.1,
+   "review_count": 212,
+   "reviews": [
+    {
+     "reviewer": "Riya Sharma",
+     "stars": 2,
+     "month": "2026-11",
+     "text": "Saree ka colour bleed ho gaya, zari bhi dull. Delicate kapde mat dena."
+    },
+    {
+     "reviewer": "Rakesh Tiwari",
+     "stars": 3,
+     "month": "2026-11",
+     "text": "Pickup time pe aate hi nahi, do baar call karna pada."
+    },
+    {
+     "reviewer": "user",
+     "stars": 5,
+     "month": "2026-10",
+     "text": "Shirts perfect press, delivery on time."
+    },
+    {
+     "reviewer": "Sunita Patel",
+     "stars": 2,
+     "month": "2026-10",
+     "text": "zari kharab ho gayi, refund bhi nahi mila"
+    },
+    {
+     "reviewer": "user",
+     "stars": 3,
+     "month": "2026-09",
+     "text": "Price thoda zyada hai but kaam theek."
+    },
+    {
+     "reviewer": "user",
+     "stars": 2,
+     "month": "2026-11",
+     "text": "Pickup slot miss kiya, koi call nahi aaya."
+    }
+   ]
+  },
+  {
+   "name": "Vijay Nagar Dry Cleaners (fictional)",
+   "rating": 3.8,
+   "review_count": 96,
+   "reviews": [
+    {
+     "reviewer": "Amit Verma",
+     "stars": 2,
+     "month": "2026-11",
+     "text": "Mere sherwani pe daag reh gaya."
+    },
+    {
+     "reviewer": "user",
+     "stars": 3,
+     "month": "2026-11",
+     "text": "Silk saree ki chamak chali gayi."
+    },
+    {
+     "reviewer": "user",
+     "stars": 5,
+     "month": "2026-10",
+     "text": "Bhaiya ne khud saree check ki, bahut dhyan se. Trust hai."
+    },
+    {
+     "reviewer": "user",
+     "stars": 2,
+     "month": "2026-10",
+     "text": "Colour bleed ho gaya ek dupatte ka."
+    },
+    {
+     "reviewer": "user",
+     "stars": 4,
+     "month": "2026-09",
+     "text": "Time pe delivery, rate reasonable."
+    },
+    {
+     "reviewer": "user",
+     "stars": 3,
+     "month": "2026-11",
+     "text": "pickup time pe aate hi nahi"
+    }
+   ]
+  },
+  {
+   "name": "Saree Care Studio, Palasia (fictional)",
+   "rating": 4.5,
+   "review_count": 140,
+   "reviews": [
+    {
+     "reviewer": "Neha Kulkarni",
+     "stars": 5,
+     "month": "2026-11",
+     "text": "Meri mummy ki Banarasi naye jaisi ho gayi. Unhone process video bheja."
+    },
+    {
+     "reviewer": "user",
+     "stars": 5,
+     "month": "2026-11",
+     "text": "Owner khud batate hain kya karenge, bahut bharosa."
+    },
+    {
+     "reviewer": "user",
+     "stars": 3,
+     "month": "2026-10",
+     "text": "Achha kaam par 7 din lag gaye."
+    },
+    {
+     "reviewer": "user",
+     "stars": 2,
+     "month": "2026-10",
+     "text": "Zari thodi kharab hui, compensate kiya unhone."
+    },
+    {
+     "reviewer": "user",
+     "stars": 4,
+     "month": "2026-09",
+     "text": "Expensive but trustworthy for silk."
+    },
+    {
+     "reviewer": "user",
+     "stars": 2,
+     "month": "2026-11",
+     "text": "colour bleed hua halka sa"
+    }
+   ]
+  }
+ ]
+}

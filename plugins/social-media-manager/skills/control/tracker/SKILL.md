@@ -39,7 +39,7 @@ No stage contract fields. The tracker is not a stage in `stages.yaml`.
    2. Find the database.
    3. Ask "Who's working?" once.
    4. **Research queue** (one light read of the Tasks and Clients tabs):
-      - for each active client's `festival_calendar` occasion 14 days or fewer away with no pending or done festival task, create a `research-run` task (trigger `festival`, `occasion`, `due`) with `save_task`;
+      - for each active client's `festival_calendar` occasion 14 days or fewer away with no pending or done festival task, create a `research-run` task (trigger `festival`, `occasion`, `due` = the later of today and 14 days before the occasion) with `save_task`;
       - if a browser is available and `research-browser-step` tasks are pending, offer them once, using `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/research-methods/templates/pending-browser-task.md` §2. A yes hands to `research-methods`; "not now" means don't ask again this session.
 
    If no database exists, offer first-run setup (`${CLAUDE_PLUGIN_ROOT}/library/storage/setup.md`); only the admin may run it.

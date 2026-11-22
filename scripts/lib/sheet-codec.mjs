@@ -194,7 +194,7 @@ export function normalise(v) {
   if (v && typeof v === 'object') {
     const o = {};
     for (const [k, x] of Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
-      if (x === null || x === undefined) continue;
+      if (x === null || x === undefined || (Array.isArray(x) && x.length === 0)) continue; // an empty cell reads back as absent (google-sheets.md §2)
       o[k] = normalise(x);
     }
     return o;

@@ -97,13 +97,13 @@ Turn it off in the Config tab (`research_schedule_enabled` = FALSE), or limit it
 
 ### Option A (recommended): cloud scheduled task
 
-Runs on Anthropic's cloud, even with every laptop closed, and uses the connectors on the agency's Claude account. It needs this `tdm-plugins` repository on GitHub, because a cloud task works from a cloned repository.
+Runs on Anthropic's cloud, even with every laptop closed, and uses the connectors on the agency's Claude account. It needs this repository on GitHub (`Samarth-1211/Social-media-agent`), because a cloud task works from a cloned repository. Push the release there first.
 
 1. Signed in to the agency's Claude account, open **claude.ai/code/routines** and click **New task** → **Set up manually**. (In Claude Code you can instead run `/schedule` and describe it.)
 2. **Name:** `TDM weekly research`.
 3. **Prompt:** paste the prompt below, unchanged.
 4. **Trigger:** schedule → **Custom** → `CRON_TZ=Asia/Kolkata 30 2 * * 1` (every Monday, 02:30 India time; off-peak, and the 30-minute offset avoids the start-of-hour rush).
-5. **Advanced settings:** repository = `tdm-plugins` (default branch); model: a Sonnet model, to keep usage low; connectors: keep **Google Sheets**, **Google Drive** and **Meta Ads**, and remove the rest.
+5. **Advanced settings:** repository = `Samarth-1211/Social-media-agent` (the branch holding this release); model: a Sonnet model, to keep usage low; connectors: keep **Google Sheets**, **Google Drive** and **Meta Ads**, and remove the rest.
 6. **Create**, then use **Run now** once and check the summary and the sheet's Insights and Tasks tabs.
 
 ### Option B: Cowork scheduled task (no GitHub needed)

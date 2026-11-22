@@ -26,7 +26,7 @@
     "needs_person": { "type": "boolean" },
     "needs_browser": { "type": "boolean" },
     "estimate_minutes": { "type": ["integer", "null"], "minimum": 0, "description": "Shown in status, e.g. 'needs browser, ~10 min'." },
-    "due": { "type": ["string", "null"], "format": "date", "description": "Do it by this date (festival runs: 14 days before the occasion)." },
+    "due": { "type": ["string", "null"], "format": "date", "description": "Do it by this date (festival runs: the later of today and 14 days before the occasion)." },
     "note": { "type": "string" },
     "created_at": { "type": "string", "format": "date-time" },
     "created_by": { "type": "string", "description": "Team handle, or 'system' for scheduled and automatic triggers." },

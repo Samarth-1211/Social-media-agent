@@ -1,0 +1,45 @@
+{
+ "note": "Meta Ad Library search results (fixture, country IN, active ads, read 2026-11-28). Each ad: page, start date, text, format.",
+ "ads": [
+  {
+   "page": "Freshfold Laundry (fictional)",
+   "page_id": "900000000000001",
+   "start": "2026-10-18",
+   "text": "20% off on your first order. Free pickup!",
+   "format": "image",
+   "versions": 3,
+   "language": "Hinglish",
+   "url": "https://www.facebook.com/ads/library/?id=EXFF1"
+  },
+  {
+   "page": "Vijay Nagar Dry Cleaners (fictional)",
+   "page_id": "900000000000002",
+   "start": "2026-11-20",
+   "text": "Wedding saree care ₹199 only, till 15 Dec",
+   "format": "image",
+   "versions": 1,
+   "language": "Hinglish",
+   "url": "https://www.facebook.com/ads/library/?id=EXVD1"
+  },
+  {
+   "page": "Indore Home Services (fictional)",
+   "page_id": "900000000000003",
+   "start": "2026-09-14",
+   "text": "Sofa cleaning at home from ₹499. Diwali-ready ghar!",
+   "format": "video",
+   "versions": 4,
+   "language": "Hindi",
+   "url": "https://www.facebook.com/ads/library/?id=EXHS1"
+  },
+  {
+   "page": "National Laundry Brand (fictional)",
+   "page_id": "900000000000004",
+   "start": "2026-05-12",
+   "text": "Download the app, laundry in 48 hours",
+   "format": "catalogue",
+   "versions": 1,
+   "language": "English",
+   "url": "https://www.facebook.com/ads/library/?id=EXNL1"
+  }
+ ]
+}

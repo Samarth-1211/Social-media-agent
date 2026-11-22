@@ -1,0 +1,41 @@
+{
+ "note": "Meta Ad Library (fixture, IN, active, 2026-11-28).",
+ "ads": [
+  {
+   "page": "Jabalpur Homes (fictional)",
+   "start": "2026-09-25",
+   "text": "Luxury living, drone tour",
+   "format": "video",
+   "versions": 5,
+   "language": "English",
+   "url": "https://www.facebook.com/ads/library/?id=EXJH1"
+  },
+  {
+   "page": "MP Realty Group (fictional)",
+   "start": "2026-11-04",
+   "text": "Free modular kitchen on booking",
+   "format": "video",
+   "versions": 4,
+   "language": "Hindi",
+   "url": "https://www.facebook.com/ads/library/?id=EXMR1"
+  },
+  {
+   "page": "Shree Developers (fictional)",
+   "start": "2026-10-26",
+   "text": "Luxury living at affordable price, drone view",
+   "format": "video",
+   "versions": 2,
+   "language": "Hinglish",
+   "url": "https://www.facebook.com/ads/library/?id=EXSD1"
+  },
+  {
+   "page": "Narmada Valley Infra (fictional)",
+   "start": "2026-11-23",
+   "text": "Year-end booking offer",
+   "format": "image",
+   "versions": 1,
+   "language": "Hindi",
+   "url": "https://www.facebook.com/ads/library/?id=EXNV1"
+  }
+ ]
+}
