@@ -112,7 +112,7 @@ stages:
   - id: hooks
     group: pre-production
     skill: hooks
-    status: placeholder
+    status: active
     reads: [client, brief]
     optional_reads: [concept, research]
     writes: [hooks]

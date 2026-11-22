@@ -28,6 +28,9 @@ This file records every change to a shared file and every proposal for files thi
 | M4 | `library/contracts/stages.yaml` | concept `status: placeholder` → `active`. |
 | M4 | `skills/pre-production/README.md` | concept row: planned → active (unreleased). The handoff section follows in M6. |
 | M4 | `library/contracts/examples/concept.example.json` | Self-check items renamed to the checklist ids CC1–CC10. |
+| M5 | `skills/pre-production/hooks/**` (new) | The hooks skill: SKILL.md (with the creative-pick gate), 8 references (formula catalogue H01–H30, India hook bank 91 hooks, three layers, Reels specifics, language rules, anti-patterns, scoring, critique pass), 2 templates, checklist HC1–HC10, 3 examples, CHANGELOG. |
+| M5 | `library/contracts/stages.yaml` | hooks `status: placeholder` → `active`. |
+| M5 | `skills/pre-production/README.md` | hooks row: planned → active (unreleased). |
 
 ## 2. Proposals for protected files (not applied here)
 
