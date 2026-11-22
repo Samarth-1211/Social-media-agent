@@ -4,7 +4,7 @@ TDM Groups' Claude plugin marketplace.
 
 | Plugin | What it does |
 |---|---|
-| [`social-media-manager`](plugins/social-media-manager/) | Social media production system: video and poster jobs, client brands, approvals. Claude works as the agency's production team, stage by stage with human gates. **0.1.0:** Group 1 (producer, tracker, brand-keeper, client-feedback); creative stages are placeholders. The team's command list is in the plugin README. |
+| [`social-media-manager`](plugins/social-media-manager/) | Social media production system: video and poster jobs, client brands, approvals. Claude works as the agency's production team, stage by stage with human gates. **0.1.0:** Group 1 (producer, tracker, brand-keeper, client-feedback); creative stages are placeholders. On `feat/brief` (unreleased): the `brief` skill. The team's command list is in the plugin README. |
 
 ## Repo layout
 
@@ -41,7 +41,7 @@ This runs the repo's checks: manifests, skills, the stage registry, schemas, pre
 
 ## Test
 
-Scenario scripts and pass criteria: [evals/scenarios/group1.md](evals/scenarios/group1.md), [evals/rubrics/group1.md](evals/rubrics/group1.md). Client-feedback samples: `node evals/run-feedback-samples.mjs run`, then `score`. Run against the **TDM Studio TEST Database** only.
+Scenario scripts and pass criteria: [evals/scenarios/group1.md](evals/scenarios/group1.md), [evals/rubrics/group1.md](evals/rubrics/group1.md). Client-feedback samples: `node evals/run-feedback-samples.mjs run`, then `score`. Brief (B1–B15): [evals/scenarios/brief.md](evals/scenarios/brief.md), [evals/rubrics/brief.md](evals/rubrics/brief.md), fixtures `node evals/brief-fixtures.mjs check | seed <dir>`. Run against the **TDM Studio TEST Database** only.
 
 ## Install (teammates)
 

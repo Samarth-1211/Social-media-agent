@@ -2,13 +2,14 @@
 
 Claude as TDM Groups' social media production team: video jobs, poster jobs, client brand profiles and approvals, run stage by stage with human gates.
 
-**Status: 0.1.0, Group 1.**
+**Status: 0.1.0, Group 1.** Unreleased on `feat/brief`: the **brief** skill (version set when it merges with the market researcher).
 - **Working now:**
   - jobs from intake to delivery, with real approvals and budget checks;
   - client profiles;
   - client feedback triage;
   - status boards and catch-up.
-- **Not built yet:** the creative stages (brief, script, storyboard, generation, edit, posters). They run as **placeholders** for now, and no Higgsfield credits are spent. Later groups replace them one by one.
+- **On `feat/brief`:** briefs that draft themselves and ask only what's missing.
+- **Not built yet:** the other creative stages (concept, script, storyboard, generation, edit, posters). They run as **placeholders** for now, and no Higgsfield credits are spent. Later groups replace them one by one.
 
 ## Skills
 
@@ -18,6 +19,7 @@ Claude as TDM Groups' social media production team: video jobs, poster jobs, cli
 | `tracker` | control | "Where is everything?": boards, overdue, credits, catch-up, team, backups |
 | `brand-keeper` | brand | Adding clients and keeping their brand profiles |
 | `client-feedback` | brand | Turning a client's WhatsApp reply into a change list, the stage to reopen, and a reply draft |
+| `brief` | pre-production | The job's creative brief: drafted by itself after intake (after research, once merged), asks only what's missing, in plain words; reads the client's reply to brief questions |
 
 You don't need to name the skill: just say what you want, in English, Hindi or Hinglish. Each skill can also be called directly as `/social-media-manager:<skill>`.
 
@@ -63,6 +65,21 @@ Start every session by saying who you are ("I'm Ravi"). Claude asks if you don't
 | "show <client> brand brief" | The ~15-line view stages use |
 | "remember that <client> …" | Proposes a learning; saved after you confirm |
 
+**Briefs (brief)**
+
+The brief starts by itself when intake is approved. Most of the time it asks **nothing**: it shows a 6-line card and waits for the admin.
+
+| Say | What happens | Who |
+|---|---|---|
+| "brief SHL-03" | Drafts (or re-drafts) the brief from the request, client profile, past jobs and festival calendar. Asks only what blocks production: one question at a time, with a guess and options, at most 5. | assignee, admin |
+| "jaldi" / "abhi chahiye" in the request | Express: asks only what can't be guessed, in one message; says what was guessed | assignee, admin |
+| "client se poochna padega" (as an answer) | Moves the question into one WhatsApp message for the client, with a guess per question. The job waits on the client ("Brief: waiting for client reply"). | assignee, admin |
+| "Neha ji ka reply: <paste>" | Reads the client's answers (numbers, bare values, voice-note text) while the brief is waiting on them | assignee, admin |
+| "brief update karo: <change>" | New brief version with a changelog line; names the later stages to review | assignee, admin |
+| "full brief dikhao" | The full production brief | anyone |
+
+Client questions unanswered for 24 hours show on the sheet Dashboard. The brief never invents a price, number or claim: it shows a `[CLIENT TO CONFIRM]` placeholder and asks.
+
 **Who approves what**
 
 | Gate | Approver |
@@ -71,6 +88,8 @@ Start every session by saying who you are ("I'm Ravi"). Claude asks if you don't
 | script, localise, style bible, casting, storyboard, voice & music, QA, edit stages, poster drafts | the assigned editor or designer, or admin |
 | client approvals | the assignee or admin, from the client's own message |
 | going over a job's credit budget | admin |
+
+The brief can be auto-approved only if the admin turns on `brief_auto_approve_repeat` in Config (off by default), and only for a quick-track repeat of a format the client approved in the last 90 days, with every essential confirmed.
 
 ## Setup
 
@@ -81,6 +100,7 @@ Start every session by saying who you are ("I'm Ravi"). Claude asks if you don't
    - offers to share the folder with each person, asking each time.
 3. **Higgsfield** (needed from the generation group onward): each person signs in to their own Higgsfield account the first time a Higgsfield tool is used. In Claude Code: `/mcp`, then authenticate `higgsfield`.
 4. **Tracker page:** say "publish the tracker page" for a read-only board that works on phones too.
+5. **Existing database, brief update** (admin, once): say "upgrade the TDM Studio sheet to layout v2". It adds the BriefQuestions tab, a Dashboard block and three Config rows (`library/storage/setup.md`, Upgrade). Run it on the TEST sheet first.
 
 Data lives in the Google Sheet (the source of truth), never inside the plugin folder; updating the plugin never touches it. Without Google, Claude Code can work in files mode (`.tdm-studio/`, this computer only).
 
@@ -89,7 +109,7 @@ Data lives in the Google Sheet (the source of truth), never inside the plugin fo
 | Folder | What it holds |
 |---|---|
 | `skills/<group>/<skill>/` | One folder per skill. Groups: control, brand, pre-production, generation, quality, post-production, delivery. Each group's README lists its skills. |
-| `library/contracts/` | `stages.yaml` (the pipeline: 24 stages; `intake` active, the rest placeholders) and the JSON schemas |
+| `library/contracts/` | `stages.yaml` (the pipeline: 24 stages; `intake` and `brief` active, the rest placeholders) and the JSON schemas |
 | `library/storage/` | How data is saved: Google Sheets layout and rules, setup, backups, tracker page |
 | `library/templates/` | Shared views: job record, client record, brand brief |
 | `agents/` | Subagents, added when their group is built |

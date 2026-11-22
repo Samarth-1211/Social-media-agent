@@ -42,7 +42,9 @@ The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, sepa
 | `evals/fixtures/brief/**`, `evals/brief-fixtures.mjs`, `evals/scenarios/brief.md`, `evals/rubrics/brief.md` (M6) | New: fixtures for 2 clients, 17 scenario jobs, 2 past jobs, a research output, 8 replies, a bad brief; a fixture checker, files-mode seeder and TEST-sheet row builder; B1–B15 with the rubric. **Not run.** | Prompt 4 §8; run in the combined test phase |
 | `evals/README.md` (M6) | One paragraph pointing to the brief evals | Discoverability; Group 1 eval files untouched |
 
-_Later milestones add rows here (README, CHANGELOGs)._
+| `README.md`, `plugins/social-media-manager/README.md` (M7) | Brief rows and commands; "Briefs (brief)" command table; auto-approve note; setup step 5 (sheet upgrade); three one-line status texts updated (status, "not built yet", `stages.yaml` active list) | Team-facing docs |
+| `plugins/social-media-manager/CHANGELOG.md` (M7) | `[Unreleased] - feat/brief` section | Version set at merge |
+| `skills/pre-production/brief/CHANGELOG.md` | Skill changelog (Unreleased) | |
 
 ## 2. To do at merge
 
