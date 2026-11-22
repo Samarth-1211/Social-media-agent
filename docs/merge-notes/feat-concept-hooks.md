@@ -104,7 +104,7 @@ Each fallback is said in one line in the reply and recorded in `fallback_used`.
 ## 6. Merge and test-phase checklist
 
 1. ~~Merge `feat/concept-hooks` into `main` and apply P1–P6.~~ Done 2026-11-22 (P7 optional, not applied).
-2. Version: suggest **0.3.0-alpha.1** (plugin.json, CHANGELOG, both skill CHANGELOGs from "Unreleased").
+2. ~~Version 0.3.0-alpha.1~~ Released 2026-11-22: plugin.json, CHANGELOGs, READMEs; tag `v0.3.0-alpha.1`; pushed with `main`.
 3. Upgrade the TEST sheet v3 → v4 (`google-sheets.md` §7, `upgrades[2]`).
 4. Run the validator, then the scenarios in `evals/scenarios/concept-hooks.md` (written in M7) on the fixtures in `evals/fixtures/concept-hooks/`.
 5. Delete the local branch `backup/concept-hooks-on-v0.1.0`.

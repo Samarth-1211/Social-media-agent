@@ -4,7 +4,7 @@ TDM Groups' Claude plugin marketplace.
 
 | Plugin | What it does |
 |---|---|
-| [`social-media-manager`](plugins/social-media-manager/) | Social media production system: video and poster jobs, client brands, approvals. Claude works as the agency's production team, stage by stage with human gates. **0.2.0-alpha.2:** Group 1 (producer, tracker, brand-keeper, client-feedback), the market researcher (research-methods skill + market-researcher subagent, weekly scheduled research) and the brief (drafts itself, asks only what's missing); other creative stages are placeholders. The team's command list is in the plugin README. |
+| [`social-media-manager`](plugins/social-media-manager/) | Social media production system: video and poster jobs, client brands, approvals. Claude works as the agency's production team, stage by stage with human gates. **0.3.0-alpha.1:** Group 1 (producer, tracker, brand-keeper, client-feedback), the market researcher (research-methods skill + market-researcher subagent, weekly scheduled research), the brief (drafts itself, asks only what's missing), and concept + hooks (insight-led concepts and three-layer Indian hooks, picked together by the editor); later creative stages are placeholders. The team's command list is in the plugin README. |
 
 ## Repo layout
 

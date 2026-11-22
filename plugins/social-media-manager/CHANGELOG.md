@@ -2,9 +2,9 @@
 
 All notable changes to the `social-media-manager` plugin. Versions follow semver (see `docs/ARCHITECTURE.md`, Versioning).
 
-## [Unreleased] - feat/concept-hooks
+## [0.3.0-alpha.1] - 2026-11-22
 
-Group 2a, agents 3 + 4: concept and hooks, the India-first creative engine. Built on 0.2.0-alpha.2; no version bump on the branch (suggested 0.3.0-alpha.1 at merge, `docs/merge-notes/feat-concept-hooks.md`). Contracts change additively; v3 sheets upgrade in place to layout v4.
+Group 2a, agents 3 + 4: concept and hooks, the India-first creative engine (`docs/merge-notes/feat-concept-hooks.md`, merge-notes P1–P6 applied). Contracts change additively; v3 sheets upgrade in place to layout v4.
 
 ### Added
 - `pre-production/concept` skill (full track, video, no gate): one sourced core insight, 6–8 raw angles from four engines (creative methods for brand films), filters for competitors-overdo, brief avoid, lever misuse and the hook test, three concepts of different angle types with story spines, levers backed by real proof, producibility and risks, a 7-criterion weighted score and one recommendation.
@@ -18,6 +18,10 @@ Group 2a, agents 3 + 4: concept and hooks, the India-first creative engine. Buil
 ### Changed
 - Pipeline (decision 0006): `concept` runs on the full track for video only, with no gate; `hooks` runs on both video tracks with the editor's creative-pick gate; `script` reads `hooks` (concept optional); `poster-drafts` reads `concept` only optionally.
 - Example SHL-01 gains a quick-track hooks record (v1 shown, v2 picked).
+- `producer`: shows the hooks skill's creative-pick message, hands the editor's reply to the hooks skill (plain approval = the recommended pair), runs the auto-pick check. `tracker`: labels the creative pick and shows the auto-pick time. `client-feedback`: idea and opening changes route to `concept` / `hooks`; reversing an approved creative pick is a change request. Stage-contract docs updated.
+
+### Not yet run
+- Eval scenarios C1–F1 (`evals/scenarios/concept-hooks.md`). Existing databases need the layout v3 → v4 upgrade (`library/storage/google-sheets.md` §7) before concept and hooks can save learnings fields.
 
 ## [0.2.0-alpha.2] - 2026-11-22
 
