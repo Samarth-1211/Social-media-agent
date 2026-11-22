@@ -4,7 +4,7 @@ From request to a shootable plan.
 
 | Skill | Status | Does | Stages |
 |---|---|---|---|
-| `research` | planned | Background on the client's market, competitors and trends. Becomes a subagent later. | none (helper for `brief` and `concept`) |
+| `research-methods` | in progress (Group 2a) | Market insight sheet per client: competitors, ads, reviews, trends, Instagram outliers. Runs inline or through the `market-researcher` subagent. | `research` |
 | `brief` | planned | Turns the request and client profile into an approved brief (`brief.schema.json`). | `brief` |
 | `concept` | planned | Creative routes for the brief. | `concept` |
 | `hooks` | planned | Opening hooks for video. | `hooks` |

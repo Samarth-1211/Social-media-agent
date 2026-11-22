@@ -16,6 +16,7 @@
   ],
   "skills": [
     "./skills/control",
-    "./skills/brand"
+    "./skills/brand",
+    "./skills/pre-production"
   ]
 }
