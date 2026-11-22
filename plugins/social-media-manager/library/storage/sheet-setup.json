@@ -2109,6 +2109,17 @@
    }
   },
   {
+   "updateSheetProperties": {
+    "properties": {
+     "sheetId": 0,
+     "gridProperties": {
+      "columnCount": 30
+     }
+    },
+    "fields": "gridProperties.columnCount"
+   }
+  },
+  {
    "repeatCell": {
     "range": {
      "sheetId": 0,
@@ -3820,6 +3831,17 @@
        "strict": true,
        "showCustomUi": true
       }
+     }
+    },
+    {
+     "updateSheetProperties": {
+      "properties": {
+       "sheetId": 0,
+       "gridProperties": {
+        "columnCount": 30
+       }
+      },
+      "fields": "gridProperties.columnCount"
      }
     },
     {

@@ -124,7 +124,7 @@ Never write other outputs, gates (except auto-approve), client records or tracke
 
 ## Gate
 
-**Admin** (`stages.yaml`). The producer requests it (`record_gate`, `shown_outputs: {brief: <version>}`); give it the card for the gate message. While the brief is `awaiting-client` there is **no gate yet**: tell the producer to stop with the stage `in_progress` and `waiting_on: client`. The gate comes after the reply is read and the self-check passes. The producer's gate rules apply: only the admin decides, approval covers only the version shown, and any change means a new version and a new gate.
+**Admin** (`stages.yaml`). When the producer runs you, it requests the gate; give it the card. **When you are run directly** ("brief SHL-03"), request it yourself, the producer's way: `record_gate` request with `shown_outputs: {brief: <version>}`, which sets `waiting_on: admin` and `next_action` "<admin> to approve brief v<n> or request changes". A brief at `ready` must never be left without its pending gate. While the brief is `awaiting-client` there is **no gate yet**: tell the producer to stop with the stage `in_progress` and `waiting_on: client`. The gate comes after the reply is read and the self-check passes. The producer's gate rules apply: only the admin decides, approval covers only the version shown, and any change means a new version and a new gate.
 
 **Auto-approve** only when `config.brief_auto_approve_repeat` is true (default **false**) **and** all of these hold:
 1. the job is on the quick track;

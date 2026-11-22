@@ -121,6 +121,8 @@ const briefDashboard = {
     [q(bqRange, `"select ${B('job_id')},${B('n')},${B('question')},${B('asked_at')} where ${B('status')}='open' and ${B('asked_at')} <> '' and ${B('asked_at')} < '"&${bqCutoffText}&"+05:30' order by ${B('asked_at')}"`, 'No client replies pending'), '', '', ''],
   ],
 };
+// The Dashboard tab starts with 26 columns (A–Z); the brief block reaches AA, so widen it first.
+const briefDashboardWiden = { updateSheetProperties: { properties: { sheetId: 0, gridProperties: { columnCount: 30 } }, fields: 'gridProperties.columnCount' } };
 const briefDashboardBold = {
   repeatCell: {
     range: { sheetId: 0, startRowIndex: 1, endRowIndex: 2, startColumnIndex: 23, endColumnIndex: 27 },
@@ -129,7 +131,7 @@ const briefDashboardBold = {
   },
 };
 values.push(briefDashboard);
-requests.push(briefDashboardBold);
+requests.push(briefDashboardWiden, briefDashboardBold);
 
 // Research settings (layout v2). Also appended to existing sheets by the v1 → v2 upgrade.
 const RESEARCH_CONFIG = [
@@ -221,7 +223,7 @@ function upgrade(from, to) {
   if (to === 2) vals.push({ range: 'Dashboard!A1:W3', values: dashboard });
   if (to === 3) {
     vals.push(briefDashboard);
-    reqs.push(briefDashboardBold);
+    reqs.push(briefDashboardWiden, briefDashboardBold);
   }
   const newConfig = { 2: RESEARCH_CONFIG, 3: BRIEF_CONFIG }[to] ?? [];
   return { from, to, batch_requests: reqs, values: vals, append: [{ range: 'Config!A1', values: newConfig.map(([k, v]) => [`'${k}`, v]) }] };
