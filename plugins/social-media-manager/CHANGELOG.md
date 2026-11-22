@@ -26,8 +26,14 @@ Group 2a, agent 2: the brief, merged with the market researcher (`docs/merge-not
 - Sample data: SHL-03 (brief waiting on the client).
 - `producer` and `tracker`: an active stage may wait on the client without a gate (brief `awaiting-client`); see merge notes §4.
 
+### Fixed (found by the combined test runs)
+- Brief requests its own admin gate when run directly, and finishes the producer's gate step (record, close, run on) when the admin decides in a brief session.
+- Question guesses are always concrete (a price guess has a number and its own unit); team-answerable blockers are asked before any client message; `cta` contains `cta_detail.action` word for word.
+- Setup and the v2 → v3 upgrade widen the Dashboard tab before writing the brief block (it reaches column AA).
+- Market-researcher eval tooling registers the `x-version` keyword.
+
 ### Tested
-- TO BE FILLED by the combined test phase.
+- B1–B13 pass on fixtures (135 automated checks + B13 + B1-approve); live run on TDM Studio TEST Database: v2 → v3 upgrade, Dashboard reminder, BriefQuestions mirror, brief version file in Drive, and a full quick video job to delivery (S3, 13 gates); S7 10/10; researcher `intake` + `tracker` 21/21; researcher static checks; validator 1–12. Results: `evals/results/2026-11-22_v0.2.0-alpha.2.md`.
 
 ## [0.2.0-alpha.1] - 2026-11-22
 
