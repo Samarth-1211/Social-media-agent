@@ -27,11 +27,11 @@ Stage contract: reads `client`, `brief`; optionally `concept`, `research`. From 
 
 - `hooks` (job output) → `${CLAUDE_PLUGIN_ROOT}/library/contracts/hooks.schema.json`, through `update_job`, plus the full record in Drive `Jobs/<job_id>/hooks/hooks-v<n>.json` (`google-sheets.md` §4).
 - At the pick: the gate decision through `record_gate`, then `pick` and `downstream` in a new version of `hooks`.
-- Log lines. Never other outputs, the brief, concepts (a redo goes back to the concept stage) or the client record. A learning goes to `brand-keeper` as a suggestion.
+- Log lines: kind `event` for the stage's own lines, `gate` for the pick, `ruling` for an auto-pick (the job schema allows only event, gate, ruling, error, credit, feedback). Never other outputs, the brief, concepts (a redo goes back to the concept stage) or the client record. A learning goes to `brand-keeper` as a suggestion.
 
 ## Steps
 
-1. **Start.** Producer-run: the session is set up. Direct: storage README §1. Timestamps from `get_now`. A pending creative-pick gate and a reply → go to §Gate.
+1. **Start.** Producer-run: the session is set up. Direct: storage README §1. Timestamps from `get_now`. A pending creative-pick gate → first the **auto-pick check** (§Gate), then, if it's still pending and the message is a reply, go to §Gate.
 
 2. **Inputs.** Full track: every concept in `concept.data.concepts` (note `concept_version`). Quick track: the reused format (`reused_format`, `track_mode: quick-reuse`). Collect the facts you may use: offer, price, date, CTA, proof points, `customer_words`, research `customer_phrases` and `outlier_hooks` (with confidence), the brief's `first_frame` and `timely_hook`.
 
@@ -49,7 +49,7 @@ Stage contract: reads `client`, `brief`; optionally `concept`, `research`. From 
 
 6. **Critique pass** (`${CLAUDE_SKILL_DIR}/references/critique-pass.md`): per concept, take the 3 weakest, diagnose them (`${CLAUDE_SKILL_DIR}/references/anti-patterns.md`), rewrite or replace them, re-score once. Mark the originals `replaced` with a `critique_note`.
 
-7. **Keep the top 3 per concept** (`top_per_concept`, best first; status `top`). Recommend one pair: the highest concept-score × hook-score combination unless a hook's risk says otherwise; one-line reason.
+7. **Keep the top 3 per concept** (`top_per_concept`, best first; status `top`), applying the variety rules in `scoring.md` (no duplicate lines across concepts; no formula leads two concepts; the lead fits the angle). Recommend one pair: the highest concept-score × hook-score combination unless a hook's risk says otherwise; one-line reason.
 
 8. **Self-check** (`${CLAUDE_SKILL_DIR}/checklists/before-showing.md`): variety, three layers, text ≤ 6 words, no invented numbers or fake urgency, every promise deliverable. Record it in `self_check`.
 
@@ -80,9 +80,9 @@ Stage contract: reads `client`, `brief`; optionally `concept`, `research`. From 
 | "none", "make it funnier", "concept badlo" | `sent_back` to `concept` with the reason (full track); quick track: `changes_requested` and new hooks in that direction. |
 | Edits a line ("2B but say 'pickup free'") | Pick 2B with the edit applied to the hook layers; note it. |
 
-On a pick: write `pick` (`status: picked`, ids, `backups`, `reply`, `decided_by`, `decided_by_role`, `decided_at`, `auto: false`) and build `downstream` (`${CLAUDE_SKILL_DIR}/templates/hook-card.md` §Downstream): the chosen concept (spine, levers + proof, producibility, risks), the hook + 2 backups, script do/don't notes, implied assets (`must_be_real` for anything shown as real), language, and the learning fields (`hook_formula_id`, `angle_type`, `outcome: untested`). Order matters (gate rules §3 check the versions shown): **first** `record_gate` the decision (`approved`, note "creative pick: <concept> + <hook>") while `hooks` is still at the version shown; **then** save `pick` + `downstream` as `hooks` version + 1. That version records the editor's choice; it doesn't need a new gate. Run directly: finish the producer's way (`${CLAUDE_PLUGIN_ROOT}/skills/control/producer/SKILL.md` step 6) and run on to `script`.
+On a pick: write `pick` (`status: picked`, ids, `backups`, `reply`, `decided_by`, `decided_by_role`, `decided_at`, `auto: false`) and build `downstream` (`${CLAUDE_SKILL_DIR}/templates/hook-card.md` §Downstream): the chosen concept (spine, levers + proof, producibility, risks), the hook + 2 backups, script do/don't notes, implied assets (`must_be_real` for anything shown as real), language, and the learning fields (`hook_formula_id`, `angle_type`, `outcome: untested`). Order matters (gate rules §3 check the versions shown): **first** `record_gate` the decision (`approved`, note "creative pick: <concept> + <hook>"; the gate record has only the job schema's gate fields, so `gate_label` stays in `stages.yaml` and never goes into the record) while `hooks` is still at the version shown; **then** save `pick` + `downstream` as `hooks` version + 1. That version records the editor's choice; it doesn't need a new gate. Run directly: finish the producer's way (`${CLAUDE_PLUGIN_ROOT}/skills/control/producer/SKILL.md` step 6) and run on to `script`.
 
-**Auto-pick** only when `config.creative_auto_pick_after_hours` is set (default null = off) and the gate has been pending that long (`requested_at` vs `get_now`) when the job is next opened: pick the recommended pair with `decided_by: system`, `decided_by_role: system`, `auto: true`; log a `ruling` "auto-picked after <n> h: <pair>". Never auto-pick a `redo`.
+**Auto-pick** only when `config.creative_auto_pick_after_hours` is set (default null = off) and the gate has been pending that long (`requested_at` vs `get_now`) when the job is next opened: pick the recommended pair with `decided_by: system`, `decided_by_role: system`, `auto: true`; log a `ruling` "auto-picked after <n> h: <pair>". Run it **whoever opens the job**, the editor included, unless their message is itself a pick reply (then follow the reply). Say it in one line: "<n> h tak reply nahi aaya, isliye ⭐ <pair> auto-pick hua. Badalna ho to 'back to hooks' bolo." Never auto-pick a `redo`.
 
 ## If it fails
 

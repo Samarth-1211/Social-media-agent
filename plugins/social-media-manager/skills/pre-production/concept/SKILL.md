@@ -27,7 +27,7 @@ Stage contract: reads `client`, `brief`; optionally `research`. What to take fro
 ## Writes
 
 - `concept` (job output) → `${CLAUDE_PLUGIN_ROOT}/library/contracts/concept.schema.json`, through `update_job`, plus the full record in Drive `Jobs/<job_id>/concept/concept-v<n>.json` (`google-sheets.md` §4, "Concept and hooks records").
-- One log line. Never gates, other outputs, the brief or the client record. A learning worth keeping goes to `brand-keeper` as a suggestion.
+- One log line, kind `event`. Never gates, other outputs, the brief or the client record. A learning worth keeping goes to `brand-keeper` as a suggestion.
 
 ## Steps
 

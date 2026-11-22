@@ -24,7 +24,7 @@ What kills retention or trust. Each has a name (used in `critique_note`) and a f
 | Name | Looks like | Rule |
 |---|---|---|
 | **invented-number** | "10,000+ customers", "98% results", a precise number nobody measured | Real numbers from the brief, profile or research, or no numbers. |
-| **fake-urgency** | "Only today", "last 2 slots", a countdown with no real end date | Deadlines only from `offer_detail.validity` or a real event date. |
+| **fake-urgency** | "Only today", "sirf aaj", "last 2 slots", "warna miss", a countdown with no real end date | Deadlines only from `offer_detail.validity` or a real event date; stock limits only when the client confirms the count. A CTA is said plainly ("DM karo"), never as a threat to miss out. |
 | **unprovable-claim** | "No.1", "best", "cheapest", "guaranteed results" | Only provable, current claims (H25 rules). |
 | **fake-person** | AI or actors shown as real customers; a review that wasn't given | Real customers with consent, or a clearly staged scene that doesn't claim to be a customer. |
 | **shaming** | Body, skin colour, age, weight, gender, a messy home as a joke | Show the problem without blaming a person. |

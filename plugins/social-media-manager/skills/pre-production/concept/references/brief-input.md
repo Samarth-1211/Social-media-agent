@@ -12,8 +12,8 @@ The brief is `job.outputs.brief.data` (`library/contracts/brief.schema.json`, x-
 | `objective`, `objective_label` | Which angle types fit | leads/sales → proof, offer; awareness → story, opinion; footfall → offer, proof with the place; growth → teach, opinion. |
 | `key_message` | The payoff beat | Every concept must land it. |
 | `audience_detail` (`who`, `where`, `age_band`, `language`) | Insight; audience slice; area names | Use `where` for local references. |
-| `offer_detail` (`text`, `price`, `unit`, `validity`, `conditions`) | Offer beats, L06/L09 proof | Only these numbers and this end date. No validity → no deadline language. |
-| `cta_detail` (`action`, `channel`, `target`) | The CTA beat | One CTA, as written. |
+| `offer_detail` (`text`, `price`, `unit`, `validity`, `conditions`) | Offer beats, L06/L09 proof | Only these numbers and this end date. No validity → no deadline language ("sirf aaj", "aaj hi"). A stock limit ("last 5 pieces") only with `{{needed: client confirms the count on the posting day}}`. |
+| `cta_detail` (`action`, `channel`, `target`) | The CTA beat | One CTA, as written, **minus pressure words** ("warna miss", "jaldi karo", "abhi nahi toh kabhi nahi", "last chance" without a real date): keep the action and channel, say it plainly ("DM karo"), and note the change in `assumptions`. |
 | `proof_points[]` (`text`, `source`, `ref`) | Lever proof | Cite `ref`. Nothing outside this list, the profile or research counts as proof. |
 | `occasion`, `posting_date` | L09, festival formats | Tie to the occasion's real job (psychology T6). |
 | `duration_sec`, `deliverables[]` | Story-spine timing | Beats add up to the master length. |

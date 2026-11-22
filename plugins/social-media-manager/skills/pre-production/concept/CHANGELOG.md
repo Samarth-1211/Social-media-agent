@@ -1,5 +1,9 @@
 # Changelog: concept
 
+## Unreleased
+
+- Fixes from the first integration runs (see the plugin CHANGELOG).
+
 ## 0.3.0-alpha.1 (2026-11-22)
 
 - First version. Runs the `concept` stage (full track, video, no gate): core insight with a source, 6–8 raw angles from four engines (brief/research angles, one-topic-five-angles, constraint fan-out, creative methods for brand films), filters (competitors overdo, brief avoid, lever misuse, hook test), three concepts of different angle types, a 7-criterion weighted score (max 50) with one recommendation, a 10-item self-check (CC1–CC10), and the Drive version file.

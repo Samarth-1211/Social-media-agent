@@ -2,6 +2,17 @@
 
 All notable changes to the `social-media-manager` plugin. Versions follow semver (see `docs/ARCHITECTURE.md`, Versioning).
 
+## [Unreleased]
+
+### Fixed (found by the first integration runs, `evals/results/2026-11-22_v0.3.0-alpha.1.md`)
+- Auto-pick runs whoever opens a job past the limit (the editor included), unless their message is itself a pick.
+- Gate records keep only the job schema's fields (`gate_label` stays in `stages.yaml`); concept and hooks name their log kinds.
+- Concept removes pressure words from the brief's CTA and accepts a stock limit only with the client's confirmation.
+- Hooks keep the creative pick varied: no formula leads two concepts, no duplicate lines, the lead fits the angle; a learnings boost lifts a formula without cloning it.
+
+### Added
+- `evals/concept-hooks/run-scenarios.mjs`: headless runner for the concept + hooks scenarios and an end-to-end intake-to-script run.
+
 ## [0.3.0-alpha.1] - 2026-11-22
 
 Group 2a, agents 3 + 4: concept and hooks, the India-first creative engine (`docs/merge-notes/feat-concept-hooks.md`, merge-notes P1–P6 applied). Contracts change additively; v3 sheets upgrade in place to layout v4.

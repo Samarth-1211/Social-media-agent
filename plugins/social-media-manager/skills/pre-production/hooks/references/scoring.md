@@ -47,6 +47,13 @@ From the client's `learnings` where `hook_formula_id` matches this hook's formul
 
 Also: a learning without a formula id that clearly describes one ("price pehle dikhao" → H30) → +1 with a note. Research `outlier_hooks` for this formula with confidence `strong` → +1 ("working in this niche now"). Total adjustment stays within −5…+5. Record it in `scores.adjustment` and the reason in `boost_note`.
 
+## Choosing the top 3 (variety)
+
+Scores rank hooks; these rules keep the pick a real choice:
+1. **Within a concept:** the top 3 use at least 2 formulas, and the first one fits the concept's angle (a price card can lead an `offer` concept; a `story` concept leads with a story or visual-led hook, a `proof` concept with a proof or process hook).
+2. **Across concepts:** no two top hooks share the same spoken line or on-screen text (near-copies count), and no formula leads (is #1) in more than one concept.
+3. **A boost lifts a formula, it doesn't clone it.** When a learnings boost puts the same formula on top everywhere, keep it where it fits the angle best; in the other concepts the next-best different hook takes the slot. Say so in that hook's `critique_note` ("H30 kept for C1; C2 leads with its own angle").
+
 ## Recommending a pair
 
 Rank pairs by `concept.weighted / 50 + hook.weighted / 55`. Recommend the top pair unless its hook is capped or its concept has `risk` ≥ 4; then the next. Reason in one line: what the pair does that the others don't.

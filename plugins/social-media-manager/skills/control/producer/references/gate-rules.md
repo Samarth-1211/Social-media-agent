@@ -24,7 +24,7 @@ When a stage with `gate: admin | editor | client` finishes and is verified:
    - `admin` → the admin's name (Team tab);
    - `editor` → the assignee's name;
    - `client` → "<assignee name> to send <what> to <client decision maker> and record the reply".
-4. Show `${CLAUDE_SKILL_DIR}/templates/gate-message.md` and stop. **Exception:** a stage with `gate_label: creative-pick` (`hooks`) shows its own message, `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/templates/creative-pick.md`, and its `shown_outputs` are `{hooks: <v>}` plus `concept: <v>` on the full track.
+4. Show `${CLAUDE_SKILL_DIR}/templates/gate-message.md` and stop. **Exception:** a stage with `gate_label: creative-pick` (`hooks`) shows its own message, `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/templates/creative-pick.md`, and its `shown_outputs` are `{hooks: <v>}` plus `concept: <v>` on the full track. The gate record itself carries only the usual fields; `gate_label` is read from `stages.yaml`, never written into the record.
 
 ## 2. Who may decide
 

@@ -1,5 +1,9 @@
 # Changelog: hooks
 
+## Unreleased
+
+- Fixes from the first integration runs (see the plugin CHANGELOG).
+
 ## 0.3.0-alpha.1 (2026-11-22)
 
 - First version. Runs the `hooks` stage (quick and full video tracks, editor gate `creative-pick`): 8–10 three-layer hooks per concept (or per reused format on the quick track) with at least 5 formulas, 2 visual-led, 1 proof and 1 customer-phrase hook; 7-criterion weighted scoring (max 55) with a weakest-link cap and a learnings adjustment (±5); a critique pass on the 3 weakest; top 3 per concept; one recommended pair; self-check HC1–HC10.

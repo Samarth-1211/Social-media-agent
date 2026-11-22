@@ -4,7 +4,7 @@ Run before every save and before showing the creative pick. Record each line in 
 
 | Id | Check | Pass when |
 |---|---|---|
-| HC1 | **Formula variety** | Per concept (or the quick format): ≥ 5 different formulas among its hooks; the top 3 use at least 2 different formulas. |
+| HC1 | **Formula variety** | Per concept (or the quick format): ≥ 5 different formulas among its hooks; the top 3 use at least 2 different formulas; across concepts no duplicate top lines and no formula leading two concepts (`scoring.md`, variety). |
 | HC2 | **Visual-led** | ≥ 2 hooks per concept tagged `visual-led`. |
 | HC3 | **Proof and real phrases** | ≥ 1 `proof` hook per concept; ≥ 1 `customer-phrase` hook when a real phrase exists (otherwise noted). |
 | HC4 | **Three layers** | Every hook has visual, spoken and text; they point at one idea; the muted test passes for the top 3. |
