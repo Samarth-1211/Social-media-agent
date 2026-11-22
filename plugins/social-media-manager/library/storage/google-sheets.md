@@ -79,8 +79,11 @@ Row 1 of every data tab holds the column keys from `sheet-layout.json`, in order
 | Learnings | learning | `client_id` + `seq` | `client.learnings[]` |
 | ClientChanges | profile change | `client_id` + `version` | `client.changelog[]`, newest first |
 | Team | person | `handle` | team members |
-| Config | setting | `key` | config record (`credit_policy` is JSON) |
-| Dashboard | (formulas) | | Never written after setup |
+| Config | setting | `key` | config record (`credit_policy`, `research_caps` and a `research_unattended_clients` list are JSON) |
+| Insights | insight sheet | `insight_id` | insight record (everything except `findings`) |
+| InsightFindings | finding | `insight_id` + `seq` | `insight.findings.<category>[]`, in `seq` order; `category` names the list. Editors may change `pinned` and `struck` here directly. |
+| Tasks | pending task | `task_id` | task record |
+| Dashboard | (formulas) | | Never written after setup or an upgrade |
 
 Columns marked `storage_only` in the layout (row keys, `seq`, a question's `status` and `answer`) are not part of the logical record.
 
@@ -88,7 +91,7 @@ Columns marked `storage_only` in the layout (row keys, `seq`, a question's `stat
 
 ## 4. Operations
 
-**Finding a row.** Read the key column (e.g. `Jobs!A:A`). Data row *n* in that list is sheet row *n*. Then read or write `Jobs!A<row>:S<row>`. Re-find the row before every write, because people may have sorted or added rows.
+**Finding a row.** Read the key column (e.g. `Jobs!A:A`). Data row *n* in that list is sheet row *n*. Then read or write the whole row, e.g. `Jobs!A<row>:V<row>` (the last column comes from the layout). Re-find the row before every write, because people may have sorted or added rows.
 
 | Operation | Steps |
 |---|---|
@@ -103,7 +106,7 @@ Columns marked `storage_only` in the layout (row keys, `seq`, a question's `stat
 | `save_client`, new client | Re-read `Clients!A:B`: `client_id` and `client_code` must not exist yet (if they do, stop and report). Append the Clients row with `version` 1 and `next_job_number` 1. Append one Questions row per open question (`status` open), and the ClientChanges row for v1. Read the new row back. |
 | `create_job` | See below. |
 | `get_job` | Read the Jobs row, then read Gates, StageHistory, Outputs, Credits, Feedback and Log and keep that job's rows. Build the record and validate it. |
-| `list_jobs` | Read `Jobs!A:S`. "Overdue" means `deadline` < today and status `active`. |
+| `list_jobs` | Read `Jobs!A:V`. "Overdue" means `deadline` < today and status `active`. |
 | `update_job` | Re-read the Jobs row and check `version` and `updated_at`. Re-count the job's Gates and StageHistory rows: they must not be fewer than you held. Write the whole Jobs row with `version` + 1. Then update or append Outputs rows, update the open StageHistory row's `status` and `finished_at`, and append new StageHistory, Gates and Log rows. Feedback: append a row for a new reply; to change one (routing, item status, messages, conflict resolution), find its row by `feedback_id` and rewrite it whole. |
 | `record_gate`, request | Append a Gates row (`pending`, `shown_outputs`, `requested_at`). Update the Jobs row: `waiting_on` = owner role, `next_action` = "<who> to approve <stage>". Append a Log row. |
 | `record_gate`, decision | Re-read the gate row; it must still be `pending`, otherwise stop and report who decided. Check permission (`README.md` §3). Write `status`, `decided_by`, `decided_by_role`, `decided_at`, `note` and `sent_back_to`. Update the Jobs row (`waiting_on`, `next_action`, `version` + 1). Append a Log row. |
@@ -119,6 +122,21 @@ Columns marked `storage_only` in the layout (row keys, `seq`, a question's `stat
 
 **Large content.** A cell holds at most 50,000 characters. Keep each `Outputs.data` cell well under that. Put large content (scripts with many versions, storyboards, media) in a Drive file under `Jobs/<job_id>/`, list its link in `files`, and keep a short `data` or `summary`.
 
+**Research and tasks:**
+
+| Operation | Steps |
+|---|---|
+| `get_latest_insight` | Read `Insights!A:U`; keep the client's rows; take the one with the latest `created_at`. |
+| `get_insight` | Read the Insights row, then the InsightFindings rows with that `insight_id`; group them by `category` (every category present, empty if it has no rows). Validate. |
+| `save_insight`, new | Re-read `Insights!A:B`: the `insight_id` must not exist. Append the Insights row (`version` 1), then one InsightFindings row per finding (`seq` 1, 2, … in category order; `client_id` filled for filtering). Read both back. Then `set_latest_insight`. |
+| `save_insight`, update | Re-read the row; check `version` and `updated_at`. Rewrite the Insights row whole (`version` + 1). Findings: update rows in place by `insight_id` + `seq`; append new findings with the next `seq`. Never delete a finding row: strike it. |
+| `mark_finding` | Re-read the InsightFindings row (find it by `insight_id` and finding `id`), write the changed cells, then rebuild `downstream` from the current findings and rewrite the Insights row with `version` + 1. A pin or strike typed straight into the sheet counts as well: the next `get_insight` rebuilds `downstream` before anyone reads it. |
+| `set_latest_insight` | Find the client's Clients row and write the `latest_insight_id` cell only (re-read just before). No `version` bump. |
+| `list_tasks` | Read `Tasks!A:T`. |
+| `save_task` | New: re-read `Tasks!A:A` for the day's highest `T-<yyyymmdd>-<n>`, append with `version` 1. Update: re-read the row, check `version`, rewrite it whole with `version` + 1. |
+
+**Raw research data** (captured reel rows, review excerpts, ad lists) goes to a Drive file under `TDM Studio/Clients/<client_code>/research/<insight_id>/`, linked in `raw_files`. It never goes into a cell: the sheet holds only the insight and its findings.
+
 ## 5. Manual edits by the team
 
 People may edit the sheet directly; that is expected.
@@ -129,3 +147,15 @@ People may edit the sheet directly; that is expected.
 ## 6. Scale
 
 v1 reads whole tabs. That is fine for thousands of rows. If any tab passes about 5,000 rows, archive finished jobs to a separate "TDM Studio Archive <year>" sheet; the plan for that comes later.
+
+## 7. Upgrading a sheet built with an older layout
+
+`sheet-setup.json` → `upgrades` lists the steps for each layout change. A sheet with no **Insights** tab is on layout v1 (Group 1, plugin 0.1.0).
+
+Admin only. Confirm the sheet by title first, and make a backup (`files-backup.md`, Export) if it holds real data.
+1. Send `upgrades[0].batch_requests` in one `update_spreadsheet` call. It widens Jobs, Clients and Credits, adds the Insights, InsightFindings and Tasks tabs at the end, and adds dropdowns and protected headers. Existing columns and tabs don't move.
+2. Send each `upgrades[0].values` entry with `update_values`: the new header cells, the new tabs' headers, and the Dashboard formulas (credits now count only rows in credits).
+3. Send each `upgrades[0].append` entry with `append_values`: the research settings rows for the Config tab.
+4. Read row 1 of every tab and compare it with `sheet-layout.json`. Report any difference.
+
+Existing rows need nothing: the new cells are empty, which means `urgent` false, no research yet, no competitors, and ledger rows in credits.

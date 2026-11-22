@@ -6,7 +6,7 @@ How the producer picks, runs, saves and verifies each stage. The pipeline is `${
 
 1. Read `stages.yaml` now (it changes as later groups ship skills).
 2. Keep the stages, in file order, whose `job_types` include `job.type` **and** whose `tracks` include `job.track`. That list is the job's **path**.
-   - Video, quick: 14 stages. Video, full: 21. Poster: 7 (the same on both tracks).
+   - Video, quick: 15 stages. Video, full: 22. Poster: 8 (the same on both tracks).
 3. The **current stage** is `job.current_stage`. The **next stage** is the one after it on the path.
 4. Stage `status`:
 

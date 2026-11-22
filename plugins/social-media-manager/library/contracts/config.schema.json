@@ -76,6 +76,59 @@
         }
       }
     },
+    "freshness_days": {
+      "description": "Research: an insight sheet younger than this is reused at job intake. Overrides stages.yaml.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 30
+    },
+    "research_schedule_enabled": {
+      "description": "Research: the scheduled task refreshes clients unattended. False = the scheduled run does nothing.",
+      "type": "boolean",
+      "default": true
+    },
+    "research_unattended_clients": {
+      "description": "Research: which clients the scheduled run refreshes: \"all\" active clients, or a list of client_ids (to limit Claude usage).",
+      "anyOf": [{ "const": "all" }, { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" } }],
+      "default": "all"
+    },
+    "research_caps": {
+      "description": "Research: volume caps per run. Methods never exceed them; 'go deeper' needs the admin.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accounts_min": { "type": "integer", "minimum": 1, "default": 6 },
+        "accounts_max": { "type": "integer", "minimum": 1, "default": 12 },
+        "reels_per_account": { "type": "integer", "minimum": 1, "default": 12 },
+        "comment_reels": { "type": "integer", "minimum": 0, "default": 5 },
+        "comments_per_reel": { "type": "integer", "minimum": 0, "default": 30 },
+        "reviews_per_business": { "type": "integer", "minimum": 0, "default": 30 },
+        "hashtag_scans": { "type": "integer", "minimum": 0, "default": 2 },
+        "trend_searches": { "type": "integer", "minimum": 0, "default": 5 },
+        "ad_library_advertisers": { "type": "integer", "minimum": 0, "default": 6 }
+      }
+    },
+    "competitor_confirm_required": {
+      "description": "Research: false = discovered competitors are used at once (marked guessed) and the editor may strike them; true = they wait for the editor or admin to confirm.",
+      "type": "boolean",
+      "default": false
+    },
+    "apify_enabled": {
+      "description": "Research: allow paid Apify runs (also needs an Apify token or connector). Off by default.",
+      "type": "boolean",
+      "default": false
+    },
+    "research_auto_approve_limit": {
+      "description": "Research: paid runs estimated at or below this amount (research_currency) run without asking the admin. 0 = always ask.",
+      "type": "number",
+      "minimum": 0,
+      "default": 0
+    },
+    "research_currency": {
+      "description": "Currency of research_auto_approve_limit and Apify estimates.",
+      "enum": ["USD", "INR"],
+      "default": "USD"
+    },
     "version": { "type": "integer", "minimum": 1 },
     "updated_at": { "type": "string", "format": "date-time" }
   }

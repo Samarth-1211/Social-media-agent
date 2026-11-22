@@ -190,6 +190,48 @@
         }
       }
     },
+    "own_handle": {
+      "description": "The client's own Instagram handle, without @. Used by the own-account audit and to size competitors (within ~10x).",
+      "type": ["string", "null"]
+    },
+    "competitors": {
+      "description": "Accounts research compares against. Discovery adds them as guessed (auto-accepted unless config.competitor_confirm_required); a person can confirm or strike. Struck ones stay listed and are never used again.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["handle", "platform", "group", "reason", "confidence"],
+        "properties": {
+          "handle": { "type": "string", "description": "Public business or creator handle, without @." },
+          "platform": { "$ref": "#/$defs/slug" },
+          "group": {
+            "description": "direct = same offer, a bit ahead; adjacent = same audience, different business; outsized = much bigger, for format only.",
+            "enum": ["direct", "adjacent", "outsized"]
+          },
+          "reason": { "type": "string", "description": "One line: why this account." },
+          "confidence": { "enum": ["confirmed", "guessed"] },
+          "struck": { "type": "boolean" },
+          "struck_by": { "type": ["string", "null"] },
+          "added_on": { "type": ["string", "null"], "format": "date" }
+        }
+      }
+    },
+    "meta": {
+      "description": "Optional link to the agency's Meta Business Manager. When linked, research can read the client's own posts through the Meta Ads connector without anyone logging in.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["linked"],
+      "properties": {
+        "linked": { "type": "boolean" },
+        "ad_account_id": { "type": ["string", "null"], "pattern": "^[0-9]+$", "description": "Numeric, without act_." },
+        "ig_account_id": { "type": ["string", "null"], "pattern": "^[0-9]+$" },
+        "page_id": { "type": ["string", "null"], "pattern": "^[0-9]+$" }
+      }
+    },
+    "latest_insight_id": {
+      "description": "The client's newest insight sheet. Operational, like next_job_number: updating it doesn't bump version or changelog.",
+      "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-I[0-9]{6}-[0-9]+$" }, { "type": "null" }]
+    },
     "festival_calendar": {
       "type": "array",
       "items": {
@@ -260,7 +302,8 @@
           "languages", "platforms", "posting_frequency",
           "audience", "tone_of_voice", "words", "visual_identity",
           "do", "dont", "references", "festival_calendar",
-          "price_points", "revision_cap"
+          "price_points", "revision_cap",
+          "own_handle", "competitors", "meta"
         ]
       },
       "additionalProperties": {

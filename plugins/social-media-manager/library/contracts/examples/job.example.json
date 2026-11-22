@@ -11,6 +11,7 @@
   "next_action": "Ravi to approve the script (placeholder) or request changes.",
   "stage_history": [
     { "stage": "intake", "status": "done", "started_at": "2026-11-15T11:00:00+05:30", "finished_at": "2026-11-15T11:20:00+05:30", "by": "samarth" },
+    { "stage": "research", "status": "skipped", "started_at": "2026-11-15T11:20:00+05:30", "finished_at": "2026-11-15T11:20:00+05:30", "by": "system", "note": "urgent job: research skipped, flagged for the brief" },
     { "stage": "brief", "status": "done", "started_at": "2026-11-15T11:20:00+05:30", "finished_at": "2026-11-15T12:05:00+05:30", "by": "samarth" },
     { "stage": "concept", "status": "done", "started_at": "2026-11-15T12:05:00+05:30", "finished_at": "2026-11-15T12:40:00+05:30", "by": "ravi" },
     { "stage": "script", "status": "in_progress", "started_at": "2026-11-15T12:40:00+05:30", "finished_at": null, "by": "ravi" }
@@ -23,6 +24,9 @@
   ],
   "assignee": "ravi",
   "deadline": "2026-11-25",
+  "urgent": true,
+  "research_status": "skipped",
+  "insight_id": null,
   "credits": { "budget": 200, "warn_at": null, "used": 0, "ledger": [] },
   "outputs": {
     "request": {
@@ -50,6 +54,29 @@
         "assumptions": ["Assignee Ravi: he made their last reel.", "Budget: video default 200."]
       },
       "updated_at": "2026-11-15T11:15:00+05:30"
+    },
+    "research": {
+      "version": 1,
+      "schema": "research.schema.json",
+      "stage": "research",
+      "by": "system",
+      "summary": "Skipped: urgent job, no insight sheet for this client yet",
+      "data": {
+        "research_status": "skipped",
+        "insight_id": null,
+        "insight_version": null,
+        "insight_date": null,
+        "flags": ["no_fresh_research"],
+        "note": "Urgent job: research skipped and the client has no insight sheet yet. The brief works from the brand brief only.",
+        "downstream": {
+          "brief": { "pain_points": [], "working_angles": [], "timely_hooks": [] },
+          "concept_and_hooks": { "working_angles": [], "outlier_hooks": [], "competitors_overdo": [] },
+          "script": { "proof_points": [] },
+          "localise": { "customer_phrases": [] },
+          "visuals": { "visual_cliches": [] }
+        }
+      },
+      "updated_at": "2026-11-15T11:20:00+05:30"
     },
     "brief": { "version": 1, "stage": "brief", "by": "system", "data": { "placeholder": true, "note": "brief not built yet" }, "updated_at": "2026-11-15T12:00:00+05:30" },
     "concept": { "version": 1, "stage": "concept", "by": "system", "data": { "placeholder": true, "note": "concept not built yet" }, "updated_at": "2026-11-15T12:35:00+05:30" },

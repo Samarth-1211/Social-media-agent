@@ -130,7 +130,7 @@ footer { font-size: 0.78rem; color: var(--muted); }
 <script>
 (() => {
   // Pipeline order, from library/contracts/stages.yaml (v2).
-  const STAGES = ['intake','brief','concept','hooks','script','localise','client-script-approval','style-bible','casting','storyboard','production-plan','clips','voice-music','qa-clips','assemble','captions-motion','audio-mix','finish','resolve-export','client-final-approval','poster-drafts','client-poster-approval','poster-final','delivery'];
+  const STAGES = ['intake','research','brief','concept','hooks','script','localise','client-script-approval','style-bible','casting','storyboard','production-plan','clips','voice-music','qa-clips','assemble','captions-motion','audio-mix','finish','resolve-export','client-final-approval','poster-drafts','client-poster-approval','poster-final','delivery'];
   // Tabs read, and the A1 range of each (columns from sheet-layout.json).
   const TABS = { Jobs: 'Jobs!A1:S', Clients: 'Clients!A1:AC', Questions: 'Questions!A1:H', Learnings: 'Learnings!A1:I', ClientChanges: 'ClientChanges!A1:F', Gates: 'Gates!A1:M', Credits: 'Credits!A1:L', Outputs: 'Outputs!A1:J', StageHistory: 'StageHistory!A1:H', Log: 'Log!A1:F', Feedback: 'Feedback!A1:O', Team: 'Team!A1:H' };
   const JSON_COLS = new Set(['decision_maker','audience','tone_of_voice','words','visual_identity','references','festival_calendar','price_points','confidence','shown_outputs','items','conflicts','routing','messages','data']);

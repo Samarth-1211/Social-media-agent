@@ -4,10 +4,10 @@ Every job runs on one of two tracks. The producer **proposes** one at intake wit
 
 | Track | Video stages | For |
 |---|---|---|
-| **quick** | 14: skips hooks, localise, style-bible, casting, production-plan, audio-mix and resolve-export | Repeat work in a style and cast that already exist |
-| **full** | 21 | Anything new or high-stakes |
+| **quick** | 15: skips hooks, localise, style-bible, casting, production-plan, audio-mix and resolve-export | Repeat work in a style and cast that already exist |
+| **full** | 22 | Anything new or high-stakes |
 
-Posters run the same 7 stages on both tracks today; the track is still recorded, because later groups may split them.
+Posters run the same 8 stages on both tracks today; the track is still recorded, because later groups may split them.
 
 ## 1. Signals
 

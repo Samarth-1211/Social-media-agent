@@ -25,12 +25,24 @@
 #   tracks          quick | full
 #   job_types       video | poster
 #
+# Optional keys (only on stages that need them; the validator rejects unknown keys)
+#   freshness_days        reuse earlier work younger than this many days instead of rerunning
+#                         (config.freshness_days overrides it)
+#   skippable_if_urgent   true: on a job with `urgent: true` the stage is skipped and its
+#                         output says so, instead of running
+#   non_blocking_partial  true: if the stage's work is only partly done (e.g. a browser step
+#                         is still queued), the job moves on with what exists
+#   spend_gate            admin | none: who approves BEFORE the stage spends real money
+#                         (not Higgsfield credits); auto-approved at or below
+#                         config.research_auto_approve_limit
+#
 # A stage only reads and writes its declared fields. Gate decisions live in job.gates[],
 # so approval stages declare no `writes`.
 #
 # intake is run by `producer` (control/producer), which is built, so it is `active`.
+# research becomes `active` when pre-production/research-methods ships (Group 2a, M4).
 
-version: 2
+version: 3
 
 stages:
   # ── Shared opening ────────────────────────────────────────────────
@@ -46,12 +58,31 @@ stages:
     tracks: [quick, full]
     job_types: [video, poster]
 
+  # ── Pre-production: research ─────────────────────────────────────
+  # Market insight sheet for the client: reused while fresh, never blocks a job.
+  # Paid methods (Apify, off by default) need the admin before spending (spend_gate).
+  - id: research
+    group: pre-production
+    skill: research-methods
+    status: placeholder
+    reads: [client, request]
+    optional_reads: []
+    writes: [research]
+    gate: none
+    spend_gate: admin
+    credit_spend: false
+    freshness_days: 30
+    skippable_if_urgent: true
+    non_blocking_partial: true
+    tracks: [quick, full]
+    job_types: [video, poster]
+
   - id: brief
     group: pre-production
     skill: brief
     status: placeholder
     reads: [client, request]
-    optional_reads: []
+    optional_reads: [research]
     writes: [brief]
     gate: admin
     credit_spend: false

@@ -1,0 +1,197 @@
+{
+  "insight_id": "SHL-I202611-1",
+  "client_id": "shubh-laundry",
+  "mode": "mixed",
+  "trigger": "onboarding",
+  "situation": ["new_client", "local_service"],
+  "festival": null,
+  "methods_used": [
+    { "method": "web-competitor-intel", "reason": "New client: map the local field first", "path": "web", "skill": null, "status": "done" },
+    { "method": "meta-ad-library", "reason": "Free; shows which local offers run as ads", "path": "connector", "skill": null, "status": "done" },
+    { "method": "maps-review-reading", "reason": "Local service: reviews carry the pain points", "path": "web", "skill": null, "status": "done" },
+    { "method": "trends", "reason": "Wedding season is on", "path": "web", "skill": null, "status": "done" },
+    { "method": "ig-outlier-read", "reason": "New client: what works on local Instagram", "path": "installed-skill", "skill": "ig-viral", "status": "done" },
+    { "method": "ig-hook-classify", "reason": "Name the formula behind each outlier", "path": "fallback", "skill": null, "status": "done", "note": "ig-hook-extractor not installed" },
+    { "method": "comment-reading", "reason": "Customer words from the top outlier reels", "path": "fallback", "skill": null, "status": "done" },
+    { "method": "own-account-audit", "reason": "New client baseline", "path": "pasted", "skill": null, "status": "skipped", "note": "Meta not linked and no Insights pasted yet" }
+  ],
+  "cost": [
+    { "provider": "web", "amount": 0, "currency": "USD" },
+    { "provider": "meta", "amount": 0, "currency": "USD" },
+    { "provider": "browser", "amount": 0, "currency": "USD" }
+  ],
+  "competitors_analysed": [
+    { "handle": "ex_freshfold_indore", "platform": "instagram", "group": "direct", "followers": 4100, "median_views": 900, "items_read": 12 },
+    { "handle": "ex_vijaynagar_drycleaners", "platform": "instagram", "group": "direct", "followers": 2300, "median_views": 450, "items_read": 12 },
+    { "handle": "ex_indore_home_services", "platform": "instagram", "group": "adjacent", "followers": 9800, "median_views": 2100, "items_read": 12 },
+    { "handle": "ex_national_laundry_brand", "platform": "instagram", "group": "outsized", "followers": 61000, "median_views": 14000, "items_read": 12 }
+  ],
+  "own_account": null,
+  "findings": {
+    "pain_points": [
+      {
+        "id": "F1",
+        "text": "Customers fear delicate sarees coming back with colour bleed or lost zari; it is the most repeated complaint about local dry cleaners.",
+        "source": "Google reviews of 3 Vijay Nagar dry cleaners, 30 read, weighted to 2-3 stars (2026-11-20)",
+        "confidence": "strong",
+        "pinned": true,
+        "struck": false,
+        "outcome": "unknown"
+      },
+      {
+        "id": "F2",
+        "text": "Pickup slots that are missed without a call are the second most common complaint.",
+        "source": "Google reviews of 3 Vijay Nagar dry cleaners, 30 read (2026-11-20)",
+        "confidence": "some"
+      }
+    ],
+    "working_angles": [
+      {
+        "id": "F3",
+        "text": "Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.",
+        "source": "Outlier read of 4 accounts, 48 reels; process reels were the top 2 multiples (2026-11-21)",
+        "confidence": "some"
+      }
+    ],
+    "outlier_hooks": [
+      {
+        "id": "F4",
+        "text": "Opens on a ruined silk dupatta held to camera with 'Ye galti mat karna' on screen; reveals the fix in 3 steps.",
+        "source": "https://www.instagram.com/reel/EXAMPLE1/",
+        "confidence": "some",
+        "details": {
+          "account": "ex_indore_home_services",
+          "multiple": 4.2,
+          "views": 8800,
+          "formula": "IG9",
+          "formula_confidence": 0.7,
+          "hook_visual": "Damaged dupatta close-up",
+          "hook_spoken": "Shaadi se pehle ye galti mat karna",
+          "hook_text": "Ye galti mat karna",
+          "format": "problem then process",
+          "length_s": 22,
+          "structure": "problem (2s) → 3 steps → result → CTA",
+          "cta": "WhatsApp for pickup"
+        }
+      }
+    ],
+    "competitors_overdo": [
+      {
+        "id": "F5",
+        "text": "Price-list carousels (per-piece rates on a coloured background): all four direct competitors post them weekly and their multiples stay under 1x.",
+        "source": "Outlier read of 4 accounts, 48 reels (2026-11-21)",
+        "confidence": "strong"
+      }
+    ],
+    "timely_hooks": [
+      {
+        "id": "F6",
+        "text": "Wedding season (Nov-Feb): pre-wedding outfit care and 'lehenga after the wedding' storage are searched and discussed now.",
+        "source": "Web search: Indore wedding season articles and local event listings, 5 searches (2026-11-20)",
+        "confidence": "some"
+      }
+    ],
+    "customer_phrases": [
+      {
+        "id": "F7",
+        "text": "zari kharab ho gayi",
+        "source": "Comments on the top 5 outlier reels, 120 read (2026-11-21)",
+        "confidence": "some",
+        "language": "Hinglish"
+      },
+      {
+        "id": "F8",
+        "text": "pickup time pe aate hi nahi",
+        "source": "Google reviews of 3 Vijay Nagar dry cleaners, 30 read (2026-11-20)",
+        "confidence": "some",
+        "language": "Hinglish"
+      }
+    ],
+    "proof_points": [
+      {
+        "id": "F9",
+        "text": "Customers trust a named person who handles silk ('bhaiya ne khud dekha'); reviews that mention a person score higher.",
+        "source": "Google reviews of 3 Vijay Nagar dry cleaners, 30 read (2026-11-20)",
+        "confidence": "weak"
+      }
+    ],
+    "visual_cliches": [
+      {
+        "id": "F10",
+        "text": "Stock photos of white shirts on hangers and washing-machine clip art; every direct competitor uses them.",
+        "source": "Outlier read of 4 accounts, 48 reels (2026-11-21)",
+        "confidence": "strong"
+      }
+    ],
+    "competitor_ads": [
+      {
+        "id": "F11",
+        "text": "A flat 20% off on first order, running 41 days in 3 versions: survived, probably a standing offer.",
+        "source": "https://www.facebook.com/ads/library/?id=EXAMPLE",
+        "confidence": "some",
+        "details": {
+          "advertiser": "Freshfold Laundry (fictional)",
+          "days_running": 41,
+          "versions": 3,
+          "reason_to_buy": "price",
+          "hook_type": "offer-led",
+          "offer": "20% off first order",
+          "format": "static image",
+          "language": "Hinglish",
+          "status_read": "survived (30+ days)"
+        }
+      }
+    ]
+  },
+  "widened": null,
+  "not_read": ["Instagram hashtag #indorelaundry: thin (11 reels); used the city-level home-services tag instead"],
+  "diff_vs_previous": null,
+  "pending_browser_step": { "pending": false },
+  "raw_files": ["https://drive.google.com/drive/folders/EXAMPLE-RESEARCH-FOLDER"],
+  "ran_without_subagent": false,
+  "summary": "First research for Shubh Laundry: saree-care fear is the top pain point; process reels beat price lists; wedding season is the timely hook.",
+  "downstream": {
+    "brief": {
+      "pain_points": [
+        { "id": "F1", "text": "Customers fear delicate sarees coming back with colour bleed or lost zari; it is the most repeated complaint about local dry cleaners.", "confidence": "strong" },
+        { "id": "F2", "text": "Pickup slots that are missed without a call are the second most common complaint.", "confidence": "some" }
+      ],
+      "working_angles": [
+        { "id": "F3", "text": "Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.", "confidence": "some" }
+      ],
+      "timely_hooks": [
+        { "id": "F6", "text": "Wedding season (Nov-Feb): pre-wedding outfit care and 'lehenga after the wedding' storage are searched and discussed now.", "confidence": "some" }
+      ]
+    },
+    "concept_and_hooks": {
+      "working_angles": [
+        { "id": "F3", "text": "Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.", "confidence": "some" }
+      ],
+      "outlier_hooks": [
+        { "id": "F4", "text": "Opens on a ruined silk dupatta held to camera with 'Ye galti mat karna' on screen; reveals the fix in 3 steps.", "confidence": "some", "formula": "IG9", "multiple": 4.2 }
+      ],
+      "competitors_overdo": [
+        { "id": "F5", "text": "Price-list carousels (per-piece rates on a coloured background): all four direct competitors post them weekly and their multiples stay under 1x.", "confidence": "strong" }
+      ]
+    },
+    "script": {
+      "proof_points": [
+        { "id": "F9", "text": "Customers trust a named person who handles silk ('bhaiya ne khud dekha'); reviews that mention a person score higher.", "confidence": "weak" }
+      ]
+    },
+    "localise": {
+      "customer_phrases": [
+        { "id": "F7", "text": "zari kharab ho gayi", "confidence": "some", "language": "Hinglish" },
+        { "id": "F8", "text": "pickup time pe aate hi nahi", "confidence": "some", "language": "Hinglish" }
+      ]
+    },
+    "visuals": {
+      "visual_cliches": [
+        { "id": "F10", "text": "Stock photos of white shirts on hangers and washing-machine clip art; every direct competitor uses them.", "confidence": "strong" }
+      ]
+    }
+  },
+  "version": 2,
+  "created_at": "2026-11-21T16:40:00+05:30",
+  "updated_at": "2026-11-21T18:05:00+05:30"
+}

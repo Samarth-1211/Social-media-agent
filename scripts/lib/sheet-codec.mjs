@@ -1,4 +1,4 @@
-// Converts logical records (client, job, team, config) to Google Sheets rows and back,
+// Converts logical records (client, job, team, insight, task, config) to Google Sheets rows and back,
 // following plugins/social-media-manager/library/storage/sheet-layout.json.
 // Dev tooling: used by validate.mjs (offline round trip) and the storage scenario tests.
 // Skills follow the same rules in prose (library/storage/google-sheets.md); this file is the executable spec.
@@ -52,7 +52,11 @@ function setPath(obj, p, v) {
   o[keys.at(-1)] = v;
 }
 const tabsFor = (record) => layout.tabs.filter((t) => t.record === record);
-const parentKeyOf = { client: 'client_id', job: 'job_id', team: 'handle' };
+const parentKeyOf = { client: 'client_id', job: 'job_id', team: 'handle', insight: 'insight_id', task: 'task_id' };
+// Collection names in decodeAll's result, per record type.
+export const collectionOf = { client: 'clients', job: 'jobs', team: 'team', insight: 'insights', task: 'tasks' };
+// Config values that are objects or lists are stored as JSON text.
+const configIsJson = (prop, v) => (v !== null && typeof v === 'object') || prop?.type === 'object' || prop?.type === 'array';
 
 // ── encode ─────────────────────────────────────────────────────────
 // Returns { [tabName]: rows[] } for one record (rows as arrays in column order).
@@ -74,6 +78,20 @@ export function encodeRecord(record, data) {
           return encodeCell(c.type, item[c.key]);
         }),
       );
+    } else if (t.kind === 'child-grouped') {
+      // An object of lists (e.g. insight.findings): one row per item, `group_key` names its list.
+      const groups = getPath(data, t.field) ?? {};
+      const items = Object.entries(groups).flatMap(([group, list]) => (list ?? []).map((item) => [group, item]));
+      out[t.name] = items.map(([group, item], i) =>
+        t.columns.map((c) => {
+          if (c.key === t.parent_key) return encodeCell(c.type, data[t.parent_key]);
+          if (c.key === 'seq') return i + 1;
+          if (c.key === t.group_key) return encodeCell(c.type, group);
+          if (c.key === 'client_id' && c.storage_only) return encodeCell(c.type, data.client_id);
+          if (c.storage_only) return '';
+          return encodeCell(c.type, item[c.key]);
+        }),
+      );
     } else if (t.kind === 'child-map') {
       const map = getPath(data, t.field) ?? {};
       out[t.name] = Object.entries(map).map(([k, item]) =>
@@ -86,7 +104,7 @@ export function encodeRecord(record, data) {
     } else if (t.kind === 'key-value') {
       out[t.name] = Object.entries(data).map(([k, v]) => {
         const prop = configSchema.properties[k];
-        const isObj = prop && (prop.type === 'object');
+        const isObj = configIsJson(prop, v);
         return [encodeCell('text', k), v === null || v === undefined ? '' : isObj ? encodeCell('json', v) : typeof v === 'number' || typeof v === 'boolean' ? v : encodeCell('text', v)];
       });
     }
@@ -110,8 +128,8 @@ function rowsAsObjects(t, rows) {
 }
 
 export function decodeAll(tabs) {
-  const result = { clients: [], jobs: [], team: [], config: null };
-  const byRecord = { client: result.clients, job: result.jobs, team: result.team };
+  const result = { clients: [], jobs: [], team: [], insights: [], tasks: [], config: null };
+  const byRecord = Object.fromEntries(Object.entries(collectionOf).map(([rec, coll]) => [rec, result[coll]]));
 
   for (const t of layout.tabs.filter((x) => x.kind === 'record')) {
     for (const row of rowsAsObjects(t, tabs[t.name])) {
@@ -138,6 +156,16 @@ export function decodeAll(tabs) {
       else setPath(parent, t.field, mine.map(strip));
     }
   }
+  for (const t of layout.tabs.filter((x) => x.kind === 'child-grouped')) {
+    // Every group from the group column's options is present, empty if it has no rows.
+    const groups = t.columns.find((c) => c.key === t.group_key).options;
+    const rows = rowsAsObjects(t, tabs[t.name]);
+    for (const parent of byRecord[t.record]) {
+      const mine = rows.filter((r) => r[t.parent_key] === parent[parentKeyOf[t.record]]).sort((a, b) => a.seq - b.seq);
+      const strip = (r) => Object.fromEntries(t.columns.filter((c) => !c.storage_only && r[c.key] !== undefined).map((c) => [c.key, r[c.key]]));
+      setPath(parent, t.field, Object.fromEntries(groups.map((g) => [g, mine.filter((r) => r[t.group_key] === g).map(strip)])));
+    }
+  }
   const cfg = tabs.Config;
   if (cfg?.length) {
     const conf = {};
@@ -147,7 +175,7 @@ export function decodeAll(tabs) {
       const types = [].concat(prop?.type ?? 'string');
       let val;
       if (v === '' || v === undefined) val = types.includes('null') ? null : undefined;
-      else if (types.includes('object')) val = JSON.parse(v);
+      else if (types.includes('object') || types.includes('array') || /^[[{]/.test(v)) val = JSON.parse(v);
       else if (types.includes('integer')) val = parseInt(v, 10);
       else if (types.includes('number')) val = Number(v);
       else if (types.includes('boolean')) val = v === 'TRUE';

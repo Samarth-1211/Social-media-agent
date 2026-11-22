@@ -1,6 +1,6 @@
 {
   "$comment": "Layout of the 'TDM Studio Database' Google Sheet. Single source of truth for setup, the storage operations, the tracker page and dev scripts. Row 1 of every data tab holds the column keys below, in this order. Cell formats: text = plain string; number/integer; boolean = TRUE/FALSE; timestamp = ISO 8601 text with offset; date = YYYY-MM-DD text; list = one item per line in the cell; json = compact JSON text. Empty cell = null / empty list.",
-  "version": 1,
+  "version": 2,
   "database_title": "TDM Studio Database",
   "folder_title": "TDM Studio",
   "test_database_title": "TDM Studio TEST Database",
@@ -35,7 +35,10 @@
         { "key": "revision_round", "type": "integer" },
         { "key": "version", "type": "integer" },
         { "key": "created_at", "type": "timestamp" },
-        { "key": "updated_at", "type": "timestamp" }
+        { "key": "updated_at", "type": "timestamp" },
+        { "key": "urgent", "type": "boolean", "since": 2 },
+        { "key": "research_status", "type": "text", "options": ["fresh", "partial", "refreshed", "new", "skipped"], "since": 2 },
+        { "key": "insight_id", "type": "text", "since": 2 }
       ]
     },
     {
@@ -72,7 +75,11 @@
         { "key": "confidence", "type": "json" },
         { "key": "version", "type": "integer" },
         { "key": "created_at", "type": "timestamp" },
-        { "key": "updated_at", "type": "timestamp" }
+        { "key": "updated_at", "type": "timestamp" },
+        { "key": "own_handle", "type": "text", "since": 2 },
+        { "key": "competitors", "type": "json", "since": 2 },
+        { "key": "meta", "type": "json", "since": 2 },
+        { "key": "latest_insight_id", "type": "text", "since": 2 }
       ]
     },
     {
@@ -149,7 +156,7 @@
         { "key": "job_id", "type": "text", "storage_only": true },
         { "key": "seq", "type": "integer", "storage_only": true },
         { "key": "stage", "type": "text" },
-        { "key": "kind", "type": "text", "options": ["stage", "budget"] },
+        { "key": "kind", "type": "text", "options": ["stage", "budget", "spend"], "options_changed": 2 },
         { "key": "owner_role", "type": "text", "options": ["admin", "editor", "client"] },
         { "key": "status", "type": "text", "options": ["pending", "approved", "changes_requested", "sent_back"] },
         { "key": "shown_outputs", "type": "json" },
@@ -180,7 +187,9 @@
         { "key": "tool", "type": "text" },
         { "key": "description", "type": "text" },
         { "key": "approved_by", "type": "text" },
-        { "key": "by", "type": "text" }
+        { "key": "by", "type": "text" },
+        { "key": "provider", "type": "text", "options": ["higgsfield", "apify", "web", "meta", "browser", "other"], "since": 2 },
+        { "key": "currency", "type": "text", "options": ["credits", "USD", "INR"], "since": 2 }
       ]
     },
     {
@@ -280,7 +289,94 @@
         { "key": "key", "type": "text" },
         { "key": "value", "type": "text" }
       ],
-      "$comment": "One row per config property. Objects (credit_policy) are stored as JSON text; numbers as numbers; nulls as empty cells."
+      "$comment": "One row per config property. Objects and lists (credit_policy, research_caps, a research_unattended_clients list) are stored as JSON text; numbers as numbers; nulls as empty cells."
+    },
+    {
+      "name": "Insights",
+      "kind": "record",
+      "record": "insight",
+      "key": ["insight_id"],
+      "since": 2,
+      "columns": [
+        { "key": "insight_id", "type": "text" },
+        { "key": "client_id", "type": "text" },
+        { "key": "mode", "type": "text", "options": ["unattended", "attended", "mixed"] },
+        { "key": "trigger", "type": "text", "options": ["onboarding", "intake", "schedule", "festival", "manual"] },
+        { "key": "situation", "type": "list" },
+        { "key": "festival", "type": "text" },
+        { "key": "summary", "type": "text" },
+        { "key": "methods_used", "type": "json" },
+        { "key": "cost", "type": "json" },
+        { "key": "competitors_analysed", "type": "json" },
+        { "key": "own_account", "type": "json" },
+        { "key": "widened", "type": "text" },
+        { "key": "not_read", "type": "list" },
+        { "key": "diff_vs_previous", "type": "json" },
+        { "key": "pending_browser_step", "type": "json" },
+        { "key": "raw_files", "type": "list" },
+        { "key": "ran_without_subagent", "type": "boolean" },
+        { "key": "downstream", "type": "json" },
+        { "key": "version", "type": "integer" },
+        { "key": "created_at", "type": "timestamp" },
+        { "key": "updated_at", "type": "timestamp" }
+      ]
+    },
+    {
+      "name": "InsightFindings",
+      "kind": "child-grouped",
+      "record": "insight",
+      "field": "findings",
+      "parent_key": "insight_id",
+      "group_key": "category",
+      "key": ["insight_id", "seq"],
+      "since": 2,
+      "$comment": "One row per finding, so editors can pin or strike from a phone. category = which findings list the row belongs to.",
+      "columns": [
+        { "key": "insight_id", "type": "text", "storage_only": true },
+        { "key": "seq", "type": "integer", "storage_only": true },
+        { "key": "client_id", "type": "text", "storage_only": true },
+        { "key": "category", "type": "text", "storage_only": true, "options": ["pain_points", "working_angles", "outlier_hooks", "competitors_overdo", "timely_hooks", "customer_phrases", "proof_points", "visual_cliches", "competitor_ads"] },
+        { "key": "id", "type": "text" },
+        { "key": "text", "type": "text" },
+        { "key": "source", "type": "text" },
+        { "key": "confidence", "type": "text", "options": ["strong", "some", "weak"] },
+        { "key": "language", "type": "text", "options": ["Hindi", "English", "Hinglish"] },
+        { "key": "pinned", "type": "boolean" },
+        { "key": "struck", "type": "boolean" },
+        { "key": "used_in_jobs", "type": "list" },
+        { "key": "outcome", "type": "text", "options": ["worked", "didnt", "unknown"] },
+        { "key": "outcome_note", "type": "text" },
+        { "key": "details", "type": "json" }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "kind": "record",
+      "record": "task",
+      "key": ["task_id"],
+      "since": 2,
+      "columns": [
+        { "key": "task_id", "type": "text" },
+        { "key": "kind", "type": "text", "options": ["research-run", "research-browser-step"] },
+        { "key": "client_id", "type": "text" },
+        { "key": "job_id", "type": "text" },
+        { "key": "insight_id", "type": "text" },
+        { "key": "status", "type": "text", "options": ["pending", "running", "done", "cancelled", "failed"] },
+        { "key": "trigger", "type": "text", "options": ["onboarding", "intake", "schedule", "festival", "manual"] },
+        { "key": "occasion", "type": "text" },
+        { "key": "methods", "type": "list" },
+        { "key": "needs_person", "type": "boolean" },
+        { "key": "needs_browser", "type": "boolean" },
+        { "key": "estimate_minutes", "type": "integer" },
+        { "key": "due", "type": "date" },
+        { "key": "note", "type": "text" },
+        { "key": "created_at", "type": "timestamp" },
+        { "key": "created_by", "type": "text" },
+        { "key": "done_at", "type": "timestamp" },
+        { "key": "done_by", "type": "text" },
+        { "key": "version", "type": "integer" },
+        { "key": "updated_at", "type": "timestamp" }
+      ]
     }
   ]
 }

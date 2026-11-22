@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:research",
+  "title": "Research (stage output)",
+  "description": "What the research stage hands to later stages, stored in job.outputs.research.data. It points at the client's insight sheet and carries a copy of its downstream block, so brief, concept, hooks, script, localise and shot sourcing read it without opening the insight record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["research_status", "insight_id", "flags", "downstream"],
+  "properties": {
+    "research_status": {
+      "description": "fresh = an existing sheet was reused; partial = the unattended part is fresh but the browser step is still queued; refreshed = an older sheet was updated now; new = the first sheet for this client; skipped = urgent job, nothing ran.",
+      "enum": ["fresh", "partial", "refreshed", "new", "skipped"]
+    },
+    "insight_id": {
+      "description": "The insight sheet used. Null only when skipped and the client has no sheet yet.",
+      "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-I[0-9]{6}-[0-9]+$" }, { "type": "null" }]
+    },
+    "insight_version": { "type": ["integer", "null"], "minimum": 1, "description": "Version of the insight sheet copied into downstream." },
+    "insight_date": { "type": ["string", "null"], "format": "date", "description": "When that sheet was created, so readers can judge its age." },
+    "flags": {
+      "description": "no_fresh_research = the brief must say research is old or missing; browser_step_pending = the Instagram read is queued; widened = the niche was too small and research widened to category or city.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "enum": ["no_fresh_research", "browser_step_pending", "widened"] }
+    },
+    "note": { "type": "string", "description": "One line for the brief, e.g. 'Urgent job: research skipped; using the October sheet (54 days old).'" },
+    "downstream": {
+      "description": "Copy of the insight's downstream block at insight_version. Empty lists when skipped with no sheet.",
+      "$ref": "urn:tdm:social-media-manager:contracts:insight#/$defs/downstream"
+    }
+  }
+}

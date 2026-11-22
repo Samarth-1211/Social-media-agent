@@ -23,6 +23,7 @@ Everything lives in one Google Sheet, **TDM Studio Database**, inside a Google D
 | Backup, restore, offline | `library/storage/files-backup.md` |
 | Tracker page + sample data (generated) | `library/storage/tracker-page/` ← `scripts/build-sample-data.mjs` |
 | Record ↔ row conversion (executable spec, dev only) | `scripts/lib/sheet-codec.mjs` |
+| Upgrading an older sheet | `library/storage/sheet-setup.json` → `upgrades`, steps in `google-sheets.md` §7 |
 
 After changing `sheet-layout.json`, run both build scripts and `node scripts/validate.mjs`. Check 11 fails if the layout no longer covers a schema field, if a record doesn't survive the round trip, or if a generated file is stale.
 
@@ -35,6 +36,18 @@ After changing `sheet-layout.json`, run both build scripts and `node scripts/val
 - **Round trip is lossless.** The example client, job (with gates, history, outputs, log), team member and config were written to the sheet, read back, and decoded **identical** to the originals, and still valid against their schemas.
 - **The clock works.** Claude has no reliable clock: in testing, sessions wrote times hours apart for the same moment. Rewriting `=TEXT(NOW(),…)` into `Config!E1` and reading it back returns the current India time (the sheet's time zone), so every timestamp now comes from `get_now`. A full producer run (S3) stamped all 13 gates with consistent real times.
 - **The Dashboard works on real data.** It listed the job under "waiting on editor", counted it per assignee, and showed the empty states for overdue and credits.
+
+## Layout v2 (Group 2a: research)
+
+- **New tabs:** Insights (one row per insight sheet), InsightFindings (one row per finding, so editors can pin or strike from a phone) and Tasks (pending browser steps and queued research runs). Files mode keeps `clients/<id>/insights/` and `tasks.json`.
+- **New columns, added at the end of their tab:**
+  - Jobs: `urgent`, `research_status`, `insight_id`;
+  - Clients: `own_handle`, `competitors`, `meta`, `latest_insight_id`;
+  - Credits: `provider`, `currency`.
+- **Money vs credits.** Ledger rows carry a `currency`. Only `credits` rows (and older rows with none) count in `credits_used`, against the job budget and on the Dashboard. Apify spend in USD is listed but never mixed in.
+- **Upgrading.** A v1 sheet is upgraded in place with `sheet-setup.json` → `upgrades` (`google-sheets.md` §7). Nothing existing moves, and old rows stay valid.
+- **Raw research data** lives in Drive (`Clients/<code>/research/<insight_id>/`) or the files-mode data folder, never in a cell and never in the plugin folder.
+- **Executable spec:** `scripts/lib/sheet-codec.mjs` handles the new `child-grouped` tab kind (InsightFindings). Check 11 round-trips the insight and task examples and the sample data, and cross-checks research records (job copies match the output; `downstream` holds only real, non-struck findings).
 
 ## Honest limits
 

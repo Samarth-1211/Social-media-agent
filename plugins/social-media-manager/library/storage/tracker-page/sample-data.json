@@ -21,7 +21,10 @@
     "revision_round",
     "version",
     "created_at",
-    "updated_at"
+    "updated_at",
+    "urgent",
+    "research_status",
+    "insight_id"
    ],
    [
     "SHL-01",
@@ -42,7 +45,10 @@
     "0",
     "9",
     "2026-11-15T11:00:00+05:30",
-    "2026-11-15T12:45:00+05:30"
+    "2026-11-15T12:45:00+05:30",
+    "TRUE",
+    "skipped",
+    ""
    ],
    [
     "SHL-02",
@@ -63,7 +69,10 @@
     "0",
     "12",
     "2026-11-16T10:00:00+05:30",
-    "2026-11-17T12:05:00+05:30"
+    "2026-11-17T12:05:00+05:30",
+    "",
+    "",
+    ""
    ],
    [
     "NRH-01",
@@ -84,7 +93,10 @@
     "0",
     "4",
     "2026-11-20T11:00:00+05:30",
-    "2026-11-20T12:00:00+05:30"
+    "2026-11-20T12:00:00+05:30",
+    "FALSE",
+    "partial",
+    "NRH-I202611-1"
    ]
   ],
   "Clients": [
@@ -117,7 +129,11 @@
     "confidence",
     "version",
     "created_at",
-    "updated_at"
+    "updated_at",
+    "own_handle",
+    "competitors",
+    "meta",
+    "latest_insight_id"
    ],
    [
     "shubh-laundry",
@@ -145,10 +161,14 @@
     "[{\"item\":\"Wash + iron per kg\",\"price\":89,\"currency\":\"INR\"}]",
     "2",
     "3",
-    "{\"name\":{\"status\":\"confirmed\",\"basis\":\"client said, onboarding 2026-11-10\"},\"business_type\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"city\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"languages\":{\"status\":\"confirmed\",\"basis\":\"admin approved\"},\"audience\":{\"status\":\"guessed\",\"basis\":\"inferred from Google Business reviews\"},\"tone_of_voice\":{\"status\":\"guessed\",\"basis\":\"inferred from past Instagram captions\"},\"visual_identity\":{\"status\":\"confirmed\",\"basis\":\"logo file colours, approved by owner\"},\"festival_calendar\":{\"status\":\"guessed\",\"basis\":\"standard Indore calendar suggestion\"},\"price_points\":{\"status\":\"confirmed\",\"basis\":\"admin entered from rate card\"},\"revision_cap\":{\"status\":\"confirmed\",\"basis\":\"default 2, admin approved\"}}",
+    "{\"name\":{\"status\":\"confirmed\",\"basis\":\"client said, onboarding 2026-11-10\"},\"business_type\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"city\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"languages\":{\"status\":\"confirmed\",\"basis\":\"admin approved\"},\"audience\":{\"status\":\"guessed\",\"basis\":\"inferred from Google Business reviews\"},\"tone_of_voice\":{\"status\":\"guessed\",\"basis\":\"inferred from past Instagram captions\"},\"visual_identity\":{\"status\":\"confirmed\",\"basis\":\"logo file colours, approved by owner\"},\"festival_calendar\":{\"status\":\"guessed\",\"basis\":\"standard Indore calendar suggestion\"},\"price_points\":{\"status\":\"confirmed\",\"basis\":\"admin entered from rate card\"},\"revision_cap\":{\"status\":\"confirmed\",\"basis\":\"default 2, admin approved\"},\"own_handle\":{\"status\":\"confirmed\",\"basis\":\"owner said, onboarding 2026-11-10\"},\"competitors\":{\"status\":\"guessed\",\"basis\":\"research discovery 2026-11-21; one confirmed by ravi, one struck (other city)\"}}",
     "3",
     "2026-11-10T10:00:00+05:30",
-    "2026-11-18T16:20:00+05:30"
+    "2026-11-18T16:20:00+05:30",
+    "ex_shubhlaundry_indore",
+    "[{\"handle\":\"ex_freshfold_indore\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Laundry with pickup in Vijay Nagar, a bit bigger\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_vijaynagar_drycleaners\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Same area, same saree dry-clean offer\",\"confidence\":\"confirmed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_indore_home_services\",\"platform\":\"instagram\",\"group\":\"adjacent\",\"reason\":\"Home cleaning for the same households\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_national_laundry_brand\",\"platform\":\"instagram\",\"group\":\"outsized\",\"reason\":\"National brand; format ideas only\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_bhopal_laundromat\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Proposed as a direct rival\",\"confidence\":\"guessed\",\"struck\":true,\"struck_by\":\"ravi\",\"added_on\":\"2026-11-21\"}]",
+    "{\"linked\":false,\"ad_account_id\":null,\"ig_account_id\":null,\"page_id\":null}",
+    "SHL-I202611-1"
    ],
    [
     "narmada-heights",
@@ -179,7 +199,11 @@
     "{\"name\":{\"status\":\"confirmed\",\"basis\":\"director on call\"},\"audience\":{\"status\":\"guessed\",\"basis\":\"inferred from site visit enquiries\"},\"tone_of_voice\":{\"status\":\"guessed\",\"basis\":\"inferred from brochure\"},\"revision_cap\":{\"status\":\"confirmed\",\"basis\":\"default 2, admin approved\"}}",
     "1",
     "2026-11-19T15:00:00+05:30",
-    "2026-11-19T15:00:00+05:30"
+    "2026-11-19T15:00:00+05:30",
+    "ex_narmadaheights",
+    "[{\"handle\":\"ex_jabalpur_homes\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Gated township on the same road\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-20\"},{\"handle\":\"ex_mp_realty_group\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Biggest ad spender in Jabalpur residential\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-20\"},{\"handle\":\"ex_home_loan_tips\",\"platform\":\"instagram\",\"group\":\"adjacent\",\"reason\":\"Same buyers, home-loan explainers\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-20\"}]",
+    "{\"linked\":true,\"ad_account_id\":\"100000000000001\",\"ig_account_id\":\"170000000000001\",\"page_id\":\"110000000000001\"}",
+    "NRH-I202611-1"
    ]
   ],
   "Questions": [
@@ -452,7 +476,9 @@
     "tool",
     "description",
     "approved_by",
-    "by"
+    "by",
+    "provider",
+    "currency"
    ],
    [
     "SHL-02",
@@ -466,7 +492,9 @@
     "higgsfield/draft-image",
     "Draft A, 4:5",
     "",
-    "pooja"
+    "pooja",
+    "",
+    ""
    ],
    [
     "SHL-02",
@@ -480,7 +508,41 @@
     "higgsfield/draft-image",
     "Draft B, 4:5",
     "",
-    "pooja"
+    "pooja",
+    "",
+    ""
+   ],
+   [
+    "NRH-01",
+    "1",
+    "narmada-heights",
+    "2026-11-20T11:52:00+05:30",
+    "research",
+    "0",
+    "",
+    "",
+    "",
+    "Web research (free)",
+    "",
+    "system",
+    "web",
+    "USD"
+   ],
+   [
+    "NRH-01",
+    "2",
+    "narmada-heights",
+    "2026-11-20T11:52:00+05:30",
+    "research",
+    "0",
+    "",
+    "",
+    "",
+    "Meta Ad Library (free)",
+    "",
+    "system",
+    "meta",
+    "USD"
    ]
   ],
   "Outputs": [
@@ -507,6 +569,18 @@
     "samarth",
     "2026-11-15T11:15:00+05:30",
     "{\"job_id\":\"SHL-01\",\"client_id\":\"shubh-laundry\",\"type\":\"video\",\"title\":\"Diwali curtain & sofa cleaning offer reel\",\"raw_request\":\"Neha ji ka Diwali offer reel chahiye: curtain aur sofa cleaning 20% off, 25 Nov tak.\",\"requested_by\":\"samarth\",\"requested_at\":\"2026-11-15T11:00:00+05:30\",\"occasion\":\"Diwali\",\"deliverables\":[\"Instagram reel 9:16 ~20s\"],\"deadline\":\"2026-11-25\",\"assignee\":\"ravi\",\"track\":{\"proposed\":\"quick\",\"reason\":\"Simple offer reel in an existing style.\",\"chosen\":\"quick\"},\"budget\":{\"credits\":200,\"warn_at\":null},\"style_preset\":null,\"references\":[],\"assumptions\":[\"Assignee Ravi: he made their last reel.\",\"Budget: video default 200.\"]}"
+   ],
+   [
+    "SHL-01",
+    "research",
+    "1",
+    "Skipped: urgent job, no insight sheet for this client yet",
+    "",
+    "research.schema.json",
+    "research",
+    "system",
+    "2026-11-15T11:20:00+05:30",
+    "{\"research_status\":\"skipped\",\"insight_id\":null,\"insight_version\":null,\"insight_date\":null,\"flags\":[\"no_fresh_research\"],\"note\":\"Urgent job: research skipped and the client has no insight sheet yet. The brief works from the brand brief only.\",\"downstream\":{\"brief\":{\"pain_points\":[],\"working_angles\":[],\"timely_hooks\":[]},\"concept_and_hooks\":{\"working_angles\":[],\"outlier_hooks\":[],\"competitors_overdo\":[]},\"script\":{\"proof_points\":[]},\"localise\":{\"customer_phrases\":[]},\"visuals\":{\"visual_cliches\":[]}}}"
    ],
    [
     "SHL-01",
@@ -606,6 +680,18 @@
    ],
    [
     "NRH-01",
+    "research",
+    "1",
+    "New sheet NRH-I202611-1 (unattended part); Instagram read queued",
+    "",
+    "research.schema.json",
+    "research",
+    "system",
+    "2026-11-20T11:52:00+05:30",
+    "{\"research_status\":\"partial\",\"insight_id\":\"NRH-I202611-1\",\"insight_version\":1,\"insight_date\":\"2026-11-20\",\"flags\":[\"browser_step_pending\"],\"note\":\"Ads, web and review parts are in; the Instagram read is queued for when someone is online with Chrome.\",\"downstream\":{\"brief\":{\"pain_points\":[{\"id\":\"F1\",\"text\":\"Buyers worry the possession date will slip; enquiries ask about it before price.\",\"confidence\":\"some\"}],\"working_angles\":[{\"id\":\"F2\",\"text\":\"Lead with the RERA number and a dated construction-progress clip; local rivals show renders only.\",\"confidence\":\"some\"}],\"timely_hooks\":[{\"id\":\"F4\",\"text\":\"Navratri is a traditional time to book a home; rivals already run \\\"shubh muhurat\\\" booking offers.\",\"confidence\":\"some\"}]},\"concept_and_hooks\":{\"working_angles\":[{\"id\":\"F2\",\"text\":\"Lead with the RERA number and a dated construction-progress clip; local rivals show renders only.\",\"confidence\":\"some\"}],\"outlier_hooks\":[],\"competitors_overdo\":[{\"id\":\"F3\",\"text\":\"Drone renders with \\\"luxury living\\\" text; 5 of 6 advertisers run them.\",\"confidence\":\"strong\"}]},\"script\":{\"proof_points\":[{\"id\":\"F6\",\"text\":\"Projects that post monthly site-progress photos get more 5-star reviews mentioning trust.\",\"confidence\":\"weak\"}]},\"localise\":{\"customer_phrases\":[{\"id\":\"F5\",\"text\":\"possession kab milega\",\"confidence\":\"some\",\"language\":\"Hinglish\"}]},\"visuals\":{\"visual_cliches\":[{\"id\":\"F7\",\"text\":\"Gold-on-black \\\"luxury\\\" templates and stock family-on-sofa photos.\",\"confidence\":\"strong\"}]}}}"
+   ],
+   [
+    "NRH-01",
     "brief",
     "1",
     "",
@@ -641,6 +727,16 @@
    [
     "SHL-01",
     "2",
+    "research",
+    "skipped",
+    "2026-11-15T11:20:00+05:30",
+    "2026-11-15T11:20:00+05:30",
+    "system",
+    "urgent job: research skipped, flagged for the brief"
+   ],
+   [
+    "SHL-01",
+    "3",
     "brief",
     "done",
     "2026-11-15T11:20:00+05:30",
@@ -650,7 +746,7 @@
    ],
    [
     "SHL-01",
-    "3",
+    "4",
     "concept",
     "done",
     "2026-11-15T12:05:00+05:30",
@@ -660,7 +756,7 @@
    ],
    [
     "SHL-01",
-    "4",
+    "5",
     "script",
     "in_progress",
     "2026-11-15T12:40:00+05:30",
@@ -731,9 +827,19 @@
    [
     "NRH-01",
     "2",
+    "research",
+    "done",
+    "2026-11-20T11:30:00+05:30",
+    "2026-11-20T11:52:00+05:30",
+    "system",
+    "new sheet; Instagram read queued (no browser)"
+   ],
+   [
+    "NRH-01",
+    "3",
     "brief",
     "in_progress",
-    "2026-11-20T11:30:00+05:30",
+    "2026-11-20T11:52:00+05:30",
     "",
     "ravi",
     ""
@@ -959,12 +1065,503 @@
     "{\"prompt_check_before_spend\":true,\"estimate_before_spend\":true,\"start_tier\":\"draft\",\"draft_variations\":1,\"upgrade_approver\":\"editor\"}"
    ],
    [
+    "freshness_days",
+    "30"
+   ],
+   [
+    "research_schedule_enabled",
+    "TRUE"
+   ],
+   [
+    "research_unattended_clients",
+    "all"
+   ],
+   [
+    "research_caps",
+    "{\"accounts_min\":6,\"accounts_max\":12,\"reels_per_account\":12,\"comment_reels\":5,\"comments_per_reel\":30,\"reviews_per_business\":30,\"hashtag_scans\":2,\"trend_searches\":5,\"ad_library_advertisers\":6}"
+   ],
+   [
+    "competitor_confirm_required",
+    "FALSE"
+   ],
+   [
+    "apify_enabled",
+    "FALSE"
+   ],
+   [
+    "research_auto_approve_limit",
+    "0"
+   ],
+   [
+    "research_currency",
+    "USD"
+   ],
+   [
     "version",
     "1"
    ],
    [
     "updated_at",
     "2026-11-10T09:00:00+05:30"
+   ]
+  ],
+  "Insights": [
+   [
+    "insight_id",
+    "client_id",
+    "mode",
+    "trigger",
+    "situation",
+    "festival",
+    "summary",
+    "methods_used",
+    "cost",
+    "competitors_analysed",
+    "own_account",
+    "widened",
+    "not_read",
+    "diff_vs_previous",
+    "pending_browser_step",
+    "raw_files",
+    "ran_without_subagent",
+    "downstream",
+    "version",
+    "created_at",
+    "updated_at"
+   ],
+   [
+    "SHL-I202611-1",
+    "shubh-laundry",
+    "mixed",
+    "onboarding",
+    "new_client\nlocal_service",
+    "",
+    "First research for Shubh Laundry: saree-care fear is the top pain point; process reels beat price lists; wedding season is the timely hook.",
+    "[{\"method\":\"web-competitor-intel\",\"reason\":\"New client: map the local field first\",\"path\":\"web\",\"skill\":null,\"status\":\"done\"},{\"method\":\"meta-ad-library\",\"reason\":\"Free; shows which local offers run as ads\",\"path\":\"connector\",\"skill\":null,\"status\":\"done\"},{\"method\":\"maps-review-reading\",\"reason\":\"Local service: reviews carry the pain points\",\"path\":\"web\",\"skill\":null,\"status\":\"done\"},{\"method\":\"trends\",\"reason\":\"Wedding season is on\",\"path\":\"web\",\"skill\":null,\"status\":\"done\"},{\"method\":\"ig-outlier-read\",\"reason\":\"New client: what works on local Instagram\",\"path\":\"installed-skill\",\"skill\":\"ig-viral\",\"status\":\"done\"},{\"method\":\"ig-hook-classify\",\"reason\":\"Name the formula behind each outlier\",\"path\":\"fallback\",\"skill\":null,\"status\":\"done\",\"note\":\"ig-hook-extractor not installed\"},{\"method\":\"comment-reading\",\"reason\":\"Customer words from the top outlier reels\",\"path\":\"fallback\",\"skill\":null,\"status\":\"done\"},{\"method\":\"own-account-audit\",\"reason\":\"New client baseline\",\"path\":\"pasted\",\"skill\":null,\"status\":\"skipped\",\"note\":\"Meta not linked and no Insights pasted yet\"}]",
+    "[{\"provider\":\"web\",\"amount\":0,\"currency\":\"USD\"},{\"provider\":\"meta\",\"amount\":0,\"currency\":\"USD\"},{\"provider\":\"browser\",\"amount\":0,\"currency\":\"USD\"}]",
+    "[{\"handle\":\"ex_freshfold_indore\",\"platform\":\"instagram\",\"group\":\"direct\",\"followers\":4100,\"median_views\":900,\"items_read\":12},{\"handle\":\"ex_vijaynagar_drycleaners\",\"platform\":\"instagram\",\"group\":\"direct\",\"followers\":2300,\"median_views\":450,\"items_read\":12},{\"handle\":\"ex_indore_home_services\",\"platform\":\"instagram\",\"group\":\"adjacent\",\"followers\":9800,\"median_views\":2100,\"items_read\":12},{\"handle\":\"ex_national_laundry_brand\",\"platform\":\"instagram\",\"group\":\"outsized\",\"followers\":61000,\"median_views\":14000,\"items_read\":12}]",
+    "",
+    "",
+    "Instagram hashtag #indorelaundry: thin (11 reels); used the city-level home-services tag instead",
+    "",
+    "{\"pending\":false}",
+    "https://drive.google.com/drive/folders/EXAMPLE-RESEARCH-FOLDER",
+    "FALSE",
+    "{\"brief\":{\"pain_points\":[{\"id\":\"F1\",\"text\":\"Customers fear delicate sarees coming back with colour bleed or lost zari; it is the most repeated complaint about local dry cleaners.\",\"confidence\":\"strong\"},{\"id\":\"F2\",\"text\":\"Pickup slots that are missed without a call are the second most common complaint.\",\"confidence\":\"some\"}],\"working_angles\":[{\"id\":\"F3\",\"text\":\"Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.\",\"confidence\":\"some\"}],\"timely_hooks\":[{\"id\":\"F6\",\"text\":\"Wedding season (Nov-Feb): pre-wedding outfit care and 'lehenga after the wedding' storage are searched and discussed now.\",\"confidence\":\"some\"}]},\"concept_and_hooks\":{\"working_angles\":[{\"id\":\"F3\",\"text\":\"Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.\",\"confidence\":\"some\"}],\"outlier_hooks\":[{\"id\":\"F4\",\"text\":\"Opens on a ruined silk dupatta held to camera with 'Ye galti mat karna' on screen; reveals the fix in 3 steps.\",\"confidence\":\"some\",\"formula\":\"IG9\",\"multiple\":4.2}],\"competitors_overdo\":[{\"id\":\"F5\",\"text\":\"Price-list carousels (per-piece rates on a coloured background): all four direct competitors post them weekly and their multiples stay under 1x.\",\"confidence\":\"strong\"}]},\"script\":{\"proof_points\":[{\"id\":\"F9\",\"text\":\"Customers trust a named person who handles silk ('bhaiya ne khud dekha'); reviews that mention a person score higher.\",\"confidence\":\"weak\"}]},\"localise\":{\"customer_phrases\":[{\"id\":\"F7\",\"text\":\"zari kharab ho gayi\",\"confidence\":\"some\",\"language\":\"Hinglish\"},{\"id\":\"F8\",\"text\":\"pickup time pe aate hi nahi\",\"confidence\":\"some\",\"language\":\"Hinglish\"}]},\"visuals\":{\"visual_cliches\":[{\"id\":\"F10\",\"text\":\"Stock photos of white shirts on hangers and washing-machine clip art; every direct competitor uses them.\",\"confidence\":\"strong\"}]}}",
+    "2",
+    "2026-11-21T16:40:00+05:30",
+    "2026-11-21T18:05:00+05:30"
+   ],
+   [
+    "NRH-I202611-1",
+    "narmada-heights",
+    "unattended",
+    "intake",
+    "new_client\nad_heavy\nno_browser",
+    "",
+    "First research for Narmada Heights (ads, web, reviews): possession-date worry leads; rivals overdo drone renders; Navratri booking offers already running.",
+    "[{\"method\":\"meta-ad-library\",\"reason\":\"Ad-heavy niche: ads first\",\"path\":\"connector\",\"skill\":null,\"status\":\"done\"},{\"method\":\"web-competitor-intel\",\"reason\":\"New client: map the local field\",\"path\":\"web\",\"skill\":null,\"status\":\"done\"},{\"method\":\"maps-review-reading\",\"reason\":\"Reviews carry buyer worries\",\"path\":\"web\",\"skill\":null,\"status\":\"done\"},{\"method\":\"trends\",\"reason\":\"Navratri offer in the request\",\"path\":\"web\",\"skill\":null,\"status\":\"done\"},{\"method\":\"ig-outlier-read\",\"reason\":\"What works on local real-estate Instagram\",\"path\":\"fallback\",\"skill\":null,\"status\":\"queued\",\"note\":\"no browser in this session\"}]",
+    "[{\"provider\":\"web\",\"amount\":0,\"currency\":\"USD\"},{\"provider\":\"meta\",\"amount\":0,\"currency\":\"USD\"}]",
+    "[{\"handle\":\"ex_jabalpur_homes\",\"platform\":\"instagram\",\"group\":\"direct\"},{\"handle\":\"ex_mp_realty_group\",\"platform\":\"instagram\",\"group\":\"direct\"}]",
+    "",
+    "",
+    "Instagram (queued: needs a person online with a browser)",
+    "",
+    "{\"pending\":true,\"methods\":[\"ig-outlier-read\",\"ig-hook-classify\"],\"task_id\":\"T-20261120-1\",\"estimate_minutes\":10}",
+    "https://drive.google.com/drive/folders/EXAMPLE-NRH-RESEARCH",
+    "FALSE",
+    "{\"brief\":{\"pain_points\":[{\"id\":\"F1\",\"text\":\"Buyers worry the possession date will slip; enquiries ask about it before price.\",\"confidence\":\"some\"}],\"working_angles\":[{\"id\":\"F2\",\"text\":\"Lead with the RERA number and a dated construction-progress clip; local rivals show renders only.\",\"confidence\":\"some\"}],\"timely_hooks\":[{\"id\":\"F4\",\"text\":\"Navratri is a traditional time to book a home; rivals already run \\\"shubh muhurat\\\" booking offers.\",\"confidence\":\"some\"}]},\"concept_and_hooks\":{\"working_angles\":[{\"id\":\"F2\",\"text\":\"Lead with the RERA number and a dated construction-progress clip; local rivals show renders only.\",\"confidence\":\"some\"}],\"outlier_hooks\":[],\"competitors_overdo\":[{\"id\":\"F3\",\"text\":\"Drone renders with \\\"luxury living\\\" text; 5 of 6 advertisers run them.\",\"confidence\":\"strong\"}]},\"script\":{\"proof_points\":[{\"id\":\"F6\",\"text\":\"Projects that post monthly site-progress photos get more 5-star reviews mentioning trust.\",\"confidence\":\"weak\"}]},\"localise\":{\"customer_phrases\":[{\"id\":\"F5\",\"text\":\"possession kab milega\",\"confidence\":\"some\",\"language\":\"Hinglish\"}]},\"visuals\":{\"visual_cliches\":[{\"id\":\"F7\",\"text\":\"Gold-on-black \\\"luxury\\\" templates and stock family-on-sofa photos.\",\"confidence\":\"strong\"}]}}",
+    "1",
+    "2026-11-20T11:52:00+05:30",
+    "2026-11-20T11:52:00+05:30"
+   ]
+  ],
+  "InsightFindings": [
+   [
+    "insight_id",
+    "seq",
+    "client_id",
+    "category",
+    "id",
+    "text",
+    "source",
+    "confidence",
+    "language",
+    "pinned",
+    "struck",
+    "used_in_jobs",
+    "outcome",
+    "outcome_note",
+    "details"
+   ],
+   [
+    "SHL-I202611-1",
+    "1",
+    "shubh-laundry",
+    "pain_points",
+    "F1",
+    "Customers fear delicate sarees coming back with colour bleed or lost zari; it is the most repeated complaint about local dry cleaners.",
+    "Google reviews of 3 Vijay Nagar dry cleaners, 30 read, weighted to 2-3 stars (2026-11-20)",
+    "strong",
+    "",
+    "TRUE",
+    "FALSE",
+    "",
+    "unknown",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "2",
+    "shubh-laundry",
+    "pain_points",
+    "F2",
+    "Pickup slots that are missed without a call are the second most common complaint.",
+    "Google reviews of 3 Vijay Nagar dry cleaners, 30 read (2026-11-20)",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "3",
+    "shubh-laundry",
+    "working_angles",
+    "F3",
+    "Show the saree-care process step by step (stain test, hand finish, tissue fold); no local competitor shows process, all show prices.",
+    "Outlier read of 4 accounts, 48 reels; process reels were the top 2 multiples (2026-11-21)",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "4",
+    "shubh-laundry",
+    "outlier_hooks",
+    "F4",
+    "Opens on a ruined silk dupatta held to camera with 'Ye galti mat karna' on screen; reveals the fix in 3 steps.",
+    "https://www.instagram.com/reel/EXAMPLE1/",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "{\"account\":\"ex_indore_home_services\",\"multiple\":4.2,\"views\":8800,\"formula\":\"IG9\",\"formula_confidence\":0.7,\"hook_visual\":\"Damaged dupatta close-up\",\"hook_spoken\":\"Shaadi se pehle ye galti mat karna\",\"hook_text\":\"Ye galti mat karna\",\"format\":\"problem then process\",\"length_s\":22,\"structure\":\"problem (2s) → 3 steps → result → CTA\",\"cta\":\"WhatsApp for pickup\"}"
+   ],
+   [
+    "SHL-I202611-1",
+    "5",
+    "shubh-laundry",
+    "competitors_overdo",
+    "F5",
+    "Price-list carousels (per-piece rates on a coloured background): all four direct competitors post them weekly and their multiples stay under 1x.",
+    "Outlier read of 4 accounts, 48 reels (2026-11-21)",
+    "strong",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "6",
+    "shubh-laundry",
+    "timely_hooks",
+    "F6",
+    "Wedding season (Nov-Feb): pre-wedding outfit care and 'lehenga after the wedding' storage are searched and discussed now.",
+    "Web search: Indore wedding season articles and local event listings, 5 searches (2026-11-20)",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "7",
+    "shubh-laundry",
+    "customer_phrases",
+    "F7",
+    "zari kharab ho gayi",
+    "Comments on the top 5 outlier reels, 120 read (2026-11-21)",
+    "some",
+    "Hinglish",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "8",
+    "shubh-laundry",
+    "customer_phrases",
+    "F8",
+    "pickup time pe aate hi nahi",
+    "Google reviews of 3 Vijay Nagar dry cleaners, 30 read (2026-11-20)",
+    "some",
+    "Hinglish",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "9",
+    "shubh-laundry",
+    "proof_points",
+    "F9",
+    "Customers trust a named person who handles silk ('bhaiya ne khud dekha'); reviews that mention a person score higher.",
+    "Google reviews of 3 Vijay Nagar dry cleaners, 30 read (2026-11-20)",
+    "weak",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "10",
+    "shubh-laundry",
+    "visual_cliches",
+    "F10",
+    "Stock photos of white shirts on hangers and washing-machine clip art; every direct competitor uses them.",
+    "Outlier read of 4 accounts, 48 reels (2026-11-21)",
+    "strong",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "SHL-I202611-1",
+    "11",
+    "shubh-laundry",
+    "competitor_ads",
+    "F11",
+    "A flat 20% off on first order, running 41 days in 3 versions: survived, probably a standing offer.",
+    "https://www.facebook.com/ads/library/?id=EXAMPLE",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "{\"advertiser\":\"Freshfold Laundry (fictional)\",\"days_running\":41,\"versions\":3,\"reason_to_buy\":\"price\",\"hook_type\":\"offer-led\",\"offer\":\"20% off first order\",\"format\":\"static image\",\"language\":\"Hinglish\",\"status_read\":\"survived (30+ days)\"}"
+   ],
+   [
+    "NRH-I202611-1",
+    "1",
+    "narmada-heights",
+    "pain_points",
+    "F1",
+    "Buyers worry the possession date will slip; enquiries ask about it before price.",
+    "Google reviews of 4 Jabalpur projects, 30 read (2026-11-20)",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "2",
+    "narmada-heights",
+    "working_angles",
+    "F2",
+    "Lead with the RERA number and a dated construction-progress clip; local rivals show renders only.",
+    "Meta Ad Library: 6 Jabalpur residential advertisers, 38 active ads (2026-11-20)",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "3",
+    "narmada-heights",
+    "competitors_overdo",
+    "F3",
+    "Drone renders with \"luxury living\" text; 5 of 6 advertisers run them.",
+    "Meta Ad Library: 6 Jabalpur residential advertisers, 38 active ads (2026-11-20)",
+    "strong",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "4",
+    "narmada-heights",
+    "timely_hooks",
+    "F4",
+    "Navratri is a traditional time to book a home; rivals already run \"shubh muhurat\" booking offers.",
+    "Meta Ad Library + web search, 5 searches (2026-11-20)",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "5",
+    "narmada-heights",
+    "customer_phrases",
+    "F5",
+    "possession kab milega",
+    "Google reviews of 4 Jabalpur projects, 30 read (2026-11-20)",
+    "some",
+    "Hinglish",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "6",
+    "narmada-heights",
+    "proof_points",
+    "F6",
+    "Projects that post monthly site-progress photos get more 5-star reviews mentioning trust.",
+    "Google reviews of 4 Jabalpur projects, 30 read (2026-11-20)",
+    "weak",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "7",
+    "narmada-heights",
+    "visual_cliches",
+    "F7",
+    "Gold-on-black \"luxury\" templates and stock family-on-sofa photos.",
+    "Meta Ad Library: 6 Jabalpur residential advertisers, 38 active ads (2026-11-20)",
+    "strong",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "NRH-I202611-1",
+    "8",
+    "narmada-heights",
+    "competitor_ads",
+    "F8",
+    "A Navratri booking offer (free modular kitchen) running 24 days in 4 versions: early, but being iterated.",
+    "https://www.facebook.com/ads/library/?id=EXAMPLE2",
+    "some",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "{\"advertiser\":\"MP Realty Group (fictional)\",\"days_running\":24,\"versions\":4,\"reason_to_buy\":\"offer\",\"hook_type\":\"offer-led\",\"offer\":\"free modular kitchen on booking\",\"format\":\"video\",\"language\":\"Hindi\",\"status_read\":\"test (under 30 days), several versions\"}"
+   ]
+  ],
+  "Tasks": [
+   [
+    "task_id",
+    "kind",
+    "client_id",
+    "job_id",
+    "insight_id",
+    "status",
+    "trigger",
+    "occasion",
+    "methods",
+    "needs_person",
+    "needs_browser",
+    "estimate_minutes",
+    "due",
+    "note",
+    "created_at",
+    "created_by",
+    "done_at",
+    "done_by",
+    "version",
+    "updated_at"
+   ],
+   [
+    "T-20261120-1",
+    "research-browser-step",
+    "narmada-heights",
+    "NRH-01",
+    "NRH-I202611-1",
+    "pending",
+    "intake",
+    "",
+    "ig-outlier-read\nig-hook-classify",
+    "TRUE",
+    "TRUE",
+    "10",
+    "",
+    "Instagram read for the new sheet; non-blocking for NRH-01.",
+    "2026-11-20T11:52:00+05:30",
+    "system",
+    "",
+    "",
+    "1",
+    "2026-11-20T11:52:00+05:30"
    ]
   ]
  }

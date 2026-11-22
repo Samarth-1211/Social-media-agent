@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:task",
+  "title": "Pending task",
+  "description": "Work queued for later because it needs something that isn't available now: a person online with a browser, or the next research run. Created by triggers (onboarding, festival, schedule, intake), shown by tracker status, picked up by research-methods. Logical record: the Tasks tab (Sheets) or tasks.json (files).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["task_id", "kind", "client_id", "status", "trigger", "needs_person", "needs_browser", "created_at", "created_by", "version", "updated_at"],
+  "properties": {
+    "task_id": {
+      "description": "T-<yyyymmdd>-<n>: creation date plus a counter for that day (1 + the highest n already used that day).",
+      "type": "string",
+      "pattern": "^T-[0-9]{8}-[0-9]+$"
+    },
+    "kind": {
+      "description": "research-run = a research run to do (unattended part first); research-browser-step = the attended Instagram read for an existing insight sheet.",
+      "enum": ["research-run", "research-browser-step"]
+    },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "job_id": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" }, { "type": "null" }], "description": "The job that triggered it, if any." },
+    "insight_id": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-I[0-9]{6}-[0-9]+$" }, { "type": "null" }], "description": "For browser steps: the sheet to complete." },
+    "status": { "enum": ["pending", "running", "done", "cancelled", "failed"] },
+    "trigger": { "enum": ["onboarding", "intake", "schedule", "festival", "manual"] },
+    "occasion": { "type": ["string", "null"], "description": "Festival runs: the occasion from the client's festival calendar." },
+    "methods": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }, "description": "Method ids still to run." },
+    "needs_person": { "type": "boolean" },
+    "needs_browser": { "type": "boolean" },
+    "estimate_minutes": { "type": ["integer", "null"], "minimum": 0, "description": "Shown in status, e.g. 'needs browser, ~10 min'." },
+    "due": { "type": ["string", "null"], "format": "date", "description": "Do it by this date (festival runs: 14 days before the occasion)." },
+    "note": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "created_by": { "type": "string", "description": "Team handle, or 'system' for scheduled and automatic triggers." },
+    "done_at": { "type": ["string", "null"], "format": "date-time" },
+    "done_by": { "type": ["string", "null"] },
+    "version": { "type": "integer", "minimum": 1 },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

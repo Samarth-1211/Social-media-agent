@@ -13,6 +13,9 @@
 //  8  every ${CLAUDE_PLUGIN_ROOT}/library/... link inside skills/agents points to a real file
 //  9  SKILL.md <= 200 lines; description <= 200 chars, one line
 // 10  frontmatter keys limited to those claude.ai skill uploads accept
+// 11  storage: the sheet layout covers every stored record; examples and sample data survive the Sheets round trip;
+//     research records agree with each other; generated files are current; tracker page stages match stages.yaml
+// (5 also checks the optional stage keys: freshness_days, skippable_if_urgent, non_blocking_partial, spend_gate.)
 // Then: `claude plugin validate` on the marketplace and each plugin, if the CLI is available.
 
 import fs from 'node:fs';
@@ -31,6 +34,14 @@ const ALLOWED_FRONTMATTER = new Set(['name', 'description', 'license', 'compatib
 const REQUIRED_SECTIONS = ['Purpose', 'Reads', 'Writes', 'Steps', 'Quality bar', 'Gate', 'If it fails'];
 const STAGE_STATUS = new Set(['planned', 'placeholder', 'active']);
 const GATES = new Set(['admin', 'editor', 'client', 'none']);
+const SPEND_GATES = new Set(['admin', 'none']);
+const STAGE_KEYS = new Set([
+  'id', 'group', 'skill', 'status', 'reads', 'optional_reads', 'writes', 'gate', 'credit_spend', 'tracks', 'job_types',
+  // optional (docs/STAGE-CONTRACT.md, "Optional stage keys")
+  'freshness_days', 'skippable_if_urgent', 'non_blocking_partial', 'spend_gate',
+]);
+// Records the storage layer maps to Sheets tabs (besides config, a key-value tab).
+const STORED_RECORDS = ['client', 'job', 'team', 'insight', 'task'];
 const TRACKS = ['quick', 'full'];
 const JOB_TYPES = ['video', 'poster'];
 const BASE_FIELDS = new Set(['client']);
@@ -227,6 +238,13 @@ for (const plugin of plugins) {
       if (!STAGE_STATUS.has(st.status)) c5.errors.push(`${at}: status must be planned | placeholder | active`);
       if (!GATES.has(st.gate)) c5.errors.push(`${at}: gate must be admin | editor | client | none`);
       if (typeof st.credit_spend !== 'boolean') c5.errors.push(`${at}: credit_spend must be true or false`);
+      for (const k of Object.keys(st)) if (!STAGE_KEYS.has(k)) c5.errors.push(`${at}: unknown key "${k}"`);
+      if ('freshness_days' in st && !(Number.isInteger(st.freshness_days) && st.freshness_days >= 1)) c5.errors.push(`${at}: freshness_days must be a whole number of days, 1 or more`);
+      for (const k of ['skippable_if_urgent', 'non_blocking_partial']) {
+        if (k in st && typeof st[k] !== 'boolean') c5.errors.push(`${at}: ${k} must be true or false`);
+      }
+      if ('spend_gate' in st && !SPEND_GATES.has(st.spend_gate)) c5.errors.push(`${at}: spend_gate must be admin | none`);
+      if (st.non_blocking_partial && !(st.writes ?? []).length) c5.errors.push(`${at}: non_blocking_partial needs a stage that writes an output to carry the partial status`);
       for (const k of ['reads', 'optional_reads', 'writes', 'tracks', 'job_types']) {
         if (!Array.isArray(st[k])) c5.errors.push(`${at}: "${k}" must be a list`);
       }
@@ -282,12 +300,22 @@ for (const plugin of plugins) {
   ];
   let presetValidator = null;
   const contractValidators = new Map(); // "job" -> validate fn (from library/contracts/job.schema.json)
+  // Register every schema first, so one contract can $ref another by its $id (research → insight).
+  const loaded = [];
   for (const f of schemaFiles) {
     const schema = readJson(f, c7);
     if (!schema) continue;
     if (schema.$schema !== 'https://json-schema.org/draft/2020-12/schema') c7.errors.push(`${rel(f)}: $schema must be draft 2020-12`);
     try {
-      const v = ajv.compile(schema);
+      ajv.addSchema(schema);
+      loaded.push([f, schema]);
+    } catch (e) {
+      c7.errors.push(`${rel(f)}: cannot be registered (${e.message})`);
+    }
+  }
+  for (const [f, schema] of loaded) {
+    try {
+      const v = schema.$id ? ajv.getSchema(schema.$id) : ajv.compile(schema);
       if (path.basename(f) === '_preset.schema.json') presetValidator = v;
       else contractValidators.set(path.basename(f, '.schema.json'), v);
     } catch (e) {
@@ -369,9 +397,9 @@ for (const plugin of plugins) {
   const layoutPath = path.join(P, 'library', 'storage', 'sheet-layout.json');
   if (isFile(layoutPath)) {
     const codec = await import(new URL('./lib/sheet-codec.mjs', import.meta.url));
-    const { layout, encodeRecord, decodeAll, normalise, headerRows } = codec;
+    const { layout, encodeRecord, decodeAll, normalise, headerRows, collectionOf } = codec;
     // a) every top-level schema property is stored somewhere
-    for (const rec of ['client', 'job', 'team']) {
+    for (const rec of STORED_RECORDS) {
       const schemaFile = path.join(P, 'library', 'contracts', `${rec}.schema.json`);
       if (!isFile(schemaFile)) continue;
       const props = Object.keys(JSON.parse(readText(schemaFile)).properties);
@@ -385,7 +413,7 @@ for (const plugin of plugins) {
     // b) examples and sample data survive encode → Sheets strings → decode, and stay valid
     const sim = (cell) => (cell === '' ? '' : typeof cell === 'string' ? cell.replace(/^'/, '') : typeof cell === 'boolean' ? (cell ? 'TRUE' : 'FALSE') : String(cell));
     const exDir = path.join(P, 'library', 'contracts', 'examples');
-    for (const rec of ['client', 'job', 'team', 'config']) {
+    for (const rec of [...STORED_RECORDS, 'config']) {
       const f = path.join(exDir, `${rec}.example.json`);
       if (!isFile(f)) continue;
       const data = JSON.parse(readText(f));
@@ -393,7 +421,7 @@ for (const plugin of plugins) {
       for (const [tab, rows] of Object.entries(encodeRecord(rec, data))) tabs[tab] = tabs[tab].concat(rows.map((r) => r.map(sim)));
       let back;
       try { back = decodeAll(tabs); } catch (e) { c11.errors.push(`${rec}.example.json: ${e.message}`); continue; }
-      const got = rec === 'config' ? back.config : back[{ client: 'clients', job: 'jobs', team: 'team' }[rec]][0];
+      const got = rec === 'config' ? back.config : back[collectionOf[rec]][0];
       if (JSON.stringify(normalise(got)) !== JSON.stringify(normalise(data))) c11.errors.push(`${rec}.example.json does not survive the Sheets round trip`);
     }
     const samplePath = path.join(P, 'library', 'storage', 'tracker-page', 'sample-data.json');
@@ -403,7 +431,7 @@ for (const plugin of plugins) {
     }
     if (sampleBack) {
       const back = sampleBack;
-      for (const [rec, list] of [['client', back.clients], ['job', back.jobs], ['team', back.team]]) {
+      for (const [rec, list] of STORED_RECORDS.map((r) => [r, back[collectionOf[r]]])) {
         const v = contractValidators.get(rec);
         list.forEach((r, i) => { if (v && !v(r)) c11.errors.push(`sample-data.json: ${rec} #${i + 1} invalid: ${v.errors.map((e) => `${e.instancePath} ${e.message}`).join('; ')}`); });
       }
@@ -418,8 +446,13 @@ for (const plugin of plugins) {
           for (const r of byId.get(j.current_stage)?.reads || []) if (r !== 'client' && !outs.has(r)) c11.errors.push(`sample-data.json: ${j.job_id} is at ${j.current_stage}, which reads ${r}, but outputs.${r} is missing`);
         }
       }
-      c11.notes.push(`${plugin.name}: sample data ${back.clients.length} clients, ${back.jobs.length} jobs`);
+      for (const e of researchConsistency(back)) c11.errors.push(`sample-data.json: ${e}`);
+      c11.notes.push(`${plugin.name}: sample data ${back.clients.length} clients, ${back.jobs.length} jobs, ${back.insights.length} insights, ${back.tasks.length} tasks`);
     }
+    // Research records in the examples hang together the same way.
+    const exRec = (n) => (isFile(path.join(exDir, `${n}.example.json`)) ? [JSON.parse(readText(path.join(exDir, `${n}.example.json`)))] : []);
+    for (const e of researchConsistency({ jobs: exRec('job'), insights: exRec('insight'), clients: exRec('client'), tasks: exRec('task') }, { partial: true })) c11.errors.push(`examples: ${e}`);
+    c11.notes.push(`${plugin.name}: research records cross-checked`);
     // c) generated files are current
     for (const script of ['build-sheet-setup.mjs', 'build-sample-data.mjs']) {
       const res = spawnSync(process.execPath, [path.join(ROOT, 'scripts', script), '--check'], { encoding: 'utf8' });
@@ -434,6 +467,49 @@ for (const plugin of plugins) {
       if (JSON.stringify(pageStages) !== JSON.stringify(yamlStages)) c11.errors.push('tracker-page/index.html STAGES list does not match stages.yaml order');
     }
   }
+}
+
+// Research records must agree with each other (the Sheets row copies and the handoff block are copies, so they can drift):
+// - a job's research_status / insight_id match its outputs.research.data;
+// - every insight a job, client or task names exists (unless `partial`: the examples hold one record each);
+// - an insight's downstream lists only its own, non-struck findings, with the same text;
+// - finding ids are unique inside an insight.
+// (Struck competitors never being reused needs dates across runs, so the eval scenarios check it.)
+function researchConsistency({ jobs = [], insights = [], clients = [], tasks = [] }, { partial = false } = {}) {
+  const errs = [];
+  const ids = new Set(insights.map((i) => i.insight_id));
+  const known = (id) => id == null || partial || ids.has(id);
+  for (const j of jobs) {
+    const d = j.outputs?.research?.data;
+    if (!d || d.placeholder) continue;
+    if ((j.research_status ?? null) !== d.research_status) errs.push(`${j.job_id}: research_status ${j.research_status} differs from outputs.research (${d.research_status})`);
+    if ((j.insight_id ?? null) !== d.insight_id) errs.push(`${j.job_id}: insight_id ${j.insight_id} differs from outputs.research (${d.insight_id})`);
+    if (!known(d.insight_id)) errs.push(`${j.job_id}: names insight ${d.insight_id}, which doesn't exist`);
+    if (d.research_status === 'skipped' && !d.flags.includes('no_fresh_research')) errs.push(`${j.job_id}: skipped research must carry the no_fresh_research flag`);
+    if (d.research_status === 'partial' && !d.flags.includes('browser_step_pending')) errs.push(`${j.job_id}: partial research must carry the browser_step_pending flag`);
+  }
+  for (const c of clients) if (!known(c.latest_insight_id)) errs.push(`${c.client_id}: latest_insight_id ${c.latest_insight_id} doesn't exist`);
+  for (const t of tasks) if (!known(t.insight_id)) errs.push(`${t.task_id}: names insight ${t.insight_id}, which doesn't exist`);
+  for (const ins of insights) {
+    const all = Object.values(ins.findings ?? {}).flat();
+    const byId = new Map();
+    for (const f of all) {
+      if (byId.has(f.id)) errs.push(`${ins.insight_id}: finding id ${f.id} is used twice`);
+      byId.set(f.id, f);
+    }
+    for (const [stage, lists] of Object.entries(ins.downstream ?? {})) {
+      for (const [list, items] of Object.entries(lists)) {
+        for (const it of items) {
+          const f = byId.get(it.id);
+          if (!f) errs.push(`${ins.insight_id}: downstream.${stage}.${list} names ${it.id}, which isn't a finding`);
+          else if (f.struck) errs.push(`${ins.insight_id}: downstream.${stage}.${list} carries struck finding ${it.id}`);
+          else if (f.text !== it.text) errs.push(`${ins.insight_id}: downstream.${stage}.${list} ${it.id} text differs from the finding`);
+        }
+      }
+    }
+    if (ins.pending_browser_step?.pending && !(ins.pending_browser_step.methods ?? []).length) errs.push(`${ins.insight_id}: a pending browser step must list its methods`);
+  }
+  return errs;
 }
 
 // ── Report ──────────────────────────────────────────────────────────

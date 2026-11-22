@@ -61,11 +61,11 @@ If the skill produces creative output, add test briefs and a rubric in `evals/` 
 | 2 | Every skill folder has `SKILL.md`: frontmatter `name` = folder, real `description`, all 7 sections |
 | 3 | Skill folder names unique across groups |
 | 4 | Registered groups exist and have skills; every group with skills is registered |
-| 5 | `active` stages point to an existing skill in their group; every stage has `credit_spend` true or false |
+| 5 | `active` stages point to an existing skill in their group; every stage has `credit_spend` true or false; optional stage keys (`freshness_days`, `skippable_if_urgent`, `non_blocking_partial`, `spend_gate`) have valid values; unknown keys are rejected |
 | 6 | Each `reads` field is written earlier on every (job type, track) path, or is `client` |
 | 7 | All schemas compile; every `examples/*.example.json` validates against its schema; presets validate against `_preset.schema.json` |
 | 8 | `${CLAUDE_PLUGIN_ROOT}/library/...` and `/skills/...` links point to real files |
 | 9 | `SKILL.md` at most 200 lines; description at most 200 characters, one line |
 | 10 | Frontmatter keys limited to those claude.ai accepts |
-| 11 | Storage: the sheet layout covers every schema field; examples and sample data survive the Sheets round trip; generated setup and sample files are current; tracker page stages match `stages.yaml` |
+| 11 | Storage: the sheet layout covers every schema field; examples and sample data survive the Sheets round trip; research records agree with each other (job copies, insight ids, the handoff block); generated setup and sample files are current; tracker page stages match `stages.yaml` |
 | + | `claude plugin validate` on the marketplace and the plugin (if the CLI is installed) |

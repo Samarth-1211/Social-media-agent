@@ -83,6 +83,18 @@
       "type": ["string", "null"]
     },
     "deadline": { "type": ["string", "null"], "format": "date" },
+    "urgent": {
+      "description": "Set by the admin at intake (or later). Stages with skippable_if_urgent are skipped and say so.",
+      "type": "boolean"
+    },
+    "research_status": {
+      "description": "Copy of outputs.research.data.research_status for the Jobs tab and the dashboard. Null until the research stage runs.",
+      "enum": ["fresh", "partial", "refreshed", "new", "skipped", null]
+    },
+    "insight_id": {
+      "description": "Copy of outputs.research.data.insight_id.",
+      "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-I[0-9]{6}-[0-9]+$" }, { "type": "null" }]
+    },
 
     "credits": {
       "type": "object",
@@ -99,7 +111,7 @@
           "type": ["number", "null"],
           "minimum": 0
         },
-        "used": { "type": "number", "minimum": 0 },
+        "used": { "type": "number", "minimum": 0, "description": "Sum of ledger amounts whose currency is credits (or absent). Money spent in USD or INR is listed in the ledger but never counts here." },
         "ledger": {
           "type": "array",
           "items": {
@@ -109,7 +121,15 @@
             "properties": {
               "at": { "$ref": "#/$defs/timestamp" },
               "stage": { "$ref": "#/$defs/stageId" },
-              "amount": { "type": "number", "description": "Credits spent (positive) or refunded (negative)." },
+              "amount": { "type": "number", "description": "Amount spent (positive) or refunded (negative), in `currency`. Free methods log 0." },
+              "provider": {
+                "description": "Who was paid. Absent on older rows, which are Higgsfield credits.",
+                "enum": ["higgsfield", "apify", "web", "meta", "browser", "other"]
+              },
+              "currency": {
+                "description": "credits = Higgsfield credits (counted in credits.used and against the budget). USD/INR = real money (Apify), never counted in credits.used. Absent = credits.",
+                "enum": ["credits", "USD", "INR"]
+              },
               "estimate": { "type": ["number", "null"], "description": "The estimate shown before spending." },
               "tier": { "enum": ["draft", "final", "other"], "description": "draft = cheapest model first; final = approved upgrade (credit policy)." },
               "tool": { "type": "string", "description": "Service and model used, e.g. higgsfield/<model>." },
@@ -183,8 +203,8 @@
       "properties": {
         "stage": { "$ref": "#/$defs/stageId" },
         "kind": {
-          "description": "stage = the stage's own gate; budget = admin approval to spend beyond the job budget.",
-          "enum": ["stage", "budget"]
+          "description": "stage = the stage's own gate; budget = admin approval to spend beyond the job budget; spend = admin approval before a stage spends real money (a stage's spend_gate, e.g. a paid Apify run), asked before running.",
+          "enum": ["stage", "budget", "spend"]
         },
         "owner_role": { "enum": ["admin", "editor", "client"] },
         "status": { "enum": ["pending", "approved", "changes_requested", "sent_back"] },

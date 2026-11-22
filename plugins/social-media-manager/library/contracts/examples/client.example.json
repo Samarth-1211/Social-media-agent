@@ -47,6 +47,16 @@
   "do": ["Show pickup van and folded clothes", "Mention free pickup above ₹299"],
   "dont": ["Show dirty clothes close-up", "Compare with named competitors"],
   "references": [{ "ref": "https://www.instagram.com/example-reference/", "kind": "liked", "note": "Clean before/after transitions" }],
+  "own_handle": "ex_shubhlaundry_indore",
+  "competitors": [
+    { "handle": "ex_freshfold_indore", "platform": "instagram", "group": "direct", "reason": "Laundry with pickup in Vijay Nagar, a bit bigger", "confidence": "guessed", "struck": false, "added_on": "2026-11-21" },
+    { "handle": "ex_vijaynagar_drycleaners", "platform": "instagram", "group": "direct", "reason": "Same area, same saree dry-clean offer", "confidence": "confirmed", "struck": false, "added_on": "2026-11-21" },
+    { "handle": "ex_indore_home_services", "platform": "instagram", "group": "adjacent", "reason": "Home cleaning for the same households", "confidence": "guessed", "struck": false, "added_on": "2026-11-21" },
+    { "handle": "ex_national_laundry_brand", "platform": "instagram", "group": "outsized", "reason": "National brand; format ideas only", "confidence": "guessed", "struck": false, "added_on": "2026-11-21" },
+    { "handle": "ex_bhopal_laundromat", "platform": "instagram", "group": "direct", "reason": "Proposed as a direct rival", "confidence": "guessed", "struck": true, "struck_by": "ravi", "added_on": "2026-11-21" }
+  ],
+  "meta": { "linked": false, "ad_account_id": null, "ig_account_id": null, "page_id": null },
+  "latest_insight_id": "SHL-I202611-1",
   "festival_calendar": [
     { "occasion": "Diwali", "date": null, "priority": "high", "note": "Pre-Diwali curtain and sofa cleaning offer" },
     { "occasion": "Wedding season", "date": "November-February", "priority": "high", "note": "Saree and sherwani dry clean" }
@@ -75,7 +85,9 @@
     "visual_identity": { "status": "confirmed", "basis": "logo file colours, approved by owner" },
     "festival_calendar": { "status": "guessed", "basis": "standard Indore calendar suggestion" },
     "price_points": { "status": "confirmed", "basis": "admin entered from rate card" },
-    "revision_cap": { "status": "confirmed", "basis": "default 2, admin approved" }
+    "revision_cap": { "status": "confirmed", "basis": "default 2, admin approved" },
+    "own_handle": { "status": "confirmed", "basis": "owner said, onboarding 2026-11-10" },
+    "competitors": { "status": "guessed", "basis": "research discovery 2026-11-21; one confirmed by ravi, one struck (other city)" }
   },
   "open_questions": [
     {

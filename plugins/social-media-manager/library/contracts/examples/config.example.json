@@ -17,6 +17,24 @@
     "draft_variations": 1,
     "upgrade_approver": "editor"
   },
+  "freshness_days": 30,
+  "research_schedule_enabled": true,
+  "research_unattended_clients": "all",
+  "research_caps": {
+    "accounts_min": 6,
+    "accounts_max": 12,
+    "reels_per_account": 12,
+    "comment_reels": 5,
+    "comments_per_reel": 30,
+    "reviews_per_business": 30,
+    "hashtag_scans": 2,
+    "trend_searches": 5,
+    "ad_library_advertisers": 6
+  },
+  "competitor_confirm_required": false,
+  "apify_enabled": false,
+  "research_auto_approve_limit": 0,
+  "research_currency": "USD",
   "version": 1,
   "updated_at": "2026-11-10T09:00:00+05:30"
 }
