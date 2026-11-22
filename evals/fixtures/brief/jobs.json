@@ -24,7 +24,7 @@
    "scenario": "B2", "job_id": "SHL-12", "client_id": "shubh-laundry", "type": "video", "track": "quick", "assignee": "ravi", "research": null, "config": {},
    "request": {
     "title": "Blanket cleaning offer reel",
-    "raw_request": "Kambal-razai dhulai ka offer reel chahiye, offer 15 Jan tak. Insta reel.",
+    "raw_request": "Kambal-razai dhulai ka offer reel chahiye: special winter rate, koi % discount nahi, free pickup wahi purana (₹299 se upar), 15 Jan tak. Insta reel.",
     "occasion": "Winter",
     "deliverables": ["Instagram reel 9:16 ~20s"],
     "deadline": "2026-12-18",

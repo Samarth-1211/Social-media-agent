@@ -52,6 +52,8 @@ Write the reference: `{ "text": "12 saal se Vijay Nagar mein", "source": "client
    - no price shown (percentage, free service) → `no-price`.
 2. The generated `offer` text shows exactly `offer_detail.price` (validator check 12).
 
+**A guess is not a claim.** A guessed price inside a question ("Humara guess: ₹349 per piece") is fine and expected; it only becomes part of the brief once someone confirms it.
+
 ## 5. How to flag, in the brief
 
 When a claim or number is wanted but not proven:

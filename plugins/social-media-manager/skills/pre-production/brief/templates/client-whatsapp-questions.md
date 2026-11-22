@@ -54,6 +54,8 @@ Bas "1 haan, 2 nahi" ya sahi value likh dein. Reply aate hi video shuru kar deng
 Namaste <name>! <job in plain words> ke <n> sawal pending hain: 1) <short>, 2) <short>. Reply kar dein toh aaj hi kaam shuru ho jayega 🙏
 ```
 
+**Guesses are concrete.** "Humara guess: ₹349 per piece", never "aap bata dein". A client who agrees with a guess replies "haan", and that must be enough to fill the field, unit included.
+
 ## After sending
 
 Record `asked_at` from `get_now`, set the questions to `open`, and save the brief as `awaiting-client` (SKILL.md step 6). Read the reply with `interview-rules.md` §3.

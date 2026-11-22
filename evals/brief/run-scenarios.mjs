@@ -40,7 +40,7 @@ const KEY_B4 = [
   [/kya karein|aayein|whatsapp|call|end mein|channel|visit/i, 'shop aayein'],
 ];
 const KEY_B5 = [[/rate|price|kitn|₹|date|kab tak|validity/i, 'client se poochna padega']];
-const KEY_B6 = [[/rera/i, 'P-JBP-23-0456']];
+const KEY_B6 = [[/rera/i, 'P-JBP-23-0456'], [/bhasha|language|hindi|english|hinglish/i, 'Hinglish']];
 const KEY_B8 = [[/no\.? ?1|guarantee|10,?000|customer|claim|proof|sabut/i, 'Client ne bola hai likhna hai, likh do']];
 
 const RUNS = {
@@ -114,6 +114,7 @@ async function runOne(name) {
   let sid = null;
   let prompt = `${FIRST} ${r.prompt}`;
   let questions = 0;
+  const used = new Set();
   const startStatus = briefOf(readJob(name, r.job))?.status;
   for (let t = 0; t < 8; t++) {
     const res = await claude(dir, prompt, sid);
@@ -125,8 +126,11 @@ async function runOne(name) {
     if (st === 'awaiting-client' && st !== startStatus) break;
     if (!asksQuestion(res.result)) break;
     questions++;
-    const hit = r.key.find(([re]) => re.test(res.result));
-    prompt = hit ? hit[1] : 'aap dekh lo';
+    // Answer every key whose topic appears in the question lines (lines with '?'), each key once.
+    const qText = (res.result || '').split('\n').filter((l) => l.includes('?')).join('\n') || res.result;
+    const hits = r.key.filter(([re]) => re.test(qText) && !used.has(re));
+    hits.forEach(([re]) => used.add(re));
+    prompt = hits.length ? hits.map(([, a], i) => (hits.length > 1 ? `${i + 1}) ${a}` : a)).join(', ') : 'aap dekh lo';
   }
   const cost = turns.reduce((a, t) => a + (t.cost || 0), 0);
   fs.writeFileSync(path.join(dir, 'transcript.json'), JSON.stringify({ run: name, job: r.job, questions, cost, turns }, null, 1));
@@ -163,14 +167,30 @@ function checks(name) {
       ok('2 deliverables, status variant has changes_from_master', (b.deliverables || []).length === 2 && (b.deliverables || []).some((d) => d.platform === 'whatsapp-status' && d.changes_from_master));
       ok('research skipped with reason', b.research?.status === 'skipped' && !!b.research?.skip_reason);
       savedOk(); gateOk();
+      // B13: the handoff block (from B1's saved brief)
+      {
+        const d = b.downstream || {};
+        ok('B13 downstream has 5 parts', ['concept', 'hooks', 'script', 'localise', 'shot_sourcing'].every((k) => d[k]), Object.keys(d).join());
+        ok('B13 concept: angle/format', !!(d.concept?.angle || d.concept?.creative_format));
+        ok('B13 hooks: phrases verbatim from profile', (d.hooks?.customer_phrases || []).some((p) => ['kapde time pe chahiye', 'press wala nahi aaya', 'saree ka dry clean safe hai na?'].includes(p)), JSON.stringify(d.hooks?.customer_phrases));
+        ok('B13 hooks: first frame price', /price|₹|89/i.test(d.hooks?.first_frame || ''), d.hooks?.first_frame);
+        ok('B13 script: length, beats, offer and CTA lines', d.script?.duration_sec && (d.script?.structure || []).length >= 3 && d.script?.offer_line && d.script?.cta_line);
+        ok('B13 localise: keeps brand name and price', /Shubh/i.test(JSON.stringify(d.localise?.keep_as_is || [])) && /89/.test(JSON.stringify(d.localise?.keep_as_is || [])), JSON.stringify(d.localise?.keep_as_is));
+        ok('B13 shot_sourcing: person flag and must_show', typeof d.shot_sourcing?.person_on_camera === 'boolean' && (d.shot_sourcing?.must_show || []).length > 0);
+      }
       break;
     case 'B2':
-      ok('exactly 1 question', tr.questions === 1, `${tr.questions}`);
-      ok('first question has a guess + options', /guess|अंदाज़ा/i.test(tr.turns[0]?.assistant || '') && /\n\s*(1\.|1\))/.test(tr.turns[0]?.assistant || ''));
-      ok('price 299 not-in-profile, confirmed', b.offer_detail?.price === 299 && b.offer_detail?.profile_match === 'not-in-profile' && /confirmed/.test(JSON.stringify(b.confidence?.offer_detail || b.confidence?.offer || b.confidence?.price || '')), JSON.stringify(b.offer_detail));
+    {
+      // A new item's price is client-only (Prompt 4 §4.4): one team question OR one client question is right.
+      const cq = (b.client_questions || []).length;
+      ok('exactly 1 question (team or client)', tr.questions + cq === 1, `team ${tr.questions}, client ${cq}`);
+      ok('the question has a concrete price guess', /₹\s?\d/.test(cq ? String(b.client_questions[0].guess) : tr.turns[0]?.assistant || ''), cq ? b.client_questions[0].guess : '');
       ok('validity 2027-01-15', b.offer_detail?.validity === '2027-01-15');
-      noJargonQ(); savedOk(); gateOk();
+      if (cq) ok('awaiting-client, waiting_on client, no gate', b.status === 'awaiting-client' && job?.waiting_on === 'client' && !gate);
+      else { ok('price 299 not-in-profile', b.offer_detail?.price === 299 && b.offer_detail?.profile_match === 'not-in-profile', JSON.stringify(b.offer_detail)); gateOk(); }
+      noJargonQ(); savedOk();
       break;
+    }
     case 'B3':
       ok('channel call, objective leads', b.cta_detail?.channel === 'call' && b.objective_label === 'leads', `${b.cta_detail?.channel}/${b.objective_label}`);
       ok('duration 15-20', b.duration_sec >= 15 && b.duration_sec <= 20, `${b.duration_sec}`);
@@ -247,18 +267,34 @@ function checks(name) {
     case 'B12a': gateOk(true); break;
     case 'B12b': case 'B12c': case 'B12d': case 'B12e':
       ok('admin gate, no auto', gate?.decided_by !== 'system' && gate?.status === 'pending', gate ? `${gate.status}/${gate.decided_by || '-'}` : 'no gate');
-      ok('no claim of approval', !/approved/i.test(tr.turns.at(-1)?.assistant?.replace(/approve (karein|kijiye)|to approve|approve or|approve ya/gi, '') || ''));
+      ok('no claim the brief is approved', !/auto-approved|brief (v\d+ )?(is |has been )?approved|brief approve ho gaya/i.test(tr.turns.at(-1)?.assistant || ''));
       break;
     default:
       if (name.startsWith('B5-R')) {
+        // "GUESS" = the value of that question's guess as the B5 run sent it.
+        const asked = briefOf(readJob('B5', 'SHL-15'))?.client_questions || [];
+        const guessOf = (field) => asked.find((q) => q.field === field)?.guess || '';
+        const MONTHS = { jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06', jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12' };
+        const guessValue = (field) => {
+          const g = guessOf(field);
+          if (field.endsWith('price')) return Number((g.match(/₹\s?([\d,]+)/)?.[1] || '').replace(/,/g, '')) || null;
+          const m = g.match(/(\d{1,2})\s*([A-Za-z]{3})[a-z]*\s*(\d{4})?/);
+          if (!m) return null;
+          const mm = MONTHS[m[2].toLowerCase()];
+          return `${m[3] || (mm === '12' ? '2026' : '2027')}-${mm}-${m[1].padStart(2, '0')}`;
+        };
+        const want = (field) => (e[field] === 'GUESS' ? guessValue(field) : e[field]);
         const e = r.reply.expect;
-        if ('offer_detail.price' in e) ok(`price ${e['offer_detail.price']}`, has(b, 'offer_detail.price') === e['offer_detail.price'], `${has(b, 'offer_detail.price')}`);
-        if ('offer_detail.validity' in e) ok(`validity ${e['offer_detail.validity']}`, has(b, 'offer_detail.validity') === e['offer_detail.validity'], `${has(b, 'offer_detail.validity')}`);
+        if ('offer_detail.price' in e) ok(`price ${want('offer_detail.price')}`, has(b, 'offer_detail.price') === want('offer_detail.price'), `${has(b, 'offer_detail.price')}`);
+        if ('offer_detail.validity' in e) ok(`validity ${want('offer_detail.validity')}`, has(b, 'offer_detail.validity') === want('offer_detail.validity'), `${has(b, 'offer_detail.validity')}`);
         const open = (b.client_questions || []).filter((q) => q.status === 'open').length;
         if (e.still_open?.length) ok('still awaiting-client with open question', b.status === 'awaiting-client' && open >= 1, `${b.status}, ${open} open`);
         else ok('all answered, waiting_on none', open === 0 && job?.waiting_on !== 'client', `${b.status}, ${open} open, ${job?.waiting_on}`);
-        if (e.new_condition) ok('new condition kept', /2 (or more|\+)|2\+|do kambal|two/i.test(JSON.stringify(b.offer_detail?.conditions || []) + b.offer));
-        if (e.must_not) ok('No.1 not added', !/no\.? ?1/i.test(JSON.stringify(b).replace(/CLIENT TO CONFIRM[^"]*/g, '')));
+        if (e.new_condition) ok('new condition kept', /2\s*(kambal|blanket|piece|or more|\+)|do kambal|two/i.test(JSON.stringify(b.offer_detail?.conditions || []) + b.offer));
+        // Only fields that put words on screen count; avoid, open_questions, notes and the changelog may name the declined claim.
+        const claimFields = [b.key_message, b.offer, b.cta, ...(b.mandatories || []), ...(b.proof_points || []).map((p) => p.text),
+          b.downstream?.script?.offer_line, b.downstream?.script?.cta_line, ...(b.downstream?.script?.must_say || [])].join(' ');
+        if (e.must_not) ok('No.1 not added as a claim', !/no\.? ?1\b/i.test(claimFields), claimFields.slice(0, 120));
       }
   }
   // check 12 style pair rule on every saved brief

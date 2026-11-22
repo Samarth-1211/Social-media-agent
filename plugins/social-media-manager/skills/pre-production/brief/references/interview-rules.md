@@ -11,7 +11,7 @@
 | A blocker only the client can know: a new offer, its price or last date, a new product detail, a stat or testimonial | **Client** |
 | Anything else (the team may know: channel, objective, which project, RERA number on file) | **Team** |
 
-Mixed blockers: ask the team first; whatever is left that only the client knows goes in one client message. Any team question can carry the option "Client se poochna padega", which moves it to the client message.
+Mixed blockers: ask the team first; whatever is left that only the client knows goes in one client message. Any team question can carry the option "Client se poochna padega", which moves it to the client message. **Never send a client message while a blocker the team could answer (deadline, channel, which project, a RERA number on file) is still unasked.** Ask those first, within the cap.
 
 ## 2. Team mode (editor or admin in chat)
 
@@ -20,7 +20,7 @@ Mixed blockers: ask the team first; whatever is left that only the client knows 
 - **Ask only questions whose earlier answers are settled.** Ask "koi offer hai?" before "kitne ka?"; never ask about validity for a job with no offer.
 - **Every question has:**
   1. the question, one idea, short;
-  2. your **guess** with a reason in a few words ("pichli baar WhatsApp tha");
+  2. your **guess** with a reason in a few words ("pichli baar WhatsApp tha"). **A guess is always a concrete value.** For a price, that means a number with its unit ("₹349 per piece"), in the item's own unit: from a saved `price_points` item or past offer of the same kind; if none exists, a round per-piece (or per-unit) figure for that service, clearly a guess. Never stretch a per-kg rate to a per-piece item. A guess inside a question is not a claim (`proof-and-claims.md`), so never leave it blank or write "aap bata dein";
   3. **2–4 options**, the guess first, worded so "haan" takes it;
   4. "other": they can type anything.
 
@@ -41,7 +41,7 @@ Mixed blockers: ask the team first; whatever is left that only the client knows 
 Use it for blockers only the client knows. Write **one** message (`${CLAUDE_SKILL_DIR}/templates/client-whatsapp-questions.md`):
 - in the client's language and script (profile `languages`; Roman Hinglish if unsure);
 - a one-line greeting with the job in plain words ("Winter blanket offer video ke liye 2 cheezein confirm karni hain");
-- **numbered questions, each with a guess**, so the client can reply "1 haan, 2 nahi, ₹249";
+- **numbered questions, each with a concrete guess** (a price guess has a number and a unit: "₹349 per piece"), so the client can reply "1 haan, 2 nahi, ₹249";
 - at most 4 questions; blocking ones first;
 - no jargon, no internal names (job ids, stage names), no phone numbers.
 
