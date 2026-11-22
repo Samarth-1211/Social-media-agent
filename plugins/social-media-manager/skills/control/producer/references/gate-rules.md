@@ -24,7 +24,7 @@ When a stage with `gate: admin | editor | client` finishes and is verified:
    - `admin` → the admin's name (Team tab);
    - `editor` → the assignee's name;
    - `client` → "<assignee name> to send <what> to <client decision maker> and record the reply".
-4. Show `${CLAUDE_SKILL_DIR}/templates/gate-message.md` and stop.
+4. Show `${CLAUDE_SKILL_DIR}/templates/gate-message.md` and stop. **Exception:** a stage with `gate_label: creative-pick` (`hooks`) shows its own message, `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/templates/creative-pick.md`, and its `shown_outputs` are `{hooks: <v>}` plus `concept: <v>` on the full track.
 
 ## 2. Who may decide
 
@@ -45,6 +45,8 @@ Rules:
 - **Refusing doesn't change the record.** Leave the gate pending, don't log a decision, and log nothing beyond an optional `event` "approval attempt by <handle> refused (needs <role>)".
 
 ## 3. Recording a decision
+
+**Creative pick.** A reply on a pending gate with `gate_label: creative-pick` goes to `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/SKILL.md` §Gate. It reads the reply ("2B", "1 with 3A", "mix 1 and 3", "more like 2A", "none, …", a line edit), checks permission and versions as below, records the decision, and saves the pick. Plain approval ("ok", "theek hai", "approve") = the recommended pair. The pick's own `hooks` version after the decision is expected and needs no new gate. Then run on as for any approval.
 
 1. **Re-read the job.** The gate must still be `pending`. If it isn't, someone decided first: show who and when, and stop.
 2. **Check permission** (§2).

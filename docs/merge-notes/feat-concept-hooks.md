@@ -42,7 +42,9 @@ This file records every change to a shared file and every proposal for files thi
 | M8 | `plugins/social-media-manager/CHANGELOG.md` | New `[Unreleased] - feat/concept-hooks` section above 0.2.0-alpha.2. At merge: rename it to the released version and bump `plugin.json`. |
 | M8 | concept and hooks `CHANGELOG.md` | Final "Unreleased" entries. |
 
-## 2. Proposals for protected files (not applied here)
+## 2. Proposals for protected files
+
+> **Applied 2026-11-22 (P1–P6), at the admin's request, in the last commit before the merge.** P7 (sample history clean-up) left as optional.
 
 Proposed text for files this branch may not touch. **Without P4 the creative pick still works** when the editor replies inside a hooks session (the hooks skill records the decision itself); P4 makes it work when the reply reaches the producer.
 
@@ -101,7 +103,7 @@ Each fallback is said in one line in the reply and recorded in `fallback_used`.
 
 ## 6. Merge and test-phase checklist
 
-1. Merge `feat/concept-hooks` into `main` (it is already rebased on `fc3fde8`). Apply P1–P6 (P7 optional) in the same PR or a follow-up, as the admin decides.
+1. ~~Merge `feat/concept-hooks` into `main` and apply P1–P6.~~ Done 2026-11-22 (P7 optional, not applied).
 2. Version: suggest **0.3.0-alpha.1** (plugin.json, CHANGELOG, both skill CHANGELOGs from "Unreleased").
 3. Upgrade the TEST sheet v3 → v4 (`google-sheets.md` §7, `upgrades[2]`).
 4. Run the validator, then the scenarios in `evals/scenarios/concept-hooks.md` (written in M7) on the fixtures in `evals/fixtures/concept-hooks/`.

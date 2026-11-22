@@ -25,7 +25,7 @@ Next: {next_action}
 Example path line (quick video, at the script gate):
 
 ```
-Path: ✓intake ✓brief ✓concept ⏸script client-script-approval storyboard clips voice-music qa-clips assemble captions-motion finish client-final-approval delivery
+Path: ✓intake ✓research ✓brief ✓hooks ⏸script client-script-approval storyboard clips voice-music qa-clips assemble captions-motion finish client-final-approval delivery
 ```
 
 ## Rules
