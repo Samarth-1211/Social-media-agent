@@ -56,21 +56,23 @@ const argv = process.argv.slice(2);
 const FROM = argv.includes('--from') ? Number(argv[argv.indexOf('--from') + 1]) : 0;
 const AS = argv.includes('--as') ? argv[argv.indexOf('--as') + 1] : 'Ravi (editor)';
 const TX = path.join(OUT, FROM ? `transcript-from${FROM}.json` : 'transcript.json');
+const FIRSTMSG = argv.includes('--first') ? argv[argv.indexOf('--first') + 1] : null;
 const turns = [];
 let sid = null;
 let cost = 0;
 let idle = 0;
-for (const [i, s] of STEPS.entries()) {
-  if (i < FROM) continue;
+const steps = FIRSTMSG ? [[FROM - 1, { p: `${PRE} ${FIRSTMSG}`, newSession: true }], ...[...STEPS.entries()].filter(([i]) => i >= FROM).map(([i, x]) => [i, { ...x, newSession: false }])] : [...STEPS.entries()];
+for (const [i, s] of steps) {
+  if (!FIRSTMSG && i < FROM) continue;
   if (s.newSession) sid = null;
-  let prompt = i === FROM && FROM > 0 && !s.newSession ? `${PRE} I'm ${AS}. ${s.p}` : s.p;
+  let prompt = !FIRSTMSG && i === FROM && FROM > 0 && !s.newSession ? `${PRE} I'm ${AS}. ${s.p}` : s.p;
   for (let k = 0; k < 4; k++) {
     const r = await claude(prompt, sid);
     sid = r.session_id || sid;
     cost += r.total_cost_usd || 0;
     turns.push({ step: s.label || s.p.slice(0, 60), user: prompt, assistant: r.result, error: r.is_error || false });
     console.log(`— ${prompt.slice(0, 70)}\n${(r.result || '').slice(0, 400)}\n`);
-    idle = /nothing (was )?(recorded|to approve)|haven't recorded|not recorded|can't record/i.test(r.result || '') ? idle + 1 : 0;
+    idle = /nothing (was )?(recorded|to approve)|haven't recorded|haven't approved|not recorded|can't record/i.test(r.result || '') ? idle + 1 : 0;
     if (r.is_error || !s.answer || !asks(r.result)) break;
     const hit = s.answer.find(([re]) => re.test(r.result));
     prompt = hit ? hit[1] : 'aap dekh lo';

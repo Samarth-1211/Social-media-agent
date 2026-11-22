@@ -54,6 +54,7 @@ const RUNS = {
     job: 'SHL-15', from: 'B5', prompt: `I'm Ravi. Neha ji ka reply aaya (SHL-15 brief questions): ${r.text}`, key: [], reply: r, maxTurns: 1,
   }])),
   'B5-R8': { job: 'SHL-11', from: 'B1', prompt: "I'm Ravi. Client ne SHL-11 pe likha: Logo thoda bada karo aur music badal do", key: [], reply: fixture('replies').replies.find((r) => r.id === 'R8'), maxTurns: 1 },
+  'B1-approve': { job: 'SHL-11', from: 'B1', prompt: "I'm Samarth (admin). approve the SHL-11 brief", key: [], maxTurns: 1 },
   B6: { job: 'NRH-10', prompt: "I'm Ravi. brief NRH-10", key: KEY_B6 },
   B7: { job: 'SHL-16', prompt: "I'm Ravi. brief SHL-16", key: [] },
   B8: { job: 'SHL-17', prompt: "I'm Ravi. brief SHL-17", key: KEY_B8 },
@@ -262,6 +263,14 @@ function checks(name) {
       ok('differing variants say what changes', d.every((x) => (x.aspect_ratio === b.aspect_ratio && (x.duration_sec == null || x.duration_sec === b.duration_sec)) || x.changes_from_master));
       ok('price 35 lakh onwards matches', b.offer_detail?.price === 3500000 && b.offer_detail?.profile_match === 'matches', JSON.stringify(b.offer_detail));
       ok('RERA in mandatories, cta call', JSON.stringify(b.mandatories || []).includes('P-JBP-23-0456') && b.cta_detail?.channel === 'call');
+      break;
+    }
+    case 'B1-approve': {
+      const bg = (job?.gates || []).filter((g) => g.stage === 'brief').at(-1);
+      ok('brief gate approved by samarth', bg?.status === 'approved' && bg?.decided_by === 'samarth', bg ? `${bg.status}/${bg.decided_by}` : 'none');
+      ok('brief stage closed (done)', (job?.stage_history || []).some((h) => h.stage === 'brief' && h.status === 'done'));
+      ok('ran on: current stage past brief', job?.current_stage && job.current_stage !== 'brief', job?.current_stage);
+      ok('next gate requested (concept)', (job?.gates || []).some((g) => g.stage === 'concept' && g.status === 'pending'));
       break;
     }
     case 'B12a': gateOk(true); break;
