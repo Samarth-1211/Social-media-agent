@@ -39,6 +39,9 @@ The brief skill (Prompt 4) was built on `feat/brief` from `main` at v0.1.0, sepa
 | `scripts/build-sample-data.mjs` (M5) | SHL-03 `next_action` uses that wording | Same |
 | `skills/pre-production/README.md` (M5) | `brief` row → active; "Brief handoff" section (which `downstream` part each later stage reads) | Handoff available to the next stages |
 
+| `evals/fixtures/brief/**`, `evals/brief-fixtures.mjs`, `evals/scenarios/brief.md`, `evals/rubrics/brief.md` (M6) | New: fixtures for 2 clients, 17 scenario jobs, 2 past jobs, a research output, 8 replies, a bad brief; a fixture checker, files-mode seeder and TEST-sheet row builder; B1–B15 with the rubric. **Not run.** | Prompt 4 §8; run in the combined test phase |
+| `evals/README.md` (M6) | One paragraph pointing to the brief evals | Discoverability; Group 1 eval files untouched |
+
 _Later milestones add rows here (README, CHANGELOGs)._
 
 ## 2. To do at merge
@@ -69,6 +72,8 @@ _Later milestones add rows here (README, CHANGELOGs)._
 ## 4. Proposed diffs to protected files (M5, awaiting the admin's decision)
 
 The brief's "waiting on the client without a gate" state (storage README §5) meets two protected rules. Neither is applied.
+
+**Decision (admin, 2026-11-22):** apply 4a and 4b at the merge phase, before the combined tests. Not on `feat/brief`.
 
 ### 4a. Producer: don't request the gate while a stage waits on the client
 

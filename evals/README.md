@@ -31,3 +31,5 @@ Use `results/*.local.md` for scratch runs. They are git-ignored.
 - **Never put real client phone or WhatsApp numbers in evals.** Use obviously fake ones, e.g. `+910000000001`.
 - Real client names, prices or messages are allowed only with the client's consent. Otherwise anonymise (e.g. "a café in Jaipur").
 - No logins, tokens or Higgsfield account details.
+
+**brief (B1–B15):** fixtures in `fixtures/brief/` (`node evals/brief-fixtures.mjs check | seed | sheet-rows`), scenarios `scenarios/brief.md`, rubric `rubrics/brief.md`. Written on `feat/brief`; run in the combined test phase after the merge.
