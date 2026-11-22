@@ -1,6 +1,6 @@
 # Changelog: research-methods
 
-## Unreleased (0.2.0-alpha.1)
+## 0.2.0-alpha.1 - 2026-11-22
 
 ### Added
 - Created from template.

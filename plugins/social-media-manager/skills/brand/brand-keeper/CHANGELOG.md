@@ -1,6 +1,6 @@
 # Changelog: brand-keeper
 
-## Unreleased (0.2.0-alpha.1)
+## 0.2.0-alpha.1 - 2026-11-22
 
 ### Changed
 - A new client queues its first research run (trigger onboarding) and starts it where subagents work.

@@ -2,13 +2,14 @@
 
 Claude as TDM Groups' social media production team: video jobs, poster jobs, client brand profiles and approvals, run stage by stage with human gates.
 
-**Status: 0.1.0, Group 1.**
+**Status: 0.2.0-alpha.1, Group 1 + Group 2a (market researcher).**
 - **Working now:**
   - jobs from intake to delivery, with real approvals and budget checks;
   - client profiles;
   - client feedback triage;
-  - status boards and catch-up.
-- **Not built yet:** the creative stages (brief, script, storyboard, generation, edit, posters). They run as **placeholders** for now, and no Higgsfield credits are spent. Later groups replace them one by one.
+  - status boards and catch-up;
+  - **market research**: an insight sheet per client (competitors, Meta ads, reviews, trends, Instagram outliers, the client's own account), refreshed weekly by a scheduled task, reused while fresh, never blocking a job. Its findings are handed to the brief and later stages.
+- **Not built yet:** the other creative stages (brief, script, storyboard, generation, edit, posters). They run as **placeholders** for now, and no Higgsfield credits are spent. Later groups replace them one by one.
 
 ## Skills
 
@@ -18,6 +19,7 @@ Claude as TDM Groups' social media production team: video jobs, poster jobs, cli
 | `tracker` | control | "Where is everything?": boards, overdue, credits, catch-up, team, backups |
 | `brand-keeper` | brand | Adding clients and keeping their brand profiles |
 | `client-feedback` | brand | Turning a client's WhatsApp reply into a change list, the stage to reopen, and a reply draft |
+| `research-methods` | pre-production | Market research per client: competitors, ads, reviews, trends, Instagram outliers. Hands its unattended part to the `market-researcher` subagent where subagents load (Claude Code, Cowork); runs inline in claude.ai chat. |
 
 You don't need to name the skill: just say what you want, in English, Hindi or Hinglish. Each skill can also be called directly as `/social-media-manager:<skill>`.
 
@@ -54,6 +56,21 @@ Start every session by saying who you are ("I'm Ravi"). Claude asks if you don't
 | "show SHL-03 in full" | The whole job record |
 | "add <name> to the team" · "backup" · "import" | Team changes and backups (admin) |
 
+**Research (research-methods)**
+
+| Say | What happens | Who |
+|---|---|---|
+| "research <client>" / "refresh research" | Runs research now: a plan in a few lines, then the free methods; the Instagram read runs if a browser is open, otherwise it's queued | anyone |
+| "go deeper" / "add <method>" / "remove <method>" | Changes the plan before it runs | anyone (paid Apify runs: admin approves) |
+| "show <client> research" | The latest insight sheet: findings with confidence and source, what changed | anyone |
+| "run the Instagram reads" / "yes" to the offer | Runs every queued Instagram read in your browser (keep it open and signed in, team account) | anyone with a browser |
+| "strike <finding>" · "pin <finding>" | Leaves a finding out of later stages, or puts it first | assigned editor, admin |
+| "strike <handle>" · "confirm <handle>" | Removes a wrong competitor for good, or confirms one | assigned editor, admin |
+| "SHL-03 urgent" / "not urgent" | Urgent jobs skip research (flagged for the brief) | admin |
+| "research status" | Pending Instagram reads, queued runs, how old each client's sheet is | anyone |
+
+Research also starts by itself: when a client is onboarded, at job intake (reused while under 30 days old), 14 days before a client's festival, and every week from the scheduled task (see "Scheduled research").
+
 **Clients (brand-keeper)**
 
 | Say | What happens |
@@ -71,6 +88,7 @@ Start every session by saying who you are ("I'm Ravi"). Claude asks if you don't
 | script, localise, style bible, casting, storyboard, voice & music, QA, edit stages, poster drafts | the assigned editor or designer, or admin |
 | client approvals | the assignee or admin, from the client's own message |
 | going over a job's credit budget | admin |
+| paid research (Apify, only if switched on) above the auto-approve limit | admin |
 
 ## Setup
 

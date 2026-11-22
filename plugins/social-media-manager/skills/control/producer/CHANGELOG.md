@@ -1,6 +1,6 @@
 # Changelog: producer
 
-## Unreleased (0.2.0-alpha.1)
+## 0.2.0-alpha.1 - 2026-11-22
 
 ### Changed
 - Handles optional stage keys (`stage-running.md` §5a): reuse research while fresh, skip it on urgent jobs, carry on with partial research, spend gate before paid runs (`gate-rules.md` §4b).

@@ -1,6 +1,6 @@
 # Changelog: tracker
 
-## Unreleased (0.2.0-alpha.1)
+## 0.2.0-alpha.1 - 2026-11-22
 
 ### Changed
 - Research queue at the start of a session: festival research tasks 14 days ahead; one offer to run pending Instagram reads when a browser is available.
