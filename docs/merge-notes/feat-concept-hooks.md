@@ -38,6 +38,9 @@ This file records every change to a shared file and every proposal for files thi
 | M7 | `evals/README.md` | One line pointing to the concept + hooks suite. |
 | M7 | `skills/pre-production/hooks/SKILL.md` | Gate table: plain approval ("ok", "theek hai") = the recommended pair. |
 | M7 | concept and hooks `examples/*.md` | Fictional research ids renamed to the real `F<n>` pattern. |
+| M8 | `plugins/social-media-manager/README.md` | Status lines, skills table (concept, hooks), "Concepts and hooks" command block, approvals table (concept off the admin list; creative pick = editor), layout v4 upgrade line, `library/knowledge/` in "What's inside". Version string unchanged. |
+| M8 | `plugins/social-media-manager/CHANGELOG.md` | New `[Unreleased] - feat/concept-hooks` section above 0.2.0-alpha.2. At merge: rename it to the released version and bump `plugin.json`. |
+| M8 | concept and hooks `CHANGELOG.md` | Final "Unreleased" entries. |
 
 ## 2. Proposals for protected files (not applied here)
 
