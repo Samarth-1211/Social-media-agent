@@ -24,6 +24,10 @@ This file records every change to a shared file and every proposal for files thi
 | M2 | `library/storage/setup.md`, `README.md`, `files-backup.md` | Upgrade order and older-layout detection include v4; files-mode note on concept/hooks files. |
 | M2 | `docs/decisions/0006-creative-pick-and-quick-track.md` (new) | Decision record. |
 | M3 | `library/knowledge/india-consumer-psychology.md` (new) | Shared by concept, hooks, script, localise: dated evidence (T1–T9), insight starters, clichés to retire, levers L01–L20 with misuse limits, hypotheses HY1–HY9, audience variants, language. **`persuasion-ethics.md` was dropped by the admin (2026-11-22);** its hard limits are the lever misuse lines and hooks `anti-patterns.md`. |
+| M4 | `skills/pre-production/concept/**` (new) | The concept skill: SKILL.md, 8 references, 2 templates, checklist CC1–CC10, 3 examples, CHANGELOG. |
+| M4 | `library/contracts/stages.yaml` | concept `status: placeholder` → `active`. |
+| M4 | `skills/pre-production/README.md` | concept row: planned → active (unreleased). The handoff section follows in M6. |
+| M4 | `library/contracts/examples/concept.example.json` | Self-check items renamed to the checklist ids CC1–CC10. |
 
 ## 2. Proposals for protected files (not applied here)
 

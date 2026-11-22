@@ -6,7 +6,7 @@ From request to a shootable plan.
 |---|---|---|---|
 | `research-methods` | active (0.2.0-alpha.1) | Market insight sheet per client: competitors, ads, reviews, trends, Instagram outliers. Runs inline or through the `market-researcher` subagent. | `research` |
 | `brief` | active (0.2.0-alpha.2) | Drafts the brief by itself from the request, profile, research, past jobs and festival calendar; asks only blocking essentials, in plain words (`brief.schema.json`). | `brief` |
-| `concept` | planned | Creative routes for the brief. | `concept` |
+| `concept` | active (unreleased) | Three insight-led, scored short-video concepts from the brief and research, one recommended; full track only, no gate (picked with the hooks). | `concept` |
 | `hooks` | planned | Opening hooks for video. | `hooks` |
 | `script` | planned | Voiceover and on-screen text (`script.schema.json`). | `script` |
 | `localise` | planned | Hindi / English / Hinglish versions of the script. | `localise` |

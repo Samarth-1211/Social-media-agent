@@ -99,7 +99,7 @@ stages:
   - id: concept
     group: pre-production
     skill: concept
-    status: placeholder
+    status: active
     reads: [client, brief]
     optional_reads: [research]
     writes: [concept]

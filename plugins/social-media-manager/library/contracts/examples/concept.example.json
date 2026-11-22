@@ -157,11 +157,16 @@
   "self_check": {
     "passed": true,
     "items": [
-      { "id": "CC1", "ok": true, "note": "Three different angle types: proof, story, teach." },
-      { "id": "CC2", "ok": true, "note": "No invented proof: gaps marked {{needed}}." },
-      { "id": "CC3", "ok": true, "note": "All three need no credits." },
-      { "id": "CC4", "ok": true, "note": "Hinglish, Roman script." },
-      { "id": "CC5", "ok": true, "note": "Fear angle removed (A7); no AI customers." }
+      { "id": "CC1", "ok": true, "note": "Three angle types (proof, story, teach); formats and levers differ." },
+      { "id": "CC2", "ok": true, "note": "Core insight sourced to the profile; C2 and C3 insights listed as assumptions." },
+      { "id": "CC3", "ok": true, "note": "No invented proof: gaps marked {{needed}}." },
+      { "id": "CC4", "ok": true, "note": "Key message and the WhatsApp CTA land in every concept; nothing from the avoid list." },
+      { "id": "CC5", "ok": true, "note": "Flat discount card removed as a category cliché." },
+      { "id": "CC6", "ok": true, "note": "All three need no credits; C1 is low difficulty." },
+      { "id": "CC7", "ok": true, "note": "C2 needs a real customer family; no AI customers." },
+      { "id": "CC8", "ok": true, "note": "Hinglish, Roman script, spoken lines." },
+      { "id": "CC9", "ok": true, "note": "Beats add up to 25 s." },
+      { "id": "CC10", "ok": true, "note": "Two levers each, each with proof; fear angle A7 removed." }
     ]
   },
   "updated_at": "2026-11-21T15:00:00+05:30"
