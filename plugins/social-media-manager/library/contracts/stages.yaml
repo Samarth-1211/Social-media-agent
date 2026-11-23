@@ -142,7 +142,7 @@ stages:
   - id: localise
     group: pre-production
     skill: localise
-    status: placeholder
+    status: active
     reads: [client, brief, script]
     optional_reads: [hooks, research]
     writes: [localised_script]

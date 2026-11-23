@@ -33,7 +33,7 @@
       { "n": 3, "start_sec": 5.6, "end_sec": 8.4, "text": "Yeh ek customer ka sofa, / *pehle*... [pause 0.4s]", "tts_text": "Yeh ek customer ka sofa, pehle...", "emphasis": ["pehle"], "speed": "slow" },
       { "n": 4, "start_sec": 8.4, "end_sec": 10.8, "text": "...aur *dhulne ke baad*.", "tts_text": "aur dhulne ke baad.", "emphasis": ["dhulne ke baad"], "speed": "slow" },
       { "n": 5, "start_sec": 10.8, "end_sec": 13.6, "text": "Dono pe *bees percent* off, / *pachchees November* tak.", "tts_text": "Dono pe bees percent off, pachchees November tak.", "emphasis": ["bees percent", "pachchees November"], "speed": "normal" },
-      { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "text": "Pickup *free*, [pause 0.2s] do sau ninyanve se upar.", "tts_text": "Pickup free, do sau ninyanve se upar.", "emphasis": ["free"], "speed": "normal" },
+      { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "text": "Pickup *free*, [pause 0.2s] do sau ninyaanave se upar.", "tts_text": "Pickup free, do sau ninyaanave se upar.", "emphasis": ["free"], "speed": "normal" },
       { "n": 7, "start_sec": 16.4, "end_sec": 20, "text": "*WhatsApp* karo, / pickup hum karenge.", "tts_text": "WhatsApp karo, pickup hum karenge.", "emphasis": ["WhatsApp"], "speed": "normal",
         "pronunciation_hints": ["WhatsApp = 'whats-app', not 'vats-app'"] }
     ],
@@ -63,7 +63,7 @@
     { "written": "20%", "spoken": "bees percent", "scene": 1, "kind": "percent" },
     { "written": "20%", "spoken": "bees percent", "scene": 5, "kind": "percent" },
     { "written": "25 Nov", "spoken": "pachchees November", "scene": 5, "kind": "date" },
-    { "written": "₹299", "spoken": "do sau ninyanve (rupaye)", "scene": 6, "kind": "price" }
+    { "written": "₹299", "spoken": "do sau ninyaanave (rupaye)", "scene": 6, "kind": "price" }
   ],
   "back_translation": {
     "by": "claude",
@@ -87,7 +87,7 @@
       { "n": 3, "start_sec": 5.6, "end_sec": 8.4, "tts_text": "Yeh ek customer ka sofa, pehle...", "speed": "slow" },
       { "n": 4, "start_sec": 8.4, "end_sec": 10.8, "tts_text": "aur dhulne ke baad.", "speed": "slow" },
       { "n": 5, "start_sec": 10.8, "end_sec": 13.6, "tts_text": "Dono pe bees percent off, pachchees November tak.", "speed": "normal" },
-      { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "tts_text": "Pickup free, do sau ninyanve se upar.", "speed": "normal" },
+      { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "tts_text": "Pickup free, do sau ninyaanave se upar.", "speed": "normal" },
       { "n": 7, "start_sec": 16.4, "end_sec": 20, "tts_text": "WhatsApp karo, pickup hum karenge.", "speed": "normal" }
     ],
     "pronunciation": [{ "term": "Shubh Laundry", "say_as": "shubh LAWN-dree (shubh as in 'shubh din')", "confirmed": true }],

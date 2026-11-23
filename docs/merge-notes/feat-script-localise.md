@@ -47,6 +47,8 @@ M7 repeats these and shows `git diff --stat main` touches no protected path.
 | `scripts/validate.mjs` | **Check 13**: script and localised_script records in the examples, the job example and the sample data. |
 | `docs/decisions/0007-script-pick-and-localise-approval.md` | **New.** |
 | `library/contracts/stages.yaml` (M3) | `script` → `active` (skill folder `skills/pre-production/script/` exists). |
+| `library/contracts/stages.yaml` (M4) | `localise` → `active` (skill folder `skills/pre-production/localise/` exists). |
+| `library/contracts/examples/localised_script.example.json`, `library/knowledge/voiceover-pacing.md` (M4) | Roman spelling of 99 unified to "ninyaanave" (as `transliterate.py` prints it). |
 
 ## 4. Proposed diffs for protected files (apply at merge, D2)
 

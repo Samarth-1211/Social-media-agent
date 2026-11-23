@@ -35,8 +35,8 @@ Count words as they are **said**, not as they are written:
 | Written | Spoken (Hinglish/Hindi) | Words |
 |---|---|---|
 | `20%` | bees percent | 2 |
-| `₹299` | do sau ninyanve (+ "rupaye" only if said) | 3 |
-| `₹1,499` | ek hazaar chaar sau ninyanve | 5 |
+| `₹299` | do sau ninyaanave (+ "rupaye" only if said) | 3 |
+| `₹1,499` | ek hazaar chaar sau ninyaanave | 5 |
 | `₹45 lakh` | paintaalis lakh | 2 |
 | `25 Nov` | pachchees November | 2 |
 | `98260 12345` | phone numbers: one word per digit group said (§ localise numbers-and-money) | 2–4 |
