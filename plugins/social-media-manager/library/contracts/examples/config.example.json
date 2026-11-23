@@ -13,6 +13,10 @@
   "concepts_count": 3,
   "hooks_per_concept": 8,
   "creative_auto_pick_after_hours": null,
+  "script_versions": 2,
+  "pace_overrides": {},
+  "localise_variant_languages": [],
+  "caption_max_chars_per_line": 32,
   "credit_policy": {
     "prompt_check_before_spend": true,
     "estimate_before_spend": true,

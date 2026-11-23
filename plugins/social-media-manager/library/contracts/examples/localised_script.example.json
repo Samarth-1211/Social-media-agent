@@ -1,0 +1,123 @@
+{
+  "job_id": "SHL-01",
+  "client_id": "shubh-laundry",
+  "version": 1,
+  "script_version": 2,
+  "script_pick": "A",
+  "language": "Hinglish",
+  "writing_script": "roman-hinglish",
+  "choice_reason": "Brief: Hinglish, roman-hinglish. Families 25-45 in Vijay Nagar and Palasia on Instagram: Roman Hinglish is the default (language-choice.md).",
+  "audience_variant": "Tier 2 city, mixed-age families",
+  "fallback_used": { "research": false, "note": "Customer phrase 'kapde time pe chahiye' checked; not used, it doesn't fit an offer for curtains." },
+  "scenes": [
+    { "n": 1, "start_sec": 0, "end_sec": 3.2, "vo_line": "Diwali se pehle curtain aur sofa, 20% off.", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "Curtain + sofa: 20% off", "in_sec": 0, "out_sec": 3.2, "position": "center" }], "timing_ok": true },
+    { "n": 2, "start_sec": 3.2, "end_sec": 5.6, "vo_line": "Mehmaan aane wale hain, aur curtain?", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "Mehmaan aane wale hain", "in_sec": 3.3, "out_sec": 5.6, "position": "top" }], "timing_ok": true },
+    { "n": 3, "start_sec": 5.6, "end_sec": 8.4, "vo_line": "Yeh ek customer ka sofa, pehle...", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "Pehle", "in_sec": 5.7, "out_sec": 8.4, "position": "top" }], "timing_ok": true },
+    { "n": 4, "start_sec": 8.4, "end_sec": 10.8, "vo_line": "...aur dhulne ke baad.", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "Dhulne ke baad", "in_sec": 8.5, "out_sec": 10.8, "position": "top" }], "timing_ok": true,
+      "note": "'wash ke baad' → 'dhulne ke baad': how customers say it for a sofa." },
+    { "n": 5, "start_sec": 10.8, "end_sec": 13.6, "vo_line": "Dono pe 20% off, 25 Nov tak.", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "20% off · 25 Nov tak", "in_sec": 10.8, "out_sec": 13.6, "position": "center" }], "timing_ok": true },
+    { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "vo_line": "Pickup free, ₹299 se upar.", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "Pickup free · ₹299 se upar", "in_sec": 13.7, "out_sec": 16.4, "position": "lower-third" }], "timing_ok": true },
+    { "n": 7, "start_sec": 16.4, "end_sec": 20, "vo_line": "WhatsApp karo, pickup hum karenge.", "vo_line_roman": null,
+      "on_screen_text": [{ "text": "WhatsApp karo", "in_sec": 16.5, "out_sec": 20, "position": "center" }], "timing_ok": true }
+  ],
+  "vo_script": {
+    "lines": [
+      { "n": 1, "start_sec": 0, "end_sec": 3.2, "text": "Diwali se pehle / curtain aur sofa, [pause 0.2s] *bees percent* off.", "tts_text": "Diwali se pehle curtain aur sofa, bees percent off.", "emphasis": ["bees percent"], "speed": "normal" },
+      { "n": 2, "start_sec": 3.2, "end_sec": 5.6, "text": "Mehmaan aane wale hain, [pause 0.3s] aur *curtain*?", "tts_text": "Mehmaan aane wale hain, aur curtain?", "emphasis": ["curtain"], "speed": "normal" },
+      { "n": 3, "start_sec": 5.6, "end_sec": 8.4, "text": "Yeh ek customer ka sofa, / *pehle*... [pause 0.4s]", "tts_text": "Yeh ek customer ka sofa, pehle...", "emphasis": ["pehle"], "speed": "slow" },
+      { "n": 4, "start_sec": 8.4, "end_sec": 10.8, "text": "...aur *dhulne ke baad*.", "tts_text": "aur dhulne ke baad.", "emphasis": ["dhulne ke baad"], "speed": "slow" },
+      { "n": 5, "start_sec": 10.8, "end_sec": 13.6, "text": "Dono pe *bees percent* off, / *pachchees November* tak.", "tts_text": "Dono pe bees percent off, pachchees November tak.", "emphasis": ["bees percent", "pachchees November"], "speed": "normal" },
+      { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "text": "Pickup *free*, [pause 0.2s] do sau ninyanve se upar.", "tts_text": "Pickup free, do sau ninyanve se upar.", "emphasis": ["free"], "speed": "normal" },
+      { "n": 7, "start_sec": 16.4, "end_sec": 20, "text": "*WhatsApp* karo, / pickup hum karenge.", "tts_text": "WhatsApp karo, pickup hum karenge.", "emphasis": ["WhatsApp"], "speed": "normal",
+        "pronunciation_hints": ["WhatsApp = 'whats-app', not 'vats-app'"] }
+    ],
+    "file": "Jobs/SHL-01/localise/vo-script-v1.md"
+  },
+  "captions_srt": {
+    "srt": "1\n00:00:00,000 --> 00:00:03,200\nDiwali se pehle curtain\naur sofa, 20% off.\n\n2\n00:00:03,200 --> 00:00:05,600\nMehmaan aane wale hain,\naur curtain?\n\n3\n00:00:05,600 --> 00:00:08,400\nYeh ek customer ka sofa,\npehle...\n\n4\n00:00:08,400 --> 00:00:10,800\n...aur dhulne ke baad.\n\n5\n00:00:10,800 --> 00:00:13,600\nDono pe 20% off, 25 Nov tak.\n\n6\n00:00:13,600 --> 00:00:16,400\nPickup free, ₹299 se upar.\n\n7\n00:00:16,400 --> 00:00:20,000\nWhatsApp karo,\npickup hum karenge.\n",
+    "cues": 7,
+    "max_chars_per_line": 32,
+    "file": "Jobs/SHL-01/localise/captions-v1.srt",
+    "font_note": null
+  },
+  "caption_post": {
+    "first_line": "Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.",
+    "full_text": "Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\n\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\n\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning",
+    "hashtags": ["#IndoreLaundry", "#VijayNagar", "#SofaCleaning", "#DiwaliCleaning"],
+    "pinned_comment": "WhatsApp pe 'CURTAIN' likh ke bhejo, pickup ka time hum bata denge."
+  },
+  "client_review_message": {
+    "language": "Hinglish",
+    "writing_script": "roman-hinglish",
+    "text": "Namaste Neha ji 🙏\nDiwali offer reel ka script ready hai (20 second):\n\nShuru: \"Diwali se pehle curtain aur sofa, 20% off.\"\n1. Parda khulta hai, 20% off dikhta hai\n2. Mehmaan aane wale hain, curtain purane?\n3. Aapke ek customer ka sofa, pehle aur dhulne ke baad\n4. Offer: curtain aur sofa cleaning 20% off, 25 Nov tak\n5. Pickup free, ₹299 se upar. Aakhir mein: \"WhatsApp karo\"\n\nIske liye ek real sofa ka pehle-baad wala video chahiye, phone se bhi chalega.\n\nReply OK to approve, or tell us what to change.",
+    "file": null
+  },
+  "script_check": { "status": "not-needed", "tool": "none", "flagged_words": [], "note": "Roman Hinglish output; no Devanagari conversion." },
+  "numbers_spoken": [
+    { "written": "20%", "spoken": "bees percent", "scene": 1, "kind": "percent" },
+    { "written": "20%", "spoken": "bees percent", "scene": 5, "kind": "percent" },
+    { "written": "25 Nov", "spoken": "pachchees November", "scene": 5, "kind": "date" },
+    { "written": "₹299", "spoken": "do sau ninyanve (rupaye)", "scene": 6, "kind": "price" }
+  ],
+  "back_translation": {
+    "by": "claude",
+    "text": "Before Diwali, curtains and sofa, 20% off. Guests are coming, and the curtains? This is a customer's sofa, before... and after washing. 20% off on both, till 25 Nov. Pickup free above ₹299. WhatsApp us, we'll do the pickup.",
+    "meaning_ok": true,
+    "offer_ok": true,
+    "price_ok": true,
+    "cta_ok": true,
+    "drift": [{ "scene": 5, "issue": "First draft said 'sirf aaj se 25 Nov tak' ('only from today'): adds urgency the brief doesn't have.", "fixed": true }]
+  },
+  "ai_tell_check": { "done": true, "fixes": ["Review message: 'Aapka swagat hai' greeting cut (literal, sounds like a notice).", "Caption: no em dash, no emoji row."] },
+  "pronunciation_proposals": [],
+  "variants": [],
+  "downstream": {
+    "language": "Hinglish",
+    "writing_script": "roman-hinglish",
+    "tts_language_code": "hi-IN",
+    "vo_lines": [
+      { "n": 1, "start_sec": 0, "end_sec": 3.2, "tts_text": "Diwali se pehle curtain aur sofa, bees percent off.", "speed": "normal" },
+      { "n": 2, "start_sec": 3.2, "end_sec": 5.6, "tts_text": "Mehmaan aane wale hain, aur curtain?", "speed": "normal" },
+      { "n": 3, "start_sec": 5.6, "end_sec": 8.4, "tts_text": "Yeh ek customer ka sofa, pehle...", "speed": "slow" },
+      { "n": 4, "start_sec": 8.4, "end_sec": 10.8, "tts_text": "aur dhulne ke baad.", "speed": "slow" },
+      { "n": 5, "start_sec": 10.8, "end_sec": 13.6, "tts_text": "Dono pe bees percent off, pachchees November tak.", "speed": "normal" },
+      { "n": 6, "start_sec": 13.6, "end_sec": 16.4, "tts_text": "Pickup free, do sau ninyanve se upar.", "speed": "normal" },
+      { "n": 7, "start_sec": 16.4, "end_sec": 20, "tts_text": "WhatsApp karo, pickup hum karenge.", "speed": "normal" }
+    ],
+    "pronunciation": [{ "term": "Shubh Laundry", "say_as": "shubh LAWN-dree (shubh as in 'shubh din')", "confirmed": true }],
+    "srt_file": "Jobs/SHL-01/localise/captions-v1.srt",
+    "font_note": null,
+    "on_screen_cards": [
+      { "n": 1, "text": "Curtain + sofa: 20% off", "in_sec": 0, "out_sec": 3.2 },
+      { "n": 2, "text": "Mehmaan aane wale hain", "in_sec": 3.3, "out_sec": 5.6 },
+      { "n": 3, "text": "Pehle", "in_sec": 5.7, "out_sec": 8.4 },
+      { "n": 4, "text": "Dhulne ke baad", "in_sec": 8.5, "out_sec": 10.8 },
+      { "n": 5, "text": "20% off · 25 Nov tak", "in_sec": 10.8, "out_sec": 13.6 },
+      { "n": 6, "text": "Pickup free · ₹299 se upar", "in_sec": 13.7, "out_sec": 16.4 },
+      { "n": 7, "text": "WhatsApp karo", "in_sec": 16.5, "out_sec": 20 }
+    ],
+    "caption_post_text": "Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\n\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\n\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning",
+    "variants_available": []
+  },
+  "assumptions": ["Decision maker addressed as 'Neha ji' (client.decision_maker: Neha, owner)."],
+  "self_check": {
+    "passed": true,
+    "items": [
+      { "id": "LC1", "ok": true, "note": "Every line fits its scene." },
+      { "id": "LC2", "ok": true, "note": "Roman output, no conversion needed." },
+      { "id": "LC3", "ok": true, "note": "20%, 25 Nov and ₹299 spoken as words in the voiceover script." },
+      { "id": "LC4", "ok": true },
+      { "id": "LC5", "ok": true, "note": "Back-translation: offer, price and CTA unchanged." },
+      { "id": "LC6", "ok": true, "note": "One CTA." },
+      { "id": "LC7", "ok": true, "note": "Review message: 9 short lines, offer exact." },
+      { "id": "LC8", "ok": true, "note": "SRT: 7 cues, longest line 29 characters." }
+    ]
+  },
+  "updated_at": "2026-11-15T15:12:00+05:30"
+}

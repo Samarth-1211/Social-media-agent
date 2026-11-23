@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:localised_script",
+  "title": "Localised script",
+  "x-version": 1,
+  "description": "The picked script, transcreated for the audience in the brief's language and writing script, written by the localise stage (both video tracks, no gate) and stored in job.outputs.localised_script.data. Holds the localised scene table, the voiceover script, SRT captions, the caption post, the WhatsApp review message for the client, the script-conversion and back-translation checks, proposed pronunciation entries, optional extra-language variants and downstream for voice-music, captions-motion and storyboard. The client-script-approval stage (also run by localise) shows client_review_message. Files: Jobs/<job_id>/localise/ in Drive (or outputs/localise/ in files mode).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id", "client_id", "version", "script_version", "script_pick", "language", "writing_script", "choice_reason",
+    "scenes", "vo_script", "captions_srt", "caption_post", "client_review_message", "script_check",
+    "numbers_spoken", "back_translation", "ai_tell_check", "pronunciation_proposals", "variants", "downstream", "self_check", "updated_at"
+  ],
+  "properties": {
+    "job_id": { "$ref": "#/$defs/jobId" },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "script_version": { "type": "integer", "minimum": 1, "description": "outputs.script version localised (the picked one)." },
+    "script_pick": { "type": "string", "pattern": "^[A-C]$", "description": "script.pick.version_id." },
+    "language": { "$ref": "#/$defs/language" },
+    "writing_script": { "$ref": "#/$defs/writingScript" },
+    "choice_reason": { "type": "string", "minLength": 1, "description": "Why this language and script (localise/references/language-choice.md), e.g. 'brief: Hindi, devanagari; 45+ Tier 2 buyers'." },
+    "audience_variant": { "type": ["string", "null"], "description": "Audience variant from india-consumer-psychology.md §7, if one applies." },
+    "fallback_used": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["research"],
+      "properties": {
+        "research": { "type": "boolean", "description": "No research customer phrases were available." },
+        "note": { "type": "string" }
+      }
+    },
+    "scenes": { "$ref": "#/$defs/scenes" },
+    "vo_script": { "$ref": "#/$defs/voScript" },
+    "captions_srt": { "$ref": "#/$defs/captionsSrt" },
+    "caption_post": { "$ref": "#/$defs/captionPost" },
+    "client_review_message": {
+      "description": "Short WhatsApp message in the client's language: greeting, hook line, 4-5 key moments, the offer and CTA exactly, 'Reply OK to approve, or tell us what to change.' No scene tables, no jargon.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "writing_script", "text"],
+      "properties": {
+        "language": { "$ref": "#/$defs/language" },
+        "writing_script": { "$ref": "#/$defs/writingScript" },
+        "text": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "file": { "type": ["string", "null"] }
+      }
+    },
+    "script_check": { "$ref": "#/$defs/scriptCheck" },
+    "numbers_spoken": { "$ref": "#/$defs/numbersSpoken" },
+    "back_translation": { "$ref": "#/$defs/backTranslation" },
+    "ai_tell_check": {
+      "description": "library/knowledge/ai-tells.md (Hinglish/Hindi section) run on every line.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["done", "fixes"],
+      "properties": {
+        "done": { "type": "boolean" },
+        "fixes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "pronunciation_proposals": {
+      "description": "New brand, product or place names that need a pronunciation hint; brand-keeper adds them to client.pronunciation once someone confirms.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term", "say_as"],
+        "properties": {
+          "term": { "type": "string", "minLength": 1 },
+          "say_as": { "type": "string", "minLength": 1, "description": "Plain respelling, e.g. 'shubh LAUN-dree'." },
+          "devanagari": { "type": ["string", "null"] },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "variants": {
+      "description": "Extra languages from config.localise_variant_languages, with the same checks. Empty when none are configured.",
+      "type": "array",
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/variant" }
+    },
+    "downstream": {
+      "description": "What later stages read.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "writing_script", "tts_language_code", "vo_lines", "srt_file", "on_screen_cards", "caption_post_text"],
+      "properties": {
+        "language": { "$ref": "#/$defs/language" },
+        "writing_script": { "$ref": "#/$defs/writingScript" },
+        "tts_language_code": { "enum": ["hi-IN", "en-IN"], "description": "voice-music: language code Indian TTS voices expect." },
+        "vo_lines": {
+          "description": "voice-music: clean text per line (no pause or emphasis marks), with timing and speed.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["n", "start_sec", "end_sec", "tts_text"],
+            "properties": {
+              "n": { "type": "integer", "minimum": 1 },
+              "start_sec": { "type": "number", "minimum": 0 },
+              "end_sec": { "type": "number", "minimum": 0 },
+              "tts_text": { "type": "string" },
+              "speed": { "$ref": "#/$defs/speed" }
+            }
+          }
+        },
+        "pronunciation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["term", "say_as", "confirmed"],
+            "properties": {
+              "term": { "type": "string" },
+              "say_as": { "type": "string" },
+              "confirmed": { "type": "boolean" }
+            }
+          }
+        },
+        "srt_file": { "type": ["string", "null"], "description": "captions-motion: Drive link or outputs path of the SRT." },
+        "font_note": { "type": ["string", "null"], "description": "captions-motion: font needs, e.g. Devanagari-capable bold sans." },
+        "on_screen_cards": {
+          "description": "storyboard and captions-motion: the localised text cards with timings.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["n", "text", "in_sec", "out_sec"],
+            "properties": {
+              "n": { "type": "integer", "minimum": 1 },
+              "text": { "type": "string", "pattern": "^\\S+(\\s+\\S+){0,5}$" },
+              "in_sec": { "type": "number", "minimum": 0 },
+              "out_sec": { "type": "number", "minimum": 0 }
+            }
+          }
+        },
+        "caption_post_text": { "type": "string", "minLength": 1 },
+        "variants_available": { "type": "array", "items": { "$ref": "#/$defs/language" } }
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "self_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "items"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "ok"],
+            "properties": {
+              "id": { "type": "string", "description": "Checklist item id, e.g. LC1 (localise/checklists/before-sending.md)." },
+              "ok": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "jobId": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "language": { "enum": ["Hindi", "English", "Hinglish"] },
+    "writingScript": { "enum": ["roman-hinglish", "devanagari", "english"] },
+    "speed": { "enum": ["slow", "normal", "fast"] },
+    "scenes": {
+      "description": "The picked script's scene table, localised: same scene numbers and times as script.downstream.scenes.",
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["n", "start_sec", "end_sec", "vo_line", "on_screen_text", "timing_ok"],
+        "properties": {
+          "n": { "type": "integer", "minimum": 1 },
+          "start_sec": { "type": "number", "minimum": 0 },
+          "end_sec": { "type": "number", "minimum": 0 },
+          "vo_line": { "type": "string" },
+          "vo_line_roman": { "type": ["string", "null"], "description": "Devanagari records: a Roman reading for the editor." },
+          "on_screen_text": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["text", "in_sec", "out_sec"],
+              "properties": {
+                "text": { "type": "string", "pattern": "^\\S+(\\s+\\S+){0,5}$" },
+                "in_sec": { "type": "number", "minimum": 0 },
+                "out_sec": { "type": "number", "minimum": 0 },
+                "position": { "enum": ["top", "center", "lower-third"] }
+              }
+            }
+          },
+          "timing_ok": { "type": "boolean", "description": "The localised line still fits the scene's seconds (voiceover-pacing.md)." },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "voScript": {
+      "description": "localise/references/vo-prep.md. text carries the marks for a human voice artist; tts_text is the same line without marks.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lines"],
+      "properties": {
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["n", "start_sec", "end_sec", "text", "tts_text", "speed"],
+            "properties": {
+              "n": { "type": "integer", "minimum": 1 },
+              "start_sec": { "type": "number", "minimum": 0 },
+              "end_sec": { "type": "number", "minimum": 0 },
+              "text": { "type": "string", "description": "With marks: [pause 0.3s], *emphasis*, / for a breath point." },
+              "tts_text": { "type": "string" },
+              "emphasis": { "type": "array", "items": { "type": "string" } },
+              "speed": { "$ref": "#/$defs/speed" },
+              "pronunciation_hints": { "type": "array", "items": { "type": "string" }, "description": "e.g. 'Shubh = shubh (not shub)'." }
+            }
+          }
+        },
+        "file": { "type": ["string", "null"], "description": "Drive link or outputs path of vo-script-v<n>.md." }
+      }
+    },
+    "captionsSrt": {
+      "description": "localise/references/captions-srt.md: SRT timed from the scene table, max 2 lines of config.caption_max_chars_per_line characters.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["srt", "cues", "max_chars_per_line"],
+      "properties": {
+        "srt": { "type": "string", "minLength": 1, "description": "The full SRT text." },
+        "cues": { "type": "integer", "minimum": 1 },
+        "max_chars_per_line": { "type": "integer", "minimum": 16, "maximum": 42 },
+        "file": { "type": ["string", "null"] },
+        "font_note": { "type": ["string", "null"] }
+      }
+    },
+    "captionPost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_line", "full_text", "hashtags"],
+      "properties": {
+        "first_line": { "type": "string", "minLength": 1, "maxLength": 125 },
+        "full_text": { "type": "string", "minLength": 1, "maxLength": 2200 },
+        "hashtags": { "type": "array", "minItems": 3, "maxItems": 5, "uniqueItems": true, "items": { "type": "string", "pattern": "^#[^\\s#]+$" } },
+        "pinned_comment": { "type": ["string", "null"] }
+      }
+    },
+    "scriptCheck": {
+      "description": "Devanagari conversion: verified = scripts/transliterate.py ran with IndicXlit; unverified = manual conversion (no IndicXlit), listed in the checklist; not-needed = Roman or English output.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "tool"],
+      "properties": {
+        "status": { "enum": ["verified", "unverified", "not-needed"] },
+        "tool": { "enum": ["indicxlit", "manual", "none"] },
+        "flagged_words": { "type": "array", "items": { "type": "string" }, "description": "Words a native reader should check (low-confidence or manual)." },
+        "note": { "type": "string" }
+      }
+    },
+    "numbersSpoken": {
+      "description": "localise/references/numbers-and-money.md: how each price, number, date and phone number is said in the voiceover.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["written", "spoken", "scene"],
+        "properties": {
+          "written": { "type": "string", "minLength": 1 },
+          "spoken": { "type": "string", "minLength": 1 },
+          "scene": { "type": "integer", "minimum": 1 },
+          "kind": { "enum": ["price", "percent", "date", "phone", "count", "other"] }
+        }
+      }
+    },
+    "backTranslation": {
+      "description": "localise/references/back-translation.md: the localised version back in plain English, compared with the picked script.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["by", "meaning_ok", "offer_ok", "price_ok", "cta_ok", "drift"],
+      "properties": {
+        "by": { "enum": ["claude", "indictrans2", "not-needed"] },
+        "text": { "type": ["string", "null"] },
+        "meaning_ok": { "type": "boolean" },
+        "offer_ok": { "type": "boolean" },
+        "price_ok": { "type": "boolean" },
+        "cta_ok": { "type": "boolean" },
+        "drift": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["scene", "issue", "fixed"],
+            "properties": {
+              "scene": { "type": "integer", "minimum": 1 },
+              "issue": { "type": "string", "minLength": 1 },
+              "fixed": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "writing_script", "scenes", "vo_script", "captions_srt", "caption_post", "script_check", "numbers_spoken", "back_translation"],
+      "properties": {
+        "language": { "$ref": "#/$defs/language" },
+        "writing_script": { "$ref": "#/$defs/writingScript" },
+        "reason": { "type": "string" },
+        "scenes": { "$ref": "#/$defs/scenes" },
+        "vo_script": { "$ref": "#/$defs/voScript" },
+        "captions_srt": { "$ref": "#/$defs/captionsSrt" },
+        "caption_post": { "$ref": "#/$defs/captionPost" },
+        "script_check": { "$ref": "#/$defs/scriptCheck" },
+        "numbers_spoken": { "$ref": "#/$defs/numbersSpoken" },
+        "back_translation": { "$ref": "#/$defs/backTranslation" }
+      }
+    }
+  }
+}

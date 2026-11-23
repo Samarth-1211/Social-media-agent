@@ -48,6 +48,10 @@
 # brief is run by `brief` (pre-production/brief); it reads the research output when present.
 # concept (full track, video) and hooks (both video tracks) are pre-production skills; the
 # hooks gate is the combined creative pick (decision 0006).
+# script (both video tracks, editor gate script-pick: the editor picks one of 2 versions or edits
+# it) and localise (both video tracks, no gate: its output goes to the client) are pre-production
+# skills. client-script-approval is run by `localise` (its approval step shows the WhatsApp review
+# message); the client's reply is recorded through client-feedback (decision 0007).
 
 version: 3
 
@@ -127,9 +131,10 @@ stages:
     skill: script
     status: placeholder
     reads: [client, brief, hooks]
-    optional_reads: [concept]
+    optional_reads: [concept, research]
     writes: [script]
     gate: editor
+    gate_label: script-pick
     credit_spend: false
     tracks: [quick, full]
     job_types: [video]
@@ -138,17 +143,18 @@ stages:
     group: pre-production
     skill: localise
     status: placeholder
-    reads: [client, script]
-    optional_reads: []
+    reads: [client, brief, script]
+    optional_reads: [hooks, research]
     writes: [localised_script]
-    gate: editor
+    gate: none
     credit_spend: false
-    tracks: [full]
+    tracks: [quick, full]
     job_types: [video]
 
+  # Run by localise (decision 0007): shows the client review message; the gate is the client's reply.
   - id: client-script-approval
-    group: delivery
-    skill: client-messenger
+    group: pre-production
+    skill: localise
     status: placeholder
     reads: [script]
     optional_reads: [localised_script]
