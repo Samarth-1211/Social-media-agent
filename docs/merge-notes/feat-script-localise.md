@@ -46,6 +46,7 @@ M7 repeats these and shows `git diff --stat main` touches no protected path.
 | `scripts/lib/script-checks.mjs` | **New**: spoken-word counter, pace check, scene-table, card, caption, pick/downstream and SRT checks. It reads the pace block from `voiceover-pacing.md` §9. Planted-fault test: 19/19 caught (kept for M7). |
 | `scripts/validate.mjs` | **Check 13**: script and localised_script records in the examples, the job example and the sample data. |
 | `docs/decisions/0007-script-pick-and-localise-approval.md` | **New.** |
+| `library/contracts/stages.yaml` (M3) | `script` → `active` (skill folder `skills/pre-production/script/` exists). |
 
 ## 4. Proposed diffs for protected files (apply at merge, D2)
 

@@ -129,7 +129,7 @@ stages:
   - id: script
     group: pre-production
     skill: script
-    status: placeholder
+    status: active
     reads: [client, brief, hooks]
     optional_reads: [concept, research]
     writes: [script]
