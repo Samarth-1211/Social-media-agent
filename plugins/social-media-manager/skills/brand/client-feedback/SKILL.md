@@ -47,6 +47,7 @@ Plus a `feedback` log entry (`append_log`). Learnings go to `brand-keeper` as su
    - Keep `raw` exactly as received, minus phone numbers.
    - Note who it's from (a name or role, never a number).
    - Note what they were looking at: `about_stage` (the pending client gate's stage, or the stage they name) and `about_version`.
+   - Before splitting a new reply about the same job, mark the earlier entry's `in_scope` items `done` when the stage they were routed to has a newer approved version (or `declined` if the admin declined them), and say so in one line.
 
 4. **Split** the reply into items. Each item has one request or remark, and its own exact `quote`. A long voice-note transcript can give 5–10 items; a "👍" gives one.
 
@@ -119,6 +120,6 @@ None of its own. It feeds the `client` gate that `producer` runs:
 | Can't tell which job it's about | List the jobs waiting on that client (ID, title, what was sent) and ask. |
 | The reply mixes two jobs | Split it into two feedback entries, one per job, and say so. |
 | It's about a version we've since replaced | `old_version` conflict: show what changed since, and ask whether their notes still apply. |
-| A stage they mention isn't on the job's path (e.g. localise on the quick track) | Route to the nearest earlier stage on the path, and note that the full track may be needed. |
+| A stage they mention isn't on the job's path (e.g. concept on the quick track) | Route to the nearest earlier stage on the path, and note that the full track may be needed. |
 | No decision maker on file | Flag `multiple_voices` if more than one person speaks. Ask brand-keeper to add a high open question. |
 | Someone not assigned (and not admin) pastes feedback | Draft the triage, but don't save. Ask the assignee or admin to record it. |

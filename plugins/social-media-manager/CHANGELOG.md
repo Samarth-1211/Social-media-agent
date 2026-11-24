@@ -25,7 +25,7 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 ### Changed: script + localise
 - `stages.yaml`: `localise` runs on the quick track too (video quick path 15 → 16 stages) and has no gate; `client-script-approval` is run by `localise` (was `delivery/client-messenger`); `script` reads research when present and its gate is labelled `script-pick`.
 - Migration: none needed. Old placeholder script records stay valid; existing sheets upgrade v4 → v5 (`google-sheets.md` §7).
-- To apply at merge (merge notes P1–P9): the producer's general `gate_label` rule, client-feedback routing to `localise`, path counts, tracker labels, and the producer's placeholder-output fix.
+- Applied at the merge (merge notes P1–P9): the producer's general `gate_label` rule, client-feedback routing to `localise`, path counts, tracker labels, and the producer's placeholder-output fix.
 
 ## [0.3.0-alpha.1] - 2026-11-22
 

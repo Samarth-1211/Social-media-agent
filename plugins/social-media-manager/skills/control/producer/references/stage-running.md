@@ -6,7 +6,7 @@ How the producer picks, runs, saves and verifies each stage. The pipeline is `${
 
 1. Read `stages.yaml` now (it changes as later groups ship skills).
 2. Keep the stages, in file order, whose `job_types` include `job.type` **and** whose `tracks` include `job.track`. That list is the job's **path**.
-   - Video, quick: 15 stages. Video, full: 22. Poster: 8 (the same on both tracks).
+   - Video, quick: 16 stages. Video, full: 22. Poster: 8 (the same on both tracks).
 3. The **current stage** is `job.current_stage`. The **next stage** is the one after it on the path.
 4. Stage `status`:
 
@@ -79,6 +79,7 @@ For each field in the stage's `writes`:
 }
 ```
 
+- Leave `schema` out of a placeholder output (never `null`). Log the stage's start and end as kind `event` ("storyboard v1 written (placeholder)").
 - Approval stages (`client-*-approval`) have no `writes`. They only open their client gate.
 - A placeholder `credit_spend` stage spends 0 credits; still run the budget check and show it in one line.
 - Say "placeholder: not real work yet" every time you show one.
@@ -127,7 +128,7 @@ Only then say the stage is done. If a check fails, log an `error`, report it and
 |---|---|
 | `none` | Close the history row (`done`, `finished_at`). Log it. Run the next stage in the same turn, without asking. |
 | `admin`, `editor`, `client` | `record_gate` request (`gate-rules.md` §1). Stop and show the gate message. |
-| `editor` with `gate_label: creative-pick` (`hooks`) | As above, but show the hooks skill's creative-pick message; the editor's reply goes to the hooks skill (`gate-rules.md` §3). |
+| `editor` with a `gate_label` (`hooks` → `creative-pick`, `script` → `script-pick`) | As above, but show the stage skill's `templates/<gate_label>.md`; the editor's reply goes to that skill (`gate-rules.md` §3). |
 | Stage skill says it is **waiting on the client** (e.g. brief `awaiting-client`) | Don't request the gate. Keep the history row `in_progress`, keep the skill's `waiting_on: client` and `next_action`, and stop. When the reply is pasted, run the same stage skill again; it ends with its normal gate. |
 
 A run of consecutive `gate: none` stages continues until the next gate, a failed check or a budget stop.

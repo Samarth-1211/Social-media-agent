@@ -30,6 +30,7 @@ Reply: "approve" · "approve, full track / budget 150 / assign Pooja" · "change
 ```
 ⏸ {job_id} · {stage}: waiting on the client ({decision maker})
 To send: {field} v{version}{ (placeholder: nothing real to send yet)}
+{for client-script-approval: "The message to send is just above: copy it as it is."}
 {assignee name}: send it to {decision maker}, then paste their reply here:
   "client approved: <their message>"  or  "client feedback: <their message>"
 ```

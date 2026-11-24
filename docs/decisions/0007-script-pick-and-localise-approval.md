@@ -19,6 +19,6 @@
 ## Consequences
 
 - The video quick path grows from 15 to 16 stages, because `localise` now runs on it.
-- The producer hard-codes `creative-pick` today (`gate-rules.md` §1.4 and §3). `script-pick` needs a general rule there. That is a protected file, so the proposed diff is in `docs/merge-notes/feat-script-localise.md` and is applied at merge (admin decision, 2026-11-23).
-- `client-feedback` routes spoken words to `script` today. Its routing table gets a `localise` row for wording and language. That is also a protected file, also proposed in the merge notes, also applied at merge.
-- Until those diffs are applied, `script-pick` replies other than a plain approve fall back to the producer's generic "changes" handling, and wording feedback re-runs `script` (heavier, but safe).
+- The producer hard-codes `creative-pick` today (`gate-rules.md` §1.4 and §3). `script-pick` needs a general rule there. The general rule ("a stage with a `gate_label` shows its skill's `templates/<gate_label>.md` and sends the reply to that skill's Gate section") was applied at the merge (merge notes P1, 2026-11-24).
+- `client-feedback` routes spoken words to `script` today. Its routing table gets a `localise` row for wording and language. Applied at the merge (merge notes P2, 2026-11-24).
+- P3–P9 (path counts, STAGE-CONTRACT wording, tracker labels, knowledge README, what to send, closing feedback items, placeholder outputs) were applied at the same merge.
