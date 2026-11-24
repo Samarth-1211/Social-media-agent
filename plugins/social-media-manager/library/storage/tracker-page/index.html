@@ -2,105 +2,160 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a production board. Summary strip (who is holding work) → filters → stage lanes in pipeline order,
-   with the selected job's detail beside the board on wide screens and below it on phones. */
+/* Layout: a studio production board in a light theme. Header → tabs → "Today" (who must act, in plain words)
+   → Jobs (each job's journey as phases) → a job page (right now, journey, what's been made). Single light look
+   by request: colors set explicitly, no dark variant. */
 :root {
-  --bg: #F3F6F9; --surface: #FFFFFF; --sunk: #EBF0F5; --ink: #17202C; --muted: #5A6576; --line: #D9E0E8;
-  --accent: #B56A00; --accent-soft: #FCEBCB;
-  --w-admin: #B56A00; --w-editor: #1D67A8; --w-client: #7347AD; --bad: #B42318; --bad-soft: #FDE4E1; --good: #23704A;
-  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --bg: #F4F6F9; --surface: #FFFFFF; --sunk: #EEF1F5; --ink: #1A2330; --muted: #5C6777; --faint: #8A94A3; --line: #E0E5EC;
+  --accent: #0E6E78; --accent-soft: #E3F2F3;
+  --admin: #A8530C; --admin-soft: #FCEFE2; --editor: #1F5DB8; --editor-soft: #E7EEFB; --client: #7440AE; --client-soft: #F1E9FA;
+  --run: #2B7A54; --run-soft: #E4F3EB; --bad: #BE3329; --bad-soft: #FCE9E7; --done: #2B7A54; --todo: #C9D1DB;
+  --f-display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
   --f-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   --f-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
-  --r: 10px;
+  --r: 12px; --shadow: 0 1px 2px rgba(20, 30, 45, .05), 0 1px 1px rgba(20, 30, 45, .03);
+  color-scheme: light;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0E131A; --surface: #151C26; --sunk: #1B2430; --ink: #E5EAF1; --muted: #98A3B3; --line: #273243;
-  --accent: #F0A93A; --accent-soft: #3A2A11;
-  --w-admin: #F0A93A; --w-editor: #63ADEB; --w-client: #B99AEB; --bad: #F2786C; --bad-soft: #3B1A17; --good: #5FC58E;
-  color-scheme: dark; } }
-:root[data-theme="dark"] {
-  --bg: #0E131A; --surface: #151C26; --sunk: #1B2430; --ink: #E5EAF1; --muted: #98A3B3; --line: #273243;
-  --accent: #F0A93A; --accent-soft: #3A2A11;
-  --w-admin: #F0A93A; --w-editor: #63ADEB; --w-client: #B99AEB; --bad: #F2786C; --bad-soft: #3B1A17; --good: #5FC58E;
-  color-scheme: dark; }
-
-body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--f-body); }
-.wrap { max-width: 1320px; margin: 0 auto; padding-block: 20px 48px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
-  display: grid; gap: 18px; }
-h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
-h1 { font-size: 1.6rem; } h2 { font-size: 1.15rem; } h3 { font-size: 0.95rem; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.55 var(--f-body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 1280px; margin: 0 auto; padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 20px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; color: var(--ink); }
+h1 { font-size: 1.35rem; letter-spacing: -0.01em; } h2 { font-size: 1.1rem; } h3 { font-size: 0.95rem; }
+p { margin: 0; }
 .mono, .id { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
-.muted { color: var(--muted); }
-.label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+.id { font-size: 0.8rem; color: var(--muted); }
+.muted { color: var(--muted); } .faint { color: var(--faint); }
+.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 600; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 
-header.top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
-.source { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.85rem; }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
-.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.pill.live { color: var(--good); } .pill.sample { color: var(--accent); }
-.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 11px; cursor: pointer; }
-.btn:hover { border-color: var(--muted); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
-
-nav.views { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
-nav.views a { padding: 8px 12px; color: var(--muted); text-decoration: none; font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
+/* header + tabs */
+.topbar { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.topbar .inner { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding-block: 12px 0; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: #fff; display: grid; place-items: center; font: 700 0.78rem var(--f-display); letter-spacing: 0.02em; }
+.brand small { display: block; color: var(--muted); font-size: 0.78rem; }
+.source { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.82rem; }
+nav.views { display: flex; gap: 2px; overflow-x: auto; margin-top: 8px; }
+nav.views a { padding: 9px 12px 10px; color: var(--muted); text-decoration: none; font-weight: 600; border-bottom: 2px solid transparent; white-space: nowrap; }
+nav.views a:hover { color: var(--ink); }
 nav.views a[aria-current="page"] { color: var(--ink); border-color: var(--accent); }
 
-.notice { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 8px; }
+/* shared bits */
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; background: var(--sunk); color: var(--muted); }
+.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.live { background: var(--run-soft); color: var(--run); } .pill.sample { background: var(--admin-soft); color: var(--admin); }
+.who-admin { background: var(--admin-soft); color: var(--admin); } .who-editor { background: var(--editor-soft); color: var(--editor); }
+.who-client { background: var(--client-soft); color: var(--client); } .who-none { background: var(--run-soft); color: var(--run); }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 12px; cursor: pointer; font-weight: 500; }
+.btn:hover { border-color: var(--faint); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.tag { font-size: 0.68rem; font-weight: 600; padding: 1px 7px; border-radius: 5px; background: var(--sunk); color: var(--muted); white-space: nowrap; }
+.tag.later { background: transparent; border: 1px dashed var(--todo); color: var(--faint); }
+.late { color: var(--bad); font-weight: 600; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
+.empty { color: var(--muted); padding: 22px; text-align: center; border: 1px dashed var(--line); border-radius: var(--r); background: var(--surface); }
+.notice { border: 1px solid var(--line); border-left: 4px solid var(--admin); background: var(--surface); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 8px; }
 .notice.bad { border-left-color: var(--bad); }
 .notice .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-
-.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-.stat { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: var(--r); padding: 10px 12px; cursor: pointer; display: grid; gap: 2px; border-top: 3px solid var(--c, var(--line)); }
-.stat[aria-pressed="true"] { background: var(--sunk); border-color: var(--c); }
-.stat b { font-family: var(--f-display); font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
-
-.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
-.filters label { display: grid; gap: 3px; font-size: 0.78rem; color: var(--muted); }
-.filters select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; min-width: 130px; }
-
-.split { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 1040px) { .split.has-detail { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); } }
-.lanes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }
-.lane { background: var(--sunk); border-radius: var(--r); padding: 10px; display: grid; gap: 8px; min-width: 0; }
-.lane header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.card { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 5px; cursor: pointer; min-width: 0; }
-.card:hover { border-color: var(--muted); }
-.card[aria-current="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-.card .title { font-weight: 600; overflow-wrap: anywhere; }
-.meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 0.8rem; color: var(--muted); }
-.w { color: var(--c); border-color: color-mix(in srgb, var(--c) 40%, var(--line)); }
-.w-admin { --c: var(--w-admin); } .w-editor { --c: var(--w-editor); } .w-client { --c: var(--w-client); } .w-none { --c: var(--muted); }
-.late { color: var(--bad); font-weight: 600; }
-
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 16px; min-width: 0; align-content: start; }
-.panel section { display: grid; gap: 8px; min-width: 0; }
-.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; font-size: 0.88rem; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; background: var(--sunk); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--f-data); }
+ul.plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+ul.plain li { overflow-wrap: anywhere; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; font-size: 0.88rem; margin: 0; }
 .kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
 .meter { height: 8px; background: var(--sunk); border-radius: 99px; position: relative; overflow: hidden; }
 .meter i { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 99px; }
 .meter i.over { background: var(--bad); }
-.meter .warn { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--ink); opacity: .5; }
-.tablewrap { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: 0.84rem; }
-th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--f-data); }
-.st-approved { color: var(--good); } .st-pending { color: var(--accent); font-weight: 600; } .st-changes_requested, .st-sent_back { color: var(--bad); }
-ul.plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-ul.plain li { overflow-wrap: anywhere; }
-.ph { font-size: 0.72rem; padding: 1px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
-.conf-c { color: var(--good); font-weight: 700; } .conf-g { color: var(--accent); font-weight: 700; }
-.swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; margin-right: 4px; }
-.prio-high { color: var(--bad); font-weight: 600; } .prio-medium { color: var(--accent); font-weight: 600; } .prio-low { color: var(--muted); }
-.clients { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); align-content: start; }
-.empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: var(--r); }
-footer { font-size: 0.78rem; color: var(--muted); }
+.meter .warn { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--admin); }
+
+/* Today */
+.hello { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; justify-content: space-between; padding-top: 4px; }
+.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.tile { text-align: left; cursor: pointer; padding: 14px 16px; display: grid; gap: 4px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); }
+.tile b { font: 700 1.9rem/1.1 var(--f-display); font-variant-numeric: tabular-nums; }
+.tile .who { font-weight: 600; } .tile .hint { font-size: 0.8rem; color: var(--muted); }
+.tile[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: -2px; }
+.tile.t-admin { color: var(--admin); } .tile.t-editor { color: var(--editor); } .tile.t-client { color: var(--client); } .tile.t-bad { color: var(--bad); }
+.tile b, .tile .who { color: inherit; } .tile .hint { color: var(--muted); }
+.group { display: grid; gap: 8px; }
+.group > header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rows { display: grid; gap: 8px; }
+.row-job { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 2.4fr) minmax(150px, 1fr); gap: 6px 18px; align-items: center;
+  padding: 12px 14px; cursor: pointer; text-align: left; width: 100%; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); }
+.row-job:hover { border-color: var(--faint); }
+.row-job .title { font-weight: 600; overflow-wrap: anywhere; }
+.row-job .sub { font-size: 0.8rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.row-job .next { font-size: 0.86rem; overflow-wrap: anywhere; }
+.row-job .side { display: grid; gap: 6px; justify-items: start; font-size: 0.8rem; }
+@media (max-width: 760px) { .row-job { grid-template-columns: minmax(0, 1fr); } }
+
+/* phase bar */
+.phases { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; width: 100%; }
+.phases span { height: 6px; border-radius: 3px; background: var(--todo); }
+.phases span.done { background: var(--done); } .phases span.now { background: var(--accent); }
+.phase-legend { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; font-size: 0.66rem; color: var(--faint); }
+.phase-legend span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phase-legend span.now { color: var(--accent); font-weight: 600; }
+
+/* Jobs */
+.filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; }
+.filters label { display: grid; gap: 3px; font-size: 0.76rem; color: var(--muted); font-weight: 500; }
+.filters select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; min-width: 140px; }
+.filters .check { grid-auto-flow: column; align-items: center; gap: 6px; padding-bottom: 6px; }
+
+/* job page */
+.split { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1060px) { .split.has-detail { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: start; } }
+.panel { padding: 18px; display: grid; gap: 18px; min-width: 0; align-content: start; }
+.panel section { display: grid; gap: 8px; min-width: 0; }
+.panel .head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.now-box { border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; background: var(--sunk); }
+.now-box.w-admin { background: var(--admin-soft); } .now-box.w-editor { background: var(--editor-soft); } .now-box.w-client { background: var(--client-soft); } .now-box.w-none { background: var(--run-soft); }
+.now-box .big { font: 600 1rem var(--f-display); }
+.journey { list-style: none; margin: 0; padding: 0; display: grid; }
+.journey li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; position: relative; padding-bottom: 12px; }
+.journey li::before { content: ""; position: absolute; left: 10px; top: 20px; bottom: 0; width: 2px; background: var(--line); }
+.journey li:last-child::before { display: none; }
+.journey .ic { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 0.7rem; font-weight: 700; border: 2px solid var(--todo); background: var(--surface); color: var(--faint); z-index: 1; }
+.journey li.done .ic { background: var(--done); border-color: var(--done); color: #fff; }
+.journey li.skipped .ic { border-style: dashed; }
+.journey li.now .ic { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.journey .st { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
+.journey .st b { font-weight: 600; }
+.journey li.upcoming .st b { color: var(--muted); font-weight: 500; }
+.journey .gate { font-size: 0.8rem; color: var(--muted); }
+.journey .phase-h { grid-column: 1 / -1; padding: 2px 0 6px 32px; }
+.made { display: grid; gap: 8px; }
+.made .item { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 4px; }
+.made .item .top { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+details summary { cursor: pointer; color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+
+/* clients + credits + guide */
+.clients { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); align-content: start; }
+.client-card { text-align: left; padding: 14px; display: grid; gap: 6px; cursor: pointer; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); min-width: 0; }
+.client-card[aria-current="true"] { outline: 2px solid var(--accent); outline-offset: -2px; }
+.client-card .title { font-weight: 600; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.8rem; color: var(--muted); }
+.conf-c { color: var(--run); font-weight: 700; } .conf-g { color: var(--admin); font-weight: 700; }
+.swatch { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); vertical-align: -2px; margin-right: 4px; }
+.prio-high { color: var(--bad); font-weight: 600; } .prio-medium { color: var(--admin); font-weight: 600; } .prio-low { color: var(--muted); }
+.guide { display: grid; gap: 14px; }
+.guide .phase { padding: 16px; display: grid; gap: 10px; }
+.guide .phase header { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+.steps { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.step { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 0.82rem; color: var(--muted); align-items: center; }
+footer { font-size: 0.78rem; color: var(--faint); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 
@@ -109,21 +164,22 @@ footer { font-size: 0.78rem; color: var(--muted); }
 </script>
 
 <div class="wrap">
-  <header class="top">
-    <div>
-      <h1>TDM Social Media Tracker</h1>
-      <div class="muted">Read-only view of the TDM Studio Database. Changes happen through Claude.</div>
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand"><span class="mark" aria-hidden="true">TDM</span><div><h1>Production Tracker</h1><small>Every job, where it is, and who needs to act. Read-only: changes happen by asking Claude.</small></div></div>
+      <div class="source" id="source"><span class="pill"><span class="dot"></span>Connecting…</span></div>
     </div>
-    <div class="source" id="source"><span class="pill"><span class="dot"></span>Connecting…</span></div>
-  </header>
-  <nav class="views" aria-label="Views">
-    <a href="#jobs" data-view="jobs">Jobs</a>
-    <a href="#clients" data-view="clients">Clients</a>
-    <a href="#credits" data-view="credits">Credits</a>
-  </nav>
+    <nav class="views" aria-label="Views">
+      <a href="#today" data-view="today">Today</a>
+      <a href="#jobs" data-view="jobs">Jobs</a>
+      <a href="#clients" data-view="clients">Clients</a>
+      <a href="#credits" data-view="credits">Credits</a>
+      <a href="#guide" data-view="guide">How it works</a>
+    </nav>
+  </div>
   <div id="notices"></div>
   <main id="main"><div class="empty">Loading jobs, clients and credits from the TDM Studio Database…</div></main>
-  <footer>Never shows client phone numbers. Times are India time.</footer>
+  <footer>Client phone numbers are never shown. Times are India time. Data: the TDM Studio Database (Google Sheet), read every minute.</footer>
   <input type="file" id="sample-file" accept="application/json,.json" hidden>
 </div>
 
@@ -131,9 +187,32 @@ footer { font-size: 0.78rem; color: var(--muted); }
 (() => {
   // Pipeline order, from library/contracts/stages.yaml (v3).
   const STAGES = ['intake','research','brief','concept','hooks','script','localise','client-script-approval','style-bible','casting','storyboard','production-plan','clips','voice-music','qa-clips','assemble','captions-motion','audio-mix','finish','resolve-export','client-final-approval','poster-drafts','client-poster-approval','poster-final','delivery'];
-  // Tabs read, and the A1 range of each (columns from sheet-layout.json).
-  const TABS = { Jobs: 'Jobs!A1:V', Clients: 'Clients!A1:AG', Questions: 'Questions!A1:H', Learnings: 'Learnings!A1:I', ClientChanges: 'ClientChanges!A1:F', Gates: 'Gates!A1:M', Credits: 'Credits!A1:N', Outputs: 'Outputs!A1:J', StageHistory: 'StageHistory!A1:H', Log: 'Log!A1:F', Feedback: 'Feedback!A1:O', Team: 'Team!A1:H', Insights: 'Insights!A1:U', InsightFindings: 'InsightFindings!A1:O', Tasks: 'Tasks!A1:T' };
-  const JSON_COLS = new Set(['decision_maker','audience','tone_of_voice','words','visual_identity','references','festival_calendar','price_points','confidence','shown_outputs','items','conflicts','routing','messages','data','competitors','meta','methods_used','cost','competitors_analysed','own_account','diff_vs_previous','pending_browser_step','downstream','details']);
+  // Plain-language name, phase, who approves (stages.yaml gate) and whether the stage's skill is built yet (status active).
+  const INFO = {
+    'intake': ['New job set up', 'Plan', 'admin', true], 'research': ['Market research', 'Plan', 'none', true], 'brief': ['Brief', 'Plan', 'admin', true],
+    'concept': ['Concepts', 'Idea', 'none', true], 'hooks': ['Concept + hook pick', 'Idea', 'editor', true],
+    'script': ['Script (pick A or B)', 'Script', 'editor', true], 'localise': ['Language version', 'Script', 'none', true], 'client-script-approval': ['Client approves script', 'Script', 'client', true],
+    'style-bible': ['Look and style', 'Prep', 'editor', false], 'casting': ['Casting', 'Prep', 'editor', false], 'storyboard': ['Storyboard', 'Prep', 'editor', false], 'production-plan': ['Shoot and generation plan', 'Prep', 'admin', false],
+    'clips': ['Video clips', 'Make', 'none', false], 'voice-music': ['Voice and music', 'Make', 'editor', false], 'qa-clips': ['Quality check', 'Make', 'editor', false],
+    'assemble': ['Rough cut', 'Edit', 'editor', false], 'captions-motion': ['Captions and motion', 'Edit', 'editor', false], 'audio-mix': ['Audio mix', 'Edit', 'editor', false], 'finish': ['Final master', 'Edit', 'admin', false], 'resolve-export': ['Project export', 'Edit', 'none', false],
+    'client-final-approval': ['Client approves video', 'Deliver', 'client', false],
+    'poster-drafts': ['Poster drafts', 'Poster', 'editor', false], 'client-poster-approval': ['Client approves poster', 'Poster', 'client', false], 'poster-final': ['Final poster', 'Poster', 'admin', false],
+    'delivery': ['Delivery', 'Deliver', 'admin', false],
+  };
+  const PHASE_TEXT = {
+    Plan: 'Set up the job, read the market, agree the brief.', Idea: 'Insight-led concepts and scroll-stopping hooks; the editor picks one pair.',
+    Script: 'Two timed script versions; the editor picks; Claude writes the language version and the client approves it.',
+    Prep: 'Look, cast, storyboard and the shoot or generation plan.', Make: 'Generate or shoot the clips, voice and music, then check quality.',
+    Edit: 'Cut, captions, sound and the final master.', Poster: 'Poster drafts, the client\'s choice, the final poster.', Deliver: 'Client sign-off and handover.',
+  };
+  const QUICK_SKIP = new Set(['concept', 'style-bible', 'casting', 'production-plan', 'audio-mix', 'resolve-export']);
+  const POSTER_PATH = new Set(['intake', 'research', 'brief', 'poster-drafts', 'client-poster-approval', 'poster-final', 'delivery']);
+  const WHO = { admin: 'Samarth (admin)', editor: 'the assigned editor', client: 'the client', none: 'nobody: runs by itself' };
+  const FIELD_NAMES = { request: 'Job request', research: 'Market research', brief: 'Brief', concept: 'Concepts', hooks: 'Hooks and the creative pick', script: 'Script', localised_script: 'Language version', style_bible: 'Style bible', cast: 'Cast', storyboard: 'Storyboard', production_plan: 'Production plan', clips: 'Clips', voiceover: 'Voiceover', music: 'Music', qa_report: 'QA report', rough_cut: 'Rough cut', captions: 'Captions', audio_mix: 'Audio mix', master: 'Final master', resolve_project: 'Resolve project', poster_drafts: 'Poster drafts', package: 'Delivery package' };
+
+  // Tabs read, and the A1 range of each (columns from sheet-layout.json, layout v5).
+  const TABS = { Jobs: 'Jobs!A1:V', Clients: 'Clients!A1:AH', Questions: 'Questions!A1:H', Learnings: 'Learnings!A1:L', ClientChanges: 'ClientChanges!A1:F', Gates: 'Gates!A1:M', Credits: 'Credits!A1:N', Outputs: 'Outputs!A1:J', StageHistory: 'StageHistory!A1:H', Log: 'Log!A1:F', Feedback: 'Feedback!A1:O', Team: 'Team!A1:H', Insights: 'Insights!A1:U', InsightFindings: 'InsightFindings!A1:O', Tasks: 'Tasks!A1:T' };
+  const JSON_COLS = new Set(['decision_maker','audience','tone_of_voice','words','visual_identity','references','festival_calendar','price_points','confidence','shown_outputs','items','conflicts','routing','messages','data','competitors','meta','methods_used','cost','competitors_analysed','own_account','diff_vs_previous','pending_browser_step','downstream','details','pronunciation']);
   const LIST_COLS = new Set(['languages','platforms','do','dont','files','sections','learnings_suggested','situation','not_read','raw_files','used_in_jobs','methods']);
   const NUM_COLS = new Set(['credits_budget','credits_warn_at','credits_used','revision_round','version','seq','amount','estimate','round','about_version','revision_cap','next_job_number','estimate_minutes']);
   // Research: finding lists shown in the client panel, in this order (insight.schema.json findings).
@@ -143,7 +222,7 @@ footer { font-size: 0.78rem; color: var(--muted); }
 
   let cfg = {};
   try { cfg = JSON.parse(document.getElementById('tracker-config').textContent); } catch (e) { cfg = {}; }
-  const state = { source: 'loading', raw: {}, errors: {}, updatedAt: null, view: 'jobs', job: null, client: null,
+  const state = { source: 'loading', raw: {}, errors: {}, updatedAt: null, view: 'today', job: null, client: null,
     filter: { client: '', assignee: '', type: '', waiting: '', overdue: false, closed: false } };
   let mcpRef = null;
 
@@ -154,8 +233,11 @@ footer { font-size: 0.78rem; color: var(--muted); }
   const monthIST = () => todayIST().slice(0, 7);
   const fmtTime = (iso) => { if (!iso) return ''; const d = new Date(iso); if (isNaN(d)) return esc(iso);
     return new Intl.DateTimeFormat('en-IN', { timeZone: IST, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).format(d); };
-  const fmtDate = (ymd) => { if (!ymd) return ''; const d = new Date(ymd + 'T12:00:00+05:30'); if (isNaN(d)) return esc(ymd);
+  const fmtDate = (ymd) => { if (!ymd) return ''; const d = new Date(String(ymd).slice(0, 10) + 'T12:00:00+05:30'); if (isNaN(d)) return esc(ymd);
     return new Intl.DateTimeFormat('en-IN', { timeZone: IST, day: 'numeric', month: 'short' }).format(d); };
+  const since = (iso) => { const d = new Date(iso); if (!iso || isNaN(d)) return ''; const h = Math.max(0, (Date.now() - d.getTime()) / 3600000);
+    return h < 1 ? 'under an hour' : h < 24 ? `${Math.floor(h)} h` : `${Math.floor(h / 24)} day${Math.floor(h / 24) === 1 ? '' : 's'}`; };
+  const stageName = (s) => esc(INFO[s]?.[0] || s || '—');
   // Same column name, different type per tab: InsightFindings.confidence is a word, Clients.confidence is JSON.
   const TEXT_IN_TAB = { InsightFindings: new Set(['confidence']) };
   const cell = (key, v, tab) => {
@@ -173,8 +255,34 @@ footer { font-size: 0.78rem; color: var(--muted); }
     return vals.slice(1).filter((r) => r.some((x) => x !== '')).map((r) => Object.fromEntries(head.map((k, i) => [k, cell(k, r[i], tab)])));
   };
   const bySeq = (a, b) => (a.seq ?? 0) - (b.seq ?? 0);
-  const stageIndex = (s) => { const i = STAGES.indexOf(s); return i < 0 ? 999 : i; };
-  const waitPill = (w) => `<span class="pill w w-${esc(w || 'none')}"><span class="dot"></span>${w && w !== 'none' ? 'waiting on ' + esc(w) : 'running'}</span>`;
+  const whoPill = (w) => { const k = w && w !== 'none' ? w : 'none'; return `<span class="pill who-${esc(k)}"><span class="dot"></span>${k === 'none' ? 'Running' : 'Waiting on ' + esc(k)}</span>`; };
+
+  // ── journey: the job's path, each stage's status, phases ──────────
+  function pathFor(j) {
+    return STAGES.filter((s) => (j.type === 'poster' ? POSTER_PATH.has(s) : !s.startsWith('poster') && s !== 'client-poster-approval')
+      && !(j.type !== 'poster' && j.track === 'quick' && QUICK_SKIP.has(s)));
+  }
+  function journey(j) {
+    const path = pathFor(j); const cur = path.indexOf(j.current_stage);
+    const last = {}; for (const h of j.history) last[h.stage] = h;
+    const gate = {}; for (const g of j.gates) if (g.kind !== 'budget' && g.kind !== 'spend') gate[g.stage] = g;
+    const done = j.status === 'delivered';
+    const steps = path.map((s, i) => {
+      const h = last[s]; let st = 'upcoming';
+      if (done) st = 'done';
+      else if (s === j.current_stage) st = 'now';
+      else if (h?.status === 'skipped') st = 'skipped';
+      else if (h?.status === 'done' || (cur >= 0 && i < cur)) st = 'done';
+      return { stage: s, st, h, g: gate[s] };
+    });
+    const phases = [];
+    for (const step of steps) { const p = INFO[step.stage]?.[1] || 'Other'; let ph = phases.at(-1); if (!ph || ph.name !== p) phases.push(ph = { name: p, steps: [] }); ph.steps.push(step); }
+    for (const ph of phases) ph.st = ph.steps.some((x) => x.st === 'now') ? 'now' : ph.steps.every((x) => x.st === 'done' || x.st === 'skipped') ? 'done' : 'todo';
+    const n = steps.filter((x) => x.st === 'done' || x.st === 'skipped').length;
+    return { steps, phases, n, total: steps.length };
+  }
+  const phaseBar = (jr, legend) => `<div class="phases" role="img" aria-label="${jr.n} of ${jr.total} steps done">${jr.phases.map((p) => `<span class="${p.st}" title="${esc(p.name)}"></span>`).join('')}</div>`
+    + (legend ? `<div class="phase-legend" aria-hidden="true">${jr.phases.map((p) => `<span class="${p.st}">${esc(p.name)}</span>`).join('')}</div>` : '');
 
   // ── model ─────────────────────────────────────────────────
   function model() {
@@ -186,10 +294,14 @@ footer { font-size: 0.78rem; color: var(--muted); }
       logs = group('Log', 'job_id'), outs = group('Outputs', 'job_id'), fb = group('Feedback', 'job_id');
     const qs = group('Questions', 'client_id'), ls = group('Learnings', 'client_id'), ch = group('ClientChanges', 'client_id');
     const today = todayIST();
-    const jobs = rows('Jobs').map((j) => ({ ...j,
-      client: clientById[j.client_id], gates: gates[j.job_id] || [], history: hist[j.job_id] || [], ledger: credits[j.job_id] || [],
-      log: (logs[j.job_id] || []).slice(-20), outputs: outs[j.job_id] || [], feedback: fb[j.job_id] || [],
-      overdue: j.status === 'active' && j.deadline && j.deadline < today }));
+    const jobs = rows('Jobs').map((j) => {
+      const job = { ...j, client: clientById[j.client_id], gates: gates[j.job_id] || [], history: hist[j.job_id] || [], ledger: credits[j.job_id] || [],
+        log: (logs[j.job_id] || []).slice(-20), outputs: outs[j.job_id] || [], feedback: fb[j.job_id] || [],
+        overdue: j.status === 'active' && j.deadline && j.deadline < today };
+      job.pending = job.gates.find((g) => g.status === 'pending') || null;
+      job.journey = journey(job);
+      return job;
+    });
     const findings = group('InsightFindings', 'insight_id');
     const insights = rows('Insights').map((i) => ({ ...i, findings: findings[i.insight_id] || [] }));
     const tasks = rows('Tasks');
@@ -202,11 +314,11 @@ footer { font-size: 0.78rem; color: var(--muted); }
   }
   const who = (m, h) => (h && m.team[h] ? esc(m.team[h].name) : esc(h || '—'));
 
-  // ── rendering ─────────────────────────────────────────────
+  // ── header, notices, nav ──────────────────────────────────
   function renderSource() {
     const el = document.getElementById('source');
     const upd = state.updatedAt ? `<span class="muted">Updated ${fmtTime(new Date(state.updatedAt).toISOString())}</span>` : '';
-    if (state.source === 'live') el.innerHTML = `<span class="pill live"><span class="dot"></span>Live · Google Sheets</span>${upd}<button class="btn" id="refresh">Refresh</button>`;
+    if (state.source === 'live') el.innerHTML = `<span class="pill live"><span class="dot"></span>Live from Google Sheets</span>${upd}<button class="btn" id="refresh">Refresh</button>`;
     else if (state.source === 'sample') el.innerHTML = `<span class="pill sample"><span class="dot"></span>Sample data (fictional)</span>`;
     else el.innerHTML = `<span class="pill"><span class="dot"></span>Connecting…</span>`;
     const r = document.getElementById('refresh'); if (r) r.onclick = () => mcpRef?.invalidate(cfg.sheets_server).catch(() => {});
@@ -236,98 +348,150 @@ footer { font-size: 0.78rem; color: var(--muted); }
     for (const a of document.querySelectorAll('nav.views a')) a.setAttribute('aria-current', a.dataset.view === state.view ? 'page' : 'false');
   }
 
+  // ── Today ─────────────────────────────────────────────────
+  function jobRow(m, j) {
+    const waited = j.pending ? `waiting ${since(j.pending.requested_at)}` : '';
+    return `<button class="row-job" data-job="${esc(j.job_id)}">
+      <span style="display:grid;gap:3px;min-width:0"><span class="sub"><span class="id">${esc(j.job_id)}</span><span>${esc(j.client?.name || j.client_id)}</span><span>${esc(j.type)} · ${esc(j.track)} track</span></span>
+        <span class="title">${esc(j.title)}</span></span>
+      <span style="display:grid;gap:4px;min-width:0"><span class="sub"><span>Now: <b style="color:var(--ink)">${stageName(j.current_stage)}</b></span><span>step ${Math.min(j.journey.n + 1, j.journey.total)} of ${j.journey.total}</span></span>
+        <span class="next">${esc(j.next_action || '')}</span>${phaseBar(j.journey, false)}</span>
+      <span class="side">${whoPill(j.waiting_on)}<span class="muted">${who(m, j.assignee)}${waited ? ' · ' + esc(waited) : ''}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : 'muted'}">${j.overdue ? 'Overdue since ' : 'Due '}${fmtDate(j.deadline)}</span>` : ''}</span>
+    </button>`;
+  }
+
+  function renderToday(m) {
+    const f = state.filter; const open = m.jobs.filter((j) => j.status === 'active');
+    const by = (w) => open.filter((j) => (j.waiting_on || 'none') === w);
+    const admin = Object.values(m.team).find((t) => t.role === 'admin');
+    const adminName = admin ? esc(admin.name) : 'The admin';
+    const tile = (key, cls, n, whoTxt, hint) => `<button class="tile ${cls}" data-stat="${key}" aria-pressed="${key === 'overdue' ? f.overdue : f.waiting === key}"><span class="who">${whoTxt}</span><b>${n}</b><span class="hint">${hint}</span></button>`;
+    const pick = (list) => list.filter((j) => (!f.waiting || (j.waiting_on || 'none') === f.waiting) && (!f.overdue || j.overdue));
+    const section = (key, title, hint, list) => { const l = pick(list).sort((a, b) => String(a.pending?.requested_at || a.deadline || '9').localeCompare(String(b.pending?.requested_at || b.deadline || '9')));
+      return l.length ? `<section class="group"><header><h2>${title}</h2><span class="muted">${hint}</span></header><div class="rows">${l.map((j) => jobRow(m, j)).join('')}</div></section>` : ''; };
+    const body = [
+      section('admin', `${adminName} needs to approve`, 'Intake, brief, plans, final master and delivery wait for the admin.', by('admin')),
+      section('editor', 'An editor needs to pick or check', 'Creative pick, script pick, storyboard and edit checks.', by('editor')),
+      section('client', 'Waiting for the client', 'Send the message Claude prepared, then paste their reply to Claude.', by('client')),
+      section('none', 'Moving on its own', 'Claude runs these steps; say "aage badho" if one looks stuck.', by('none')),
+    ].join('');
+    return `<div class="hello"><h2>${open.length} open job${open.length === 1 ? '' : 's'}</h2><span class="muted">Click a job to see its full journey.</span></div>
+      <div class="tiles">
+        ${tile('admin', 't-admin', by('admin').length, `${adminName} (admin)`, 'approvals waiting')}
+        ${tile('editor', 't-editor', by('editor').length, 'Editors', 'picks and checks waiting')}
+        ${tile('client', 't-client', by('client').length, 'Clients', 'replies waiting')}
+        ${tile('overdue', 't-bad', open.filter((j) => j.overdue).length, 'Overdue', 'past the deadline')}
+      </div>
+      ${body || `<div class="empty">${f.waiting || f.overdue ? 'Nothing here for this filter. Click the tile again to clear it.' : 'No open jobs. Start one by telling Claude: "new job for <client>: <what they want>".'}</div>`}`;
+  }
+
+  // ── Jobs ──────────────────────────────────────────────────
   function jobMatches(j, f) {
     if (!f.closed && j.status !== 'active') return false;
     if (f.client && j.client_id !== f.client) return false;
     if (f.assignee && j.assignee !== f.assignee) return false;
     if (f.type && j.type !== f.type) return false;
-    if (f.waiting && j.waiting_on !== f.waiting) return false;
+    if (f.waiting && (j.waiting_on || 'none') !== f.waiting) return false;
     if (f.overdue && !j.overdue) return false;
     return true;
   }
 
   function renderJobs(m) {
-    const f = state.filter; const open = m.jobs.filter((j) => j.status === 'active');
-    const count = (w) => open.filter((j) => j.waiting_on === w).length;
-    const stat = (key, label, n, c) => `<button class="stat" data-stat="${key}" aria-pressed="${key === 'overdue' ? f.overdue : f.waiting === key}" style="--c: var(${c})"><span class="label">${label}</span><b>${n}</b></button>`;
+    const f = state.filter;
     const opt = (vals, cur, all) => `<option value="">${all}</option>` + vals.map(([v, l]) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(l)}</option>`).join('');
     const assignees = [...new Set(m.jobs.map((j) => j.assignee).filter(Boolean))].map((h) => [h, m.team[h]?.name || h]);
-    const shown = m.jobs.filter((j) => jobMatches(j, f));
-    const byStage = {}; for (const j of shown) (byStage[j.current_stage] ??= []).push(j);
-    const lanes = Object.keys(byStage).sort((a, b) => stageIndex(a) - stageIndex(b)).map((s) => `
-      <div class="lane"><header><h3>${esc(s)}</h3><span class="muted mono">${byStage[s].length}</span></header>
-      ${byStage[s].sort((a, b) => (a.deadline || '9') < (b.deadline || '9') ? -1 : 1).map((j) => `
-        <button class="card" data-job="${esc(j.job_id)}" aria-current="${state.job === j.job_id}">
-          <span class="meta"><span class="id">${esc(j.job_id)}</span><span>${esc(j.type)} · ${esc(j.track)}</span></span>
-          <span class="title">${esc(j.title)}</span>
-          <span class="meta"><span>${esc(j.client?.name || j.client_id)}</span><span>${who(m, j.assignee)}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : ''}">${j.overdue ? 'Overdue · ' : 'Due '}${fmtDate(j.deadline)}</span>` : ''}</span>
-          ${waitPill(j.waiting_on)}
-        </button>`).join('')}
-      </div>`).join('');
+    const shown = m.jobs.filter((j) => jobMatches(j, f)).sort((a, b) => STAGES.indexOf(b.current_stage) - STAGES.indexOf(a.current_stage));
     const detail = state.job && m.jobs.find((j) => j.job_id === state.job);
-    return `
-      <div class="strip">${stat('admin', 'Waiting on admin', count('admin'), '--w-admin')}${stat('editor', 'Waiting on editor', count('editor'), '--w-editor')}${stat('client', 'Waiting on client', count('client'), '--w-client')}${stat('overdue', 'Overdue', open.filter((j) => j.overdue).length, '--bad')}</div>
-      <div class="filters">
+    const list = shown.map((j) => `<button class="row-job" data-job="${esc(j.job_id)}"${state.job === j.job_id ? ' aria-current="true" style="outline:2px solid var(--accent);outline-offset:-2px"' : ''}>
+        <span style="display:grid;gap:3px;min-width:0"><span class="sub"><span class="id">${esc(j.job_id)}</span><span>${esc(j.client?.name || j.client_id)}</span></span><span class="title">${esc(j.title)}</span>
+          <span class="sub"><span>${esc(j.type)} · ${esc(j.track)} track</span><span>${who(m, j.assignee)}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : ''}">${j.overdue ? 'Overdue · ' : 'Due '}${fmtDate(j.deadline)}</span>` : ''}</span></span>
+        <span style="display:grid;gap:4px;min-width:0"><span class="sub"><span>Now: <b style="color:var(--ink)">${stageName(j.current_stage)}</b></span><span>${j.journey.n} of ${j.journey.total} steps done</span></span>${phaseBar(j.journey, true)}</span>
+        <span class="side">${whoPill(j.waiting_on)}${j.status !== 'active' ? `<span class="tag">${esc(j.status)}</span>` : ''}</span>
+      </button>`).join('');
+    return `<div class="filters">
         <label for="f-client">Client<select id="f-client">${opt(m.clients.map((c) => [c.client_id, c.name]), f.client, 'All clients')}</select></label>
         <label for="f-assignee">Assignee<select id="f-assignee">${opt(assignees, f.assignee, 'Everyone')}</select></label>
         <label for="f-type">Type<select id="f-type">${opt([['video', 'Video'], ['poster', 'Poster']], f.type, 'Video and poster')}</select></label>
         <label for="f-waiting">Waiting on<select id="f-waiting">${opt([['admin', 'Admin'], ['editor', 'Editor'], ['client', 'Client'], ['none', 'Nobody (running)']], f.waiting, 'Anyone')}</select></label>
-        <label for="f-closed" style="grid-auto-flow: column; align-items: center; gap: 6px;"><input type="checkbox" id="f-closed"${f.closed ? ' checked' : ''}> Include paused, delivered, cancelled</label>
+        <label for="f-closed" class="check"><input type="checkbox" id="f-closed"${f.closed ? ' checked' : ''}> Show paused, delivered and cancelled</label>
       </div>
       <div class="split${detail ? ' has-detail' : ''}">
-        <div class="lanes">${lanes || `<div class="empty">No jobs match these filters.</div>`}</div>
+        <div class="rows">${list || '<div class="empty">No jobs match these filters.</div>'}</div>
         ${detail ? renderJobDetail(m, detail) : ''}
       </div>`;
+  }
+
+  function madeItem(o) {
+    const d = o.data || {}; const name = esc(FIELD_NAMES[o.field] || o.field);
+    if (d.placeholder) return `<div class="item"><div class="top"><b>${name}</b><span class="mono faint">v${esc(o.version)}</span><span class="tag later">placeholder · no real content yet</span></div></div>`;
+    let facts = '';
+    if (o.field === 'brief') facts = `<dl class="kv"><dt>Goal</dt><dd>${esc(d.objective)}</dd><dt>Message</dt><dd>${esc(d.key_message)}</dd><dt>Call to action</dt><dd>${esc(d.cta)}</dd><dt>Language</dt><dd>${esc(d.language)}${d.duration_sec ? ` · ${esc(d.duration_sec)} s` : ''}</dd></dl>`;
+    else if (o.field === 'hooks') { const h = d.downstream?.hook; facts = d.pick?.status === 'picked' ? `<div>Picked: <b>${esc(d.pick.concept_ref ? d.pick.concept_ref + ' + ' : '')}${esc(d.pick.hook_id)}</b>${h?.layers?.text ? ` · "${esc(h.layers.text)}"` : ''}</div>` : `<div class="muted">${esc((d.hooks || []).length)} hooks written · waiting for the creative pick</div>`; }
+    else if (o.field === 'script') { const ds = d.downstream; facts = d.pick?.status === 'picked' && ds ? `<div>Picked version <b>${esc(ds.version_id)}</b> · ${esc(ds.structure_type)} · ${esc(ds.duration_sec)} s · ${esc((ds.scenes || []).length)} scenes</div>` : `<div class="muted">${esc((d.versions || []).length)} versions written · waiting for the script pick</div>`; }
+    else if (o.field === 'localised_script') facts = `<div>${esc(d.language)} · ${esc(d.writing_script === 'devanagari' ? 'Devanagari' : d.writing_script === 'english' ? 'English' : 'Roman Hinglish')} · script check ${esc(d.script_check?.status || '—')}</div>`;
+    else if (o.field === 'research') facts = `<div>${esc(d.research_status)}${d.insight_id ? ` · ${esc(d.insight_id)}` : ''}</div>`;
+    return `<div class="item"><div class="top"><b>${name}</b><span class="mono faint">v${esc(o.version)}</span>${(o.files || []).map((f) => /^https:\/\//.test(f) ? `<a href="${esc(f)}" target="_blank" rel="noopener">open file</a>` : `<span class="faint">${esc(f)}</span>`).join(' ')}</div>${o.summary ? `<div class="muted">${esc(o.summary)}</div>` : ''}${facts}</div>`;
+  }
+
+  function gateText(m, g) {
+    if (!g) return '';
+    const by = g.decided_by ? `${who(m, g.decided_by)}, ${fmtTime(g.decided_at)}` : '';
+    const map = { approved: `Approved by ${by}`, pending: `Waiting for ${esc(g.owner_role)} · asked ${fmtTime(g.requested_at)}`, changes_requested: `Changes asked by ${by}`, sent_back: `Sent back to ${stageName(g.sent_back_to)} by ${by}` };
+    return `<div class="gate">${map[g.status] || esc(g.status)}${g.note ? ` · ${esc(g.note)}` : ''}</div>`;
   }
 
   function renderJobDetail(m, j) {
     const used = j.credits_used || 0, budget = j.credits_budget || 0, pct = budget ? Math.min(100, (used / budget) * 100) : 0;
     const warn = j.credits_warn_at && budget ? (j.credits_warn_at / budget) * 100 : null;
-    const brief = j.outputs.find((o) => o.field === 'brief');
-    const briefHtml = !brief ? '<span class="muted">Not written yet.</span>'
-      : brief.data?.placeholder ? `<span class="ph">placeholder</span> <span class="muted">${esc(brief.data.note)}</span>`
-      : `<dl class="kv"><dt>Objective</dt><dd>${esc(brief.data?.objective)}</dd><dt>Key message</dt><dd>${esc(brief.data?.key_message)}</dd><dt>CTA</dt><dd>${esc(brief.data?.cta)}</dd><dt>Language</dt><dd>${esc(brief.data?.language)}</dd></dl>`;
-    return `<aside class="panel" id="detail" aria-label="Job ${esc(j.job_id)}">
+    const w = j.waiting_on && j.waiting_on !== 'none' ? j.waiting_on : 'none';
+    let lastPhase = '';
+    const steps = j.journey.steps.map((s) => {
+      const ph = INFO[s.stage]?.[1] || ''; const head = ph !== lastPhase ? `<li class="phase-h"><span class="label">${esc(ph)}</span></li>` : ''; lastPhase = ph;
+      const icon = s.st === 'done' ? '✓' : s.st === 'skipped' ? '–' : s.st === 'now' ? '●' : '';
+      const built = INFO[s.stage]?.[3];
+      return `${head}<li class="${s.st}"><span class="ic" aria-hidden="true">${icon}</span><div><div class="st"><b>${stageName(s.stage)}</b>${s.st === 'now' ? '<span class="tag">now</span>' : ''}${s.st === 'skipped' ? '<span class="tag">skipped</span>' : ''}${!built ? '<span class="tag later">not built yet</span>' : ''}${s.h?.finished_at && s.st === 'done' ? `<span class="faint">${fmtTime(s.h.finished_at)}</span>` : ''}</div>${gateText(m, s.g)}${s.h?.note && s.st !== 'upcoming' ? `<div class="gate">${esc(s.h.note)}</div>` : ''}</div></li>`;
+    }).join('');
+    return `<aside class="card panel" id="detail" aria-label="Job ${esc(j.job_id)}">
       <section>
-        <div class="meta"><span class="id">${esc(j.job_id)}</span><span>${esc(j.type)} · ${esc(j.track)} track · ${esc(j.status)}</span><button class="btn" id="close-detail" style="margin-left:auto">Close</button></div>
+        <div class="head"><span class="id">${esc(j.job_id)}</span><span class="tag">${esc(j.type)}</span><span class="tag">${esc(j.track)} track</span>${j.status !== 'active' ? `<span class="tag">${esc(j.status)}</span>` : ''}<button class="btn" id="close-detail" style="margin-left:auto">Close</button></div>
         <h2>${esc(j.title)}</h2>
-        <div class="meta"><a href="#client-${esc(j.client_id)}">${esc(j.client?.name || j.client_id)}</a><span>Assignee ${who(m, j.assignee)}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : ''}">Deadline ${fmtDate(j.deadline)}${j.overdue ? ' (overdue)' : ''}</span>` : ''}</div>
+        <div class="meta"><a href="#client-${esc(j.client_id)}">${esc(j.client?.name || j.client_id)}</a><span>Assignee: ${who(m, j.assignee)}</span>${j.deadline ? `<span class="${j.overdue ? 'late' : ''}">Deadline ${fmtDate(j.deadline)}${j.overdue ? ' (overdue)' : ''}</span>` : ''}</div>
       </section>
-      <section><div class="label">Now</div><div>${esc(j.current_stage)} · ${waitPill(j.waiting_on)}</div><div><b>Next:</b> ${esc(j.next_action)}</div></section>
-      <section><div class="label">Credits</div>
-        <div class="mono">${used} / ${budget} used${j.credits_warn_at ? ` · warn at ${j.credits_warn_at}` : ''}</div>
-        <div class="meter" role="img" aria-label="${used} of ${budget} credits used"><i class="${used > budget ? 'over' : ''}" style="width:${pct}%"></i>${warn ? `<span class="warn" style="left:${warn}%"></span>` : ''}</div>
-        ${j.ledger.length ? `<div class="tablewrap"><table><thead><tr><th>When</th><th>Stage</th><th>Tier</th><th class="num">Amount</th><th class="num">Est.</th></tr></thead><tbody>${j.ledger.map((l) => `<tr><td>${fmtTime(l.at)}</td><td>${esc(l.stage)}</td><td>${esc(l.tier)}</td><td class="num">${esc(l.amount)}</td><td class="num">${esc(l.estimate ?? '')}</td></tr>`).join('')}</tbody></table></div>` : '<span class="muted">No credits spent yet.</span>'}
-      </section>
-      <section><div class="label">Brief</div>${briefHtml}</section>
-      <section><div class="label">Gates</div><div class="tablewrap"><table><thead><tr><th>Stage</th><th>Owner</th><th>Status</th><th>Decided</th></tr></thead><tbody>
-        ${j.gates.map((g) => `<tr><td>${esc(g.stage)}${g.kind === 'budget' ? ' <span class="ph">budget</span>' : ''}</td><td>${esc(g.owner_role)}</td><td class="st-${esc(g.status)}">${esc(g.status)}${g.sent_back_to ? ' → ' + esc(g.sent_back_to) : ''}</td><td>${g.decided_by ? `${who(m, g.decided_by)}, ${fmtTime(g.decided_at)}` : `<span class="muted">asked ${fmtTime(g.requested_at)}</span>`}${g.note ? `<div class="muted">${esc(g.note)}</div>` : ''}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">No gates yet.</td></tr>'}
-      </tbody></table></div></section>
-      <section><div class="label">Outputs</div><ul class="plain">${j.outputs.map((o) => `<li><b>${esc(o.field)}</b> <span class="mono muted">v${esc(o.version)}</span> ${o.data?.placeholder ? '<span class="ph">placeholder</span>' : ''} ${esc(o.summary || '')}${(o.files || []).map((f) => ` <a href="${esc(f)}" target="_blank" rel="noopener">file</a>`).join('')}</li>`).join('') || '<li class="muted">None yet.</li>'}</ul></section>
+      <section class="now-box w-${esc(w)}"><span class="label">Right now</span><span class="big">${stageName(j.current_stage)}</span>
+        <span>${w === 'none' ? 'Claude is working on this step, or it moves on by itself.' : `Waiting on <b>${w === 'editor' ? who(m, j.assignee) + ' (editor)' : w === 'client' ? esc(j.client?.decision_maker?.name || 'the client') + ' (client)' : esc(WHO[w])}</b>${j.pending ? ` for ${esc(since(j.pending.requested_at))}` : ''}.`}</span>
+        ${j.next_action ? `<span><b>Next:</b> ${esc(j.next_action)}</span>` : ''}</section>
+      <section><div class="label">Journey · ${j.journey.n} of ${j.journey.total} steps done</div>${phaseBar(j.journey, true)}<ol class="journey">${steps}</ol></section>
+      <section><div class="label">What's been made</div><div class="made">${j.outputs.slice().sort((a, b) => STAGES.indexOf(a.stage) - STAGES.indexOf(b.stage)).map(madeItem).join('') || '<span class="muted">Nothing yet.</span>'}</div></section>
       ${j.feedback.length ? `<section><div class="label">Client feedback · revision round ${esc(j.revision_round)}</div><ul class="plain">${j.feedback.map((f) => { const items = Array.isArray(f.items) ? f.items : []; const conf = Array.isArray(f.conflicts) ? f.conflicts.length : 0;
-        return `<li><span class="id">${esc(f.feedback_id)}</span> · round ${esc(f.round)} on ${esc(f.about_stage)} · ${items.length} items${conf ? `, <span class="late">${conf} conflict${conf > 1 ? 's' : ''}</span>` : ''}${f.over_cap ? ', <span class="late">over cap</span>' : ''} · routing ${esc(f.routing?.status || '—')}${f.routing?.proposed_stage ? ' → ' + esc(f.routing.proposed_stage) : ''}</li>`; }).join('')}</ul></section>` : ''}
-      <section><div class="label">Stages</div><ul class="plain">${j.history.map((h) => `<li>${esc(h.stage)} · ${esc(h.status)} <span class="muted">${fmtTime(h.started_at)}${h.finished_at ? ' → ' + fmtTime(h.finished_at) : ''}</span></li>`).join('')}</ul></section>
-      <section><div class="label">Log (latest first)</div><ul class="plain">${j.log.slice().reverse().map((l) => `<li><span class="muted">${fmtTime(l.at)} · ${who(m, l.by)} · ${esc(l.kind)}</span><br>${esc(l.message)}</li>`).join('') || '<li class="muted">Empty.</li>'}</ul></section>
+        return `<li><span class="id">${esc(f.feedback_id)}</span> · round ${esc(f.round)} on ${stageName(f.about_stage)} · ${items.length} item${items.length === 1 ? '' : 's'}${conf ? `, <span class="late">${conf} conflict${conf > 1 ? 's' : ''}</span>` : ''}${f.over_cap ? ', <span class="late">over the revision cap</span>' : ''} · route ${esc(f.routing?.status || '—')}${f.routing?.proposed_stage ? ' → ' + stageName(f.routing.proposed_stage) : ''}</li>`; }).join('')}</ul></section>` : ''}
+      <section><div class="label">Credits (Higgsfield)</div>
+        <div class="mono">${used} of ${budget} used${j.credits_warn_at ? ` · warning at ${j.credits_warn_at}` : ''}</div>
+        <div class="meter" role="img" aria-label="${used} of ${budget} credits used"><i class="${used > budget ? 'over' : ''}" style="width:${pct}%"></i>${warn ? `<span class="warn" style="left:${warn}%"></span>` : ''}</div>
+        ${j.ledger.length ? `<div class="tablewrap"><table><thead><tr><th>When</th><th>Step</th><th>Tier</th><th class="num">Credits</th><th class="num">Estimated</th></tr></thead><tbody>${j.ledger.map((l) => `<tr><td>${fmtTime(l.at)}</td><td>${stageName(l.stage)}</td><td>${esc(l.tier)}</td><td class="num">${esc(l.amount)}${isCredits(l) ? '' : ' ' + esc(l.currency)}</td><td class="num">${esc(l.estimate ?? '')}</td></tr>`).join('')}</tbody></table></div>` : '<span class="muted">No credits spent yet.</span>'}
+      </section>
+      <section><details><summary>Activity log (latest first)</summary><ul class="plain" style="margin-top:8px">${j.log.slice().reverse().map((l) => `<li><span class="faint">${fmtTime(l.at)} · ${who(m, l.by)} · ${esc(l.kind)}</span><br>${esc(l.message)}</li>`).join('') || '<li class="muted">Empty.</li>'}</ul></details></section>
     </aside>`;
   }
 
+  // ── Clients ───────────────────────────────────────────────
   function confMark(c, field) {
     const x = c.confidence?.[field]; if (!x) return '';
     return x.status === 'confirmed' ? `<span class="conf-c" title="Confirmed: ${esc(x.basis)}">✓</span>` : `<span class="conf-g" title="Guessed: ${esc(x.basis)}">?</span>`;
   }
 
   function renderClients(m) {
-    const list = `<div class="clients">${m.clients.map((c) => `<button class="card" data-client="${esc(c.client_id)}" aria-current="${state.client === c.client_id}">
+    const list = `<div class="clients">${m.clients.map((c) => `<button class="client-card" data-client="${esc(c.client_id)}" aria-current="${state.client === c.client_id}">
       <span class="meta"><span class="id">${esc(c.client_code)}</span><span>${esc(c.status)}</span></span><span class="title">${esc(c.name)}</span>
       <span class="meta"><span>${esc(c.business_type)}</span><span>${esc(c.city)}</span></span>
       <span class="meta"><span>${c.jobs.filter((j) => j.status === 'active').length} open jobs</span>${c.questions.length ? `<span class="prio-medium">${c.questions.length} open question${c.questions.length > 1 ? 's' : ''}</span>` : ''}</span>
-      <span class="meta"><span>${c.insight ? `research ${ageDays(c.insight.created_at)} days old` : 'no research yet'}</span>${c.tasks.some((t) => t.needs_browser) ? '<span class="prio-medium">Instagram read pending</span>' : ''}</span></button>`).join('') || '<div class="empty">No clients yet.</div>'}</div>`;
+      <span class="meta"><span>${c.insight ? `research ${ageDays(c.insight.created_at)} days old` : 'no research yet'}</span>${c.tasks.some((t) => t.needs_browser) ? '<span class="prio-medium">Instagram read pending</span>' : ''}</span></button>`).join('') || '<div class="empty">No clients yet. Add one by telling Claude: "new client: <name>".</div>'}</div>`;
     const c = state.client && m.clientById[state.client];
     if (!c) return list;
     const guessed = Object.entries(c.confidence || {}).filter(([, v]) => v.status === 'guessed').map(([k, v]) => `${esc(k)} <span class="muted">(${esc(v.basis)})</span>`);
     const tov = c.tone_of_voice || {};
-    return `<div class="split has-detail">${list}<aside class="panel" aria-label="${esc(c.name)} profile">
-      <section><div class="meta"><span class="id">${esc(c.client_code)}</span><span>profile v${esc(c.version)} · updated ${fmtTime(c.updated_at)}</span><button class="btn" id="close-client" style="margin-left:auto">Close</button></div>
+    const pron = Array.isArray(c.pronunciation) ? c.pronunciation : [];
+    return `<div class="split has-detail">${list}<aside class="card panel" aria-label="${esc(c.name)} profile">
+      <section><div class="head"><span class="id">${esc(c.client_code)}</span><span class="muted">profile v${esc(c.version)} · updated ${fmtTime(c.updated_at)}</span><button class="btn" id="close-client" style="margin-left:auto">Close</button></div>
         <h2>${esc(c.name)}</h2><div class="muted">${esc(c.business_type)} · ${esc(c.city)}</div></section>
       <section><dl class="kv">
         <dt>Contact</dt><dd>${esc(c.contact_person || '—')} · WhatsApp ${c.whatsapp ? 'on file' : 'not on file'}</dd>
@@ -340,12 +504,13 @@ footer { font-size: 0.78rem; color: var(--muted); }
         <dt>Do</dt><dd>${esc((c.do || []).join(' · ') || '—')}</dd>
         <dt>Don't</dt><dd>${esc((c.dont || []).join(' · ') || '—')}</dd>
         <dt>Revision cap</dt><dd>${esc(c.revision_cap)} rounds</dd>
+        ${pron.length ? `<dt>How to say names</dt><dd>${pron.map((p) => `<div><b>${esc(p.term)}</b>: ${esc(p.say_as)}${p.devanagari ? ` (${esc(p.devanagari)})` : ''}${p.confirmed ? ' <span class="conf-c">✓</span>' : ' <span class="conf-g">?</span>'}</div>`).join('')}</dd>` : ''}
       </dl></section>
-      <section><div class="label">Guessed fields (unconfirmed)</div>${guessed.length ? `<ul class="plain">${guessed.map((g) => `<li><span class="conf-g">?</span> ${g}</li>`).join('')}</ul>` : '<span class="muted">Everything recorded is confirmed.</span>'}</section>
+      <section><div class="label">Guessed fields (not confirmed yet)</div>${guessed.length ? `<ul class="plain">${guessed.map((g) => `<li><span class="conf-g">?</span> ${g}</li>`).join('')}</ul>` : '<span class="muted">Everything recorded is confirmed.</span>'}</section>
       <section><div class="label">Open questions</div>${c.questions.length ? `<ul class="plain">${c.questions.map((q) => `<li><span class="prio-${esc(q.priority)}">${esc(q.priority)}</span> ${esc(q.question)}<div class="muted">Recommended: ${esc(q.recommendation)}</div></li>`).join('')}</ul>` : '<span class="muted">None.</span>'}</section>
       <section><div class="label">Learnings</div>${c.learnings.length ? `<ul class="plain">${c.learnings.filter((l) => l.status !== 'retired').map((l) => `<li>${esc(l.what)} <span class="muted">· ${esc(l.kind)}, ${esc(l.status)} · ${fmtDate(l.date)}${l.source_job ? ' · ' + esc(l.source_job) : ''}</span></li>`).join('')}</ul>` : '<span class="muted">None yet.</span>'}</section>
       ${renderInsights(c)}
-      <section><div class="label">Changes</div><ul class="plain">${c.changes.map((x) => `<li><span class="mono">v${esc(x.version)}</span> ${fmtDate(x.date)} · ${esc(x.change)}</li>`).join('') || '<li class="muted">None.</li>'}</ul></section>
+      <section><details><summary>Profile changes</summary><ul class="plain" style="margin-top:8px">${c.changes.map((x) => `<li><span class="mono">v${esc(x.version)}</span> ${fmtDate(x.date)} · ${esc(x.change)}</li>`).join('') || '<li class="muted">None.</li>'}</ul></details></section>
     </aside></div>`;
   }
 
@@ -377,6 +542,7 @@ footer { font-size: 0.78rem; color: var(--muted); }
       <div class="muted">Read-only. Pin or strike findings by asking Claude, or in the InsightFindings tab.</div></section>`;
   }
 
+  // ── Credits ───────────────────────────────────────────────
   function renderCredits(m) {
     const month = monthIST();
     const rowsHtml = m.clients.map((c) => {
@@ -388,20 +554,36 @@ footer { font-size: 0.78rem; color: var(--muted); }
     }).join('');
     const jobRows = m.jobs.filter((j) => j.status === 'active').sort((a, b) => (b.credits_used || 0) - (a.credits_used || 0)).map((j) => {
       const pct = j.credits_budget ? Math.min(100, (j.credits_used / j.credits_budget) * 100) : 0;
-      return `<tr><td><button class="btn" data-job="${esc(j.job_id)}" data-goto="jobs"><span class="id">${esc(j.job_id)}</span></button></td><td>${esc(j.title)}</td><td class="num">${j.credits_used || 0} / ${j.credits_budget || 0}</td><td style="min-width:120px"><div class="meter"><i class="${j.credits_used > j.credits_budget ? 'over' : ''}" style="width:${pct}%"></i></div></td></tr>`;
+      return `<tr><td><button class="btn" data-job="${esc(j.job_id)}"><span class="id">${esc(j.job_id)}</span></button></td><td>${esc(j.title)}</td><td class="num">${j.credits_used || 0} / ${j.credits_budget || 0}</td><td style="min-width:120px"><div class="meter"><i class="${j.credits_used > j.credits_budget ? 'over' : ''}" style="width:${pct}%"></i></div></td></tr>`;
     }).join('');
-    return `<div class="panel"><section><h2>Credits by client</h2><div class="muted">This month = ${esc(month)}, India time. Higgsfield credits only; research money (USD/INR) is never added in.</div>
+    return `<div class="card panel"><section><h2>Credits by client</h2><div class="muted">This month = ${esc(month)}, India time. Higgsfield credits only; research money (USD/INR) is never added in.</div>
       <div class="tablewrap"><table><thead><tr><th>Client</th><th class="num">This month</th><th class="num">All time</th><th class="num">Open jobs: used / budget</th></tr></thead><tbody>${rowsHtml || '<tr><td colspan="4" class="muted">No clients yet.</td></tr>'}</tbody></table></div></section>
       <section><h2>Open jobs</h2><div class="tablewrap"><table><thead><tr><th>Job</th><th>Title</th><th class="num">Used / budget</th><th>Budget used</th></tr></thead><tbody>${jobRows || '<tr><td colspan="4" class="muted">No open jobs.</td></tr>'}</tbody></table></div></section></div>`;
   }
 
+  // ── How it works ──────────────────────────────────────────
+  function renderGuide() {
+    const phases = []; for (const s of STAGES) { const p = INFO[s][1]; let ph = phases.find((x) => x.name === p); if (!ph) phases.push(ph = { name: p, stages: [] }); ph.stages.push(s); }
+    const approver = (g) => g === 'none' ? 'No approval: moves on by itself' : g === 'client' ? 'The client approves (you paste their reply to Claude)' : g === 'editor' ? 'The assigned editor (or admin) approves' : 'Samarth (admin) approves';
+    return `<div class="guide">
+      <div class="card panel"><section><h2>How a job moves</h2>
+        <p>Every job walks through the steps below, in order. Claude does the work; at an approval it stops and waits for the right person. You never edit this page: you tell Claude, in English or Hinglish, for example <span class="mono">"SHL-03 aage badho"</span>, <span class="mono">"approve"</span>, <span class="mono">"A"</span> (script pick) or <span class="mono">"client approved: &lt;their message&gt;"</span>.</p>
+        <div class="legend"><span>${whoPill('admin')}</span><span>${whoPill('editor')}</span><span>${whoPill('client')}</span><span>${whoPill('none')}</span><span class="tag later">not built yet</span><span class="muted">= the step runs as a placeholder for now</span></div>
+        <p class="muted">Quick track skips Concepts, Look and style, Casting, the Shoot plan, Audio mix and Project export. Posters take the poster steps instead of the video ones.</p></section></div>
+      ${phases.map((p) => `<section class="card phase"><header><h3>${esc(p.name)}</h3><span class="muted">${esc(PHASE_TEXT[p.name] || '')}</span></header>
+        <div class="steps">${p.stages.map((s) => `<div class="step"><div class="st" style="display:flex;gap:8px;flex-wrap:wrap;align-items:baseline"><b>${stageName(s)}</b>${INFO[s][3] ? '' : '<span class="tag later">not built yet</span>'}</div><span class="muted" style="font-size:0.82rem">${approver(INFO[s][2])}</span><span class="faint mono" style="font-size:0.72rem">${esc(s)}</span></div>`).join('')}</div></section>`).join('')}
+    </div>`;
+  }
+
+  // ── render + routing ──────────────────────────────────────
   function render() {
     renderSource(); renderNotices(); renderNav();
     const main = document.getElementById('main');
+    if (state.view === 'guide') { main.innerHTML = renderGuide(); bind(); return; }
     const hasData = Object.keys(state.raw).length > 0;
     if (!hasData) { if (state.source !== 'loading') main.innerHTML = '<div class="empty">No data loaded yet.</div>'; return; }
     const m = model();
-    main.innerHTML = state.view === 'clients' ? renderClients(m) : state.view === 'credits' ? renderCredits(m) : renderJobs(m);
+    main.innerHTML = state.view === 'clients' ? renderClients(m) : state.view === 'credits' ? renderCredits(m) : state.view === 'jobs' ? renderJobs(m) : renderToday(m);
     bind();
   }
 
@@ -423,10 +605,11 @@ footer { font-size: 0.78rem; color: var(--muted); }
     if (h.startsWith('job-')) { state.view = 'jobs'; state.job = h.slice(4); }
     else if (h.startsWith('client-')) { state.view = 'clients'; state.client = h.slice(7); }
     else if (h === 'clients') { state.view = 'clients'; state.client = null; }
-    else if (h === 'credits') { state.view = 'credits'; }
-    else { state.view = 'jobs'; state.job = null; }
+    else if (h === 'credits' || h === 'guide') { state.view = h; }
+    else if (h === 'jobs') { state.view = 'jobs'; state.job = null; }
+    else { state.view = 'today'; state.job = null; }
     render();
-    const d = document.getElementById('detail'); if (d && h.startsWith('job-') && window.innerWidth < 1040) d.scrollIntoView({ block: 'start' });
+    const d = document.getElementById('detail'); if (d && h.startsWith('job-') && window.innerWidth < 1060) d.scrollIntoView({ block: 'start' });
   }
 
   // ── data sources ──────────────────────────────────────────

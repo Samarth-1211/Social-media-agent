@@ -1,11 +1,11 @@
 # TDM Social Media Tracker page
 
-A **read-only** page in the Claude app that shows the TDM Studio Database live. It has four views:
-- the jobs board by stage, with filters for client, assignee, type and "waiting on";
-- job detail: brief, gates, credits, feedback and log;
-- clients, with each field's confidence mark and open questions;
-- per client, **Latest insights** (read-only): the newest research sheet, its age, pending Instagram read, top findings per list with confidence and source, what changed, and the competitors in use (struck ones hidden);
-- credits per client (Higgsfield credits only; research money in USD/INR is never added in).
+A **read-only** page in the Claude app that shows the TDM Studio Database live, in plain language for the whole team (light theme). Five views:
+- **Today**: who needs to act, grouped as admin approvals, editor picks and checks, waiting on the client, and moving on its own; each job shows its current step, the next action, how long it has waited and its deadline. Tiles filter the list.
+- **Jobs**: every job with its journey as phases (Plan, Idea, Script, Prep, Make, Edit, Deliver; posters: Plan, Poster, Deliver), with filters. A job page shows "Right now", the step-by-step journey with each approval, what has been made (brief, hooks pick, script pick, language version…), client feedback, credits and the activity log.
+- **Clients**: profiles with each field's confidence mark, open questions, learnings, how to say names, and **Latest insights** (read-only research: findings with confidence and source, what changed, pending Instagram reads, competitors in use).
+- **Credits**: Higgsfield credits per client and per open job (research money in USD/INR is never added in).
+- **How it works**: every step in plain words, who approves it, and which steps are not built yet.
 
 Changes always happen through Claude. The page never writes.
 
@@ -56,4 +56,5 @@ Do this from a Claude chat or Claude Code, signed in to the agency's Claude acco
 
 | Date | What | Result |
 |---|---|---|
+| 2026-11-24 | Light redesign republished to the TEST copy (version 2); `get_values` payload shape (`values` rows) confirmed with one read of the TEST sheet; render test passes on sample data | Live loading in the app still to be confirmed by a viewer (VERIFY list). |
 | 2026-11-22 | Published a private TEST copy pointed at **TDM Studio TEST Database** | Manifest accepted; the connector resolved to "Google Sheets". Loading live data in the app is on the `VERIFY-IN-CLAUDE-APP` list in `docs/STORAGE.md`. |

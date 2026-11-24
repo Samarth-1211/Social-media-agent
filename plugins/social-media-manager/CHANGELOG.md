@@ -4,6 +4,9 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 
 ## [Unreleased]
 
+### Changed
+- Tracker page redesigned: light theme, plain-language step names, a **Today** view of who must act, each job's journey by phase with approvals and what has been made, and a **How it works** guide. Same read-only data access (Google Sheets `get_values`), now reading layout v5 ranges.
+
 ## [0.4.0-alpha.1] - 2026-11-24
 
 Group 2a, agents 5 + 6: script and localise (`docs/merge-notes/feat-script-localise.md`, merge-notes P1–P9 applied). Contracts change additively; v4 sheets upgrade in place to layout v5 (`google-sheets.md` §7). Also ships the concept + hooks fixes found by the 0.3.0-alpha.1 integration runs. Test results: `evals/results/2026-11-24_feat-script-localise.md`.
