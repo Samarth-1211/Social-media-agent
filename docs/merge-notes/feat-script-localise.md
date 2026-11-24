@@ -165,6 +165,56 @@ No protected file changes are needed for it to work. P2 improves the routing, an
 - `client-feedback/SKILL.md` step 8 hands approval-only replies back to the producer.
 - `revision-policy.md` §3 "If the earliest stage is the one just shown → `sent_back` to that stage" covers routing to the stage that made the localised script.
 
-## 5. Merge and test checklist
+## 5. Integration notes (Mode A, M6)
 
-_Filled in at M6._
+**Upstream fields, real ones (read-only).**
+- `script` reads `hooks.data.pick` (must be `picked`) and `hooks.data.downstream`:
+  - `concept` (logline, insight, angle, format, story spine, levers with proof, producibility, risks, `mix_note`);
+  - `hook`, `backup_hooks`, `script_notes`, `implied_assets`, `language`, `writing_script`, `learning`;
+  - `reused_format` on the quick track.
+- From `brief.data`, `script` reads:
+  - `downstream.script` and `downstream.localise.keep_as_is`;
+  - `offer_detail`, `cta_detail`, `proof_points`;
+  - `duration_sec`, `deliverables`, `platforms`;
+  - `language`, `writing_script`, `mandatories`, `avoid`, `tone`, `audience_detail`, `creative_format`, `style_preset`, `confidence`.
+- From `research.data`, `script` reads `research_status`, `insight_id`, `flags`, `downstream.script.proof_points`, `downstream.localise.customer_phrases` and `downstream.brief.pain_points`.
+- `localise` reads `script.data.downstream`, the brief's `downstream.localise`, the hook's layers and research `customer_phrases`.
+- Mapping and fallbacks: `skills/pre-production/script/references/upstream-input.md`. No field was renamed or added upstream.
+
+**Downstream blocks (for later groups).** `script.downstream` and `localised_script.downstream`, described in `skills/pre-production/README.md`, "Script and localise handoff".
+- The draft `storyboard.schema.json` already has `shots[].script_beat`. It maps to our scene `n`, so the storyboard group can build one shot per scene from `shot_list_seed`.
+- `voice-music` reads `localised_script.downstream.vo_lines` and `tts_language_code`. When it measures real durations, it writes `config.pace_overrides` (`voiceover-pacing.md` §8).
+
+**What behaves differently until the protected diffs are applied:**
+
+| Without | Effect | Fixed by |
+|---|---|---|
+| P1 (producer `gate_label` rule) | After `script`, the producer shows its generic editor gate message. "A", "B" and edits are read as approve or "changes", not handed to the script skill. | P1 |
+| P2 (routing) | All wording and language feedback routes to `script`: it works, with one extra editor check. | P2 |
+| P3 (path counts) | The producer docs say 15 quick-track stages; the validator counts 16. | P3 |
+| P5 (tracker labels) | A pending script pick shows as "script · waiting on editor". | P5 |
+
+**Known limits (state them in the release notes):**
+- **IndicXlit isn't verified on this machine:** fairseq won't install on Python 3.14. The fallback is tested (11/11), and its Devanagari is always `unverified`.
+- **The Hindi and Hinglish speaking paces are working defaults,** not published figures; they get calibrated when `voice-music` exists.
+- **No live run of either skill yet** (M7 writes the tests; they run only on "run").
+
+## 6. Merge and test checklist
+
+1. **Merge.** `main` is still at `c62ed16`, an ancestor of this branch, so it fast-forwards or merges with `--no-ff` without conflicts. Re-check with `git merge-base --is-ancestor main feat/script-localise` first.
+2. **Apply the protected diffs (D2): P1–P6.** Ask the admin about the optional P7 and P8. Then run `node scripts/validate.mjs`.
+3. **Version** (admin's call): suggest **0.4.0-alpha.1** (Group 2a agents 5 + 6).
+   - `plugin.json` `version`.
+   - Plugin `CHANGELOG.md`: move "[Unreleased]" items and add the script, localise and client-approval lines from the two skill CHANGELOGs.
+   - The two skill CHANGELOGs: "Unreleased" → the version.
+   - The pre-production README statuses.
+   - Tag `v0.4.0-alpha.1`.
+4. **Storage on the TEST sheet:** run the v3 → v4 upgrade if it's still pending (open from 0.3.0-alpha.1), then v4 → v5 (`google-sheets.md` §7, `upgrades[2]` and `upgrades[3]`). Check that the Clients tab has `pronunciation` and Config has the 4 new rows.
+5. **Offline tests:**
+   - the validator (13 checks);
+   - `python -I plugins/social-media-manager/skills/pre-production/localise/scripts/transliterate.py --self-test`;
+   - the script-localise fixture check and the planted-fault test (M7);
+   - the M1 baseline commands (section 2).
+6. **Live tests (on "run"):** `evals/scenarios/script-localise.md` S1–S6, L1–L7, A1 and R1, plus one end-to-end run (intake → … → hooks pick → script pick → localise → client approval), headless, files mode.
+7. **Regression:** `git diff --stat main` must show no protected path (`skills/control/**`, `skills/brand/**`, `research-methods/`, `agents/market-researcher.md`, `brief/`, `concept/`, `hooks/`, existing `library/knowledge/*`, and existing evals and fixtures) other than the applied P-diffs.
+8. **Clean up:** after the merge, remove the worktree `../tdm-script` and the branch (ask first).
