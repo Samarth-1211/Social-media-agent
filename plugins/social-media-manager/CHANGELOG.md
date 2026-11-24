@@ -4,6 +4,10 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 
 ## [Unreleased]
 
+## [0.4.0-alpha.1] - 2026-11-24
+
+Group 2a, agents 5 + 6: script and localise (`docs/merge-notes/feat-script-localise.md`, merge-notes P1–P9 applied). Contracts change additively; v4 sheets upgrade in place to layout v5 (`google-sheets.md` §7). Also ships the concept + hooks fixes found by the 0.3.0-alpha.1 integration runs. Test results: `evals/results/2026-11-24_feat-script-localise.md`.
+
 ### Fixed (found by the first integration runs, `evals/results/2026-11-22_v0.3.0-alpha.1.md`)
 - Auto-pick runs whoever opens a job past the limit (the editor included), unless their message is itself a pick.
 - Gate records keep only the job schema's fields (`gate_label` stays in `stages.yaml`); concept and hooks name their log kinds.

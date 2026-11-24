@@ -1,6 +1,6 @@
 # Changelog: localise
 
-## Unreleased
+## 0.4.0-alpha.1 (2026-11-24)
 
 - First version, on branch `feat/script-localise` (no plugin version bump on the branch).
 - Runs the `localise` stage (quick and full video tracks, no gate, decision 0007): language and writing-script choice with a reason; transcreation (meaning, feeling, retention devices and facts kept; customer phrases verbatim; never "too pure"); Devanagari conversion through `scripts/transliterate.py`; spoken numbers and money; a voiceover script (pauses, emphasis, breath points, speed, pronunciation hints, clean TTS text); SRT captions timed from the scene table; the caption post; a length check; a back-translation check (Claude, or IndicTrans2 only if already installed); an AI-tell check; a WhatsApp-ready client review message; optional extra-language variants; self-check LC1–LC8; `downstream` for voice-music, captions-motion and storyboard.

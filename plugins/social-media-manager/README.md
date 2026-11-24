@@ -2,7 +2,7 @@
 
 Claude as TDM Groups' social media production team: video jobs, poster jobs, client brand profiles and approvals, run stage by stage with human gates.
 
-**Status: 0.3.0-alpha.1, Group 1 + Group 2a (market researcher, brief, concept and hooks).**
+**Status: 0.4.0-alpha.1, Group 1 + Group 2a (market researcher, brief, concept, hooks, script and localise).**
 - **Working now:**
   - jobs from intake to delivery, with real approvals and budget checks;
   - client profiles;

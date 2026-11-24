@@ -1,6 +1,6 @@
 # Changelog: script
 
-## Unreleased
+## 0.4.0-alpha.1 (2026-11-24)
 
 - First version, on branch `feat/script-localise` (no plugin version bump on the branch).
 - Runs the `script` stage (quick and full video tracks, editor gate `script-pick`, decision 0007): two versions with different structures (story-led, demo-led, list-led, problem-solution, before-after, testimonial, pov), both opening with the picked hook (or a named backup), written directly in the brief's language (Hindi and Hinglish in Roman letters).

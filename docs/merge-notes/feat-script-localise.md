@@ -214,9 +214,9 @@ No protected file changes are needed for it to work. P2 improves the routing, an
 
 ## 6. Merge and test checklist
 
-1. **Merge.** `main` is still at `c62ed16`, an ancestor of this branch, so it fast-forwards or merges with `--no-ff` without conflicts. Re-check with `git merge-base --is-ancestor main feat/script-localise` first.
-2. **Apply the protected diffs (D2): P1–P6.** Ask the admin about the optional P7 and P8. Then run `node scripts/validate.mjs`.
-3. **Version** (admin's call): suggest **0.4.0-alpha.1** (Group 2a agents 5 + 6).
+1. ~~**Merge.**~~ Done 2026-11-24: P1–P9 applied on the branch (`00a81ef`), merged with `--no-ff` into `main` (`f0170dd`). Original note: `main` was still at `c62ed16`, an ancestor of this branch, so it fast-forwards or merges with `--no-ff` without conflicts. Re-check with `git merge-base --is-ancestor main feat/script-localise` first.
+2. ~~**Apply the protected diffs (D2): P1–P6.**~~ Done: all of P1–P9 applied (admin, 2026-11-24). Ask the admin about the optional P7 and P8. Then run `node scripts/validate.mjs`.
+3. ~~**Version**~~ **0.4.0-alpha.1** released 2026-11-24 (admin's choice), tag `v0.4.0-alpha.1`.
    - `plugin.json` `version`.
    - Plugin `CHANGELOG.md`: move "[Unreleased]" items and add the script, localise and client-approval lines from the two skill CHANGELOGs.
    - The two skill CHANGELOGs: "Unreleased" → the version.

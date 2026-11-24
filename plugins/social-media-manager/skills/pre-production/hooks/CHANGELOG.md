@@ -1,6 +1,6 @@
 # Changelog: hooks
 
-## Unreleased
+## 0.4.0-alpha.1 (2026-11-24)
 
 - Fixes from the first integration runs (see the plugin CHANGELOG).
 
