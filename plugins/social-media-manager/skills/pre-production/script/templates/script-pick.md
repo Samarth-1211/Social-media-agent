@@ -24,6 +24,25 @@ Reply: "A", "B", "A with scene 3 from B", "scene 4 line: …", "shorter by 5 sec
 Full scene table: "A poora dikhao".
 ```
 
+## After client feedback (SKILL step 15)
+
+Only the changed scenes, so the editor checks the client's changes, not the whole script again.
+
+```
+🎬 <job_id> · Script pick: client changes (<feedback_id>, round <n>)
+Version <A> · <title> · <duration_sec> s
+
+Scene 4  🗣 "<before>"  →  "<after>"
+         Client: "<quote>"
+Scene 6  🔤 <before>  →  <after>
+         Client: "<quote>"
+<"Not applied: <item>: needs a brief change (offer/CTA)" only if any>
+<"⚠ <placeholder>" only if any>
+
+Timing ✓ · facts ✓ · humanizer ✓
+Reply: "ok" to approve, a line edit ("scene 4 line: …"), or what to change.
+```
+
 ## Rules
 
 - Every scene in one line: the visual in a few words, then the voiceover. The editor must be able to judge flow without opening the full table.

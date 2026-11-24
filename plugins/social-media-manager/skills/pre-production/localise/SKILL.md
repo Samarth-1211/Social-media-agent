@@ -48,7 +48,7 @@ Shared knowledge: `${CLAUDE_PLUGIN_ROOT}/library/knowledge/voiceover-pacing.md`,
 
 ## Steps
 
-1. **Start.** Producer-run: the session is set up. Direct: storage README §1. Timestamps from `get_now`. If the stage is `client-script-approval`, go to the approval step (§Gate).
+1. **Start.** Producer-run: the session is set up. Direct: storage README §1. Timestamps from `get_now`. If the stage is `client-script-approval`, go to the approval step (§Gate). Re-running after client feedback (the latest `client_feedback` entry has `routing.status: confirmed` and items with `target_stage: localise`) → step 16.
 
 2. **Inputs.** `script.pick.status` must be `picked` (otherwise stop). Read `script.downstream` and the fields above. A scene with a `{{needed}}` placeholder is localised with the placeholder kept.
 
@@ -106,6 +106,14 @@ Shared knowledge: `${CLAUDE_PLUGIN_ROOT}/library/knowledge/voiceover-pacing.md`,
     - `variants_available`.
 
 15. **Save** after `get_now`: the `localised_script` output (`version` + 1), the four files, and a log line "localised_script v<n>: <language> (<writing_script>), script check <status>". Re-read and confirm. No gate: the producer runs on to `client-script-approval` in the same turn.
+
+16. **Changes from client feedback** (wording or language routed here by `client-feedback`, or `localise` re-running after `script` changed):
+    1. Read the job's latest `client_feedback` entry: items with `target_stage: localise` (in scope), with the client's `quote` and the team's `change`.
+    2. If `script` has a newer version than the one you localised (`script_version`), localise the changed scenes from it first (steps 4–9 for those scenes).
+    3. Apply each `localise` item to the lines it names: a word, a phrase, Hindi vs English, Roman vs Devanagari, a name's spelling or pronunciation (also update `pronunciation_proposals`), the caption wording. Change nothing else. A wording request that would change a fact, the offer or the CTA belongs to `script`: say so and don't apply it.
+    4. Re-run steps 5–11 on the changed lines and rebuild the SRT, the voiceover file and `downstream`.
+    5. Write the client message as a revision (`templates/client-review-message.md`, "After changes"): what changed in their words ("Aapke kehne par: …"), the hook line if it changed, the offer and CTA exactly, and the OK ask.
+    6. Self-check and save as `localised_script` version + 1 (step 15). The producer runs `client-script-approval` again.
 
 ## Quality bar
 

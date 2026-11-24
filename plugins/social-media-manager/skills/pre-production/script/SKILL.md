@@ -30,7 +30,7 @@ Stage contract: reads `client`, `brief`, `hooks`; optionally `concept`, `researc
 
 ## Steps
 
-1. **Start.** Producer-run: the session is set up. Direct: storage README §1. Timestamps from `get_now`. A pending `script-pick` gate and the message is a reply → go to §Gate.
+1. **Start.** Producer-run: the session is set up. Direct: storage README §1. Timestamps from `get_now`. A pending `script-pick` gate and the message is a reply → go to §Gate. Reopened because of client feedback (the latest `client_feedback` entry has `routing.status: confirmed` and items with `target_stage: script`) → step 15.
 
 2. **Inputs** (`upstream-input.md`). `hooks.pick.status` must be `picked`, otherwise stop. Collect: the chosen concept (logline, insight, angle, format, story spine, levers + proof, producibility, risks), the hook's three layers + 2 backups, `script_notes`, `implied_assets`; the brief's `downstream.script`, `offer_detail`, `cta_detail`, `proof_points`, `duration_sec`, `deliverables`, `language`, `writing_script`, `mandatories`, `avoid`, `tone`; research `proof_points` and `customer_phrases`; client `learnings`; the style preset if one exists. Set `inputs` and `fallback_used`.
 
@@ -60,6 +60,13 @@ Stage contract: reads `client`, `brief`, `hooks`; optionally `concept`, `researc
 13. **Save** after `get_now`: the `script` output (`version` + 1, `pick.status: pending`, `downstream: null`), the Drive file, a log line "script v<n>: A <structure> / B <structure>, recommended <id>". Re-read and confirm. Producer-run: hand back the version; the producer requests the gate.
 
 14. **Show the script pick** (`${CLAUDE_SKILL_DIR}/templates/script-pick.md`) and stop. Run directly: request the gate yourself (`record_gate` request, `shown_outputs: {script: <v>}`), which sets `waiting_on: editor`. The full scene table (`${CLAUDE_SKILL_DIR}/templates/script-version.md`) only when asked.
+
+15. **Changes from client feedback** (the producer reopened `script` after `client-feedback` and a confirmed route):
+    1. Read the routed items through storage: the job's latest `client_feedback` entry, items with `target_stage: script` and label `in_scope` or `change_request`, with the client's `quote` and the team's `change`. Items for `localise` are left for that stage; it re-runs after you.
+    2. **Change the picked version only** (`downstream.version_id`): apply each item as an edit to the scenes it touches. Never write two fresh versions, and never change what the client didn't ask about. A change that needs a new fact (a new price, a new claim) takes the fact from the item only if the brief or profile backs it; otherwise it becomes a `{{needed}}` placeholder and you say so. A change to the offer or the CTA channel is a brief change: say so, don't apply it.
+    3. Re-run steps 5–10 on the changed scenes (timing on the whole version if a length or order changed) and the self-check.
+    4. Save as `script` version + 1: `versions` = the updated version only (same `id` and `structure_type`), `pick.status: pending`, `pick.edits` with one `other` edit per item ("client F<n>#<item>: <change>"), `downstream: null`.
+    5. Show the script pick in its client-changes form (`templates/script-pick.md`, "After client feedback"): only the changed scenes, before → after, with the client's quote. The editor approves (or edits) as at any pick; then `localise` re-runs and the client sees the new message.
 
 ## Quality bar
 

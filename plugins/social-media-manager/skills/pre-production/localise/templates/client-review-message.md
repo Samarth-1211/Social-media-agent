@@ -19,4 +19,19 @@ Fill from the localised script (`references/client-review.md`). In the client's 
 <Reply OK to approve, or tell us what to change. | OK likh dijiye, ya bataiye kya badalna hai. | OK लिख दीजिए, या बताइए क्या बदलना है।>
 ```
 
+## After changes (SKILL step 16)
+
+```
+<Namaste | नमस्ते> <name> <ji | जी> 🙏
+<Aapke kehne par changes kar diye | आपके कहने पर बदलाव कर दिए>:
+1. <what changed, in their words>
+2. <what changed>
+<Shuru | शुरू में>: "<hook line>"   (only if it changed)
+Offer: <offer exactly>. <CTA exactly>
+
+<Reply OK to approve, or tell us what to change. | OK likh dijiye, ya bataiye aur kya badalna hai. | OK लिख दीजिए, या बताइए और क्या बदलना है।>
+```
+
+Only the changes and the facts; don't resend the whole script. If an item wasn't done (it needs the admin, or it's a new request), say so politely in one line, using the wording `client-feedback` drafted.
+
 Never include: scene numbers or timings, "hook / CTA / VO / SRT / version", `{{needed}}` tokens, phone numbers, prices or claims that aren't in the script.

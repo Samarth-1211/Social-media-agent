@@ -49,6 +49,7 @@ M7 repeats these and shows `git diff --stat main` touches no protected path.
 | `library/contracts/stages.yaml` (M3) | `script` → `active` (skill folder `skills/pre-production/script/` exists). |
 | `library/contracts/stages.yaml` (M4) | `localise` → `active` (skill folder `skills/pre-production/localise/` exists). |
 | `library/contracts/examples/localised_script.example.json`, `library/knowledge/voiceover-pacing.md` (M4) | Roman spelling of 99 unified to "ninyaanave" (as `transliterate.py` prints it). |
+| `library/contracts/stages.yaml` (M5) | `client-script-approval` → `active` (run by `localise`, D1). |
 
 ## 4. Proposed diffs for protected files (apply at merge, D2)
 
@@ -125,6 +126,44 @@ Also add to "Gates": "`client-script-approval` is run by `localise`: its approva
 | `india-consumer-psychology.md` | Indian consumer truths, insight starters, levers L01–L20 with misuse lines, audience variants, language | concept, hooks, script, localise |
 | `voiceover-pacing.md` | Spoken pace per language, counting spoken words, pauses, Devanagari vs Roman, card and caption reading time, calibration; machine-readable defaults | script, localise, voice-music, captions-motion |
 | `ai-tells.md` | English and Hinglish/Hindi AI tells with fixes, how to apply them, the screenshot test | script, localise, voice-music, captions-motion, client messages |
+
+### P7. Producer: say what to send at the script approval (optional, wording only)
+
+The client gate works without this. With it, the board and the gate message name the thing to send instead of a field name.
+
+- `skills/control/producer/references/gate-rules.md` §1 step 3, the `client` bullet. After "<assignee name> to send <what> to <client decision maker> and record the reply", add: "For `client-script-approval`, <what> is "the script review message (shown above)"."
+- `skills/control/producer/templates/gate-message.md`, "Client gate": after `To send: {field} v{version}…`, add the line: `{for client-script-approval: "The message to send is just above: copy it as it is."}`.
+
+### P8. client-feedback: close the items a re-run handled (optional)
+
+Today nobody sets `client_feedback[].items[].status` to `done`, so an item stays `open` after the routed stage has re-run. Proposed, in `skills/brand/client-feedback/SKILL.md` step 3 (quote ledger), add: "Before splitting a new reply about the same job, mark the earlier entry's `in_scope` items `done` when the stage they were routed to has a newer approved version (or `declined` if the admin declined them), and say so in one line." That way the next triage knows what was already fixed, and the `old_version` check stays accurate.
+
+## 4a. Client script approval: how it runs (M5)
+
+No protected file changes are needed for it to work. P2 improves the routing, and P7 and P8 are optional polish.
+
+**The stage.** `client-script-approval` (group `pre-production`, skill `localise`, gate `client`, reads `script`, optional `localised_script`, writes nothing).
+
+**Approved path** (traced against `producer/references/stage-running.md` §§2, 5–7 and `gate-rules.md` §§1, 2, 5):
+1. `localise` saves `localised_script` v1 (no gate) → the producer runs on in the same turn.
+2. The producer starts `client-script-approval`, an `active` stage. §2 check: `reads: [script]` is present ✓, and the skill folder exists ✓. §5: it opens `localise/SKILL.md`, which goes to its approval step.
+3. The approval step checks `self_check.passed` and that no placeholder fact would reach the client, shows the review message ready to copy plus the send-and-paste line, and returns no outputs.
+4. §6 verify: there are no writes to check. §7 `client` gate: `record_gate` request with `shown_outputs` `{script: <v>, localised_script: <v>}` (§1: approval stages show their reads and optional reads). `waiting_on: client`; `next_action` "<assignee> to send <what> to <decision maker> and record the reply". The gate message is shown.
+5. The assignee sends the message on WhatsApp and pastes "client approved: haan theek hai, final karo". `gate-rules.md` §5: clear approval → `approved`, note "client (<decision maker>): <short quote>". The job runs on to `style-bible` (full) or `storyboard` (quick).
+
+**Changes path:**
+1. The assignee pastes "client feedback: …". `gate-rules.md` §5 hands it to `client-feedback`, which quotes, labels and routes each item (`revision-policy.md` §3).
+   - Today: "spoken words, voice-over lines, claims" → `script`.
+   - With P2: what is said → `script`; how it is said → `localise`.
+2. The routed stage is the one that made what was shown, so the producer records `sent_back` to it. It never records `changes_requested` on `client-script-approval` itself: re-running an approval stage only re-shows the same message.
+3. **Sent back to `script`:** script SKILL step 15 applies only the script items to the picked version, re-checks the changed scenes, saves a new version and shows the client-changes form of the script pick. The editor approves. `localise` re-runs (step 16 picks up the script's changes and any `localise` items), writes the "after changes" client message, and the client gate is asked again.
+4. **Sent back to `localise`:** localise step 16 applies the wording or language items, re-checks, writes the "after changes" message; the client gate is asked again.
+5. Revision rounds, caps, change orders and admin-only routes stay with `client-feedback` (unchanged).
+
+**Checked against the protected files, no edits:**
+- `client_feedback[].items[].target_stage` and `routing.proposed_stage` take any stage id, so `localise` and `script` are valid targets.
+- `client-feedback/SKILL.md` step 8 hands approval-only replies back to the producer.
+- `revision-policy.md` §3 "If the earliest stage is the one just shown → `sent_back` to that stage" covers routing to the stage that made the localised script.
 
 ## 5. Merge and test checklist
 

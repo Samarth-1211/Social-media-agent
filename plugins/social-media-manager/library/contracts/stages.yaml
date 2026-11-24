@@ -155,7 +155,7 @@ stages:
   - id: client-script-approval
     group: pre-production
     skill: localise
-    status: placeholder
+    status: active
     reads: [script]
     optional_reads: [localised_script]
     writes: []
