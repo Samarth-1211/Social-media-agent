@@ -4,7 +4,7 @@ Every job runs on one of two tracks. The producer **proposes** one at intake wit
 
 | Track | Video stages | For |
 |---|---|---|
-| **quick** | 15: skips hooks, localise, style-bible, casting, production-plan, audio-mix and resolve-export | Repeat work in a style and cast that already exist |
+| **quick** | 16: skips concept, style-bible, casting, production-plan, audio-mix and resolve-export | Repeat work in a style and cast that already exist |
 | **full** | 22 | Anything new or high-stakes |
 
 Posters run the same 8 stages on both tracks today; the track is still recorded, because later groups may split them.
@@ -19,7 +19,7 @@ Look before you ask: read `list_jobs` for the client and the brand brief first.
 | Brand film, launch, opening, rebrand | A simple offer, festival greeting or reminder |
 | A format we haven't made for this client (first reel, first ad film) | A repeat format: "same as last Diwali reel" |
 | Needs a new look or new characters (style-bible, casting) | An existing style preset and cast |
-| More than one language version (localise runs only on full) | One language |
+| A second language version that needs its own script or casting | One language, or an extra language from `localise_variant_languages` |
 | Longer than ~30 s, or a multi-scene story | Short, one message |
 | A professional voice-over mix or a Resolve handover | Music bed and simple voice-over |
 
@@ -33,10 +33,10 @@ Look before you ask: read `list_jobs` for the client and the brand brief first.
 One line, in plain words, naming the signal:
 - "Quick: repeat Diwali offer reel in their existing style, one language."
 - "Full: first video for a new client, so we need a style bible and cast."
-- "Full: Hindi and English versions, and localise only runs on the full track."
+- "Full: Hindi and English versions with different casting."
 
 Log it as a `ruling`: "Proposed <track> track: <reason>. Cost if wrong: <what switching later adds>."
-- Cost if quick is wrong: "switching to full later adds hooks, localise, style-bible, casting and production-plan before storyboard; storyboard and later stages rerun."
+- Cost if quick is wrong: "switching to full later adds concept, style-bible, casting and production-plan before storyboard (and the creative pick is asked again); storyboard and later stages rerun."
 - Cost if full is wrong: "about 7 extra stages and gates of time; no credits."
 
 ## 3. Switching track mid-job

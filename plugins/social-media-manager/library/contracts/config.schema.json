@@ -3,7 +3,7 @@
   "$id": "urn:tdm:social-media-manager:contracts:config",
   "title": "Config",
   "description": "Agency-wide settings, stored in the data store (Config tab). Created at first-run setup.",
-  "x-version": 3,
+  "x-version": 4,
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -54,6 +54,36 @@
     "creative_auto_pick_after_hours": {
       "description": "(v3) If set, the recommended concept + hook is picked automatically when the creative-pick gate has had no reply for this many hours; logged as system. Null = off (default).",
       "type": ["number", "null"], "minimum": 1, "default": null
+    },
+    "script_versions": {
+      "description": "(v4) Script versions the script stage writes per job, each with a different structure.",
+      "type": "integer", "minimum": 1, "maximum": 3, "default": 2
+    },
+    "pace_overrides": {
+      "description": "(v4) Measured speaking pace that replaces the defaults in library/knowledge/voiceover-pacing.md. Key = a language (English, Hinglish, Hindi) or 'voice:<voice id>'. Filled later by voice-music from real voiceover durations. Empty = use the defaults.",
+      "type": "object",
+      "propertyNames": { "pattern": "^(English|Hinglish|Hindi|voice:[A-Za-z0-9_.-]+)$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["words_per_sec"],
+        "properties": {
+          "words_per_sec": { "type": "number", "minimum": 1, "maximum": 5 },
+          "measured_from": { "type": ["string", "null"], "description": "Job ids or the run the number came from." },
+          "updated_at": { "type": ["string", "null"], "format": "date-time" }
+        }
+      },
+      "default": {}
+    },
+    "localise_variant_languages": {
+      "description": "(v4) Extra languages localise writes besides the brief's language, e.g. [\"English\"] alongside Hinglish. Empty = none.",
+      "type": "array", "uniqueItems": true, "maxItems": 2,
+      "items": { "enum": ["Hindi", "English", "Hinglish"] },
+      "default": []
+    },
+    "caption_max_chars_per_line": {
+      "description": "(v4) Longest SRT caption line, in characters (2 lines max per cue).",
+      "type": "integer", "minimum": 16, "maximum": 42, "default": 32
     },
     "credit_policy": {
       "description": "How generation stages spend credits: as little as possible. See docs/decisions/0003-credit-policy.md.",

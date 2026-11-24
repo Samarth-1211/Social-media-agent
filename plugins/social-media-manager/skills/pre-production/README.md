@@ -8,8 +8,8 @@ From request to a shootable plan.
 | `brief` | active (0.2.0-alpha.2) | Drafts the brief by itself from the request, profile, research, past jobs and festival calendar; asks only blocking essentials, in plain words (`brief.schema.json`). | `brief` |
 | `concept` | active (0.3.0-alpha.1) | Three insight-led, scored short-video concepts from the brief and research, one recommended; full track only, no gate (picked with the hooks). | `concept` |
 | `hooks` | active (0.3.0-alpha.1) | Three-layer hooks (visual, spoken, text) in natural Indian language for each concept or the reused quick format, scored and critiqued; runs the editor's combined creative pick (concept + hook). | `hooks` |
-| `script` | planned | Voiceover and on-screen text (`script.schema.json`). | `script` |
-| `localise` | planned | Hindi / English / Hinglish versions of the script. | `localise` |
+| `script` | active (unreleased, `feat/script-localise`) | Two retention-first, timed, fact-checked versions from the picked concept and hook: a storyboard-ready scene table, caption and one CTA; runs the editor's script pick (`script.schema.json`). | `script` |
+| `localise` | active (unreleased, `feat/script-localise`) | Natural Hinglish / Hindi / English for the audience: Devanagari conversion, spoken numbers, voiceover script, SRT, caption post, back-translation, the client's WhatsApp review message (`localised_script.schema.json`); also runs the client script approval. | `localise`, `client-script-approval` |
 | `style-bible` | planned | Look, palette, references, preset choice for the job. | `style-bible` |
 | `casting` | planned | Characters and consistent AI talent. | `casting` |
 | `storyboard` | planned | Shot list (`storyboard.schema.json`). Reviewed by the `storyboard-critic` subagent. | `storyboard` |
@@ -50,3 +50,24 @@ Rules for readers:
 - On the quick track `downstream.concept.id` is null: the concept is the client's reused format (`reused_format`).
 - Shared knowledge for all creative stages: `library/knowledge/india-consumer-psychology.md` (levers L01–L20, audience variants, language). Hook formulas use the ids in `hooks/references/formula-catalog.md` (H01–H30).
 - If the brief changes after the pick and its changelog lists `concept` or `hooks` in `affected_stages`, the producer reopens them and the creative pick is asked again.
+
+## Script and localise handoff (for later stages)
+
+`script` (both video tracks, editor gate **script-pick**) → `localise` (both video tracks, no gate) → `client-script-approval` (client gate, run by `localise`; decision 0007). After the client approves, later stages read two `downstream` blocks: **`job.outputs.script.data.downstream`** (the picked version, edits applied) and **`job.outputs.localised_script.data.downstream`** (the version the client approved, in the audience's language).
+
+| Stage | Reads | Holds |
+|---|---|---|
+| `storyboard`, shot sourcing (future) | `script.downstream.scenes`, `.shot_list_seed` | Per scene: times, beat role, storyboard-ready `visual_action` (shot, subject, action, camera, setting, continuity), `asset_hint`, `must_be_real` |
+| `storyboard`, `captions-motion` | `localised_script.downstream.on_screen_cards`, `.writing_script`, `.font_note` | The localised cards (≤ 6 words) with in/out times; the font needs for Devanagari |
+| `voice-music` | `localised_script.downstream.vo_lines`, `.tts_language_code`, `.pronunciation`; `script.downstream.audio_cues` (`sfx`, `music_cue`) | Clean TTS text per line with timing and speed (`hi-IN` / `en-IN`), confirmed and proposed name readings; sound and music cues per scene |
+| `captions-motion` | `localised_script.downstream.srt_file`; the SRT text in `localised_script.data.captions_srt` | Cues timed from the scene table, ≤ 2 lines of `caption_max_chars_per_line` |
+| `delivery` (future) | `localised_script.downstream.caption_post_text`; `script.downstream.cta` | The post text with hashtags; the one CTA |
+| learning loop (future) | `script.downstream.learning` | `hook_formula_id`, `structure_type`, `angle_type`, `outcome` (`untested` until results come in) |
+
+Rules for readers:
+- `script.pick.status` must be `picked`, and the `client-script-approval` gate approved, before any later stage uses these blocks. A `{{needed: …}}` placeholder in a scene means the asset or fact is still missing: stop and say so, never fill it.
+- Times are the contract: every later stage keeps each scene's `start_sec`/`end_sec`. A change of length goes back to `script` (or through client feedback).
+- `must_be_real: true` scenes are filmed or come from the client, never generated.
+- Variants (`localised_script.data.variants[]`, from `config.localise_variant_languages`) carry their own scenes, voiceover and SRT; `downstream.variants_available` lists them.
+- Shared knowledge for timing and wording: `library/knowledge/voiceover-pacing.md` (pace, reading time; `config.pace_overrides` after voice-music calibrates) and `library/knowledge/ai-tells.md`.
+

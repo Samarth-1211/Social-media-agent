@@ -157,7 +157,8 @@
     "own_handle",
     "competitors",
     "meta",
-    "latest_insight_id"
+    "latest_insight_id",
+    "pronunciation"
    ],
    [
     "shubh-laundry",
@@ -192,7 +193,8 @@
     "ex_shubhlaundry_indore",
     "[{\"handle\":\"ex_freshfold_indore\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Laundry with pickup in Vijay Nagar, a bit bigger\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_vijaynagar_drycleaners\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Same area, same saree dry-clean offer\",\"confidence\":\"confirmed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_indore_home_services\",\"platform\":\"instagram\",\"group\":\"adjacent\",\"reason\":\"Home cleaning for the same households\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_national_laundry_brand\",\"platform\":\"instagram\",\"group\":\"outsized\",\"reason\":\"National brand; format ideas only\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-21\"},{\"handle\":\"ex_bhopal_laundromat\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Proposed as a direct rival\",\"confidence\":\"guessed\",\"struck\":true,\"struck_by\":\"ravi\",\"added_on\":\"2026-11-21\"}]",
     "{\"linked\":false,\"ad_account_id\":null,\"ig_account_id\":null,\"page_id\":null}",
-    "SHL-I202611-1"
+    "SHL-I202611-1",
+    "[{\"term\":\"Shubh Laundry\",\"say_as\":\"shubh LAWN-dree (shubh as in 'shubh din')\",\"devanagari\":\"शुभ लॉन्ड्री\",\"confirmed\":true,\"note\":\"Owner's own reading, onboarding call\",\"source_job\":null}]"
    ],
    [
     "narmada-heights",
@@ -227,7 +229,8 @@
     "ex_narmadaheights",
     "[{\"handle\":\"ex_jabalpur_homes\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Gated township on the same road\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-20\"},{\"handle\":\"ex_mp_realty_group\",\"platform\":\"instagram\",\"group\":\"direct\",\"reason\":\"Biggest ad spender in Jabalpur residential\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-20\"},{\"handle\":\"ex_home_loan_tips\",\"platform\":\"instagram\",\"group\":\"adjacent\",\"reason\":\"Same buyers, home-loan explainers\",\"confidence\":\"guessed\",\"struck\":false,\"added_on\":\"2026-11-20\"}]",
     "{\"linked\":true,\"ad_account_id\":\"100000000000001\",\"ig_account_id\":\"170000000000001\",\"page_id\":\"110000000000001\"}",
-    "NRH-I202611-1"
+    "NRH-I202611-1",
+    ""
    ]
   ],
   "Questions": [
@@ -1265,6 +1268,22 @@
    [
     "creative_auto_pick_after_hours",
     ""
+   ],
+   [
+    "script_versions",
+    "2"
+   ],
+   [
+    "pace_overrides",
+    "{}"
+   ],
+   [
+    "localise_variant_languages",
+    "[]"
+   ],
+   [
+    "caption_max_chars_per_line",
+    "32"
    ],
    [
     "credit_policy",

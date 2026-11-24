@@ -1,15 +1,182 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:tdm:social-media-manager:contracts:script",
-  "$comment": "draft — completed in its group (Group 2, pre-production)",
   "title": "Script",
+  "x-version": 2,
+  "description": "Short-video script for one job, written by the script stage (both video tracks) and stored in job.outputs.script.data. v2: two (config.script_versions) storyboard-ready versions with a timed scene table, caption and one CTA, the checks each version passed, the editor's pick at the script-pick gate, and downstream for localise, storyboard, shot sourcing and voice-music. Written in the brief's language; Hindi and Hinglish in Roman letters (localise converts to the brief's writing_script). A record with `versions` must carry every v2 field (dependentRequired); the v1 draft shape (job_id, language, lines) stays valid for old placeholders. Large records: compact record in the sheet, the full one in Drive (Jobs/<job_id>/script/script-v<n>.json).",
   "type": "object",
-  "required": ["job_id", "language", "lines"],
+  "additionalProperties": false,
+  "required": ["job_id", "language"],
+  "dependentRequired": {
+    "versions": ["client_id", "version", "writing_script", "inputs", "fallback_used", "recommended", "pick", "self_check", "updated_at"]
+  },
   "properties": {
-    "job_id": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "job_id": { "$ref": "#/$defs/jobId" },
+    "client_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "version": { "type": "integer", "minimum": 1, "description": "Same as the output version in job.outputs.script." },
     "language": { "enum": ["Hindi", "English", "Hinglish"] },
-    "hook": { "type": "string" },
+    "writing_script": {
+      "description": "How this record is written. The script stage writes Hindi and Hinglish in Roman letters (roman-hinglish) so the editor can read the pick fast; English is english. localise converts to the brief's writing_script.",
+      "enum": ["roman-hinglish", "english"]
+    },
+    "inputs": {
+      "description": "Which upstream versions the script was written from, so a rerun knows what changed.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brief_version", "hooks_version"],
+      "properties": {
+        "brief_version": { "type": "integer", "minimum": 1 },
+        "hooks_version": { "type": "integer", "minimum": 1 },
+        "concept_version": { "type": ["integer", "null"], "minimum": 1 },
+        "research_insight_id": { "type": ["string", "null"] },
+        "style_preset": { "type": ["string", "null"] }
+      }
+    },
+    "fallback_used": {
+      "description": "brief = the brief was a placeholder, so facts came from the request and the profile only; research = no usable research proof points. Said in the gate message.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brief", "research"],
+      "properties": {
+        "brief": { "type": "boolean" },
+        "research": { "type": "boolean" },
+        "note": { "type": "string" }
+      }
+    },
+    "versions": {
+      "description": "config.script_versions versions (default 2), each with a different structure_type. Editor edits at the gate change these in a new record version.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/scriptVersion" }
+    },
+    "recommended": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version_id", "reason"],
+      "properties": {
+        "version_id": { "$ref": "#/$defs/versionId" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "pick": {
+      "description": "The editor's decision at the script-pick gate (mirrors the gate record).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "description": "pending = waiting for the editor; picked = decided (edits applied); redo = the editor asked for new versions.", "enum": ["pending", "picked", "redo"] },
+        "version_id": { "anyOf": [{ "$ref": "#/$defs/versionId" }, { "type": "null" }] },
+        "edits": {
+          "description": "Edits asked for in the reply, each applied before the pick is saved.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "detail", "applied"],
+            "properties": {
+              "kind": { "description": "take-scene = 'scene 3 from B'; line = a VO or text line rewritten; length = 'shorter by 5 sec'; cta / caption = those changed; other.", "enum": ["take-scene", "line", "length", "cta", "caption", "other"] },
+              "detail": { "type": "string", "minLength": 1 },
+              "scenes": { "type": "array", "items": { "type": "integer", "minimum": 1 } },
+              "applied": { "type": "boolean" },
+              "rechecked": { "type": "boolean", "description": "Timing, facts, humanizer and limits re-run on the changed scenes." }
+            }
+          }
+        },
+        "reply": { "type": ["string", "null"], "description": "The editor's reply as written." },
+        "decided_by": { "type": ["string", "null"] },
+        "decided_by_role": { "enum": ["admin", "editor", "designer", null] },
+        "decided_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "downstream": {
+      "description": "Filled once pick.status is picked: the final picked version (edits applied), read by localise, storyboard, shot sourcing and voice-music.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["version_id", "structure_type", "duration_sec", "language", "scenes", "shot_list_seed", "audio_cues", "caption", "cta", "learning"],
+      "properties": {
+        "version_id": { "$ref": "#/$defs/versionId" },
+        "structure_type": { "$ref": "#/$defs/structureType" },
+        "duration_sec": { "type": "number", "minimum": 1 },
+        "language": { "enum": ["Hindi", "English", "Hinglish"] },
+        "platform": { "$ref": "#/$defs/platform" },
+        "scenes": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/scene" } },
+        "shot_list_seed": {
+          "description": "Per scene: what the shot must show and where it comes from. Seed for shot sourcing and storyboard.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["n", "visual_action", "asset_hint"],
+            "properties": {
+              "n": { "type": "integer", "minimum": 1 },
+              "visual_action": { "$ref": "#/$defs/visualAction" },
+              "asset_hint": { "$ref": "#/$defs/assetSource" },
+              "must_be_real": { "type": "boolean" }
+            }
+          }
+        },
+        "audio_cues": {
+          "description": "Per scene: voiceover, sound effect and music cue with timings. Seed for voice-music.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["n", "start_sec", "end_sec", "vo_line"],
+            "properties": {
+              "n": { "type": "integer", "minimum": 1 },
+              "start_sec": { "type": "number", "minimum": 0 },
+              "end_sec": { "type": "number", "minimum": 0 },
+              "vo_line": { "type": "string" },
+              "sfx": { "type": ["string", "null"] },
+              "music_cue": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "caption": { "$ref": "#/$defs/caption" },
+        "cta": { "$ref": "#/$defs/cta" },
+        "keep_as_is": { "type": "array", "items": { "type": "string" }, "description": "Brand names, prices, dates and addresses localise must not change (from the brief's downstream.localise)." },
+        "learning": {
+          "description": "Learning-loop fields; outcome stays untested until results come in.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hook_formula_id", "structure_type", "outcome"],
+          "properties": {
+            "hook_formula_id": { "type": "string", "pattern": "^H[0-9]{2}$" },
+            "structure_type": { "$ref": "#/$defs/structureType" },
+            "angle_type": { "enum": ["proof", "teach", "opinion", "story", "offer", null] },
+            "outcome": { "enum": ["untested", "worked", "flopped", "mixed"] }
+          }
+        }
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "self_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "items"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "ok"],
+            "properties": {
+              "id": { "type": "string", "description": "Checklist item id, e.g. SC1 (script/checklists/before-showing.md)." },
+              "ok": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "updated_at": { "type": "string", "format": "date-time" },
+
+    "hook": { "type": "string", "description": "v1 draft field, kept so old placeholder-era records stay valid. v2 records use versions[].hook_used." },
     "lines": {
+      "description": "v1 draft field (deprecated). v2 records use versions[].scenes.",
       "type": "array",
       "items": {
         "type": "object",
@@ -20,6 +187,159 @@
         }
       }
     },
-    "cta": { "type": "string" }
+    "cta": { "type": "string", "description": "v1 draft field (deprecated). v2 records use versions[].cta." }
+  },
+  "$defs": {
+    "jobId": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" },
+    "versionId": { "type": "string", "pattern": "^[A-C]$" },
+    "structureType": {
+      "description": "script/references/structures.md.",
+      "enum": ["story-led", "demo-led", "list-led", "problem-solution", "before-after", "testimonial", "pov"]
+    },
+    "platform": { "enum": ["instagram-reels", "youtube-shorts", "meta-ad", "whatsapp-status", "facebook-reels"] },
+    "assetSource": {
+      "description": "Same values as concept producibility shots: ai, client-footage, phone-shoot, motion-graphics, stock.",
+      "enum": ["ai", "client-footage", "phone-shoot", "motion-graphics", "stock"]
+    },
+    "visualAction": {
+      "description": "Storyboard-ready action line (script/references/scene-writing.md): one dominant subject, action and camera move per shot.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shot", "subject", "action", "camera", "setting"],
+      "properties": {
+        "shot": { "enum": ["extreme-close-up", "close-up", "medium-close-up", "medium", "wide", "extreme-wide", "insert", "over-shoulder", "pov", "top-down", "screen"] },
+        "subject": { "type": "string", "minLength": 1 },
+        "action": { "type": "string", "minLength": 1 },
+        "camera": { "enum": ["static", "push-in", "pull-out", "pan", "tilt", "tracking", "handheld", "whip-pan", "zoom", "orbit"] },
+        "setting": { "type": "string", "minLength": 1 },
+        "continuity": { "type": "string", "description": "Optional: prop, wardrobe or location state to keep." }
+      }
+    },
+    "textCard": {
+      "description": "On-screen text: max 6 words, readable with the sound off, in the safe zone (script/references/on-screen-text.md).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "in_sec", "out_sec"],
+      "properties": {
+        "text": { "type": "string", "pattern": "^\\S+(\\s+\\S+){0,5}$" },
+        "in_sec": { "type": "number", "minimum": 0 },
+        "out_sec": { "type": "number", "minimum": 0 },
+        "position": { "enum": ["top", "center", "lower-third"] }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["n", "start_sec", "end_sec", "beat_role", "visual_action", "on_screen_text", "vo_line", "asset_hint", "retention_device"],
+      "properties": {
+        "n": { "type": "integer", "minimum": 1 },
+        "start_sec": { "type": "number", "minimum": 0 },
+        "end_sec": { "type": "number", "minimum": 0 },
+        "beat_role": { "enum": ["hook", "escalation", "proof", "payoff", "cta"] },
+        "visual_action": { "$ref": "#/$defs/visualAction" },
+        "on_screen_text": { "type": "array", "maxItems": 2, "items": { "$ref": "#/$defs/textCard" } },
+        "vo_line": { "type": "string", "description": "Spoken line for this scene, or empty for a silent beat." },
+        "sfx": { "type": ["string", "null"] },
+        "music_cue": { "type": ["string", "null"] },
+        "asset_hint": { "$ref": "#/$defs/assetSource" },
+        "must_be_real": { "type": "boolean", "description": "Shown as a real customer, place or result: filmed, never generated (hooks implied_assets)." },
+        "retention_device": { "enum": ["open-loop", "pattern-change", "reveal", "number", "re-hook", "loop-back"] },
+        "fact_refs": { "type": "array", "items": { "type": "string" }, "description": "Where each price, offer, claim or number in this scene comes from: brief field, profile field or research finding id." }
+      }
+    },
+    "caption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_line", "full_text", "hashtags"],
+      "properties": {
+        "first_line": { "type": "string", "minLength": 1, "maxLength": 125, "description": "Survives the '...more' cut on its own (about 125 characters on Instagram)." },
+        "full_text": { "type": "string", "minLength": 1, "maxLength": 2200 },
+        "hashtags": { "type": "array", "minItems": 3, "maxItems": 5, "uniqueItems": true, "items": { "type": "string", "pattern": "^#[^\\s#]+$" } },
+        "pinned_comment": { "type": ["string", "null"] }
+      }
+    },
+    "cta": {
+      "description": "One ask, from the brief's cta_detail: said in the voiceover and shown on screen.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "channel", "said_in_scene", "shown_in_scene"],
+      "properties": {
+        "action": { "type": "string", "minLength": 1 },
+        "channel": { "enum": ["whatsapp", "call", "visit", "dm", "website", "form", "other"] },
+        "said_in_scene": { "type": ["integer", "null"], "minimum": 1 },
+        "shown_in_scene": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "checks": {
+      "description": "What each check found on this version (script/SKILL.md steps 3-8).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timing_ok", "facts_ok", "payoff_scene", "critique_notes", "humanizer_done", "ethics_ok"],
+      "properties": {
+        "timing_ok": { "type": "boolean", "description": "Every scene's voiceover fits its seconds at the language's pace (library/knowledge/voiceover-pacing.md) and a pattern change lands every 1.5-3 s." },
+        "timing_notes": { "type": "array", "items": { "type": "string" }, "description": "Scenes that were over and how they were fixed." },
+        "facts_ok": { "type": "boolean", "description": "Every price, offer, claim and number traces to the brief, the profile or research (fact-guard.md)." },
+        "fact_flags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["claim", "action"],
+            "properties": {
+              "claim": { "type": "string" },
+              "action": { "description": "removed = cut from the script; placeholder = left as {{needed: …}} for the client.", "enum": ["removed", "placeholder"] },
+              "unlock": { "type": ["string", "null"], "description": "What evidence would let us use it." }
+            }
+          }
+        },
+        "payoff_scene": { "type": "integer", "minimum": 1, "description": "The scene that delivers the hook's promise." },
+        "critique_notes": {
+          "description": "Critique pass: where attention would drop, which failure mode, and the rewrite.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["failure_mode", "scene", "note", "fixed"],
+            "properties": {
+              "failure_mode": { "enum": ["weak-hook", "no-escalation", "buried-payoff", "other"] },
+              "scene": { "type": "integer", "minimum": 1 },
+              "note": { "type": "string", "minLength": 1 },
+              "fixed": { "type": "boolean" }
+            }
+          }
+        },
+        "humanizer_done": { "type": "boolean", "description": "library/knowledge/ai-tells.md applied to voiceover, text and caption." },
+        "humanizer_notes": { "type": "array", "items": { "type": "string" } },
+        "ethics_ok": { "type": "boolean", "description": "The misuse lines (india-consumer-psychology.md levers) and hooks anti-patterns hold: no invented numbers, no fake deadlines, no AI people shown as real customers." },
+        "ethics_notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "scriptVersion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "structure_type", "duration_sec", "platform", "hook_used", "scenes", "caption", "cta", "checks"],
+      "properties": {
+        "id": { "$ref": "#/$defs/versionId" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "structure_type": { "$ref": "#/$defs/structureType" },
+        "duration_sec": { "type": "number", "minimum": 1 },
+        "platform": { "$ref": "#/$defs/platform" },
+        "hook_used": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hook_id", "formula_id"],
+          "properties": {
+            "hook_id": { "type": "string", "pattern": "^([1-5]|Q)[A-L]$" },
+            "formula_id": { "type": "string", "pattern": "^H[0-9]{2}$" },
+            "backup_reason": { "type": ["string", "null"], "description": "Set when a backup hook is used: why it fits this structure better." }
+          }
+        },
+        "scenes": { "type": "array", "minItems": 2, "maxItems": 20, "items": { "$ref": "#/$defs/scene" } },
+        "caption": { "$ref": "#/$defs/caption" },
+        "cta": { "$ref": "#/$defs/cta" },
+        "checks": { "$ref": "#/$defs/checks" },
+        "variant_notes": { "type": "array", "items": { "type": "string" }, "description": "Changes for other platforms in the brief (platform-variants.md), e.g. 'Shorts: loop last line to hook'." }
+      }
+    }
   }
 }

@@ -13,6 +13,20 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 ### Added
 - `evals/concept-hooks/run-scenarios.mjs`: headless runner for the concept + hooks scenarios and an end-to-end intake-to-script run.
 
+### Added: script + localise (Group 2a agents 5 + 6, branch `feat/script-localise`, decision 0007)
+- `script` skill (`pre-production/script`, stage `script`, both video tracks, editor gate `script-pick`): two versions with different structures from the picked hook, written in the brief's language; a timed, storyboard-ready scene table, caption and one CTA; timing, fact-guard, payoff, critique, humanizer and limits passes; natural replies at the pick ("A", "A with scene 3 from B", "scene 4 line: …", "shorter by 5 sec"); re-runs after client feedback change only the picked version.
+- `localise` skill (`pre-production/localise`, stage `localise`, both video tracks, no gate; also runs `client-script-approval`): transcreation into Roman Hinglish, Devanagari Hindi or English; `scripts/transliterate.py` (IndicXlit when installed, otherwise a flagged fallback; Hindi number words); spoken numbers; voiceover script with clean TTS text; SRT captions; caption post; back-translation check; WhatsApp client review message; extra-language variants; pronunciation proposals.
+- Shared knowledge: `library/knowledge/voiceover-pacing.md` (pace per language, spoken-word counting, reading time, machine-readable defaults) and `library/knowledge/ai-tells.md` (English and Hinglish/Hindi AI tells, the screenshot test).
+- Contracts: `script.schema.json` x-version 2 (versions, scene table, checks, pick, downstream; `lines` no longer required); new `localised_script.schema.json`; `config` x-version 4 (`script_versions`, `pace_overrides`, `localise_variant_languages`, `caption_max_chars_per_line`); `client` x-version 3 (`pronunciation[]`). Examples for SHL-01.
+- Storage: sheet layout v5 (Clients `pronunciation` column, 4 Config rows, upgrade v4 → v5); script and localise files in Drive (`Jobs/<id>/script/`, `Jobs/<id>/localise/`).
+- Validator check 13 (`scripts/lib/script-checks.mjs`): scene times, spoken pace, card reading time, pick and downstream, SRT cues, client-message facts.
+- Evals: `evals/fixtures/script-localise/`, `evals/script-localise-fixtures.mjs`, `evals/script-localise/run-scenarios.mjs`, `check-faults.mjs`, scenarios and rubric. First live run: 18 of 19 pass (`evals/results/2026-11-24_feat-script-localise.md`).
+
+### Changed: script + localise
+- `stages.yaml`: `localise` runs on the quick track too (video quick path 15 → 16 stages) and has no gate; `client-script-approval` is run by `localise` (was `delivery/client-messenger`); `script` reads research when present and its gate is labelled `script-pick`.
+- Migration: none needed. Old placeholder script records stay valid; existing sheets upgrade v4 → v5 (`google-sheets.md` §7).
+- Applied at the merge (merge notes P1–P9): the producer's general `gate_label` rule, client-feedback routing to `localise`, path counts, tracker labels, and the producer's placeholder-output fix.
+
 ## [0.3.0-alpha.1] - 2026-11-22
 
 Group 2a, agents 3 + 4: concept and hooks, the India-first creative engine (`docs/merge-notes/feat-concept-hooks.md`, merge-notes P1–P6 applied). Contracts change additively; v3 sheets upgrade in place to layout v4.

@@ -17,6 +17,7 @@
 //     research records agree with each other; generated files are current; tracker page stages match stages.yaml
 // (5 also checks the optional stage keys: freshness_days, skippable_if_urgent, non_blocking_partial, spend_gate.)
 // 12  brief text/detail pairs agree (offer/offer_detail, cta/cta_detail, audience/audience_detail), variants and mirrors consistent
+// 13  script and localised_script records hang together: scene times, pace (voiceover-pacing.md), cards, pick and downstream, SRT cues
 // Then: `claude plugin validate` on the marketplace and each plugin, if the CLI is available.
 
 import fs from 'node:fs';
@@ -27,6 +28,7 @@ import YAML from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { researchConsistency } from './lib/research-checks.mjs';
+import { scriptConsistency, localisedConsistency, loadPacing } from './lib/script-checks.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -130,6 +132,7 @@ const c9 = check(9, `SKILL.md <= ${MAX_SKILL_LINES} lines; description <= ${MAX_
 const c10 = check(10, 'Frontmatter keys accepted by claude.ai uploads');
 const c11 = check(11, 'Storage: layout covers schemas, records round-trip, generated files current');
 const c12 = check(12, 'Brief pairs agree; variants and BriefQuestions mirror consistent');
+const c13 = check(13, 'Script and localised script records consistent (times, pace, cards, SRT)');
 
 for (const plugin of plugins) {
   const P = plugin.dir;
@@ -566,6 +569,50 @@ for (const plugin of plugins) {
     }
   }
   c12.notes.push(`${plugin.name}: ${briefCount} brief(s) checked`);
+
+  // ── 13. Script and localised script records ──
+  {
+    const exDir13 = path.join(P, 'library', 'contracts', 'examples');
+    const pacingFile = path.join(P, 'library', 'knowledge', 'voiceover-pacing.md');
+    if (isFile(pacingFile)) {
+      let pacing = null;
+      try { pacing = loadPacing(pacingFile); } catch (e) { c13.errors.push(e.message); }
+      if (pacing) {
+        const exJson = (n) => (isFile(path.join(exDir13, `${n}.example.json`)) ? JSON.parse(readText(path.join(exDir13, `${n}.example.json`))) : null);
+        const config = exJson('config') || {};
+        // pairs of { where, script, localised } from the examples, the job example and the sample data
+        const sets = [];
+        const exScript = exJson('script');
+        const exLoc = exJson('localised_script');
+        if (exScript || exLoc) sets.push({ where: 'examples', script: exScript, localised: exLoc, pair: !!(exLoc && exScript && exLoc.job_id === exScript.job_id) });
+        const jobsToCheck = [];
+        const exJob = exJson('job');
+        if (exJob) jobsToCheck.push(['job.example.json', exJob]);
+        const sp = path.join(P, 'library', 'storage', 'tracker-page', 'sample-data.json');
+        if (isFile(sp)) {
+          try {
+            const { decodeAll: dec13 } = await import(new URL('./lib/sheet-codec.mjs', import.meta.url));
+            for (const j of dec13(JSON.parse(readText(sp)).tabs).jobs) jobsToCheck.push([`sample-data.json ${j.job_id}`, j]);
+          } catch { /* decode errors are reported by check 11 */ }
+        }
+        for (const [where, j] of jobsToCheck) {
+          const sc = j.outputs?.script?.data;
+          const lo = j.outputs?.localised_script?.data;
+          if ((sc && !sc.placeholder) || (lo && !lo.placeholder)) sets.push({ where, script: sc, localised: lo, pair: true });
+        }
+        let n13 = 0;
+        for (const set of sets) {
+          if (set.script && !set.script.placeholder) { n13++; for (const e of scriptConsistency(set.script, { pacing, config, where: `${set.where} script` })) c13.errors.push(e); }
+          if (set.localised && !set.localised.placeholder) {
+            n13++;
+            const scr = set.pair ? set.script : null;
+            for (const e of localisedConsistency(set.localised, { script: scr, pacing, config, where: `${set.where} localised_script` })) c13.errors.push(e);
+          }
+        }
+        c13.notes.push(`${plugin.name}: ${n13} script/localised record(s) checked`);
+      }
+    }
+  }
 }
 
 // ── Report ──────────────────────────────────────────────────────────

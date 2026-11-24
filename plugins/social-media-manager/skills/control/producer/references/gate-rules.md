@@ -23,8 +23,9 @@ When a stage with `gate: admin | editor | client` finishes and is verified:
 3. Set `waiting_on` = `owner_role` and `next_action` = "<Name> to <approve the stage> or request changes." Put the person's name in, not the role:
    - `admin` → the admin's name (Team tab);
    - `editor` → the assignee's name;
-   - `client` → "<assignee name> to send <what> to <client decision maker> and record the reply".
-4. Show `${CLAUDE_SKILL_DIR}/templates/gate-message.md` and stop. **Exception:** a stage with `gate_label: creative-pick` (`hooks`) shows its own message, `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/templates/creative-pick.md`, and its `shown_outputs` are `{hooks: <v>}` plus `concept: <v>` on the full track. The gate record itself carries only the usual fields; `gate_label` is read from `stages.yaml`, never written into the record.
+   - `client` → "<assignee name> to send <what> to <client decision maker> and record the reply". For `client-script-approval`, <what> is "the script review message (shown above)".
+   - Keep `next_action` under 200 characters (the schema limit): who, what, one action.
+4. Show `${CLAUDE_SKILL_DIR}/templates/gate-message.md` and stop. **Exception:** a stage with a `gate_label` (in `stages.yaml`) shows its own skill's message, `templates/<gate_label>.md` in that skill's folder, instead of this template. Its `shown_outputs` are what that template shows. Today: `creative-pick` (`hooks`): `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/templates/creative-pick.md`, `shown_outputs` `{hooks: <v>}` plus `concept: <v>` on the full track; `script-pick` (`script`): `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/script/templates/script-pick.md`, `shown_outputs` `{script: <v>}`. The gate record itself carries only the usual fields; `gate_label` is read from `stages.yaml`, never written into the record.
 
 ## 2. Who may decide
 
@@ -46,7 +47,7 @@ Rules:
 
 ## 3. Recording a decision
 
-**Creative pick.** A reply on a pending gate with `gate_label: creative-pick` goes to `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/SKILL.md` §Gate. It reads the reply ("2B", "1 with 3A", "mix 1 and 3", "more like 2A", "none, …", a line edit), checks permission and versions as below, records the decision, and saves the pick. Plain approval ("ok", "theek hai", "approve") = the recommended pair. The pick's own `hooks` version after the decision is expected and needs no new gate. Then run on as for any approval.
+**Labelled gates** (`creative-pick`, `script-pick`, …). A reply on a pending gate with a `gate_label` goes to that stage's skill, §Gate: `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/SKILL.md` for `creative-pick` ("2B", "1 with 3A", "mix 1 and 3", "more like 2A", "none, …", a line edit) and `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/script/SKILL.md` for `script-pick` ("A", "B", "A with scene 3 from B", "scene 4 line: …", "shorter by 5 sec"). The skill reads the reply in plain words, checks permission and versions as below, records the decision, and saves the pick. Plain approval ("ok", "theek hai", "approve") = the skill's recommendation. The pick's own version of the stage's output after the decision is expected and needs no new gate. Then run on as for any approval.
 
 1. **Re-read the job.** The gate must still be `pending`. If it isn't, someone decided first: show who and when, and stop.
 2. **Check permission** (§2).

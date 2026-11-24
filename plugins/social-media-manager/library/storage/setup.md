@@ -63,4 +63,4 @@ For tests, use the folder **TDM Studio TEST** and the sheet **TDM Studio TEST Da
 
 ## Upgrade an existing database
 
-A sheet built with an older layout is upgraded in place, in order (v1 → v2 research, v2 → v3 brief, v3 → v4 concept + hooks): `google-sheets.md` §7, using `sheet-setup.json` → `upgrades`. Admin only, TEST sheet first. Nothing existing is moved, renamed or deleted.
+A sheet built with an older layout is upgraded in place, in order (v1 → v2 research, v2 → v3 brief, v3 → v4 concept + hooks, v4 → v5 script + localise): `google-sheets.md` §7, using `sheet-setup.json` → `upgrades`. Admin only, TEST sheet first. Nothing existing is moved, renamed or deleted.

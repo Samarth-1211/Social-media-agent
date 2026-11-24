@@ -159,6 +159,14 @@ const CREATIVE_CONFIG = [
   ['creative_auto_pick_after_hours', ''],
 ];
 
+// Script + localise settings (layout v5). Also appended to existing sheets by the v4 → v5 upgrade.
+const SCRIPT_CONFIG = [
+  ['script_versions', 2],
+  ['pace_overrides', "'{}"],
+  ['localise_variant_languages', "'[]"],
+  ['caption_max_chars_per_line', 32],
+];
+
 // Config defaults (ADR 0003). spreadsheet_id and drive_folder_id are filled in by setup.
 const configRows = [
   ['storage_mode', "'google-sheets"],
@@ -176,6 +184,7 @@ const configRows = [
   ...RESEARCH_CONFIG,
   ...BRIEF_CONFIG,
   ...CREATIVE_CONFIG,
+  ...SCRIPT_CONFIG,
   ['version', 1],
   ['updated_at', '<NOW>'],
 ].map(([k, v]) => [`'${k}`, v]);
@@ -186,7 +195,7 @@ export const CLOCK_FORMULA = '=TEXT(NOW(),"yyyy-mm-dd")&"T"&TEXT(NOW(),"HH:mm:ss
 values.push({ range: 'Config!D1:E1', values: [["'clock (do not edit)", CLOCK_FORMULA]] });
 
 // ── Upgrades for sheets built with an older layout ──────────────────
-// A sheet is on layout v1 if it has no Insights tab, on v2 if it has Insights but no BriefQuestions tab, and on v3 if its Learnings tab has no hook_formula_id column. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
+// A sheet is on layout v1 if it has no Insights tab, on v2 if it has Insights but no BriefQuestions tab, on v3 if its Learnings tab has no hook_formula_id column, and on v4 if its Clients tab has no pronunciation column. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
 // batch_requests in one batch update, then each values entry with update values, then each append entry with append values.
 // Nothing existing moves: new columns go after the last column of their tab, new tabs after the last tab.
 function upgrade(from, to) {
@@ -199,7 +208,8 @@ function upgrade(from, to) {
       return;
     }
     if (!t.columns) return;
-    const n = t.columns.length;
+    // Count only the columns that exist at layout v<to>, so older upgrades don't change when later columns are added.
+    const n = t.columns.filter((c) => (c.since ?? 1) <= to).length;
     const added = t.columns.map((c, i) => [c, i]).filter(([c]) => c.since === to);
     if (added.length) {
       const first = added[0][1];
@@ -233,7 +243,7 @@ function upgrade(from, to) {
     vals.push(briefDashboard);
     reqs.push(briefDashboardWiden, briefDashboardBold);
   }
-  const newConfig = { 2: RESEARCH_CONFIG, 3: BRIEF_CONFIG, 4: CREATIVE_CONFIG }[to] ?? [];
+  const newConfig = { 2: RESEARCH_CONFIG, 3: BRIEF_CONFIG, 4: CREATIVE_CONFIG, 5: SCRIPT_CONFIG }[to] ?? [];
   return { from, to, batch_requests: reqs, values: vals, append: [{ range: 'Config!A1', values: newConfig.map(([k, v]) => [`'${k}`, v]) }] };
 }
 
@@ -242,7 +252,7 @@ const out = {
   layout_version: layout.version,
   batch_requests: requests,
   values,
-  upgrades: [upgrade(1, 2), upgrade(2, 3), upgrade(3, 4)],
+  upgrades: [upgrade(1, 2), upgrade(2, 3), upgrade(3, 4), upgrade(4, 5)],
 };
 const text = JSON.stringify(out, null, 1) + '\n';
 

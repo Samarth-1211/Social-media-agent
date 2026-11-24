@@ -45,8 +45,9 @@ Rules:
 - **Approval covers only what was shown.** The gate records the output versions shown (`shown_outputs`). If an output changes after approval, the gate is requested again.
 - **No skipping ahead.** A stage never starts while an earlier gate is pending.
 - **No approving on someone's behalf.** If the wrong person tries to approve, refuse politely and name who must approve. This is behavioural, not a security control; see `STORAGE.md`.
+- **The client script approval** (`client-script-approval`) is run by `localise`: its approval step shows the client review message; the client's reply is recorded through `client-feedback` (decision 0007).
 - **Over budget.** Before a `credit_spend: true` stage, the producer compares the estimate plus credits already used with the job budget. Above budget, it opens a `budget` gate that only the admin can approve. The credit policy (`config.credit_policy`, `decisions/0003-credit-policy.md`) applies on top.
-- **One decision for several outputs.** A gate with a `gate_label` decides more than its own stage's output. Today: `hooks` → `creative-pick`, where the editor picks a concept **and** a hook in one reply (`decisions/0006-creative-pick-and-quick-track.md`). The stage's skill shows its own gate message and reads the reply; `shown_outputs` names every output shown (`hooks`, plus `concept` on the full track). The skill records the decision first, then saves the pick as the next `hooks` version, which needs no new gate.
+- **Labelled gates.** A gate with a `gate_label` is run by the stage's skill: it shows its own message (`templates/<gate_label>.md`) and reads the reply in plain words. Today: `hooks` → `creative-pick`, where the editor picks a concept **and** a hook in one reply (`decisions/0006-creative-pick-and-quick-track.md`), and `script` → `script-pick`, where the editor picks one of two script versions, with edits (`decisions/0007-script-pick-and-localise-approval.md`). The stage's skill shows its own gate message and reads the reply; `shown_outputs` names every output shown (`hooks`, plus `concept` on the full track). The skill records the decision first, then saves the pick as the next `hooks` version, which needs no new gate.
 - **Real money.** A stage with `spend_gate: admin` asks the admin **before** spending money (USD or INR, not credits), with a `spend` gate, unless the estimate is at or below `config.research_auto_approve_limit` (default 0, so always ask). Free work never opens it. Money spent is listed in the credit ledger with its `provider` and `currency`, but only `credits` rows count against the job budget.
 
 ## Optional stage keys
@@ -57,7 +58,7 @@ Rules:
 | `skippable_if_urgent` | true / false | On a job with `urgent: true`, skip the stage: write its output with a "skipped" status and a flag for later stages, add a `skipped` history row, and move on. |
 | `non_blocking_partial` | true / false | If the work is only partly done (for `research`: the unattended part is fresh but the Instagram browser step is queued), write the output as `partial` and move on. Offer to finish the rest; never wait for it. |
 | `spend_gate` | `admin` / `none` | Who approves before the stage spends real money (above). |
-| `gate_label` | kebab-case name | Only with a gate other than `none`: the gate decides more than this stage's own output, and the stage's skill runs it (above). Today: `hooks` → `creative-pick`. |
+| `gate_label` | kebab-case name | Only with a gate other than `none`: the stage's skill runs the gate with its own message and reads the reply (above). Today: `hooks` → `creative-pick`, `script` → `script-pick`. |
 
 The validator rejects unknown keys and wrong value types, so a typo can't silently switch a behaviour off.
 
@@ -84,7 +85,7 @@ Each `(job_type, track)` pair gives a path through the list:
 | Path | Stages |
 |---|---|
 | video / full | 22 |
-| video / quick | 15 (skips concept, localise, style-bible, casting, production-plan, audio-mix, resolve-export) |
+| video / quick | 16 (skips concept, style-bible, casting, production-plan, audio-mix, resolve-export) |
 | poster | 7 (same stages on quick and full; no concept stage) |
 
 `scripts/validate.mjs` checks every path:

@@ -1,0 +1,77 @@
+{
+  "$comment": "Picked scripts for the localise scenarios, as compact specs. The builder expands each into a full script record (one version A, pick picked, downstream) and checks it with scripts/lib/script-checks.mjs. Scene row: [n, start, end, beat_role, shot, subject, action, camera, setting, cards, vo_line, asset_hint, must_be_real, retention_device, sfx, music_cue, fact_refs]; cards: [[text, in, out, position], ...]. 'example' = the contract example (library/contracts/examples/script.example.json).",
+  "scripts": {
+    "shl-planted-lines": {
+      "$comment": "L1: the picked script carries three planted 'too pure' / literal lines (scenes 2, 3, 6) that localise must rewrite in everyday Hinglish, keeping the facts.",
+      "pick": "shl-razai", "language": "Hinglish", "title": "Razai wapas fluffy", "structure_type": "before-after", "duration_sec": 20, "platform": "instagram-reels",
+      "hook": { "hook_id": "2B", "formula_id": "H30" },
+      "scenes": [
+        [1, 0, 3, "hook", "medium", "Folded razai on a bed", "A hand presses the razai; it stays flat; a '₹249' card drops in", "push-in", "Bedroom, winter morning", [["Razai dry clean: ₹249", 0, 3, "center"]], "Razai ghar pe dhulti hi nahi.", "phone-shoot", false, "number", "Soft thud", "Warm guitar loop from frame 1", ["brief.offer_detail.price"]],
+        [2, 3, 5.5, "escalation", "close-up", "Razai in a bucket", "Water spills; the razai won't fit", "static", "Bathroom", [["Ghar pe? Mushkil.", 3.1, 5.5, "top"]], "Aapka hamare store mein swagat hai.", "phone-shoot", false, "open-loop", "Water splash", null, []],
+        [3, 5.5, 8.5, "proof", "medium", "Shubh Laundry counter", "Staff weighs and tags a razai", "static", "Shop counter", [["Shop pe dry clean", 5.6, 8.5, "top"]], "Razai ki swachhata ab aasaan.", "phone-shoot", true, "pattern-change", null, null, ["client.business_type"]],
+        [4, 8.5, 11, "payoff", "medium", "The same razai, fluffed", "It springs back when pressed", "static", "Bedroom", [["Wapas, fluffy", 8.6, 11, "top"]], "Wapas aati hai, ekdum fluffy.", "client-footage", true, "reveal", "Soft whoosh", "Music lifts", ["hooks.downstream.implied_assets[0]"]],
+        [5, 11, 14.5, "escalation", "screen", "Offer card", "'₹249 · 31 Dec tak' types on", "static", "Brand card", [["₹249 · 31 Dec tak", 11, 14.5, "center"]], "Sirf ₹249 per razai, 31 Dec tak.", "motion-graphics", false, "number", "Type-on clicks", null, ["brief.offer_detail.price", "brief.offer_detail.validity"]],
+        [6, 14.5, 18, "escalation", "wide", "Shubh Laundry van and staff", "Staff carry a folded razai from a gate to the van", "tracking", "Residential lane, Vijay Nagar", [["Pickup free · ₹299 se upar", 14.6, 18, "lower-third"]], "Vastron ka sangrahan nishulk, ₹299 se upar.", "phone-shoot", true, "pattern-change", "Van door slide", null, ["brief.proof_points[0]"]],
+        [7, 18, 20, "cta", "screen", "Logo end card", "WhatsApp button pulses once", "static", "Brand end card", [["WhatsApp karo", 18.1, 20, "center"]], "WhatsApp karo.", "motion-graphics", false, "loop-back", "Ping", "Out on the beat", ["brief.cta_detail"]]
+      ],
+      "caption": {
+        "first_line": "Razai ghar pe nahi dhulti? Shubh Laundry pe dry clean ₹249, 31 Dec tak.",
+        "full_text": "Razai ghar pe nahi dhulti? Shubh Laundry pe dry clean ₹249, 31 Dec tak.\n\nGhar se pickup free, ₹299 se upar. WhatsApp karo.\n\n#IndoreLaundry #VijayNagar #RazaiCleaning",
+        "hashtags": ["#IndoreLaundry", "#VijayNagar", "#RazaiCleaning"],
+        "pinned_comment": null
+      },
+      "cta": { "action": "WhatsApp karo", "channel": "whatsapp", "said_in_scene": 7, "shown_in_scene": 7 },
+      "keep_as_is": ["Shubh Laundry", "₹249", "31 Dec", "₹299"]
+    },
+    "nrh-film": {
+      "$comment": "L2/L3/L7: Hindi written in Roman (the script stage), to be localised into Devanagari for buyers 30-55. Scene 12 says the sales number (the client asked).",
+      "pick": "nrh-film", "language": "Hindi", "title": "Har mahine, ek hi jagah", "structure_type": "demo-led", "duration_sec": 45, "platform": "instagram-reels",
+      "hook": { "hook_id": "1A", "formula_id": "H06" },
+      "scenes": [
+        [1, 0, 3, "hook", "wide", "The empty site", "Date stamp ticks to month 1", "static", "Same fixed spot, morning", [["Har mahine, ek hi jagah", 0, 3, "center"]], "Har mahine, yahi jagah shoot ki.", "client-footage", true, "open-loop", "Camera shutter", "Soft tabla pulse from frame 1", ["hooks.downstream.implied_assets[0]"]],
+        [2, 3, 7, "escalation", "wide", "The same frame", "Dated cuts: field, foundation, columns", "static", "Same fixed spot", [["Khet se aaj tak", 3.1, 7, "top"]], "Dekhiye kaise bani. Pehle khet tha.", "client-footage", true, "pattern-change", "Shutter on each cut", null, ["hooks.downstream.implied_assets[0]"]],
+        [3, 7, 11, "escalation", "insert", "A worker's hands", "Tie rebar on a column", "handheld", "Floor 2 slab", [["Har mahine ki photo", 7.1, 11, "top"]], "Har column, har mahine, camera pe.", "client-footage", true, "pattern-change", "Wire twist", null, []],
+        [4, 11, 15, "payoff", "wide", "The tower today", "Lights come on floor by floor", "tracking", "Same fixed spot, evening", [["Aaj", 11.1, 15, "center"]], "Aur aaj, yahi jagah aisi dikhti hai.", "phone-shoot", true, "reveal", null, "Tabla lifts on the reveal", []],
+        [5, 15, 19, "proof", "medium", "The RERA board at the gate", "A hand points at the number", "push-in", "Site gate", [["RERA: P-JBP-21-1234", 15.1, 19, "center"]], "Aur yeh raha RERA number.", "phone-shoot", true, "number", null, null, ["brief.mandatories"]],
+        [6, 19, 23, "escalation", "medium-close-up", "Agrawal ji, director", "Looks up from the site plan to camera", "static", "Site office", [["Agrawal ji, director", 19.1, 23, "lower-third"]], "Main Agrawal, Narmada Heights se.", "phone-shoot", true, "pattern-change", null, "Music drops under the voice", []],
+        [7, 23, 27, "escalation", "medium-close-up", "Agrawal ji", "Speaks to camera", "static", "Site office", [["Pehla sawaal?", 23.1, 27, "top"]], "Ghar lene wale ka pehla sawaal hota hai.", "phone-shoot", true, "re-hook", null, null, []],
+        [8, 27, 31, "escalation", "medium", "Agrawal ji", "Walks a finished corridor", "tracking", "Floor 5 corridor", [["Ghar time pe milega?", 27.1, 31, "center"]], "Ghar time pe milega?", "phone-shoot", true, "open-loop", "Footsteps", null, []],
+        [9, 31, 35, "proof", "screen", "Possession card", "Types on", "static", "Brand card", [["Possession: {{needed: month year}}", 31.1, 35, "center"]], "Possession {{needed: mahina, saal}}, jo RERA mein darj hai.", "motion-graphics", false, "number", "Type-on clicks", null, ["hooks.downstream.concept.levers[1]"]],
+        [10, 35, 38.5, "escalation", "medium", "Sample flat living room", "Daylight through the balcony door", "pan", "Sample flat, Napier Town", [["Sample flat, Napier Town", 35.1, 38.5, "lower-third"]], "Sample flat taiyaar hai, Napier Town mein.", "phone-shoot", true, "pattern-change", null, null, ["brief.audience_detail.where"]],
+        [11, 38.5, 41, "cta", "medium-close-up", "Agrawal ji", "Gestures toward the door", "static", "Sample flat", [["Site visit kijiye", 38.6, 41, "top"]], "Site visit ke liye call kijiye.", "phone-shoot", true, "loop-back", null, null, ["brief.cta_detail"]],
+        [12, 41, 45, "cta", "screen", "End card", "Logo, the sales number and the RERA line", "static", "Brand end card", [["Call: 98260 12345", 41.1, 45, "center"], ["RERA: P-JBP-21-1234 · rera.mp.gov.in", 41.1, 45, "lower-third"]], "98260 12345.", "motion-graphics", false, "number", null, "Out on the beat", ["brief.mandatories"]]
+      ],
+      "caption": {
+        "first_line": "Har mahine isi jagah se shoot kiya. Dekhiye Narmada Heights kaise bana.",
+        "full_text": "Har mahine isi jagah se shoot kiya. Dekhiye Narmada Heights kaise bana.\n\nSite visit ke liye call kijiye. RERA: P-JBP-21-1234.\n\n#Jabalpur #NapierTown #NarmadaHeights",
+        "hashtags": ["#Jabalpur", "#NapierTown", "#NarmadaHeights"],
+        "pinned_comment": null
+      },
+      "cta": { "action": "Site visit ke liye call kijiye", "channel": "call", "said_in_scene": 11, "shown_in_scene": 12 },
+      "keep_as_is": ["Narmada Heights", "RERA", "P-JBP-21-1234", "rera.mp.gov.in", "98260 12345"],
+      "variant_notes": ["YouTube 16:9, 60 s: add 15 s of site walkthrough B-roll between scenes 10 and 11; the RERA end card stays."]
+    },
+    "sje-festive": {
+      "$comment": "L1 (variants) and L7: Hinglish festival reel; config adds an English variant. 'Saanjh' has no pronunciation entry yet.",
+      "pick": "sje-festive", "language": "Hinglish", "title": "Behen ke saath matching", "structure_type": "story-led", "duration_sec": 25, "platform": "instagram-reels",
+      "hook": { "hook_id": "1A", "formula_id": "H26" },
+      "scenes": [
+        [1, 0, 3, "hook", "medium", "Two sisters at the boutique mirror", "They hold up matching kurta sets", "push-in", "Saanjh boutique, evening lights", [["Behen ke saath matching", 0, 3, "center"]], "Bhai Dooj pe behen ke saath matching?", "phone-shoot", true, "open-loop", null, "Light dhol loop from frame 1", []],
+        [2, 3, 6.5, "escalation", "close-up", "The elder sister's sleeve", "She pinches the extra cloth at the cuff", "static", "Trial room", [["Diwali tak ready?", 3.1, 6.5, "top"]], "'Diwali tak ready ho jayega na?'", "phone-shoot", true, "open-loop", null, null, []],
+        [3, 6.5, 10, "proof", "insert", "Tailor's tape", "Measures the sleeve at the tailoring table", "handheld", "Tailoring table", [["Fitting yahin, saamne", 6.6, 10, "top"]], "Fitting yahin hoti hai, aapke saamne.", "phone-shoot", true, "pattern-change", "Scissors snip", null, ["client.do"]],
+        [4, 10, 13.5, "escalation", "medium", "The tailor", "Pins the sleeve and marks it with chalk", "static", "Tailoring table", [["Custom fitting", 10.1, 13.5, "lower-third"]], "Custom fitting, har set ke saath.", "phone-shoot", true, "pattern-change", null, null, ["brief.proof_points[0]"]],
+        [5, 13.5, 17, "payoff", "medium", "Both sisters", "Turn to the mirror in their fitted sets, smiling", "pull-out", "Boutique mirror", [["Ready, matching", 13.6, 17, "center"]], "Aur dono ready, ekdum matching.", "phone-shoot", true, "reveal", null, "Dhol hit on the turn", []],
+        [6, 17, 21, "escalation", "screen", "Price card", "'₹1,499 · custom fitting' stamps in", "static", "Brand card", [["₹1,499 · custom fitting", 17.1, 21, "center"]], "Festive kurta set, ₹1,499, fitting ke saath.", "motion-graphics", false, "number", "Stamp hit", null, ["brief.offer_detail.price"]],
+        [7, 21, 25, "cta", "screen", "Logo end card", "WhatsApp button pulses once", "static", "Brand end card", [["Fitting slot book karo", 21.1, 25, "center"]], "WhatsApp karo, fitting slot book karo.", "motion-graphics", false, "loop-back", "Ping", "Out on the beat", ["brief.cta_detail"]]
+      ],
+      "caption": {
+        "first_line": "Behen ke saath matching, fitting perfect: festive kurta set ₹1,499, custom fitting ke saath.",
+        "full_text": "Behen ke saath matching, fitting perfect: festive kurta set ₹1,499, custom fitting ke saath.\n\nWhatsApp karo, fitting slot book karo.\n\n#Bhopal #MPNagar #BhaiDooj #KurtaSet",
+        "hashtags": ["#Bhopal", "#MPNagar", "#BhaiDooj", "#KurtaSet"],
+        "pinned_comment": null
+      },
+      "cta": { "action": "WhatsApp karo, fitting slot book karo", "channel": "whatsapp", "said_in_scene": 7, "shown_in_scene": 7 },
+      "keep_as_is": ["Saanjh", "₹1,499"]
+    }
+  }
+}

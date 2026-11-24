@@ -64,6 +64,9 @@
   "price_points": [{ "item": "Wash + iron per kg", "price": 89, "currency": "INR" }],
   "revision_cap": 2,
   "next_job_number": 2,
+  "pronunciation": [
+    { "term": "Shubh Laundry", "say_as": "shubh LAWN-dree (shubh as in 'shubh din')", "devanagari": "शुभ लॉन्ड्री", "confirmed": true, "note": "Owner's own reading, onboarding call", "source_job": null }
+  ],
   "learnings": [
     {
       "date": "2026-11-18",

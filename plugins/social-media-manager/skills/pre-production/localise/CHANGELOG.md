@@ -1,0 +1,11 @@
+# Changelog: localise
+
+## Unreleased
+
+- First version, on branch `feat/script-localise` (no plugin version bump on the branch).
+- Runs the `localise` stage (quick and full video tracks, no gate, decision 0007): language and writing-script choice with a reason; transcreation (meaning, feeling, retention devices and facts kept; customer phrases verbatim; never "too pure"); Devanagari conversion through `scripts/transliterate.py`; spoken numbers and money; a voiceover script (pauses, emphasis, breath points, speed, pronunciation hints, clean TTS text); SRT captions timed from the scene table; the caption post; a length check; a back-translation check (Claude, or IndicTrans2 only if already installed); an AI-tell check; a WhatsApp-ready client review message; optional extra-language variants; self-check LC1–LC8; `downstream` for voice-music, captions-motion and storyboard.
+- The approval step for `client-script-approval`: shows the client review message ready to copy; the producer opens the client gate; the reply goes through `client-feedback`.
+- `scripts/transliterate.py`: IndicXlit (AI4Bharat, MIT) when installed (`script_check: verified`), otherwise a fallback with a Hinglish lexicon and phonetic rules that flags every word it doesn't know (`script_check: unverified`). It protects numbers, ₹ amounts, hashtags, placeholders, acronyms and `--keep` terms, takes fixed spellings with `--map`, and spells numbers in Hindi words (`--number`, with the shop style for 1,100–9,999). `--self-test`: 11 checks.
+- References (transcreation rules, language choice, Hinglish style, numbers and money, pronunciation, voiceover prep, captions SRT, back-translation, client review), templates (localised script, voiceover script, captions file, client review message), checklist, three examples (Roman Hinglish, Devanagari for 30–55 with the fallback, bad translated Hindi annotated).
+- Client feedback (step 16): apply wording and language items to the named lines only (or localise the script's changed scenes first), re-check, and write the client message as an "after changes" revision. `client-script-approval` is active, run by this skill.
+- From the first live runs (2026-11-24): see `evals/results/2026-11-24_feat-script-localise.md`; fixes listed there.

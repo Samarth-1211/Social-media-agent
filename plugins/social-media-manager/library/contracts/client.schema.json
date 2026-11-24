@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:tdm:social-media-manager:contracts:client",
   "title": "Client",
-  "x-version": 2,
+  "x-version": 3,
   "description": "A client's brand profile, maintained by brand-keeper and read (as the short brand brief) by every stage. Every profile field is marked confirmed or guessed in `confidence`, with its basis. Logical record: the storage layer maps it to Google Sheets rows.",
   "type": "object",
   "additionalProperties": false,
@@ -275,6 +275,23 @@
       "minimum": 1
     },
 
+    "pronunciation": {
+      "description": "(v3) How to say brand, product and place names in voiceovers. localise proposes entries; brand-keeper saves them, and confirmed becomes true once the client or admin agrees.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term", "say_as", "confirmed"],
+        "properties": {
+          "term": { "type": "string", "minLength": 1 },
+          "say_as": { "type": "string", "minLength": 1, "description": "Plain respelling, e.g. 'shubh LAUN-dree'." },
+          "devanagari": { "type": ["string", "null"], "description": "How the term is written in Devanagari, if it differs from a plain transliteration." },
+          "confirmed": { "type": "boolean" },
+          "note": { "type": "string" },
+          "source_job": { "anyOf": [{ "type": "string", "pattern": "^[A-Z]{3}-[0-9]{2,}$" }, { "type": "null" }] }
+        }
+      }
+    },
     "learnings": {
       "description": "What the team found out by shipping. About 20 active entries; retire instead of deleting.",
       "type": "array",

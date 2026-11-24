@@ -67,7 +67,7 @@ Never write another stage's outputs, and never change client records.
 
 6. **Gates.** Follow `${CLAUDE_SKILL_DIR}/references/gate-rules.md`:
    - **Stop at every gate.** Record a pending gate whose `shown_outputs` are the exact versions shown. Then show `${CLAUDE_SKILL_DIR}/templates/gate-message.md`: what is being approved, who must approve (by name), and the options (approve / changes / back to a stage).
-   - **Creative pick** (`gate_label: creative-pick`): the hooks skill shows the pick and reads the reply (`gate-rules.md` §3).
+   - **Labelled gates** (`gate_label` in `stages.yaml`: `creative-pick` on hooks, `script-pick` on script): the stage's skill shows the pick and reads the reply (`gate-rules.md` §3).
    - **Check permission before recording any decision.** If the wrong person decides, refuse politely, name who must approve, and leave the gate pending.
    - **Never pass a gate on someone's behalf,** even if they "said yes on the phone".
    - **Approve:** record it, close the stage, run on (step 5).

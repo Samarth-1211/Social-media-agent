@@ -1,0 +1,13 @@
+{
+  "$comment": "Built on the concept-hooks clients (which build on ../brief/clients.json). Only the overrides for script + localise are here.",
+  "overrides": {
+    "shubh-laundry": {
+      "next_job_number": 36,
+      "pronunciation": [
+        { "term": "Shubh Laundry", "say_as": "shubh LAWN-dree (shubh as in 'shubh din')", "devanagari": "शुभ लॉन्ड्री", "confirmed": true, "note": "Owner's own reading, onboarding call", "source_job": null }
+      ]
+    },
+    "narmada-heights": { "next_job_number": 16 },
+    "saanjh-ethnic": { "next_job_number": 6 }
+  }
+}

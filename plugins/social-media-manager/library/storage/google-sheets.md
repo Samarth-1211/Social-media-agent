@@ -125,6 +125,8 @@ Columns marked `storage_only` in the layout (row keys, `seq`, a question's `stat
 
 **Concept and hooks records.** These two can pass 30,000 characters on the full track (3 concepts, 8–10 hooks each). Always save the whole record as `Jobs/<job_id>/<field>/<field>-v<version>.json` in Drive (`concept/concept-v2.json`, `hooks/hooks-v1.json`) and list its link in `files`. If the whole record is under 40,000 characters, the `Outputs.data` cell holds it too (quick-track hooks usually are: about 8,000). Otherwise the cell keeps a compact record: for `concept`, `raw_angles` cut to id, type and status; for `hooks`, only hooks with status `top`, plus `pick`, `recommended`, `top_per_concept` and `downstream`. Later stages read the cell; the Drive file is for the editor and for reruns. Both must validate against their schema.
 
+**Script and localise records (layout v5).** Same rule as concept and hooks. Every `script` version is saved whole as `Jobs/<job_id>/script/script-v<n>.json`, and every `localised_script` version as `Jobs/<job_id>/localise/localised_script-v<n>.json`. Two script versions with 6–10 scenes each usually stay under 40,000 characters, so the cell holds the whole record. If one doesn't, the cell keeps `versions` cut to `id`, `title`, `structure_type` and `checks`, plus `recommended`, `pick` and `downstream` (the picked scene table). `localise` also writes three plain files to the same folder: `vo-script-v<n>.md`, `captions-v<n>.srt` and `client-review-v<n>.txt`. It lists their links in the output's `files` and in the record (`vo_script.file`, `captions_srt.file`, `client_review_message.file`), and the SRT and voiceover text also stay inside the record. No new tabs. The client's `pronunciation` list is a JSON cell on the Clients tab.
+
 **Research and tasks:**
 
 | Operation | Steps |
@@ -153,7 +155,7 @@ v1 reads whole tabs. That is fine for thousands of rows. If any tab passes about
 
 ## 7. Upgrading a sheet built with an older layout
 
-`sheet-setup.json` → `upgrades` lists the steps for each layout change. A sheet with no **Insights** tab is on layout v1 (Group 1, plugin 0.1.0); a sheet with Insights but no **BriefQuestions** tab is on layout v2 (0.2.0-alpha.1); a sheet whose **Learnings** tab has no `hook_formula_id` column is on layout v3 (0.2.0-alpha.2). Apply the upgrades in order, from the sheet's layout to the current one.
+`sheet-setup.json` → `upgrades` lists the steps for each layout change. A sheet with no **Insights** tab is on layout v1 (Group 1, plugin 0.1.0); a sheet with Insights but no **BriefQuestions** tab is on layout v2 (0.2.0-alpha.1); a sheet whose **Learnings** tab has no `hook_formula_id` column is on layout v3 (0.2.0-alpha.2). A sheet whose **Clients** tab has no `pronunciation` column is on layout v4 (0.3.0-alpha.1). Apply the upgrades in order, from the sheet's layout to the current one.
 
 Admin only. Confirm the sheet by title first, and make a backup (`files-backup.md`, Export) if it holds real data.
 1. Send `upgrades[0].batch_requests` in one `update_spreadsheet` call. It widens Jobs, Clients and Credits, adds the Insights, InsightFindings and Tasks tabs at the end, and adds dropdowns and protected headers. Existing columns and tabs don't move.
@@ -166,6 +168,8 @@ Existing rows need nothing: the new cells are empty, which means `urgent` false,
 **v2 → v3 (brief), `upgrades[1]`:** the same four steps. Its `batch_requests` add the BriefQuestions tab (header, protection, status dropdown), make the Dashboard block bold and widen the Gates `decided_by_role` dropdown with `system`. Its `values` write the BriefQuestions header and the "Brief: waiting for client reply" Dashboard block (`X2:AA3`). Its `append` adds the three brief settings to Config. Existing rows need nothing.
 
 **v3 → v4 (concept + hooks), `upgrades[2]`:** the same four steps. Its `batch_requests` add the `angle_type` and `outcome` dropdowns and protect the new Learnings header cells. Its `values` write the three new Learnings headers (`hook_formula_id`, `angle_type`, `outcome`, after `source_job`). Its `append` adds `concepts_count`, `hooks_per_concept` and `creative_auto_pick_after_hours` (empty = off) to Config. Existing rows need nothing: empty cells mean a learning isn't about a hook formula or angle.
+
+**v4 → v5 (script + localise), `upgrades[3]`:** the same four steps. Its `batch_requests` widen the Clients tab and protect the new header cell. Its `values` write the `pronunciation` header (after `latest_insight_id`). Its `append` adds `script_versions` (2), `pace_overrides` (`{}`), `localise_variant_languages` (`[]`) and `caption_max_chars_per_line` (32) to Config. Existing rows need nothing: an empty `pronunciation` cell means no entries yet.
 
 ## 8. Brief records (layout v3)
 
