@@ -9,7 +9,7 @@ For Samarth (admin), the editors, and anyone checking the system before real cli
 | Producer (jobs, tracks, approvals, budgets), tracker (status, catch-up), brand-keeper (client profiles), client-feedback (client replies) | Style bible, casting, storyboard, production plan |
 | Market research, brief, concepts, hooks + the creative pick | Clips, voice and music, QA, rough cut, captions, audio mix, final master, export |
 | Script + the script pick, language version (Hinglish / Hindi / English), the client's script approval | Poster drafts and final poster, delivery |
-| Tracker page (read-only board) | |
+| Tracker page (board + approve / reject / regenerate / pick buttons, new-job form) | |
 
 So today a job can go **from the request to a client-approved script**. Everything after that moves through placeholder steps, so you can test the flow and the approvals, but not real videos.
 
@@ -32,14 +32,17 @@ There are four layers of testing. Do them in this order; each one catches differ
    - Check that the version shows 0.4.0-alpha.1.
 2. **Connect Google Drive and Google Sheets** in the Claude app (Settings → Connectors), signed in to the agency account.
 3. **Use the TEST database, never the real one.** Start every test session with "use TDM Studio TEST Database".
-4. **Upgrade the TEST sheet to layout v5** (admin): say "upgrade the TDM Studio sheet". It adds the missing columns and Config rows (v3 → v4 → v5). Then check:
+4. **Upgrade the TEST sheet to layout v6** (admin): say "upgrade the TDM Studio sheet". It adds the missing columns, Config rows and tabs (v3 → v4 → v5 → v6). Then check:
    - the Clients tab has a `pronunciation` column;
-   - the Config tab has `script_versions`, `pace_overrides`, `localise_variant_languages` and `caption_max_chars_per_line`.
-5. **Open the tracker page**, https://claude.ai/artifact/9vZTbn9j6WFZyMzvWC8XAj, and press **Allow** when it asks to read Google Sheets.
+   - the Config tab has `script_versions`, `pace_overrides`, `localise_variant_languages` and `caption_max_chars_per_line`;
+   - there is an **Actions** tab (the tracker page's buttons write there).
+5. **Open the tracker page**, https://claude.ai/artifact/9vZTbn9j6WFZyMzvWC8XAj, and press **Allow** when it asks to read Google Sheets (and, at your first click, to write).
    - **If it works,** the header says "Live from Google Sheets".
+   - Choose yourself under **You are** (top right).
    - **If it says "Sample data",** the connector isn't connected for you.
    - **Share it** from its Share menu with whoever will test.
-6. **Decide who plays whom:**
+6. **Start the approvals session** (only for testing the page's buttons): open Claude Code in the repository with the plugin, say "use TDM Studio TEST Database", say who you are, then run `/loop 3m process approvals`. Leave it open. Every 3 minutes it carries out the page's clicks.
+7. **Decide who plays whom:**
    - Samarth = admin.
    - One editor = assigned editor (e.g. Ravi).
    - Someone plays the client: they write the WhatsApp replies you'll paste.
@@ -61,6 +64,7 @@ node evals/research/validator-faults.cjs                    # 18 planted faults
 node evals/research/methods-consistency.cjs
 python -I plugins/social-media-manager/skills/pre-production/localise/scripts/transliterate.py --self-test
 npm i --no-save jsdom && node evals/research/tracker-page-render.cjs   # the tracker page renders
+node evals/tracker/page-actions.cjs                         # every view and tab renders; buttons write valid Actions rows (56 checks)
 ```
 
 **Pass** = every line ends with ✔ / PASS / "caught" and nothing says ✘ or MISS. Or in one go: `node evals/script-localise/run-scenarios.mjs R1` runs most of these and shows "R1: 9/9".
@@ -163,7 +167,27 @@ At a "waiting for the client" step, paste each of these in turn (start again fro
 | Pick a Hindi brief for older buyers (devanagari) | Devanagari text; the record says "unverified" with words to check if IndicXlit isn't installed |
 | "log 250 credits for clips" on a 200-credit job | A budget approval opens for Samarth before anything else spends |
 
-### G. A poster job (5 min)
+### G. A brand-new project, decided from the page (30 min)
+
+The approvals session (setup step 6) must be running. Everything below is clicked on the tracker page; nobody types to Claude. After each click, the job's decision box shows **waiting for Claude**, and within about 3 minutes the result.
+
+| Step | On the page | Expect |
+|---|---|---|
+| 1 | **New job** → a TEST client, Video, "Diwali offer reel: …", a deadline → **Send to Claude** | Approvals log: *done*, "SHL-xx set up; waiting for Samarth". The job appears under Today → admin. |
+| 2 | As Samarth, open it → read Overview → **Approve** → **Yes, approve** | Research and brief run; the brief's approval appears. |
+| 3 | **Brief** tab → read it → **Reject…** with "say the price on the first frame" | A new brief version; the decision box asks again; History shows the rejection with your note. |
+| 4 | **Approve** the new brief | Concepts and hooks run; the box shows the hooks to pick (⭐ preselected). |
+| 5 | As Ravi: **Ideas & hooks** tab → pick a different hook in the box → **Pick this hook** | Script runs; the **Script** tab shows A and B side by side. |
+| 6 | **Regenerate…** with "funnier" | Two new versions; the old pick is gone. |
+| 7 | Choose B, edit "shorter by 5 sec" → **Pick this version** | Localise runs; **Language version** shows the voice-over, captions and the client message with **Copy**. |
+| 8 | Copy the message, have the "client" reply, paste it → **Client wants changes** | Client feedback tab: items and a proposed route; the box shows **Confirm: reopen …**. Confirm it. |
+| 9 | After the rework, paste "haan theek hai" → **Client approved** | The job moves to the next phase (placeholders from here). |
+| 10 | Guardrails: as Pooja, open a gate that's Ravi's | No buttons, "This one is for Ravi…". |
+| 11 | Two people click on the same gate within a minute | The first is *done*, the second *not recorded: already decided*. |
+
+**Also check:** typing a long note while the page refreshes doesn't lose your text; the Today tile counts change after each step; nothing shows a WhatsApp number.
+
+### H. A poster job (5 min)
 
 Say: "new job for Gupta Sweets: Diwali offer poster".
 

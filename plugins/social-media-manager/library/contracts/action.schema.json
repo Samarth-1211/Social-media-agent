@@ -1,0 +1,403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tdm:social-media-manager:contracts:action",
+  "title": "Page action",
+  "x-version": 1,
+  "description": "A decision or request someone made on the tracker page (approve, reject, regenerate, a creative or script pick, a client's reply, a new job). The page only appends it to the Actions tab as `queued`; nothing changes in a job until the producer's 'process approvals' command reads it, checks it exactly as if that person had typed the command, and acts on it (skills/control/producer/references/page-actions.md). Layout v6, Sheets only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "action_id",
+    "created_at",
+    "requested_by",
+    "kind",
+    "status",
+    "version"
+  ],
+  "properties": {
+    "action_id": {
+      "description": "A-<yyyymmddHHMMSS>-<4 lowercase letters or digits>: the page's clock when clicked, plus a random tail so two clicks in the same second don't clash.",
+      "type": "string",
+      "pattern": "^A-[0-9]{14}-[a-z0-9]{4}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the button was pressed (the viewer's clock, India time)."
+    },
+    "requested_by": {
+      "type": "string",
+      "description": "Team handle the person chose under 'Who's using this page?'. Behavioural, like the session's 'Who's working?': the producer checks this handle's role, not a login."
+    },
+    "kind": {
+      "description": "approve / reject / regenerate / send-back = an admin or editor gate decision; pick-creative = the hooks creative pick; pick-script = the script pick; client-approved / client-feedback = recording the client's own reply at a client gate; confirm-route = confirming the stage client-feedback proposed to reopen; new-job = a request for intake.",
+      "enum": [
+        "approve",
+        "reject",
+        "regenerate",
+        "send-back",
+        "pick-creative",
+        "pick-script",
+        "client-approved",
+        "client-feedback",
+        "confirm-route",
+        "new-job"
+      ]
+    },
+    "job_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Z]{3}-[0-9]{2,}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Null only for new-job."
+    },
+    "client_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "stage": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The stage whose pending gate the page showed (null for new-job)."
+    },
+    "gate_shown": {
+      "description": "Exactly what the page showed when the button was pressed: the gate's shown_outputs (field → version). The producer refuses the action if the job's pending gate now covers other versions.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "payload": {
+      "description": "What the person chose or wrote. Only the keys their kind uses.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "type": "string",
+          "description": "reject / regenerate / send-back: what to change or why. Required for reject."
+        },
+        "back_to": {
+          "type": "string",
+          "description": "send-back: the earlier stage to reopen."
+        },
+        "concept_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^C[1-5]$"
+        },
+        "hook_id": {
+          "type": "string",
+          "pattern": "^([1-5]|Q)[A-L]$"
+        },
+        "backups": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^([1-5]|Q)[A-L]$"
+          }
+        },
+        "version_id": {
+          "type": "string",
+          "pattern": "^[A-D]$",
+          "description": "pick-script: the script version picked."
+        },
+        "edit": {
+          "type": "string",
+          "description": "pick-script: an edit in the editor's words, read like a typed pick ('scene 4 line: …', 'shorter by 5 sec')."
+        },
+        "client_reply": {
+          "type": "string",
+          "description": "client-approved / client-feedback: the client's own words, pasted. Required for both."
+        },
+        "feedback_id": {
+          "type": "string",
+          "description": "confirm-route: the client_feedback entry whose proposed route is confirmed."
+        },
+        "new_job": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "request"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "video",
+                "poster"
+              ]
+            },
+            "request": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The ask, in the team's words (any language)."
+            },
+            "deadline": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            },
+            "urgent": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "description": "queued = written by the page; processing = the producer has started it; done = carried out; refused = not allowed or out of date (result says why; nothing changed); failed = an error part-way (result says what, the producer logged it).",
+      "enum": [
+        "queued",
+        "processing",
+        "done",
+        "refused",
+        "failed"
+      ]
+    },
+    "result": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "One plain line the page shows, e.g. 'Recorded: SHL-04 script approved. Localise ran; waiting for the client.'"
+    },
+    "processed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "processed_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Handle of the person whose session processed it, or 'system' for a scheduled loop."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "new-job"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "client_id",
+          "payload"
+        ],
+        "properties": {
+          "client_id": true,
+          "payload": {
+            "required": [
+              "new_job"
+            ],
+            "properties": {
+              "new_job": true
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "else": {
+        "required": [
+          "job_id",
+          "client_id",
+          "stage",
+          "gate_shown"
+        ],
+        "properties": {
+          "job_id": true,
+          "client_id": true,
+          "stage": true,
+          "gate_shown": true
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "reject"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "note"
+            ],
+            "properties": {
+              "note": true
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "send-back"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "back_to"
+            ],
+            "properties": {
+              "back_to": true
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "pick-creative"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "hook_id"
+            ],
+            "properties": {
+              "hook_id": true
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "pick-script"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "version_id"
+            ],
+            "properties": {
+              "version_id": true
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "client-approved",
+              "client-feedback"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "client_reply"
+            ],
+            "properties": {
+              "client_reply": true
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "confirm-route"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "feedback_id"
+            ],
+            "properties": {
+              "feedback_id": true
+            }
+          }
+        }
+      }
+    }
+  ]
+}

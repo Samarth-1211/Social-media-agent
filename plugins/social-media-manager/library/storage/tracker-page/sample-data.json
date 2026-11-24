@@ -33,9 +33,9 @@
     "Diwali curtain & sofa cleaning offer reel",
     "quick",
     "active",
-    "script",
-    "editor",
-    "Ravi to approve the script (placeholder) or request changes.",
+    "client-script-approval",
+    "client",
+    "Ravi to send the review message to Neha ji and record her reply.",
     "ravi",
     "2026-11-25",
     "",
@@ -43,9 +43,9 @@
     "",
     "0",
     "0",
-    "9",
+    "12",
     "2026-11-15T11:00:00+05:30",
-    "2026-11-15T12:45:00+05:30",
+    "2026-11-15T15:12:40+05:30",
     "TRUE",
     "skipped",
     ""
@@ -121,6 +121,30 @@
     "FALSE",
     "fresh",
     "SHL-I202611-1"
+   ],
+   [
+    "SHL-04",
+    "shubh-laundry",
+    "video",
+    "Diwali offer reel, demo copy held at the script pick",
+    "quick",
+    "active",
+    "script",
+    "editor",
+    "Ravi to pick script A or B (or ask for changes).",
+    "ravi",
+    "2026-11-25",
+    "",
+    "200",
+    "",
+    "0",
+    "0",
+    "9",
+    "2026-11-15T11:00:00+05:30",
+    "2026-11-15T12:45:00+05:30",
+    "TRUE",
+    "skipped",
+    ""
    ]
   ],
   "Clients": [
@@ -185,7 +209,7 @@
     "[{\"occasion\":\"Diwali\",\"date\":null,\"priority\":\"high\",\"note\":\"Pre-Diwali curtain and sofa cleaning offer\"},{\"occasion\":\"Wedding season\",\"date\":\"November-February\",\"priority\":\"high\",\"note\":\"Saree and sherwani dry clean\"}]",
     "[{\"item\":\"Wash + iron per kg\",\"price\":89,\"currency\":\"INR\"}]",
     "2",
-    "4",
+    "5",
     "{\"name\":{\"status\":\"confirmed\",\"basis\":\"client said, onboarding 2026-11-10\"},\"business_type\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"city\":{\"status\":\"confirmed\",\"basis\":\"client said\"},\"languages\":{\"status\":\"confirmed\",\"basis\":\"admin approved\"},\"audience\":{\"status\":\"guessed\",\"basis\":\"inferred from Google Business reviews\"},\"tone_of_voice\":{\"status\":\"guessed\",\"basis\":\"inferred from past Instagram captions\"},\"visual_identity\":{\"status\":\"confirmed\",\"basis\":\"logo file colours, approved by owner\"},\"festival_calendar\":{\"status\":\"guessed\",\"basis\":\"standard Indore calendar suggestion\"},\"price_points\":{\"status\":\"confirmed\",\"basis\":\"admin entered from rate card\"},\"revision_cap\":{\"status\":\"confirmed\",\"basis\":\"default 2, admin approved\"},\"own_handle\":{\"status\":\"confirmed\",\"basis\":\"owner said, onboarding 2026-11-10\"},\"competitors\":{\"status\":\"guessed\",\"basis\":\"research discovery 2026-11-21; one confirmed by ravi, one struck (other city)\"}}",
     "3",
     "2026-11-10T10:00:00+05:30",
@@ -410,9 +434,24 @@
     "script",
     "stage",
     "editor",
-    "pending",
+    "approved",
     "{\"script\":1}",
     "2026-11-15T12:45:00+05:30",
+    "ravi",
+    "editor",
+    "2026-11-15T15:10:00+05:30",
+    "",
+    "script pick: A, edits: scene 7 line"
+   ],
+   [
+    "SHL-01",
+    "6",
+    "client-script-approval",
+    "stage",
+    "client",
+    "pending",
+    "{\"script\":2,\"localised_script\":1}",
+    "2026-11-15T15:12:00+05:30",
     "",
     "",
     "",
@@ -536,6 +575,81 @@
     "samarth",
     "admin",
     "2026-11-22T10:15:00+05:30",
+    "",
+    ""
+   ],
+   [
+    "SHL-04",
+    "1",
+    "intake",
+    "stage",
+    "admin",
+    "approved",
+    "{\"request\":1}",
+    "2026-11-15T11:15:00+05:30",
+    "samarth",
+    "admin",
+    "2026-11-15T11:20:00+05:30",
+    "",
+    ""
+   ],
+   [
+    "SHL-04",
+    "2",
+    "brief",
+    "stage",
+    "admin",
+    "approved",
+    "{\"brief\":1}",
+    "2026-11-15T12:00:00+05:30",
+    "samarth",
+    "admin",
+    "2026-11-15T12:05:00+05:30",
+    "",
+    ""
+   ],
+   [
+    "SHL-04",
+    "3",
+    "concept",
+    "stage",
+    "admin",
+    "approved",
+    "{\"concept\":1}",
+    "2026-11-15T12:35:00+05:30",
+    "samarth",
+    "admin",
+    "2026-11-15T12:40:00+05:30",
+    "",
+    ""
+   ],
+   [
+    "SHL-04",
+    "4",
+    "hooks",
+    "stage",
+    "editor",
+    "approved",
+    "{\"hooks\":1}",
+    "2026-11-15T12:42:00+05:30",
+    "ravi",
+    "editor",
+    "2026-11-15T12:44:00+05:30",
+    "",
+    "Creative pick: QA, backups QC and QE."
+   ],
+   [
+    "SHL-04",
+    "5",
+    "script",
+    "stage",
+    "editor",
+    "pending",
+    "{\"script\":1}",
+    "2026-11-15T12:45:00+05:30",
+    "",
+    "",
+    "",
     "",
     ""
    ]
@@ -663,13 +777,13 @@
     "SHL-01",
     "brief",
     "1",
+    "Diwali curtain + sofa offer, 20% off till 25 Nov; quick offer-card reel, 20 s.",
     "",
-    "",
-    "",
+    "brief.schema.json",
     "brief",
-    "system",
+    "samarth",
     "2026-11-15T12:00:00+05:30",
-    "{\"placeholder\":true,\"note\":\"brief not built yet\"}"
+    "{\"job_id\":\"SHL-01\",\"client_id\":\"shubh-laundry\",\"type\":\"video\",\"client_version\":3,\"objective\":\"Get curtain and sofa cleaning bookings before Diwali through a 20% off offer.\",\"occasion\":\"Diwali\",\"audience\":\"Families in Vijay Nagar and Palasia preparing their homes for Diwali.\",\"key_message\":\"Ghar Diwali-ready, bina mehnat: curtain and sofa cleaning 20% off till 25 Nov.\",\"offer\":\"20% off curtain and sofa cleaning, till 25 Nov\",\"cta\":\"WhatsApp karo, free pickup\",\"language\":\"Hinglish\",\"tone\":\"Helpful, festive, no fake urgency\",\"deliverables\":[{\"platform\":\"instagram\",\"format\":\"reel\",\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"count\":1}],\"mandatories\":[\"Logo end card\",\"Offer validity date\",\"Free pickup line\"],\"avoid\":[\"Dirty-clothes close-ups\",\"'Cheap'\"],\"references\":[],\"style_preset\":null,\"deadline\":\"2026-11-25\",\"credit_budget\":200,\"success_measure\":\"WhatsApp enquiries in the week after posting\",\"assumptions\":[\"Price shown on the first frame, from the SHL-01 learning (watch).\"],\"open_questions\":[],\"version\":1,\"updated_at\":\"2026-11-15T12:00:00+05:30\",\"status\":\"approved\",\"changelog\":[{\"version\":1,\"at\":\"2026-11-15T12:00:00+05:30\",\"by\":\"ravi\",\"change\":\"Drafted from the intake note and profile; no questions needed.\"}],\"job_kind\":\"offer-reel\",\"objective_label\":\"leads\",\"audience_detail\":{\"who\":\"Families in Vijay Nagar and Palasia\",\"where\":[\"Vijay Nagar\",\"Palasia\"],\"age_band\":\"25-45\",\"language\":\"Hinglish\"},\"proof_points\":[{\"text\":\"Free pickup above ₹299\",\"source\":\"profile\",\"ref\":\"do\"}],\"offer_detail\":{\"text\":\"20% off curtain and sofa cleaning\",\"price\":null,\"unit\":null,\"validity\":\"2026-11-25\",\"conditions\":[],\"profile_match\":\"no-price\",\"profile_price\":null},\"cta_detail\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"target\":\"shop WhatsApp on the end card\"},\"creative_format\":\"offer-card-motion\",\"platforms\":[\"instagram\"],\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"writing_script\":\"roman-hinglish\",\"posting_date\":\"2026-11-18\",\"research\":{\"status\":\"skipped\",\"skip_reason\":\"Urgent job: research skipped and the client has no insight sheet yet.\"},\"track_suggestion\":{\"track\":\"quick\",\"reason\":\"Repeat offer-reel format for this client.\"},\"confidence\":{\"objective\":{\"status\":\"confirmed\",\"basis\":\"intake note\"},\"offer\":{\"status\":\"confirmed\",\"basis\":\"intake note (Neha ji)\"},\"cta\":{\"status\":\"guessed\",\"basis\":\"profile: customers enquire on WhatsApp\"},\"deadline\":{\"status\":\"confirmed\",\"basis\":\"intake note\"},\"duration_sec\":{\"status\":\"guessed\",\"basis\":\"default for offer reels\"},\"language\":{\"status\":\"confirmed\",\"basis\":\"profile languages (confirmed)\"}},\"client_questions\":[],\"ready_for_production\":true,\"self_check\":[{\"check\":\"editor-can-start\",\"pass\":true},{\"check\":\"offer-matches-profile\",\"pass\":true,\"note\":\"Percentage offer, no price shown.\"},{\"check\":\"no-invented-claims\",\"pass\":true},{\"check\":\"research-angle-or-reason\",\"pass\":true,\"note\":\"Research skipped (urgent job, no insight sheet yet).\"},{\"check\":\"variants-consistent\",\"pass\":true},{\"check\":\"essentials-confirmed\",\"pass\":true},{\"check\":\"pairs-agree\",\"pass\":true},{\"check\":\"language-consistent\",\"pass\":true},{\"check\":\"mandatories-present\",\"pass\":true,\"note\":\"Price-first learning applied as the offer on the first frame.\"},{\"check\":\"downstream-complete\",\"pass\":true}],\"downstream\":{\"concept\":{\"angle\":\"Ghar Diwali-ready, bina mehnat\",\"creative_format\":\"offer-card-motion\",\"constraints\":[\"No dirty-clothes close-ups\",\"Never say 'cheap'\"]},\"hooks\":{\"pain_points\":[\"No time for Diwali cleaning\"],\"customer_phrases\":[\"kapde time pe chahiye\"],\"timely_hook\":\"Diwali\",\"first_frame\":\"The 20% off offer (learning from SHL-01, watch)\"},\"script\":{\"duration_sec\":20,\"structure\":[\"hook + offer 0-3s\",\"problem 3-8s\",\"service shown 8-15s\",\"CTA end card 15-20s\"],\"offer_line\":\"Curtain aur sofa cleaning 20% off, 25 Nov tak\",\"cta_line\":\"WhatsApp karo, free pickup\",\"must_say\":[\"25 Nov tak\",\"free pickup\"]},\"localise\":{\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"keep_as_is\":[\"Shubh Laundry\",\"20%\",\"25 Nov\"]},\"shot_sourcing\":{\"person_on_camera\":false,\"locations\":[\"shop counter\",\"pickup van\"],\"must_show\":[\"pickup van\",\"folded curtains\"],\"existing_footage\":null}}}"
    ],
    [
     "SHL-01",
@@ -698,14 +812,26 @@
    [
     "SHL-01",
     "script",
-    "1",
+    "2",
+    "Ravi picked A (scene 7 line changed, re-checked).",
     "",
-    "",
-    "",
+    "script.schema.json",
     "script",
-    "system",
-    "2026-11-15T12:45:00+05:30",
-    "{\"placeholder\":true,\"note\":\"script not built yet\"}"
+    "ravi",
+    "2026-11-15T15:10:00+05:30",
+    "{\"job_id\":\"SHL-01\",\"client_id\":\"shubh-laundry\",\"version\":2,\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"inputs\":{\"brief_version\":1,\"hooks_version\":2,\"concept_version\":null,\"research_insight_id\":\"SHL-I202611-1\",\"style_preset\":null},\"fallback_used\":{\"brief\":false,\"research\":true,\"note\":\"Research had no proof points for curtains or sofas; facts come from the brief and the profile.\"},\"versions\":[{\"id\":\"A\",\"title\":\"Wahi sofa, wash ke baad\",\"structure_type\":\"before-after\",\"duration_sec\":20,\"platform\":\"instagram-reels\",\"hook_used\":{\"hook_id\":\"QA\",\"formula_id\":\"H30\",\"backup_reason\":null},\"scenes\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"beat_role\":\"hook\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Living-room curtain\",\"action\":\"A hand draws the curtain open; daylight floods in and a '20% off' card slides up\",\"camera\":\"push-in\",\"setting\":\"Bright Indore flat, morning\"},\"on_screen_text\":[{\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3.2,\"position\":\"center\"}],\"vo_line\":\"Diwali se pehle curtain aur sofa, 20% off.\",\"sfx\":\"Curtain swish\",\"music_cue\":\"Light festive dhol loop starts on frame 1\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\"]},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"close-up\",\"subject\":\"Curtain fold\",\"action\":\"Fingers pinch a faded, creased curtain edge\",\"camera\":\"static\",\"setting\":\"Same room, side light\"},\"on_screen_text\":[{\"text\":\"Mehmaan aane wale hain\",\"in_sec\":3.3,\"out_sec\":5.6,\"position\":\"top\"}],\"vo_line\":\"Mehmaan aane wale hain, aur curtain?\",\"sfx\":\"Doorbell, far off\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"open-loop\",\"fact_refs\":[]},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"beat_role\":\"proof\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"A customer's sofa, before cleaning\",\"action\":\"Sofa sits under a dull light; a 'Pehle' label pops on\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"on_screen_text\":[{\"text\":\"Pehle\",\"in_sec\":5.7,\"out_sec\":8.4,\"position\":\"top\"}],\"vo_line\":\"Yeh ek customer ka sofa, pehle...\",\"sfx\":null,\"music_cue\":\"Music drops to a hum\",\"asset_hint\":\"client-footage\",\"must_be_real\":true,\"retention_device\":\"open-loop\",\"fact_refs\":[\"hooks.downstream.implied_assets[0]\"]},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"beat_role\":\"payoff\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"The same sofa, after cleaning\",\"action\":\"A wipe reveals the clean sofa in the same framing\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"on_screen_text\":[{\"text\":\"Wash ke baad\",\"in_sec\":8.5,\"out_sec\":10.8,\"position\":\"top\"}],\"vo_line\":\"...aur wash ke baad.\",\"sfx\":\"Soft whoosh on the wipe\",\"music_cue\":\"Music back up on the reveal\",\"asset_hint\":\"client-footage\",\"must_be_real\":true,\"retention_device\":\"reveal\",\"fact_refs\":[\"hooks.downstream.implied_assets[0]\"]},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Offer card\",\"action\":\"'20% off' stamps in, then '25 Nov tak' slides under it\",\"camera\":\"static\",\"setting\":\"Brand colours, motion graphics\"},\"on_screen_text\":[{\"text\":\"20% off · 25 Nov tak\",\"in_sec\":10.8,\"out_sec\":13.6,\"position\":\"center\"}],\"vo_line\":\"Dono pe 20% off, 25 Nov tak.\",\"sfx\":\"Stamp hit\",\"music_cue\":null,\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\",\"brief.offer_detail.validity\"]},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"wide\",\"subject\":\"Shubh Laundry pickup van and staff\",\"action\":\"Staff carry folded curtains from a house gate to the van\",\"camera\":\"tracking\",\"setting\":\"Residential lane, Vijay Nagar\"},\"on_screen_text\":[{\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":13.7,\"out_sec\":16.4,\"position\":\"lower-third\"}],\"vo_line\":\"Pickup free, ₹299 se upar.\",\"sfx\":\"Van door slide\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"brief.proof_points[0]\",\"client.do\"]},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"beat_role\":\"cta\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Logo end card\",\"action\":\"Logo settles; a WhatsApp button pulses once\",\"camera\":\"static\",\"setting\":\"Brand end card\"},\"on_screen_text\":[{\"text\":\"WhatsApp karo\",\"in_sec\":16.5,\"out_sec\":20,\"position\":\"center\"}],\"vo_line\":\"WhatsApp karo, hum ghar se le jaayenge.\",\"sfx\":\"WhatsApp-style ping\",\"music_cue\":\"Dhol hit, then out\",\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"loop-back\",\"fact_refs\":[\"brief.cta_detail\"]}],\"caption\":{\"first_line\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\",\"full_text\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\\n\\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\\n\\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning\",\"hashtags\":[\"#IndoreLaundry\",\"#VijayNagar\",\"#SofaCleaning\",\"#DiwaliCleaning\"],\"pinned_comment\":\"WhatsApp pe 'CURTAIN' likh ke bhejo, pickup ka time hum bata denge.\"},\"cta\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"said_in_scene\":7,\"shown_in_scene\":7},\"checks\":{\"timing_ok\":true,\"timing_notes\":[\"Scene 1 first had the full hook line with '25 Nov tak' (13 spoken words in 3.2 s, over 3.0 words/s); the date moved to scene 5.\"],\"facts_ok\":true,\"fact_flags\":[{\"claim\":\"Before/after clip of a real sofa job (scenes 3-4)\",\"action\":\"placeholder\",\"unlock\":\"Client sends a phone clip of a real job, before and after; no AI or stock stand-in.\"}],\"payoff_scene\":4,\"critique_notes\":[{\"failure_mode\":\"buried-payoff\",\"scene\":4,\"note\":\"The reveal came after the offer card at 12 s; moved before it so the clean sofa lands by 10.8 s.\",\"fixed\":true}],\"humanizer_done\":true,\"humanizer_notes\":[\"Scene 4 'ekdum best quality cleaning' cut: generic superlative.\",\"Caption: dropped the emoji row and 'Hurry!'.\"],\"ethics_ok\":true,\"ethics_notes\":[\"25 Nov is the real offer end date; no countdown or 'aaj hi'.\",\"Scenes 3-4 must be a real customer job (must_be_real).\"]},\"variant_notes\":[]},{\"id\":\"B\",\"title\":\"Ek WhatsApp, chaar steps\",\"structure_type\":\"demo-led\",\"duration_sec\":20,\"platform\":\"instagram-reels\",\"hook_used\":{\"hook_id\":\"QA\",\"formula_id\":\"H30\",\"backup_reason\":null},\"scenes\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3,\"beat_role\":\"hook\",\"visual_action\":{\"shot\":\"wide\",\"subject\":\"Living room with curtains and sofa\",\"action\":\"Curtain pulled open; '20% off' card drops in\",\"camera\":\"push-in\",\"setting\":\"Bright Indore flat, morning\"},\"on_screen_text\":[{\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3,\"position\":\"center\"}],\"vo_line\":\"Curtain aur sofa cleaning pe 20% off.\",\"sfx\":\"Curtain swish\",\"music_cue\":\"Upbeat loop from frame 1\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\"]},{\"n\":2,\"start_sec\":3,\"end_sec\":5.5,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"insert\",\"subject\":\"Phone screen\",\"action\":\"A WhatsApp message 'CURTAIN' is typed and sent\",\"camera\":\"static\",\"setting\":\"Hand-held phone, sofa behind\"},\"on_screen_text\":[{\"text\":\"1. WhatsApp karo\",\"in_sec\":3.1,\"out_sec\":5.5,\"position\":\"top\"}],\"vo_line\":\"Ek WhatsApp karo.\",\"sfx\":\"Send tick\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.cta_detail\"]},{\"n\":3,\"start_sec\":5.5,\"end_sec\":8.5,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Shubh Laundry staff at a doorstep\",\"action\":\"Staff fold curtains into a branded bag\",\"camera\":\"tracking\",\"setting\":\"House entrance, Vijay Nagar\"},\"on_screen_text\":[{\"text\":\"2. Ghar se pickup\",\"in_sec\":5.6,\"out_sec\":8.5,\"position\":\"top\"}],\"vo_line\":\"Hum ghar se le jaate hain.\",\"sfx\":null,\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"brief.proof_points[0]\"]},{\"n\":4,\"start_sec\":8.5,\"end_sec\":11.5,\"beat_role\":\"proof\",\"visual_action\":{\"shot\":\"close-up\",\"subject\":\"Curtain fabric at the shop\",\"action\":\"Steam iron glides over the fabric; it is folded on the counter\",\"camera\":\"handheld\",\"setting\":\"Shubh Laundry shop counter\"},\"on_screen_text\":[{\"text\":\"3. Wash, press, fold\",\"in_sec\":8.6,\"out_sec\":11.5,\"position\":\"top\"}],\"vo_line\":\"Shop pe wash, press, fold.\",\"sfx\":\"Steam hiss\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"client.business_type\"]},{\"n\":5,\"start_sec\":11.5,\"end_sec\":14.5,\"beat_role\":\"payoff\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Clean curtains back on the rod\",\"action\":\"Curtains fall into place; room looks festive-ready\",\"camera\":\"pull-out\",\"setting\":\"The same flat, evening diyas lit\"},\"on_screen_text\":[{\"text\":\"4. Wapas, Diwali-ready\",\"in_sec\":11.6,\"out_sec\":14.5,\"position\":\"top\"}],\"vo_line\":\"Aur wapas, Diwali se pehle.\",\"sfx\":null,\"music_cue\":\"Music lifts\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"reveal\",\"fact_refs\":[]},{\"n\":6,\"start_sec\":14.5,\"end_sec\":17,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Offer card\",\"action\":\"'20% off · 25 Nov tak' types on\",\"camera\":\"static\",\"setting\":\"Brand colours, motion graphics\"},\"on_screen_text\":[{\"text\":\"20% off · 25 Nov tak\",\"in_sec\":14.5,\"out_sec\":17,\"position\":\"center\"}],\"vo_line\":\"Offer 25 Nov tak hai.\",\"sfx\":\"Type-on clicks\",\"music_cue\":null,\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.validity\"]},{\"n\":7,\"start_sec\":17,\"end_sec\":20,\"beat_role\":\"cta\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Logo end card\",\"action\":\"Logo with the WhatsApp button and pickup line\",\"camera\":\"static\",\"setting\":\"Brand end card\"},\"on_screen_text\":[{\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":17.1,\"out_sec\":20,\"position\":\"lower-third\"}],\"vo_line\":\"WhatsApp karo. Pickup free, ₹299 se upar.\",\"sfx\":\"Ping\",\"music_cue\":\"Out on the beat\",\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"loop-back\",\"fact_refs\":[\"brief.cta_detail\",\"brief.proof_points[0]\"]}],\"caption\":{\"first_line\":\"Curtain aur sofa cleaning pe 20% off: bas ek WhatsApp, baaki hum karenge.\",\"full_text\":\"Curtain aur sofa cleaning pe 20% off: bas ek WhatsApp, baaki hum karenge.\\n\\nOffer 25 Nov tak. Ghar se pickup free, ₹299 se upar.\\n\\n#IndoreLaundry #VijayNagar #CurtainCleaning #DiwaliCleaning\",\"hashtags\":[\"#IndoreLaundry\",\"#VijayNagar\",\"#CurtainCleaning\",\"#DiwaliCleaning\"],\"pinned_comment\":null},\"cta\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"said_in_scene\":7,\"shown_in_scene\":7},\"checks\":{\"timing_ok\":true,\"timing_notes\":[\"Scene 3 first said '₹299 se upar pickup free' as well (12 spoken words in 3 s); the condition moved to the end card.\"],\"facts_ok\":true,\"fact_flags\":[],\"payoff_scene\":5,\"critique_notes\":[{\"failure_mode\":\"no-escalation\",\"scene\":4,\"note\":\"Steps 1-3 ran flat (same pace, same framing); step 4 now ends on a pull-out reveal with the music lift.\",\"fixed\":true}],\"humanizer_done\":true,\"humanizer_notes\":[\"'Process ekdum seamless hai' cut from scene 4.\"],\"ethics_ok\":true,\"ethics_notes\":[\"Pickup shown as free only together with '₹299 se upar' (end card and caption).\"]},\"variant_notes\":[]}],\"recommended\":{\"version_id\":\"A\",\"reason\":\"The real before/after carries trust for a cleaning offer, and the reveal lands before halfway; B is the fallback if the client has no before/after clip.\"},\"pick\":{\"status\":\"picked\",\"version_id\":\"A\",\"edits\":[{\"kind\":\"line\",\"detail\":\"Scene 7 line: 'WhatsApp karo, pickup hum karenge.'\",\"scenes\":[7],\"applied\":true,\"rechecked\":true}],\"reply\":\"A, scene 7 line: WhatsApp karo, pickup hum karenge\",\"decided_by\":\"ravi\",\"decided_by_role\":\"editor\",\"decided_at\":\"2026-11-15T15:10:00+05:30\"},\"downstream\":{\"version_id\":\"A\",\"structure_type\":\"before-after\",\"duration_sec\":20,\"language\":\"Hinglish\",\"platform\":\"instagram-reels\",\"scenes\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"beat_role\":\"hook\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Living-room curtain\",\"action\":\"A hand draws the curtain open; daylight floods in and a '20% off' card slides up\",\"camera\":\"push-in\",\"setting\":\"Bright Indore flat, morning\"},\"on_screen_text\":[{\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3.2,\"position\":\"center\"}],\"vo_line\":\"Diwali se pehle curtain aur sofa, 20% off.\",\"sfx\":\"Curtain swish\",\"music_cue\":\"Light festive dhol loop starts on frame 1\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\"]},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"close-up\",\"subject\":\"Curtain fold\",\"action\":\"Fingers pinch a faded, creased curtain edge\",\"camera\":\"static\",\"setting\":\"Same room, side light\"},\"on_screen_text\":[{\"text\":\"Mehmaan aane wale hain\",\"in_sec\":3.3,\"out_sec\":5.6,\"position\":\"top\"}],\"vo_line\":\"Mehmaan aane wale hain, aur curtain?\",\"sfx\":\"Doorbell, far off\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"open-loop\",\"fact_refs\":[]},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"beat_role\":\"proof\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"A customer's sofa, before cleaning\",\"action\":\"Sofa sits under a dull light; a 'Pehle' label pops on\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"on_screen_text\":[{\"text\":\"Pehle\",\"in_sec\":5.7,\"out_sec\":8.4,\"position\":\"top\"}],\"vo_line\":\"Yeh ek customer ka sofa, pehle...\",\"sfx\":null,\"music_cue\":\"Music drops to a hum\",\"asset_hint\":\"client-footage\",\"must_be_real\":true,\"retention_device\":\"open-loop\",\"fact_refs\":[\"hooks.downstream.implied_assets[0]\"]},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"beat_role\":\"payoff\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"The same sofa, after cleaning\",\"action\":\"A wipe reveals the clean sofa in the same framing\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"on_screen_text\":[{\"text\":\"Wash ke baad\",\"in_sec\":8.5,\"out_sec\":10.8,\"position\":\"top\"}],\"vo_line\":\"...aur wash ke baad.\",\"sfx\":\"Soft whoosh on the wipe\",\"music_cue\":\"Music back up on the reveal\",\"asset_hint\":\"client-footage\",\"must_be_real\":true,\"retention_device\":\"reveal\",\"fact_refs\":[\"hooks.downstream.implied_assets[0]\"]},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Offer card\",\"action\":\"'20% off' stamps in, then '25 Nov tak' slides under it\",\"camera\":\"static\",\"setting\":\"Brand colours, motion graphics\"},\"on_screen_text\":[{\"text\":\"20% off · 25 Nov tak\",\"in_sec\":10.8,\"out_sec\":13.6,\"position\":\"center\"}],\"vo_line\":\"Dono pe 20% off, 25 Nov tak.\",\"sfx\":\"Stamp hit\",\"music_cue\":null,\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\",\"brief.offer_detail.validity\"]},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"wide\",\"subject\":\"Shubh Laundry pickup van and staff\",\"action\":\"Staff carry folded curtains from a house gate to the van\",\"camera\":\"tracking\",\"setting\":\"Residential lane, Vijay Nagar\"},\"on_screen_text\":[{\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":13.7,\"out_sec\":16.4,\"position\":\"lower-third\"}],\"vo_line\":\"Pickup free, ₹299 se upar.\",\"sfx\":\"Van door slide\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"brief.proof_points[0]\",\"client.do\"]},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"beat_role\":\"cta\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Logo end card\",\"action\":\"Logo settles; a WhatsApp button pulses once\",\"camera\":\"static\",\"setting\":\"Brand end card\"},\"on_screen_text\":[{\"text\":\"WhatsApp karo\",\"in_sec\":16.5,\"out_sec\":20,\"position\":\"center\"}],\"vo_line\":\"WhatsApp karo, pickup hum karenge.\",\"sfx\":\"WhatsApp-style ping\",\"music_cue\":\"Dhol hit, then out\",\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"loop-back\",\"fact_refs\":[\"brief.cta_detail\"]}],\"shot_list_seed\":[{\"n\":1,\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Living-room curtain\",\"action\":\"A hand draws the curtain open; daylight floods in and a '20% off' card slides up\",\"camera\":\"push-in\",\"setting\":\"Bright Indore flat, morning\"},\"asset_hint\":\"phone-shoot\",\"must_be_real\":false},{\"n\":2,\"visual_action\":{\"shot\":\"close-up\",\"subject\":\"Curtain fold\",\"action\":\"Fingers pinch a faded, creased curtain edge\",\"camera\":\"static\",\"setting\":\"Same room, side light\"},\"asset_hint\":\"phone-shoot\",\"must_be_real\":false},{\"n\":3,\"visual_action\":{\"shot\":\"medium\",\"subject\":\"A customer's sofa, before cleaning\",\"action\":\"Sofa sits under a dull light; a 'Pehle' label pops on\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"asset_hint\":\"client-footage\",\"must_be_real\":true},{\"n\":4,\"visual_action\":{\"shot\":\"medium\",\"subject\":\"The same sofa, after cleaning\",\"action\":\"A wipe reveals the clean sofa in the same framing\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"asset_hint\":\"client-footage\",\"must_be_real\":true},{\"n\":5,\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Offer card\",\"action\":\"'20% off' stamps in, then '25 Nov tak' slides under it\",\"camera\":\"static\",\"setting\":\"Brand colours, motion graphics\"},\"asset_hint\":\"motion-graphics\",\"must_be_real\":false},{\"n\":6,\"visual_action\":{\"shot\":\"wide\",\"subject\":\"Shubh Laundry pickup van and staff\",\"action\":\"Staff carry folded curtains from a house gate to the van\",\"camera\":\"tracking\",\"setting\":\"Residential lane, Vijay Nagar\"},\"asset_hint\":\"phone-shoot\",\"must_be_real\":true},{\"n\":7,\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Logo end card\",\"action\":\"Logo settles; a WhatsApp button pulses once\",\"camera\":\"static\",\"setting\":\"Brand end card\"},\"asset_hint\":\"motion-graphics\",\"must_be_real\":false}],\"audio_cues\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"vo_line\":\"Diwali se pehle curtain aur sofa, 20% off.\",\"sfx\":\"Curtain swish\",\"music_cue\":\"Light festive dhol loop starts on frame 1\"},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"vo_line\":\"Mehmaan aane wale hain, aur curtain?\",\"sfx\":\"Doorbell, far off\",\"music_cue\":null},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"vo_line\":\"Yeh ek customer ka sofa, pehle...\",\"sfx\":null,\"music_cue\":\"Music drops to a hum\"},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"vo_line\":\"...aur wash ke baad.\",\"sfx\":\"Soft whoosh on the wipe\",\"music_cue\":\"Music back up on the reveal\"},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"vo_line\":\"Dono pe 20% off, 25 Nov tak.\",\"sfx\":\"Stamp hit\",\"music_cue\":null},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"vo_line\":\"Pickup free, ₹299 se upar.\",\"sfx\":\"Van door slide\",\"music_cue\":null},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"vo_line\":\"WhatsApp karo, pickup hum karenge.\",\"sfx\":\"WhatsApp-style ping\",\"music_cue\":\"Dhol hit, then out\"}],\"caption\":{\"first_line\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\",\"full_text\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\\n\\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\\n\\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning\",\"hashtags\":[\"#IndoreLaundry\",\"#VijayNagar\",\"#SofaCleaning\",\"#DiwaliCleaning\"],\"pinned_comment\":\"WhatsApp pe 'CURTAIN' likh ke bhejo, pickup ka time hum bata denge.\"},\"cta\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"said_in_scene\":7,\"shown_in_scene\":7},\"keep_as_is\":[\"Shubh Laundry\",\"20%\",\"25 Nov\",\"₹299\"],\"learning\":{\"hook_formula_id\":\"H30\",\"structure_type\":\"before-after\",\"angle_type\":\"offer\",\"outcome\":\"untested\"}},\"assumptions\":[\"Scenes 3-4 wait for the client's before/after clip (fact flag); version B needs no client footage.\"],\"self_check\":{\"passed\":true,\"items\":[{\"id\":\"SC1\",\"ok\":true,\"note\":\"Every scene has shot, subject, action, camera move and setting.\"},{\"id\":\"SC2\",\"ok\":true,\"note\":\"Offer, date and CTA are on screen; works on mute.\"},{\"id\":\"SC3\",\"ok\":true,\"note\":\"One CTA: WhatsApp.\"},{\"id\":\"SC4\",\"ok\":true,\"note\":\"20 s, as in the brief.\"},{\"id\":\"SC5\",\"ok\":true,\"note\":\"One placeholder (before/after clip); no invented facts.\"},{\"id\":\"SC6\",\"ok\":true,\"note\":\"Hinglish, Roman.\"},{\"id\":\"SC7\",\"ok\":true},{\"id\":\"SC8\",\"ok\":true,\"note\":\"Payoff: A scene 4, B scene 5.\"},{\"id\":\"SC9\",\"ok\":true},{\"id\":\"SC10\",\"ok\":true}]},\"updated_at\":\"2026-11-15T15:10:00+05:30\"}"
+   ],
+   [
+    "SHL-01",
+    "localised_script",
+    "1",
+    "Hinglish voice-over, captions and the WhatsApp review message for Neha ji.",
+    "",
+    "localised_script.schema.json",
+    "localise",
+    "ravi",
+    "2026-11-15T15:12:00+05:30",
+    "{\"job_id\":\"SHL-01\",\"client_id\":\"shubh-laundry\",\"version\":1,\"script_version\":2,\"script_pick\":\"A\",\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"choice_reason\":\"Brief: Hinglish, roman-hinglish. Families 25-45 in Vijay Nagar and Palasia on Instagram: Roman Hinglish is the default (language-choice.md).\",\"audience_variant\":\"Tier 2 city, mixed-age families\",\"fallback_used\":{\"research\":false,\"note\":\"Customer phrase 'kapde time pe chahiye' checked; not used, it doesn't fit an offer for curtains.\"},\"scenes\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"vo_line\":\"Diwali se pehle curtain aur sofa, 20% off.\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3.2,\"position\":\"center\"}],\"timing_ok\":true},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"vo_line\":\"Mehmaan aane wale hain, aur curtain?\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"Mehmaan aane wale hain\",\"in_sec\":3.3,\"out_sec\":5.6,\"position\":\"top\"}],\"timing_ok\":true},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"vo_line\":\"Yeh ek customer ka sofa, pehle...\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"Pehle\",\"in_sec\":5.7,\"out_sec\":8.4,\"position\":\"top\"}],\"timing_ok\":true},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"vo_line\":\"...aur dhulne ke baad.\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"Dhulne ke baad\",\"in_sec\":8.5,\"out_sec\":10.8,\"position\":\"top\"}],\"timing_ok\":true,\"note\":\"'wash ke baad' → 'dhulne ke baad': how customers say it for a sofa.\"},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"vo_line\":\"Dono pe 20% off, 25 Nov tak.\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"20% off · 25 Nov tak\",\"in_sec\":10.8,\"out_sec\":13.6,\"position\":\"center\"}],\"timing_ok\":true},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"vo_line\":\"Pickup free, ₹299 se upar.\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":13.7,\"out_sec\":16.4,\"position\":\"lower-third\"}],\"timing_ok\":true},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"vo_line\":\"WhatsApp karo, pickup hum karenge.\",\"vo_line_roman\":null,\"on_screen_text\":[{\"text\":\"WhatsApp karo\",\"in_sec\":16.5,\"out_sec\":20,\"position\":\"center\"}],\"timing_ok\":true}],\"vo_script\":{\"lines\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"text\":\"Diwali se pehle / curtain aur sofa, [pause 0.2s] *bees percent* off.\",\"tts_text\":\"Diwali se pehle curtain aur sofa, bees percent off.\",\"emphasis\":[\"bees percent\"],\"speed\":\"normal\"},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"text\":\"Mehmaan aane wale hain, [pause 0.3s] aur *curtain*?\",\"tts_text\":\"Mehmaan aane wale hain, aur curtain?\",\"emphasis\":[\"curtain\"],\"speed\":\"normal\"},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"text\":\"Yeh ek customer ka sofa, / *pehle*... [pause 0.4s]\",\"tts_text\":\"Yeh ek customer ka sofa, pehle...\",\"emphasis\":[\"pehle\"],\"speed\":\"slow\"},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"text\":\"...aur *dhulne ke baad*.\",\"tts_text\":\"aur dhulne ke baad.\",\"emphasis\":[\"dhulne ke baad\"],\"speed\":\"slow\"},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"text\":\"Dono pe *bees percent* off, / *pachchees November* tak.\",\"tts_text\":\"Dono pe bees percent off, pachchees November tak.\",\"emphasis\":[\"bees percent\",\"pachchees November\"],\"speed\":\"normal\"},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"text\":\"Pickup *free*, [pause 0.2s] do sau ninyaanave se upar.\",\"tts_text\":\"Pickup free, do sau ninyaanave se upar.\",\"emphasis\":[\"free\"],\"speed\":\"normal\"},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"text\":\"*WhatsApp* karo, / pickup hum karenge.\",\"tts_text\":\"WhatsApp karo, pickup hum karenge.\",\"emphasis\":[\"WhatsApp\"],\"speed\":\"normal\",\"pronunciation_hints\":[\"WhatsApp = 'whats-app', not 'vats-app'\"]}],\"file\":\"Jobs/SHL-01/localise/vo-script-v1.md\"},\"captions_srt\":{\"srt\":\"1\\n00:00:00,000 --> 00:00:03,200\\nDiwali se pehle curtain\\naur sofa, 20% off.\\n\\n2\\n00:00:03,200 --> 00:00:05,600\\nMehmaan aane wale hain,\\naur curtain?\\n\\n3\\n00:00:05,600 --> 00:00:08,400\\nYeh ek customer ka sofa,\\npehle...\\n\\n4\\n00:00:08,400 --> 00:00:10,800\\n...aur dhulne ke baad.\\n\\n5\\n00:00:10,800 --> 00:00:13,600\\nDono pe 20% off, 25 Nov tak.\\n\\n6\\n00:00:13,600 --> 00:00:16,400\\nPickup free, ₹299 se upar.\\n\\n7\\n00:00:16,400 --> 00:00:20,000\\nWhatsApp karo,\\npickup hum karenge.\\n\",\"cues\":7,\"max_chars_per_line\":32,\"file\":\"Jobs/SHL-01/localise/captions-v1.srt\",\"font_note\":null},\"caption_post\":{\"first_line\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\",\"full_text\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\\n\\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\\n\\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning\",\"hashtags\":[\"#IndoreLaundry\",\"#VijayNagar\",\"#SofaCleaning\",\"#DiwaliCleaning\"],\"pinned_comment\":\"WhatsApp pe 'CURTAIN' likh ke bhejo, pickup ka time hum bata denge.\"},\"client_review_message\":{\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"text\":\"Namaste Neha ji 🙏\\nDiwali offer reel ka script ready hai (20 second):\\n\\nShuru: \\\"Diwali se pehle curtain aur sofa, 20% off.\\\"\\n1. Parda khulta hai, 20% off dikhta hai\\n2. Mehmaan aane wale hain, curtain purane?\\n3. Aapke ek customer ka sofa, pehle aur dhulne ke baad\\n4. Offer: curtain aur sofa cleaning 20% off, 25 Nov tak\\n5. Pickup free, ₹299 se upar. Aakhir mein: \\\"WhatsApp karo\\\"\\n\\nIske liye ek real sofa ka pehle-baad wala video chahiye, phone se bhi chalega.\\n\\nReply OK to approve, or tell us what to change.\",\"file\":null},\"script_check\":{\"status\":\"not-needed\",\"tool\":\"none\",\"flagged_words\":[],\"note\":\"Roman Hinglish output; no Devanagari conversion.\"},\"numbers_spoken\":[{\"written\":\"20%\",\"spoken\":\"bees percent\",\"scene\":1,\"kind\":\"percent\"},{\"written\":\"20%\",\"spoken\":\"bees percent\",\"scene\":5,\"kind\":\"percent\"},{\"written\":\"25 Nov\",\"spoken\":\"pachchees November\",\"scene\":5,\"kind\":\"date\"},{\"written\":\"₹299\",\"spoken\":\"do sau ninyaanave (rupaye)\",\"scene\":6,\"kind\":\"price\"}],\"back_translation\":{\"by\":\"claude\",\"text\":\"Before Diwali, curtains and sofa, 20% off. Guests are coming, and the curtains? This is a customer's sofa, before... and after washing. 20% off on both, till 25 Nov. Pickup free above ₹299. WhatsApp us, we'll do the pickup.\",\"meaning_ok\":true,\"offer_ok\":true,\"price_ok\":true,\"cta_ok\":true,\"drift\":[{\"scene\":5,\"issue\":\"First draft said 'sirf aaj se 25 Nov tak' ('only from today'): adds urgency the brief doesn't have.\",\"fixed\":true}]},\"ai_tell_check\":{\"done\":true,\"fixes\":[\"Review message: 'Aapka swagat hai' greeting cut (literal, sounds like a notice).\",\"Caption: no em dash, no emoji row.\"]},\"pronunciation_proposals\":[],\"variants\":[],\"downstream\":{\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tts_language_code\":\"hi-IN\",\"vo_lines\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"tts_text\":\"Diwali se pehle curtain aur sofa, bees percent off.\",\"speed\":\"normal\"},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"tts_text\":\"Mehmaan aane wale hain, aur curtain?\",\"speed\":\"normal\"},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"tts_text\":\"Yeh ek customer ka sofa, pehle...\",\"speed\":\"slow\"},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"tts_text\":\"aur dhulne ke baad.\",\"speed\":\"slow\"},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"tts_text\":\"Dono pe bees percent off, pachchees November tak.\",\"speed\":\"normal\"},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"tts_text\":\"Pickup free, do sau ninyaanave se upar.\",\"speed\":\"normal\"},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"tts_text\":\"WhatsApp karo, pickup hum karenge.\",\"speed\":\"normal\"}],\"pronunciation\":[{\"term\":\"Shubh Laundry\",\"say_as\":\"shubh LAWN-dree (shubh as in 'shubh din')\",\"confirmed\":true}],\"srt_file\":\"Jobs/SHL-01/localise/captions-v1.srt\",\"font_note\":null,\"on_screen_cards\":[{\"n\":1,\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3.2},{\"n\":2,\"text\":\"Mehmaan aane wale hain\",\"in_sec\":3.3,\"out_sec\":5.6},{\"n\":3,\"text\":\"Pehle\",\"in_sec\":5.7,\"out_sec\":8.4},{\"n\":4,\"text\":\"Dhulne ke baad\",\"in_sec\":8.5,\"out_sec\":10.8},{\"n\":5,\"text\":\"20% off · 25 Nov tak\",\"in_sec\":10.8,\"out_sec\":13.6},{\"n\":6,\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":13.7,\"out_sec\":16.4},{\"n\":7,\"text\":\"WhatsApp karo\",\"in_sec\":16.5,\"out_sec\":20}],\"caption_post_text\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\\n\\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\\n\\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning\",\"variants_available\":[]},\"assumptions\":[\"Decision maker addressed as 'Neha ji' (client.decision_maker: Neha, owner).\"],\"self_check\":{\"passed\":true,\"items\":[{\"id\":\"LC1\",\"ok\":true,\"note\":\"Every line fits its scene.\"},{\"id\":\"LC2\",\"ok\":true,\"note\":\"Roman output, no conversion needed.\"},{\"id\":\"LC3\",\"ok\":true,\"note\":\"20%, 25 Nov and ₹299 spoken as words in the voiceover script.\"},{\"id\":\"LC4\",\"ok\":true},{\"id\":\"LC5\",\"ok\":true,\"note\":\"Back-translation: offer, price and CTA unchanged.\"},{\"id\":\"LC6\",\"ok\":true,\"note\":\"One CTA.\"},{\"id\":\"LC7\",\"ok\":true,\"note\":\"Review message: 9 short lines, offer exact.\"},{\"id\":\"LC8\",\"ok\":true,\"note\":\"SRT: 7 cues, longest line 29 characters.\"}]},\"updated_at\":\"2026-11-15T15:12:00+05:30\"}"
    ],
    [
     "SHL-02",
@@ -826,6 +952,78 @@
     "ravi",
     "2026-11-22T10:40:00+05:30",
     "{\"job_id\":\"SHL-03\",\"client_id\":\"shubh-laundry\",\"type\":\"video\",\"client_version\":3,\"objective\":\"Get blanket and quilt cleaning orders on WhatsApp before winter.\",\"occasion\":\"Winter\",\"audience\":\"Families in Vijay Nagar and Bhawarkua taking out woollens for winter\",\"key_message\":\"Kambal aur razai ki dhulai, ghar se pickup.\",\"offer\":\"Blanket and quilt cleaning offer [CLIENT TO CONFIRM: price and last date]\",\"cta\":\"WhatsApp karo, free pickup\",\"language\":\"Hinglish\",\"tone\":\"Friendly neighbourhood helper, quick and reliable\",\"deliverables\":[{\"platform\":\"instagram\",\"format\":\"reel\",\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"count\":1},{\"platform\":\"whatsapp-status\",\"format\":\"story\",\"aspect_ratio\":\"9:16\",\"duration_sec\":15,\"count\":1,\"changes_from_master\":\"15s cut: offer and CTA only, no problem beat.\"}],\"mandatories\":[\"Price on the first frame\",\"Offer last date\",\"Free pickup line\",\"Captions on\"],\"avoid\":[\"Dirty-clothes close-ups\",\"The word cheap\"],\"references\":[],\"style_preset\":null,\"deadline\":\"2026-11-30\",\"credit_budget\":200,\"success_measure\":\"WhatsApp enquiries for blanket cleaning in the week after posting\",\"assumptions\":[\"Duration 20s: default for offer reels.\",\"WhatsApp status cut added: the client posts statuses (profile platforms).\"],\"open_questions\":[\"Blanket cleaning price per piece (asked the client).\",\"Offer last date (asked the client).\"],\"version\":1,\"updated_at\":\"2026-11-22T10:40:00+05:30\",\"status\":\"awaiting-client\",\"changelog\":[{\"version\":1,\"at\":\"2026-11-22T10:40:00+05:30\",\"by\":\"ravi\",\"change\":\"Drafted; 2 client questions sent on WhatsApp.\"}],\"job_kind\":\"offer-reel\",\"objective_label\":\"leads\",\"audience_detail\":{\"who\":\"Families in Vijay Nagar and Bhawarkua\",\"where\":[\"Vijay Nagar\",\"Bhawarkua\"],\"age_band\":\"25-45\",\"language\":\"Hinglish\"},\"proof_points\":[{\"text\":\"Free pickup above ₹299\",\"source\":\"profile\",\"ref\":\"do\"}],\"offer_detail\":{\"text\":\"Blanket and quilt cleaning offer\",\"price\":null,\"unit\":\"per piece\",\"validity\":null,\"conditions\":[],\"profile_match\":\"not-in-profile\",\"profile_price\":null},\"cta_detail\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"target\":\"shop WhatsApp on the end card\"},\"creative_format\":\"offer-card-motion\",\"platforms\":[\"instagram\",\"whatsapp-status\"],\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"writing_script\":\"roman-hinglish\",\"posting_date\":null,\"research\":{\"status\":\"fresh\",\"insight_id\":\"SHL-I202611-1\",\"angles_chosen\":[],\"pain_points_used\":[{\"id\":\"F2\",\"text\":\"Pickup slots that are missed without a call are the second most common complaint.\"}],\"customer_phrases_used\":[{\"id\":\"F8\",\"text\":\"pickup time pe aate hi nahi\"}],\"skip_reason\":null,\"no_angle_reason\":\"Research angles are about wedding saree care; this job is a winter blanket offer.\"},\"track_suggestion\":{\"track\":\"quick\",\"reason\":\"Same offer-reel format as SHL-01.\"},\"confidence\":{\"objective\":{\"status\":\"confirmed\",\"basis\":\"intake note\"},\"offer\":{\"status\":\"guessed\",\"basis\":\"blanket price not in profile price_points\"},\"cta\":{\"status\":\"confirmed\",\"basis\":\"same as SHL-01 (approved)\"},\"deadline\":{\"status\":\"confirmed\",\"basis\":\"intake note\"}},\"client_questions\":[{\"n\":1,\"question\":\"Kambal/razai dhulai ka rate kya rakhein? Per piece?\",\"guess\":\"₹349 per piece\",\"options\":[\"₹299\",\"₹349\",\"₹399\"],\"field\":\"offer_detail.price\",\"blocking\":true,\"asked_at\":\"2026-11-22T10:40:00+05:30\",\"status\":\"open\",\"answer\":null,\"answered_at\":null},{\"n\":2,\"question\":\"Offer kab tak chalega?\",\"guess\":\"30 Nov tak\",\"options\":[\"30 Nov tak\",\"15 Dec tak\",\"Poori sardi\"],\"field\":\"offer_detail.validity\",\"blocking\":true,\"asked_at\":\"2026-11-22T10:40:00+05:30\",\"status\":\"open\",\"answer\":null,\"answered_at\":null}],\"ready_for_production\":false,\"self_check\":[{\"check\":\"editor-can-start\",\"pass\":false,\"note\":\"Price and last date are with the client.\"},{\"check\":\"essentials-confirmed\",\"pass\":false,\"note\":\"offer_detail.price and validity open (client questions 1, 2).\"},{\"check\":\"offer-matches-profile\",\"pass\":false,\"note\":\"Blanket price not in profile; asked the client.\"},{\"check\":\"no-invented-claims\",\"pass\":true},{\"check\":\"research-angle-or-reason\",\"pass\":true,\"note\":\"No angle fits (saree-care sheet); pain point F2 and phrase F8 used.\"},{\"check\":\"variants-consistent\",\"pass\":true},{\"check\":\"pairs-agree\",\"pass\":true},{\"check\":\"language-consistent\",\"pass\":true},{\"check\":\"mandatories-present\",\"pass\":true},{\"check\":\"downstream-complete\",\"pass\":false,\"note\":\"Script offer line waits for the price.\"}]}"
+   ],
+   [
+    "SHL-04",
+    "request",
+    "1",
+    "Diwali offer reel, 9:16 ~20s, quick track, budget 200",
+    "",
+    "request.schema.json",
+    "intake",
+    "samarth",
+    "2026-11-15T11:15:00+05:30",
+    "{\"job_id\":\"SHL-04\",\"client_id\":\"shubh-laundry\",\"type\":\"video\",\"title\":\"Diwali offer reel, demo copy held at the script pick\",\"raw_request\":\"Neha ji ka Diwali offer reel chahiye: curtain aur sofa cleaning 20% off, 25 Nov tak.\",\"requested_by\":\"samarth\",\"requested_at\":\"2026-11-15T11:00:00+05:30\",\"occasion\":\"Diwali\",\"deliverables\":[\"Instagram reel 9:16 ~20s\"],\"deadline\":\"2026-11-25\",\"assignee\":\"ravi\",\"track\":{\"proposed\":\"quick\",\"reason\":\"Simple offer reel in an existing style.\",\"chosen\":\"quick\"},\"budget\":{\"credits\":200,\"warn_at\":null},\"style_preset\":null,\"references\":[],\"assumptions\":[\"Assignee Ravi: he made their last reel.\",\"Budget: video default 200.\"]}"
+   ],
+   [
+    "SHL-04",
+    "research",
+    "1",
+    "Skipped: urgent job, no insight sheet for this client yet",
+    "",
+    "research.schema.json",
+    "research",
+    "system",
+    "2026-11-15T11:20:00+05:30",
+    "{\"research_status\":\"skipped\",\"insight_id\":null,\"insight_version\":null,\"insight_date\":null,\"flags\":[\"no_fresh_research\"],\"note\":\"Urgent job: research skipped and the client has no insight sheet yet. The brief works from the brand brief only.\",\"downstream\":{\"brief\":{\"pain_points\":[],\"working_angles\":[],\"timely_hooks\":[]},\"concept_and_hooks\":{\"working_angles\":[],\"outlier_hooks\":[],\"competitors_overdo\":[]},\"script\":{\"proof_points\":[]},\"localise\":{\"customer_phrases\":[]},\"visuals\":{\"visual_cliches\":[]}}}"
+   ],
+   [
+    "SHL-04",
+    "brief",
+    "1",
+    "Diwali curtain + sofa offer, 20% off till 25 Nov; quick offer-card reel, 20 s.",
+    "",
+    "brief.schema.json",
+    "brief",
+    "samarth",
+    "2026-11-15T12:00:00+05:30",
+    "{\"job_id\":\"SHL-04\",\"client_id\":\"shubh-laundry\",\"type\":\"video\",\"client_version\":3,\"objective\":\"Get curtain and sofa cleaning bookings before Diwali through a 20% off offer.\",\"occasion\":\"Diwali\",\"audience\":\"Families in Vijay Nagar and Palasia preparing their homes for Diwali.\",\"key_message\":\"Ghar Diwali-ready, bina mehnat: curtain and sofa cleaning 20% off till 25 Nov.\",\"offer\":\"20% off curtain and sofa cleaning, till 25 Nov\",\"cta\":\"WhatsApp karo, free pickup\",\"language\":\"Hinglish\",\"tone\":\"Helpful, festive, no fake urgency\",\"deliverables\":[{\"platform\":\"instagram\",\"format\":\"reel\",\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"count\":1}],\"mandatories\":[\"Logo end card\",\"Offer validity date\",\"Free pickup line\"],\"avoid\":[\"Dirty-clothes close-ups\",\"'Cheap'\"],\"references\":[],\"style_preset\":null,\"deadline\":\"2026-11-25\",\"credit_budget\":200,\"success_measure\":\"WhatsApp enquiries in the week after posting\",\"assumptions\":[\"Price shown on the first frame, from the SHL-01 learning (watch).\"],\"open_questions\":[],\"version\":1,\"updated_at\":\"2026-11-15T12:00:00+05:30\",\"status\":\"approved\",\"changelog\":[{\"version\":1,\"at\":\"2026-11-15T12:00:00+05:30\",\"by\":\"ravi\",\"change\":\"Drafted from the intake note and profile; no questions needed.\"}],\"job_kind\":\"offer-reel\",\"objective_label\":\"leads\",\"audience_detail\":{\"who\":\"Families in Vijay Nagar and Palasia\",\"where\":[\"Vijay Nagar\",\"Palasia\"],\"age_band\":\"25-45\",\"language\":\"Hinglish\"},\"proof_points\":[{\"text\":\"Free pickup above ₹299\",\"source\":\"profile\",\"ref\":\"do\"}],\"offer_detail\":{\"text\":\"20% off curtain and sofa cleaning\",\"price\":null,\"unit\":null,\"validity\":\"2026-11-25\",\"conditions\":[],\"profile_match\":\"no-price\",\"profile_price\":null},\"cta_detail\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"target\":\"shop WhatsApp on the end card\"},\"creative_format\":\"offer-card-motion\",\"platforms\":[\"instagram\"],\"aspect_ratio\":\"9:16\",\"duration_sec\":20,\"writing_script\":\"roman-hinglish\",\"posting_date\":\"2026-11-18\",\"research\":{\"status\":\"skipped\",\"skip_reason\":\"Urgent job: research skipped and the client has no insight sheet yet.\"},\"track_suggestion\":{\"track\":\"quick\",\"reason\":\"Repeat offer-reel format for this client.\"},\"confidence\":{\"objective\":{\"status\":\"confirmed\",\"basis\":\"intake note\"},\"offer\":{\"status\":\"confirmed\",\"basis\":\"intake note (Neha ji)\"},\"cta\":{\"status\":\"guessed\",\"basis\":\"profile: customers enquire on WhatsApp\"},\"deadline\":{\"status\":\"confirmed\",\"basis\":\"intake note\"},\"duration_sec\":{\"status\":\"guessed\",\"basis\":\"default for offer reels\"},\"language\":{\"status\":\"confirmed\",\"basis\":\"profile languages (confirmed)\"}},\"client_questions\":[],\"ready_for_production\":true,\"self_check\":[{\"check\":\"editor-can-start\",\"pass\":true},{\"check\":\"offer-matches-profile\",\"pass\":true,\"note\":\"Percentage offer, no price shown.\"},{\"check\":\"no-invented-claims\",\"pass\":true},{\"check\":\"research-angle-or-reason\",\"pass\":true,\"note\":\"Research skipped (urgent job, no insight sheet yet).\"},{\"check\":\"variants-consistent\",\"pass\":true},{\"check\":\"essentials-confirmed\",\"pass\":true},{\"check\":\"pairs-agree\",\"pass\":true},{\"check\":\"language-consistent\",\"pass\":true},{\"check\":\"mandatories-present\",\"pass\":true,\"note\":\"Price-first learning applied as the offer on the first frame.\"},{\"check\":\"downstream-complete\",\"pass\":true}],\"downstream\":{\"concept\":{\"angle\":\"Ghar Diwali-ready, bina mehnat\",\"creative_format\":\"offer-card-motion\",\"constraints\":[\"No dirty-clothes close-ups\",\"Never say 'cheap'\"]},\"hooks\":{\"pain_points\":[\"No time for Diwali cleaning\"],\"customer_phrases\":[\"kapde time pe chahiye\"],\"timely_hook\":\"Diwali\",\"first_frame\":\"The 20% off offer (learning from SHL-01, watch)\"},\"script\":{\"duration_sec\":20,\"structure\":[\"hook + offer 0-3s\",\"problem 3-8s\",\"service shown 8-15s\",\"CTA end card 15-20s\"],\"offer_line\":\"Curtain aur sofa cleaning 20% off, 25 Nov tak\",\"cta_line\":\"WhatsApp karo, free pickup\",\"must_say\":[\"25 Nov tak\",\"free pickup\"]},\"localise\":{\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"keep_as_is\":[\"Shubh Laundry\",\"20%\",\"25 Nov\"]},\"shot_sourcing\":{\"person_on_camera\":false,\"locations\":[\"shop counter\",\"pickup van\"],\"must_show\":[\"pickup van\",\"folded curtains\"],\"existing_footage\":null}}}"
+   ],
+   [
+    "SHL-04",
+    "concept",
+    "1",
+    "",
+    "",
+    "",
+    "concept",
+    "system",
+    "2026-11-15T12:35:00+05:30",
+    "{\"placeholder\":true,\"note\":\"concept not built yet\"}"
+   ],
+   [
+    "SHL-04",
+    "hooks",
+    "2",
+    "Quick track: 7 hooks for the reused offer format; v1 shown at the creative pick; v2 records the pick: QA (price-first card).",
+    "",
+    "hooks.schema.json",
+    "hooks",
+    "ravi",
+    "2026-11-15T12:44:00+05:30",
+    "{\"job_id\":\"SHL-04\",\"client_id\":\"shubh-laundry\",\"version\":2,\"track_mode\":\"quick-reuse\",\"concept_version\":null,\"reused_format\":{\"format\":\"offer card + before/after\",\"angle_type\":\"offer\",\"structure\":[\"price card 0-2s\",\"before/after 2-10s\",\"offer and pickup 10-16s\",\"WhatsApp end card 16-20s\"],\"source_job\":null,\"source\":\"profile\",\"note\":\"First job for this client, so no approved job to reuse: format from the profile's liked reference (clean before/after transitions).\"},\"fallback_used\":{\"brief\":true,\"research\":true,\"note\":\"In this example the brief output is still a placeholder and research was skipped (urgent job, no insight sheet): hooks use the intake request (20% off till 25 Nov) and the profile.\"},\"hooks\":[{\"id\":\"QA\",\"concept_ref\":null,\"formula_id\":\"H30\",\"layers\":{\"visual\":\"Curtain drawn open in a bright room; a '20% off' card slides in.\",\"spoken\":\"Diwali se pehle curtain aur sofa cleaning, 20% off, 25 Nov tak.\",\"text\":\"Curtain + sofa: 20% off\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[\"proof\",\"timely\"],\"source_refs\":[\"request: raw_request\"],\"scores\":{\"clarity\":5,\"curiosity\":3,\"relevance\":4,\"specificity\":5,\"india_fit\":4,\"payoff\":5,\"brand_safety\":5,\"weighted\":48,\"capped\":false},\"boost_note\":null,\"critique_note\":null,\"rewritten_from\":null,\"status\":\"top\"},{\"id\":\"QB\",\"concept_ref\":null,\"formula_id\":\"H13\",\"layers\":{\"visual\":\"Split frame: the same sofa cushion before and after cleaning (real job footage).\",\"spoken\":\"Yeh wahi sofa hai. Bas Diwali se pehle dhulwaya.\",\"text\":\"Wahi sofa, Diwali ready\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[\"visual-led\"],\"scores\":{\"clarity\":5,\"curiosity\":3,\"relevance\":4,\"specificity\":3,\"india_fit\":4,\"payoff\":4,\"brand_safety\":4,\"weighted\":42.5,\"capped\":false},\"boost_note\":null,\"critique_note\":\"Keep the 'before' shot mild: the profile says no dirty close-ups.\",\"rewritten_from\":null,\"status\":\"kept\"},{\"id\":\"QC\",\"concept_ref\":null,\"formula_id\":\"H26\",\"layers\":{\"visual\":\"Doorbell rings; the host glances at the curtains before opening.\",\"spoken\":\"Mehmaan aa gaye, aur curtain abhi bhi pichhli Diwali wale?\",\"text\":\"Curtain pichhli Diwali wale?\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[\"visual-led\",\"timely\"],\"scores\":{\"clarity\":4,\"curiosity\":4,\"relevance\":5,\"specificity\":3,\"india_fit\":5,\"payoff\":4,\"brand_safety\":5,\"weighted\":46.5,\"capped\":false},\"boost_note\":null,\"critique_note\":null,\"rewritten_from\":null,\"status\":\"top\"},{\"id\":\"QD\",\"concept_ref\":null,\"formula_id\":\"H18\",\"layers\":{\"visual\":\"Calendar page with 25 Nov circled.\",\"spoken\":\"25 Nov tak curtain aur sofa cleaning pe 20% off.\",\"text\":\"20% off · 25 Nov tak\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[\"proof\",\"timely\"],\"source_refs\":[\"request: raw_request\"],\"scores\":{\"clarity\":4,\"curiosity\":2,\"relevance\":3,\"specificity\":5,\"india_fit\":4,\"payoff\":5,\"brand_safety\":5,\"weighted\":42.5,\"capped\":false},\"boost_note\":null,\"critique_note\":null,\"rewritten_from\":null,\"status\":\"kept\"},{\"id\":\"QE\",\"concept_ref\":null,\"formula_id\":\"H10\",\"layers\":{\"visual\":\"Someone struggling to lift heavy curtains off the rod.\",\"spoken\":\"Curtain bhaari hain? Pickup free hai, ₹299 se upar.\",\"text\":\"Pickup free · ₹299 se upar\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[\"proof\"],\"source_refs\":[\"profile: do[1]\"],\"scores\":{\"clarity\":4,\"curiosity\":2,\"relevance\":4,\"specificity\":5,\"india_fit\":4,\"payoff\":5,\"brand_safety\":5,\"weighted\":44,\"capped\":false},\"boost_note\":null,\"critique_note\":null,\"rewritten_from\":null,\"status\":\"top\"},{\"id\":\"QF\",\"concept_ref\":null,\"formula_id\":\"H03\",\"layers\":{\"visual\":\"Close-up of dust on a curtain.\",\"spoken\":\"Koi nahi batata ki aapke parde mein kitni dhool hai.\",\"text\":\"Parde mein kitni dhool?\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[],\"scores\":{\"clarity\":3,\"curiosity\":3,\"relevance\":3,\"specificity\":1,\"india_fit\":2,\"payoff\":2,\"brand_safety\":2,\"weighted\":26,\"capped\":true},\"boost_note\":null,\"critique_note\":\"Vague tease with no real fact; 'parde/dhool' reads translated; a dust close-up breaks the profile's don't-list. Replaced by QG.\",\"rewritten_from\":null,\"status\":\"replaced\"},{\"id\":\"QG\",\"concept_ref\":null,\"formula_id\":\"H17\",\"layers\":{\"visual\":\"Fresh curtain going up on the rod, light coming through.\",\"spoken\":\"Diwali pe ghar aisa dikhna chahiye. Curtain hum dekh lenge.\",\"text\":\"Curtain hum dekh lenge\"},\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"tags\":[\"visual-led\"],\"scores\":{\"clarity\":4,\"curiosity\":3,\"relevance\":4,\"specificity\":2,\"india_fit\":4,\"payoff\":4,\"brand_safety\":5,\"weighted\":40,\"capped\":false},\"boost_note\":null,\"critique_note\":\"Rewrite of QF: visual-led, no fear, but still light on facts.\",\"rewritten_from\":\"QF\",\"status\":\"kept\"}],\"top_per_concept\":{\"Q\":[\"QA\",\"QC\",\"QE\"]},\"recommended\":{\"concept_ref\":null,\"hook_id\":\"QA\",\"reason\":\"Offer and date read on mute in the first frame; every word is from the request.\"},\"pick\":{\"status\":\"picked\",\"concept_ref\":null,\"hook_id\":\"QA\",\"backups\":[\"QC\",\"QE\"],\"mix_note\":null,\"reply\":\"QA, backups C aur E\",\"decided_by\":\"ravi\",\"decided_by_role\":\"editor\",\"decided_at\":\"2026-11-15T12:44:00+05:30\",\"auto\":false},\"downstream\":{\"concept\":{\"id\":null,\"title\":\"Diwali curtain & sofa offer\",\"logline\":\"Curtains and sofa look Diwali-ready, with 20% off till 25 Nov and free pickup.\",\"insight\":\"Before Diwali guests arrive, people notice the big fabrics they've put off cleaning.\",\"angle_type\":\"offer\",\"format\":\"offer card + before/after\",\"story_spine\":[{\"beat\":\"hook\",\"start_sec\":0,\"end_sec\":2,\"what_we_see\":\"Price card over a curtain being drawn open.\"},{\"beat\":\"proof\",\"start_sec\":2,\"end_sec\":10,\"what_we_see\":\"Before/after of a real sofa and curtain job.\"},{\"beat\":\"offer\",\"start_sec\":10,\"end_sec\":16,\"what_we_see\":\"20% off till 25 Nov; free pickup above ₹299.\"},{\"beat\":\"cta\",\"start_sec\":16,\"end_sec\":20,\"what_we_see\":\"WhatsApp end card.\"}],\"levers\":[{\"lever_id\":\"L09\",\"name\":\"Festival timing\",\"proof\":\"Diwali offer till 25 Nov (request).\"},{\"lever_id\":\"L06\",\"name\":\"Value framing\",\"proof\":\"20% off (request).\"}],\"producibility\":{\"difficulty\":\"low\",\"credit_band\":\"low\",\"shots\":[{\"beat\":\"hook\",\"what\":\"Curtain drawn open\",\"source\":\"phone-shoot\"},{\"beat\":\"proof\",\"what\":\"Before/after of a real job\",\"source\":\"client-footage\"},{\"beat\":\"offer\",\"what\":\"Price and pickup cards\",\"source\":\"motion-graphics\"}]},\"risks\":[\"Before shot must stay mild (profile don't-list).\"],\"mix_note\":null},\"hook\":{\"id\":\"QA\",\"formula_id\":\"H30\",\"layers\":{\"visual\":\"Curtain drawn open in a bright room; a '20% off' card slides in.\",\"spoken\":\"Diwali se pehle curtain aur sofa cleaning, 20% off, 25 Nov tak.\",\"text\":\"Curtain + sofa: 20% off\"}},\"backup_hooks\":[{\"id\":\"QC\",\"formula_id\":\"H26\",\"layers\":{\"visual\":\"Doorbell rings; the host glances at the curtains before opening.\",\"spoken\":\"Mehmaan aa gaye, aur curtain abhi bhi pichhli Diwali wale?\",\"text\":\"Curtain pichhli Diwali wale?\"}},{\"id\":\"QE\",\"formula_id\":\"H10\",\"layers\":{\"visual\":\"Someone struggling to lift heavy curtains off the rod.\",\"spoken\":\"Curtain bhaari hain? Pickup free hai, ₹299 se upar.\",\"text\":\"Pickup free · ₹299 se upar\"}}],\"script_notes\":{\"do\":[\"Show '20% off' and '25 Nov' exactly as in the request.\",\"The hook is the price: keep it on screen 2-3 s.\",\"One CTA only: WhatsApp.\"],\"dont\":[\"No 'only today' or countdown pressure beyond the real 25 Nov date.\",\"No dirty-clothes close-ups (profile).\",\"Never say 'cheap' (profile).\"]},\"implied_assets\":[{\"asset\":\"Before/after of a real sofa and curtain job\",\"source\":\"client-footage\",\"must_be_real\":true},{\"asset\":\"Price card: 20% off till 25 Nov\",\"source\":\"motion-graphics\",\"must_be_real\":false},{\"asset\":\"WhatsApp end card with pickup line\",\"source\":\"motion-graphics\",\"must_be_real\":false}],\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"learning\":{\"hook_formula_id\":\"H30\",\"angle_type\":\"offer\",\"outcome\":\"untested\",\"evidence\":null}},\"assumptions\":[\"Insight inferred from the Diwali occasion; no research.\"],\"self_check\":{\"passed\":true,\"items\":[{\"id\":\"HC1\",\"ok\":true,\"note\":\"6 formulas across 7 hooks.\"},{\"id\":\"HC2\",\"ok\":true,\"note\":\"3 visual-led and 3 proof hooks.\"},{\"id\":\"HC3\",\"ok\":true,\"note\":\"No customer phrase fits this offer; noted.\"},{\"id\":\"HC4\",\"ok\":true,\"note\":\"Only numbers from the request and profile.\"}]},\"updated_at\":\"2026-11-15T12:44:00+05:30\"}"
+   ],
+   [
+    "SHL-04",
+    "script",
+    "1",
+    "Two versions, 20 s each: A \"Wahi sofa, wash ke baad\" (before/after, recommended) and B \"Ek WhatsApp, chaar steps\".",
+    "",
+    "script.schema.json",
+    "script",
+    "system",
+    "2026-11-15T12:45:00+05:30",
+    "{\"job_id\":\"SHL-04\",\"client_id\":\"shubh-laundry\",\"version\":1,\"language\":\"Hinglish\",\"writing_script\":\"roman-hinglish\",\"inputs\":{\"brief_version\":1,\"hooks_version\":2,\"concept_version\":null,\"research_insight_id\":\"SHL-I202611-1\",\"style_preset\":null},\"fallback_used\":{\"brief\":false,\"research\":true,\"note\":\"Research had no proof points for curtains or sofas; facts come from the brief and the profile.\"},\"versions\":[{\"id\":\"A\",\"title\":\"Wahi sofa, wash ke baad\",\"structure_type\":\"before-after\",\"duration_sec\":20,\"platform\":\"instagram-reels\",\"hook_used\":{\"hook_id\":\"QA\",\"formula_id\":\"H30\",\"backup_reason\":null},\"scenes\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3.2,\"beat_role\":\"hook\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Living-room curtain\",\"action\":\"A hand draws the curtain open; daylight floods in and a '20% off' card slides up\",\"camera\":\"push-in\",\"setting\":\"Bright Indore flat, morning\"},\"on_screen_text\":[{\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3.2,\"position\":\"center\"}],\"vo_line\":\"Diwali se pehle curtain aur sofa, 20% off.\",\"sfx\":\"Curtain swish\",\"music_cue\":\"Light festive dhol loop starts on frame 1\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\"]},{\"n\":2,\"start_sec\":3.2,\"end_sec\":5.6,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"close-up\",\"subject\":\"Curtain fold\",\"action\":\"Fingers pinch a faded, creased curtain edge\",\"camera\":\"static\",\"setting\":\"Same room, side light\"},\"on_screen_text\":[{\"text\":\"Mehmaan aane wale hain\",\"in_sec\":3.3,\"out_sec\":5.6,\"position\":\"top\"}],\"vo_line\":\"Mehmaan aane wale hain, aur curtain?\",\"sfx\":\"Doorbell, far off\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"open-loop\",\"fact_refs\":[]},{\"n\":3,\"start_sec\":5.6,\"end_sec\":8.4,\"beat_role\":\"proof\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"A customer's sofa, before cleaning\",\"action\":\"Sofa sits under a dull light; a 'Pehle' label pops on\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"on_screen_text\":[{\"text\":\"Pehle\",\"in_sec\":5.7,\"out_sec\":8.4,\"position\":\"top\"}],\"vo_line\":\"Yeh ek customer ka sofa, pehle...\",\"sfx\":null,\"music_cue\":\"Music drops to a hum\",\"asset_hint\":\"client-footage\",\"must_be_real\":true,\"retention_device\":\"open-loop\",\"fact_refs\":[\"hooks.downstream.implied_assets[0]\"]},{\"n\":4,\"start_sec\":8.4,\"end_sec\":10.8,\"beat_role\":\"payoff\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"The same sofa, after cleaning\",\"action\":\"A wipe reveals the clean sofa in the same framing\",\"camera\":\"static\",\"setting\":\"Customer's home (real job)\"},\"on_screen_text\":[{\"text\":\"Wash ke baad\",\"in_sec\":8.5,\"out_sec\":10.8,\"position\":\"top\"}],\"vo_line\":\"...aur wash ke baad.\",\"sfx\":\"Soft whoosh on the wipe\",\"music_cue\":\"Music back up on the reveal\",\"asset_hint\":\"client-footage\",\"must_be_real\":true,\"retention_device\":\"reveal\",\"fact_refs\":[\"hooks.downstream.implied_assets[0]\"]},{\"n\":5,\"start_sec\":10.8,\"end_sec\":13.6,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Offer card\",\"action\":\"'20% off' stamps in, then '25 Nov tak' slides under it\",\"camera\":\"static\",\"setting\":\"Brand colours, motion graphics\"},\"on_screen_text\":[{\"text\":\"20% off · 25 Nov tak\",\"in_sec\":10.8,\"out_sec\":13.6,\"position\":\"center\"}],\"vo_line\":\"Dono pe 20% off, 25 Nov tak.\",\"sfx\":\"Stamp hit\",\"music_cue\":null,\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\",\"brief.offer_detail.validity\"]},{\"n\":6,\"start_sec\":13.6,\"end_sec\":16.4,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"wide\",\"subject\":\"Shubh Laundry pickup van and staff\",\"action\":\"Staff carry folded curtains from a house gate to the van\",\"camera\":\"tracking\",\"setting\":\"Residential lane, Vijay Nagar\"},\"on_screen_text\":[{\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":13.7,\"out_sec\":16.4,\"position\":\"lower-third\"}],\"vo_line\":\"Pickup free, ₹299 se upar.\",\"sfx\":\"Van door slide\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"brief.proof_points[0]\",\"client.do\"]},{\"n\":7,\"start_sec\":16.4,\"end_sec\":20,\"beat_role\":\"cta\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Logo end card\",\"action\":\"Logo settles; a WhatsApp button pulses once\",\"camera\":\"static\",\"setting\":\"Brand end card\"},\"on_screen_text\":[{\"text\":\"WhatsApp karo\",\"in_sec\":16.5,\"out_sec\":20,\"position\":\"center\"}],\"vo_line\":\"WhatsApp karo, hum ghar se le jaayenge.\",\"sfx\":\"WhatsApp-style ping\",\"music_cue\":\"Dhol hit, then out\",\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"loop-back\",\"fact_refs\":[\"brief.cta_detail\"]}],\"caption\":{\"first_line\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\",\"full_text\":\"Diwali se pehle curtain aur sofa cleaning pe 20% off, 25 Nov tak.\\n\\nGhar se pickup free, ₹299 se upar. WhatsApp karo, baaki hum dekh lenge.\\n\\n#IndoreLaundry #VijayNagar #SofaCleaning #DiwaliCleaning\",\"hashtags\":[\"#IndoreLaundry\",\"#VijayNagar\",\"#SofaCleaning\",\"#DiwaliCleaning\"],\"pinned_comment\":\"WhatsApp pe 'CURTAIN' likh ke bhejo, pickup ka time hum bata denge.\"},\"cta\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"said_in_scene\":7,\"shown_in_scene\":7},\"checks\":{\"timing_ok\":true,\"timing_notes\":[\"Scene 1 first had the full hook line with '25 Nov tak' (13 spoken words in 3.2 s, over 3.0 words/s); the date moved to scene 5.\"],\"facts_ok\":true,\"fact_flags\":[{\"claim\":\"Before/after clip of a real sofa job (scenes 3-4)\",\"action\":\"placeholder\",\"unlock\":\"Client sends a phone clip of a real job, before and after; no AI or stock stand-in.\"}],\"payoff_scene\":4,\"critique_notes\":[{\"failure_mode\":\"buried-payoff\",\"scene\":4,\"note\":\"The reveal came after the offer card at 12 s; moved before it so the clean sofa lands by 10.8 s.\",\"fixed\":true}],\"humanizer_done\":true,\"humanizer_notes\":[\"Scene 4 'ekdum best quality cleaning' cut: generic superlative.\",\"Caption: dropped the emoji row and 'Hurry!'.\"],\"ethics_ok\":true,\"ethics_notes\":[\"25 Nov is the real offer end date; no countdown or 'aaj hi'.\",\"Scenes 3-4 must be a real customer job (must_be_real).\"]},\"variant_notes\":[]},{\"id\":\"B\",\"title\":\"Ek WhatsApp, chaar steps\",\"structure_type\":\"demo-led\",\"duration_sec\":20,\"platform\":\"instagram-reels\",\"hook_used\":{\"hook_id\":\"QA\",\"formula_id\":\"H30\",\"backup_reason\":null},\"scenes\":[{\"n\":1,\"start_sec\":0,\"end_sec\":3,\"beat_role\":\"hook\",\"visual_action\":{\"shot\":\"wide\",\"subject\":\"Living room with curtains and sofa\",\"action\":\"Curtain pulled open; '20% off' card drops in\",\"camera\":\"push-in\",\"setting\":\"Bright Indore flat, morning\"},\"on_screen_text\":[{\"text\":\"Curtain + sofa: 20% off\",\"in_sec\":0,\"out_sec\":3,\"position\":\"center\"}],\"vo_line\":\"Curtain aur sofa cleaning pe 20% off.\",\"sfx\":\"Curtain swish\",\"music_cue\":\"Upbeat loop from frame 1\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.text\"]},{\"n\":2,\"start_sec\":3,\"end_sec\":5.5,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"insert\",\"subject\":\"Phone screen\",\"action\":\"A WhatsApp message 'CURTAIN' is typed and sent\",\"camera\":\"static\",\"setting\":\"Hand-held phone, sofa behind\"},\"on_screen_text\":[{\"text\":\"1. WhatsApp karo\",\"in_sec\":3.1,\"out_sec\":5.5,\"position\":\"top\"}],\"vo_line\":\"Ek WhatsApp karo.\",\"sfx\":\"Send tick\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.cta_detail\"]},{\"n\":3,\"start_sec\":5.5,\"end_sec\":8.5,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Shubh Laundry staff at a doorstep\",\"action\":\"Staff fold curtains into a branded bag\",\"camera\":\"tracking\",\"setting\":\"House entrance, Vijay Nagar\"},\"on_screen_text\":[{\"text\":\"2. Ghar se pickup\",\"in_sec\":5.6,\"out_sec\":8.5,\"position\":\"top\"}],\"vo_line\":\"Hum ghar se le jaate hain.\",\"sfx\":null,\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"brief.proof_points[0]\"]},{\"n\":4,\"start_sec\":8.5,\"end_sec\":11.5,\"beat_role\":\"proof\",\"visual_action\":{\"shot\":\"close-up\",\"subject\":\"Curtain fabric at the shop\",\"action\":\"Steam iron glides over the fabric; it is folded on the counter\",\"camera\":\"handheld\",\"setting\":\"Shubh Laundry shop counter\"},\"on_screen_text\":[{\"text\":\"3. Wash, press, fold\",\"in_sec\":8.6,\"out_sec\":11.5,\"position\":\"top\"}],\"vo_line\":\"Shop pe wash, press, fold.\",\"sfx\":\"Steam hiss\",\"music_cue\":null,\"asset_hint\":\"phone-shoot\",\"must_be_real\":true,\"retention_device\":\"pattern-change\",\"fact_refs\":[\"client.business_type\"]},{\"n\":5,\"start_sec\":11.5,\"end_sec\":14.5,\"beat_role\":\"payoff\",\"visual_action\":{\"shot\":\"medium\",\"subject\":\"Clean curtains back on the rod\",\"action\":\"Curtains fall into place; room looks festive-ready\",\"camera\":\"pull-out\",\"setting\":\"The same flat, evening diyas lit\"},\"on_screen_text\":[{\"text\":\"4. Wapas, Diwali-ready\",\"in_sec\":11.6,\"out_sec\":14.5,\"position\":\"top\"}],\"vo_line\":\"Aur wapas, Diwali se pehle.\",\"sfx\":null,\"music_cue\":\"Music lifts\",\"asset_hint\":\"phone-shoot\",\"must_be_real\":false,\"retention_device\":\"reveal\",\"fact_refs\":[]},{\"n\":6,\"start_sec\":14.5,\"end_sec\":17,\"beat_role\":\"escalation\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Offer card\",\"action\":\"'20% off · 25 Nov tak' types on\",\"camera\":\"static\",\"setting\":\"Brand colours, motion graphics\"},\"on_screen_text\":[{\"text\":\"20% off · 25 Nov tak\",\"in_sec\":14.5,\"out_sec\":17,\"position\":\"center\"}],\"vo_line\":\"Offer 25 Nov tak hai.\",\"sfx\":\"Type-on clicks\",\"music_cue\":null,\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"number\",\"fact_refs\":[\"brief.offer_detail.validity\"]},{\"n\":7,\"start_sec\":17,\"end_sec\":20,\"beat_role\":\"cta\",\"visual_action\":{\"shot\":\"screen\",\"subject\":\"Logo end card\",\"action\":\"Logo with the WhatsApp button and pickup line\",\"camera\":\"static\",\"setting\":\"Brand end card\"},\"on_screen_text\":[{\"text\":\"Pickup free · ₹299 se upar\",\"in_sec\":17.1,\"out_sec\":20,\"position\":\"lower-third\"}],\"vo_line\":\"WhatsApp karo. Pickup free, ₹299 se upar.\",\"sfx\":\"Ping\",\"music_cue\":\"Out on the beat\",\"asset_hint\":\"motion-graphics\",\"must_be_real\":false,\"retention_device\":\"loop-back\",\"fact_refs\":[\"brief.cta_detail\",\"brief.proof_points[0]\"]}],\"caption\":{\"first_line\":\"Curtain aur sofa cleaning pe 20% off: bas ek WhatsApp, baaki hum karenge.\",\"full_text\":\"Curtain aur sofa cleaning pe 20% off: bas ek WhatsApp, baaki hum karenge.\\n\\nOffer 25 Nov tak. Ghar se pickup free, ₹299 se upar.\\n\\n#IndoreLaundry #VijayNagar #CurtainCleaning #DiwaliCleaning\",\"hashtags\":[\"#IndoreLaundry\",\"#VijayNagar\",\"#CurtainCleaning\",\"#DiwaliCleaning\"],\"pinned_comment\":null},\"cta\":{\"action\":\"WhatsApp karo\",\"channel\":\"whatsapp\",\"said_in_scene\":7,\"shown_in_scene\":7},\"checks\":{\"timing_ok\":true,\"timing_notes\":[\"Scene 3 first said '₹299 se upar pickup free' as well (12 spoken words in 3 s); the condition moved to the end card.\"],\"facts_ok\":true,\"fact_flags\":[],\"payoff_scene\":5,\"critique_notes\":[{\"failure_mode\":\"no-escalation\",\"scene\":4,\"note\":\"Steps 1-3 ran flat (same pace, same framing); step 4 now ends on a pull-out reveal with the music lift.\",\"fixed\":true}],\"humanizer_done\":true,\"humanizer_notes\":[\"'Process ekdum seamless hai' cut from scene 4.\"],\"ethics_ok\":true,\"ethics_notes\":[\"Pickup shown as free only together with '₹299 se upar' (end card and caption).\"]},\"variant_notes\":[]}],\"recommended\":{\"version_id\":\"A\",\"reason\":\"The real before/after carries trust for a cleaning offer, and the reveal lands before halfway; B is the fallback if the client has no before/after clip.\"},\"pick\":{\"status\":\"pending\",\"version_id\":null,\"edits\":[],\"reply\":null,\"decided_by\":null,\"decided_by_role\":null,\"decided_at\":null},\"downstream\":null,\"assumptions\":[\"Scenes 3-4 wait for the client's before/after clip (fact flag); version B needs no client footage.\"],\"self_check\":{\"passed\":true,\"items\":[{\"id\":\"SC1\",\"ok\":true,\"note\":\"Every scene has shot, subject, action, camera move and setting.\"},{\"id\":\"SC2\",\"ok\":true,\"note\":\"Offer, date and CTA are on screen; works on mute.\"},{\"id\":\"SC3\",\"ok\":true,\"note\":\"One CTA: WhatsApp.\"},{\"id\":\"SC4\",\"ok\":true,\"note\":\"20 s, as in the brief.\"},{\"id\":\"SC5\",\"ok\":true,\"note\":\"One placeholder (before/after clip); no invented facts.\"},{\"id\":\"SC6\",\"ok\":true,\"note\":\"Hinglish, Roman.\"},{\"id\":\"SC7\",\"ok\":true},{\"id\":\"SC8\",\"ok\":true,\"note\":\"Payoff: A scene 4, B scene 5.\"},{\"id\":\"SC9\",\"ok\":true},{\"id\":\"SC10\",\"ok\":true}]},\"updated_at\":\"2026-11-15T12:45:00+05:30\"}"
    ]
   ],
   "StageHistory": [
@@ -893,8 +1091,28 @@
     "SHL-01",
     "6",
     "script",
-    "in_progress",
+    "done",
     "2026-11-15T12:44:00+05:30",
+    "2026-11-15T15:10:00+05:30",
+    "ravi",
+    ""
+   ],
+   [
+    "SHL-01",
+    "7",
+    "localise",
+    "done",
+    "2026-11-15T15:10:00+05:30",
+    "2026-11-15T15:12:00+05:30",
+    "system",
+    ""
+   ],
+   [
+    "SHL-01",
+    "8",
+    "client-script-approval",
+    "in_progress",
+    "2026-11-15T15:12:00+05:30",
     "",
     "ravi",
     ""
@@ -1008,6 +1226,66 @@
     "",
     "ravi",
     ""
+   ],
+   [
+    "SHL-04",
+    "1",
+    "intake",
+    "done",
+    "2026-11-15T11:00:00+05:30",
+    "2026-11-15T11:20:00+05:30",
+    "samarth",
+    ""
+   ],
+   [
+    "SHL-04",
+    "2",
+    "research",
+    "skipped",
+    "2026-11-15T11:20:00+05:30",
+    "2026-11-15T11:20:00+05:30",
+    "system",
+    "urgent job: research skipped, flagged for the brief"
+   ],
+   [
+    "SHL-04",
+    "3",
+    "brief",
+    "done",
+    "2026-11-15T11:20:00+05:30",
+    "2026-11-15T12:05:00+05:30",
+    "samarth",
+    ""
+   ],
+   [
+    "SHL-04",
+    "4",
+    "concept",
+    "done",
+    "2026-11-15T12:05:00+05:30",
+    "2026-11-15T12:40:00+05:30",
+    "ravi",
+    ""
+   ],
+   [
+    "SHL-04",
+    "5",
+    "hooks",
+    "done",
+    "2026-11-15T12:40:00+05:30",
+    "2026-11-15T12:44:00+05:30",
+    "ravi",
+    ""
+   ],
+   [
+    "SHL-04",
+    "6",
+    "script",
+    "in_progress",
+    "2026-11-15T12:44:00+05:30",
+    "",
+    "ravi",
+    ""
    ]
   ],
   "Log": [
@@ -1065,7 +1343,23 @@
     "2026-11-15T12:45:00+05:30",
     "system",
     "event",
-    "script placeholder written; waiting on editor (ravi)."
+    "script v1: two versions written; waiting on editor (ravi)."
+   ],
+   [
+    "SHL-01",
+    "7",
+    "2026-11-15T15:10:00+05:30",
+    "ravi",
+    "gate",
+    "script (script pick) approved by ravi (editor): A, scene 7 line changed. Picked on the tracker page."
+   ],
+   [
+    "SHL-01",
+    "8",
+    "2026-11-15T15:12:00+05:30",
+    "system",
+    "event",
+    "localise v1 written; client review message ready; waiting on client."
    ],
    [
     "SHL-02",
@@ -1122,6 +1416,54 @@
     "ravi",
     "event",
     "brief v1 drafted; 2 questions sent to the client; waiting on client."
+   ],
+   [
+    "SHL-04",
+    "1",
+    "2026-11-15T11:15:00+05:30",
+    "samarth",
+    "ruling",
+    "Proposed quick track: repeat offer format. Cost if wrong: switch to full adds style-bible and casting."
+   ],
+   [
+    "SHL-04",
+    "2",
+    "2026-11-15T11:20:00+05:30",
+    "samarth",
+    "gate",
+    "intake approved by samarth (admin)."
+   ],
+   [
+    "SHL-04",
+    "3",
+    "2026-11-15T12:05:00+05:30",
+    "samarth",
+    "gate",
+    "brief approved by samarth (admin)."
+   ],
+   [
+    "SHL-04",
+    "4",
+    "2026-11-15T12:40:00+05:30",
+    "samarth",
+    "gate",
+    "concept approved by samarth (admin)."
+   ],
+   [
+    "SHL-04",
+    "5",
+    "2026-11-15T12:44:00+05:30",
+    "ravi",
+    "gate",
+    "hooks (creative pick) approved by ravi (editor): QA, backups QC and QE."
+   ],
+   [
+    "SHL-04",
+    "6",
+    "2026-11-15T12:45:00+05:30",
+    "system",
+    "event",
+    "script v1: two versions written; waiting on editor (ravi)."
    ]
   ],
   "ClientChanges": [
@@ -1843,6 +2185,72 @@
     "open",
     "",
     ""
+   ]
+  ],
+  "Actions": [
+   [
+    "action_id",
+    "created_at",
+    "requested_by",
+    "kind",
+    "job_id",
+    "client_id",
+    "stage",
+    "gate_shown",
+    "payload",
+    "status",
+    "result",
+    "processed_at",
+    "processed_by",
+    "version"
+   ],
+   [
+    "A-20261115151002-k3p9",
+    "2026-11-15T15:10:02+05:30",
+    "ravi",
+    "pick-script",
+    "SHL-01",
+    "shubh-laundry",
+    "script",
+    "{\"script\":1}",
+    "{\"version_id\":\"A\",\"edit\":\"scene 7 line: WhatsApp karo, pickup hum karenge\"}",
+    "done",
+    "Picked A for SHL-01 (scene 7 line changed, re-checked). Localise ran; Ravi to send the review message to the client.",
+    "2026-11-15T15:12:40+05:30",
+    "samarth",
+    "2"
+   ],
+   [
+    "A-20261115131500-p7x2",
+    "2026-11-15T13:15:00+05:30",
+    "pooja",
+    "approve",
+    "SHL-04",
+    "shubh-laundry",
+    "script",
+    "{\"script\":1}",
+    "{}",
+    "refused",
+    "Not recorded: Pooja (designer) can't decide SHL-04's script pick. Ravi (assigned editor) or Samarth (admin) can.",
+    "2026-11-15T13:17:10+05:30",
+    "samarth",
+    "2"
+   ],
+   [
+    "A-20261117180500-m4q8",
+    "2026-11-17T18:05:00+05:30",
+    "pooja",
+    "client-feedback",
+    "SHL-02",
+    "shubh-laundry",
+    "client-poster-approval",
+    "{\"poster_drafts\":1}",
+    "{\"client_reply\":\"Dusra wala achha hai, bas saree ka colour thoda aur laal karo.\"}",
+    "queued",
+    "",
+    "",
+    "",
+    "1"
    ]
   ]
  }

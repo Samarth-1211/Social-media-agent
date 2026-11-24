@@ -1,5 +1,10 @@
 # Changelog: producer
 
+## Unreleased
+
+### Added
+- "process approvals" (`references/page-actions.md`): carries out the tracker page's queued clicks (Actions tab, layout v6) one at a time, each exactly as if its person had typed the command: same permission and version checks, same stage skills, a one-line result the page shows. Run it under `/loop 3m process approvals` while testing.
+
 ## 0.2.0-alpha.1 - 2026-11-22
 
 ### Changed

@@ -32,6 +32,7 @@ What people type, who may do it, and what the producer does. They write in Engli
 | **urgent**: "SHL-01 urgent", "not urgent", "ye urgent hai" | admin | Set `urgent`; log a ruling. If set before `research` runs, that stage will be skipped (and flagged for the brief). |
 | **research**: "research <client>", "refresh research", "Instagram read kar do", "strike <competitor>" | anyone (strikes: the assignee or an admin) | Hand to `research-methods`. Outside a job it doesn't move any job. |
 | **job card**: "SHL-01 card", "job card dikhao" | anyone | `templates/job-card.md` from a fresh read. |
+| **process approvals**: "process approvals", "check the page", "approvals check karo" (or `/loop 3m process approvals`) | anyone (each action is checked as its own person) | Carry out the tracker page's queued actions (`page-actions.md`). |
 | **status, board, credits, overdue** | anyone | Hand to `tracker`. |
 
 **Wrong person.** Refuse politely and name who may (`gate-rules.md` §2). Don't change anything.

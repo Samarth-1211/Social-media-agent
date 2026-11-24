@@ -195,7 +195,7 @@ export const CLOCK_FORMULA = '=TEXT(NOW(),"yyyy-mm-dd")&"T"&TEXT(NOW(),"HH:mm:ss
 values.push({ range: 'Config!D1:E1', values: [["'clock (do not edit)", CLOCK_FORMULA]] });
 
 // ── Upgrades for sheets built with an older layout ──────────────────
-// A sheet is on layout v1 if it has no Insights tab, on v2 if it has Insights but no BriefQuestions tab, on v3 if its Learnings tab has no hook_formula_id column, and on v4 if its Clients tab has no pronunciation column. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
+// A sheet is on layout v1 if it has no Insights tab, on v2 if it has Insights but no BriefQuestions tab, on v3 if its Learnings tab has no hook_formula_id column, on v4 if its Clients tab has no pronunciation column, and on v5 if it has no Actions tab. Apply upgrades in order. The admin runs the upgrade once (google-sheets.md §7):
 // batch_requests in one batch update, then each values entry with update values, then each append entry with append values.
 // Nothing existing moves: new columns go after the last column of their tab, new tabs after the last tab.
 function upgrade(from, to) {
@@ -252,7 +252,7 @@ const out = {
   layout_version: layout.version,
   batch_requests: requests,
   values,
-  upgrades: [upgrade(1, 2), upgrade(2, 3), upgrade(3, 4), upgrade(4, 5)],
+  upgrades: [upgrade(1, 2), upgrade(2, 3), upgrade(3, 4), upgrade(4, 5), upgrade(5, 6)],
 };
 const text = JSON.stringify(out, null, 1) + '\n';
 

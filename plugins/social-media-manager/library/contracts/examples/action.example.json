@@ -1,0 +1,16 @@
+{
+  "action_id": "A-20261115151002-k3p9",
+  "created_at": "2026-11-15T15:10:02+05:30",
+  "requested_by": "ravi",
+  "kind": "pick-script",
+  "job_id": "SHL-01",
+  "client_id": "shubh-laundry",
+  "stage": "script",
+  "gate_shown": { "script": 1 },
+  "payload": { "version_id": "A", "edit": "scene 7 line: WhatsApp karo, pickup hum karenge" },
+  "status": "done",
+  "result": "Picked A for SHL-01 (scene 7 line changed, re-checked). Localise ran; Ravi to send the review message to the client.",
+  "processed_at": "2026-11-15T15:12:40+05:30",
+  "processed_by": "samarth",
+  "version": 2
+}

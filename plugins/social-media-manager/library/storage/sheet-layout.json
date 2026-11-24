@@ -1,6 +1,6 @@
 {
   "$comment": "Layout of the 'TDM Studio Database' Google Sheet. Single source of truth for setup, the storage operations, the tracker page and dev scripts. Row 1 of every data tab holds the column keys below, in this order. Cell formats: text = plain string; number/integer; boolean = TRUE/FALSE; timestamp = ISO 8601 text with offset; date = YYYY-MM-DD text; list = one item per line in the cell; json = compact JSON text. Empty cell = null / empty list.",
-  "version": 5,
+  "version": 6,
   "database_title": "TDM Studio Database",
   "folder_title": "TDM Studio",
   "test_database_title": "TDM Studio TEST Database",
@@ -404,6 +404,30 @@
         { "key": "status", "type": "text", "options": ["draft", "open", "answered", "dropped"] },
         { "key": "answer", "type": "text" },
         { "key": "answered_at", "type": "timestamp" }
+      ]
+    },
+    {
+      "name": "Actions",
+      "kind": "record",
+      "record": "action",
+      "key": ["action_id"],
+      "since": 6,
+      "$comment": "Decisions and requests made on the tracker page (action.schema.json). The page appends rows with status queued; only the producer's 'process approvals' command changes them (skills/control/producer/references/page-actions.md). Rows are never deleted.",
+      "columns": [
+        { "key": "action_id", "type": "text" },
+        { "key": "created_at", "type": "timestamp" },
+        { "key": "requested_by", "type": "text" },
+        { "key": "kind", "type": "text", "options": ["approve", "reject", "regenerate", "send-back", "pick-creative", "pick-script", "client-approved", "client-feedback", "confirm-route", "new-job"] },
+        { "key": "job_id", "type": "text" },
+        { "key": "client_id", "type": "text" },
+        { "key": "stage", "type": "text" },
+        { "key": "gate_shown", "type": "json" },
+        { "key": "payload", "type": "json" },
+        { "key": "status", "type": "text", "options": ["queued", "processing", "done", "refused", "failed"] },
+        { "key": "result", "type": "text" },
+        { "key": "processed_at", "type": "timestamp" },
+        { "key": "processed_by", "type": "text" },
+        { "key": "version", "type": "integer" }
       ]
     }
   ]

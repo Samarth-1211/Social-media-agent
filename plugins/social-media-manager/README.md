@@ -138,6 +138,15 @@ The script starts by itself after the creative pick: two versions with different
 
 The script never invents a price, number, review or deadline: anything missing shows as `{{needed}}` for the editor, and the client is asked for it in plain words, never shown the placeholder. Devanagari is checked with IndicXlit when it is installed; otherwise it is marked "unverified" with the words to check. New brand, place or people names get a pronunciation proposal, saved to the client profile once someone confirms.
 
+**Deciding on the tracker page**
+
+Every approval above can also be made on the tracker page: open the job, read the work in its tabs, and click **Approve**, **Reject…** (with what to change), **Regenerate…**, **Back to an earlier step…**, pick a hook or a script version (with an optional edit), or paste the client's reply (**Client approved** / **Client wants changes**). **New job** starts a job the same way. Choose who you are first ("You are", top right); only the person who may decide sees the buttons.
+
+| Say | What happens | Who |
+|---|---|---|
+| "process approvals" / "check the page" | Claude carries out the page's queued clicks, oldest first, each exactly as if that person had typed it, and writes the result back to the page | anyone (each click is checked as its own person) |
+| `/loop 3m process approvals` (Claude Code) | Keeps checking every 3 minutes while the session is open; use it during testing so clicks are picked up without anyone asking | anyone |
+
 **Who approves what**
 
 | Gate | Approver |
@@ -159,8 +168,8 @@ The brief can be auto-approved only if the admin turns on `brief_auto_approve_re
    - asks for the team's names, roles and emails;
    - offers to share the folder with each person, asking each time.
 3. **Higgsfield** (needed from the generation group onward): each person signs in to their own Higgsfield account the first time a Higgsfield tool is used. In Claude Code: `/mcp`, then authenticate `higgsfield`.
-4. **Tracker page:** say "publish the tracker page" for a read-only board that works on phones too.
-5. **Existing database, upgrade** (admin, once per release that changes the layout): say "upgrade the TDM Studio sheet". It brings an older sheet to layout v5: the research tabs (v2); the BriefQuestions tab, a Dashboard block and three Config rows (v3); three Learnings columns and three creative Config rows for concept and hooks (v4); the Clients `pronunciation` column and four script/localise Config rows (v5) (`library/storage/google-sheets.md` §7). Run it on the TEST sheet first.
+4. **Tracker page:** say "publish the tracker page" for the team's board, which works on phones too: everything made for each job, and buttons to approve, reject, regenerate, pick and start jobs (`library/storage/tracker-page/README.md`). Its buttons need the sheet on layout v6.
+5. **Existing database, upgrade** (admin, once per release that changes the layout): say "upgrade the TDM Studio sheet". It brings an older sheet to layout v6: the research tabs (v2); the BriefQuestions tab, a Dashboard block and three Config rows (v3); three Learnings columns and three creative Config rows for concept and hooks (v4); the Clients `pronunciation` column and four script/localise Config rows (v5); the Actions tab for the tracker page's buttons (v6) (`library/storage/google-sheets.md` §7). Run it on the TEST sheet first.
 
 Data lives in the Google Sheet (the source of truth), never inside the plugin folder; updating the plugin never touches it. Without Google, Claude Code can work in files mode (`.tdm-studio/`, this computer only).
 

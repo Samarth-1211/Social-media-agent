@@ -4,8 +4,14 @@ All notable changes to the `social-media-manager` plugin. Versions follow semver
 
 ## [Unreleased]
 
+### Added
+- **Decide from the tracker page.** Each job opens on its own page with tabs (Overview, Brief, Research, Ideas & hooks, Script with A and B side by side, Language version with the client message and caption to copy, Client feedback, History) and a decision box: Approve, Reject, Regenerate, Back to an earlier step, pick a hook, pick a script (with an edit), Client approved / wants changes, confirm the client's change route. Plus a **New job** form, an **Approvals log**, "You are" (from the Team tab) and a "waiting on you" list on Today. Clients open on their own page with all their jobs.
+- Clicks are appended to a new **Actions** tab (`action.schema.json`, sheet layout v6, upgrade v5 → v6 in `google-sheets.md` §7; storage operations `list_actions` / `save_action`). The producer's new **"process approvals"** command (`producer/references/page-actions.md`) carries them out as if typed, with the same permission and version checks, and writes a one-line result the page shows. During testing: `/loop 3m process approvals`.
+- Sample data: SHL-01 moves on to the client's script approval (real brief, script v2 picked, language version) and SHL-04 is a demo copy held at the script pick; three sample page actions.
+- `evals/tracker/page-actions.cjs`: renders every view and tab, checks who gets buttons, and validates the rows the page appends (56 checks).
+
 ### Changed
-- Tracker page redesigned: light theme, plain-language step names, a **Today** view of who must act, each job's journey by phase with approvals and what has been made, and a **How it works** guide. Same read-only data access (Google Sheets `get_values`), now reading layout v5 ranges.
+- Tracker page redesigned: light theme, plain-language step names, a **Today** view of who must act, each job's journey by phase with approvals and what has been made, and a **How it works** guide. It now reads layout v6 ranges and declares `get_values` + `append_values`.
 
 ## [0.4.0-alpha.1] - 2026-11-24
 

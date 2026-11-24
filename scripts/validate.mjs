@@ -45,7 +45,7 @@ const STAGE_KEYS = new Set([
   'freshness_days', 'skippable_if_urgent', 'non_blocking_partial', 'spend_gate', 'gate_label',
 ]);
 // Records the storage layer maps to Sheets tabs (besides config, a key-value tab).
-const STORED_RECORDS = ['client', 'job', 'team', 'insight', 'task'];
+const STORED_RECORDS = ['client', 'job', 'team', 'insight', 'task', 'action'];
 const TRACKS = ['quick', 'full'];
 const JOB_TYPES = ['video', 'poster'];
 const BASE_FIELDS = new Set(['client']);
@@ -460,7 +460,7 @@ for (const plugin of plugins) {
         }
       }
       for (const e of researchConsistency(back)) c11.errors.push(`sample-data.json: ${e}`);
-      c11.notes.push(`${plugin.name}: sample data ${back.clients.length} clients, ${back.jobs.length} jobs, ${back.insights.length} insights, ${back.tasks.length} tasks`);
+      c11.notes.push(`${plugin.name}: sample data ${back.clients.length} clients, ${back.jobs.length} jobs, ${back.insights.length} insights, ${back.tasks.length} tasks, ${back.actions.length} page actions`);
     }
     // Research records in the examples hang together the same way.
     const exRec = (n) => (isFile(path.join(exDir, `${n}.example.json`)) ? [JSON.parse(readText(path.join(exDir, `${n}.example.json`)))] : []);
