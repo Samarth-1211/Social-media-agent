@@ -1,0 +1,43 @@
+{
+  "$comment": "Scenario jobs. brief = a key in ../concept-hooks/briefs.json, or 'example' (library/contracts/examples/brief.example.json). research = a key in ../concept-hooks/research.json. hooks = a key in picks.json, or 'example' (the SHL-01 job example's picked hooks). at: script = the script stage is next; script-gate = script v1 shown, pick pending; localise = script picked, localise is next; client-gate = localised, client-script-approval gate pending. script / localised = a key in scripts.json, or 'example' / 'example-pending' / 'example-planted-drift'.",
+  "clock": "2026-12-12T10:00:00+05:30",
+  "jobs": [
+    { "job_id": "SHL-30", "client_id": "shubh-laundry", "title": "Razai dry clean ₹249 reel", "track": "full", "assignee": "ravi",
+      "brief": "SHL-26", "research": "shl-winter-fresh", "hooks": "shl-razai", "at": "script",
+      "for": ["S1", "S2", "S4", "E2E"] },
+    { "job_id": "SHL-31", "client_id": "shubh-laundry", "title": "Razai reel (planted facts)", "track": "full", "assignee": "ravi",
+      "brief": "SHL-26", "research": "shl-winter-fresh", "hooks": "shl-razai-planted", "at": "script",
+      "for": ["S3"] },
+    { "job_id": "SJE-04", "client_id": "saanjh-ethnic", "title": "Bhai Dooj sister sets (flat middle)", "track": "full", "assignee": "pooja",
+      "brief": "SJE-01", "research": null, "hooks": "sje-flat-middle", "at": "script",
+      "for": ["S5"] },
+    { "job_id": "SHL-32", "client_id": "shubh-laundry", "title": "Diwali curtain + sofa offer (script pick)", "track": "quick", "assignee": "ravi",
+      "brief": "example", "research": null, "hooks": "example", "at": "script-gate", "script": "example-pending",
+      "for": ["S6"] },
+    { "job_id": "SHL-33", "client_id": "shubh-laundry", "title": "Razai reel (planted stiff lines)", "track": "full", "assignee": "ravi",
+      "brief": "SHL-26", "research": "shl-winter-fresh", "hooks": "shl-razai", "at": "localise", "script": "shl-planted-lines",
+      "for": ["L1", "L3", "L4", "L6"] },
+    { "job_id": "NRH-15", "client_id": "narmada-heights", "title": "Har mahine ki tasveer (brand film)", "track": "full", "assignee": "ravi",
+      "brief": "NRH-14", "brief_overrides": {
+        "duration_sec": 45,
+        "deliverables": [
+          { "platform": "instagram", "format": "reel", "aspect_ratio": "9:16", "duration_sec": 45, "count": 1 },
+          { "platform": "youtube", "format": "feed-video", "aspect_ratio": "16:9", "duration_sec": 60, "count": 1, "changes_from_master": "16:9 version, 60 s: adds 15 s of site walkthrough B-roll; the RERA end card stays" }
+        ],
+        "aspect_ratio": "9:16",
+        "mandatories": ["RERA P-JBP-21-1234 and rera.mp.gov.in on the end card", "Sales number 98260 12345 said and shown on the end card (client asked)"]
+      },
+      "research": "nrh-partial", "hooks": "nrh-film", "at": "localise", "script": "nrh-film",
+      "for": ["L2", "L3", "L4", "L7"] },
+    { "job_id": "SJE-05", "client_id": "saanjh-ethnic", "title": "Bhai Dooj sister sets (with English)", "track": "full", "assignee": "pooja",
+      "brief": "SJE-01", "research": null, "hooks": "sje-festive", "at": "localise", "script": "sje-festive",
+      "config": { "localise_variant_languages": ["English"] },
+      "for": ["L1", "L4", "L7"] },
+    { "job_id": "SHL-34", "client_id": "shubh-laundry", "title": "Diwali curtain + sofa offer (re-check)", "track": "quick", "assignee": "ravi",
+      "brief": "example", "research": null, "hooks": "example", "at": "localise", "script": "example", "localised": "example-planted-drift",
+      "for": ["L5"] },
+    { "job_id": "SHL-35", "client_id": "shubh-laundry", "title": "Diwali curtain + sofa offer (client approval)", "track": "quick", "assignee": "ravi",
+      "brief": "example", "research": null, "hooks": "example", "at": "client-gate", "script": "example", "localised": "example",
+      "for": ["A1"] }
+  ]
+}

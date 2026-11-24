@@ -24,6 +24,8 @@ Defaults stated at planning and not objected to: field name stays `localised_scr
 | `run-scenarios.mjs --check-only` (research, concept-hooks) | not applicable: needs the git-ignored local run outputs, which this worktree doesn't have |
 | Headless Claude runners | not run (they spend Claude usage); only at M7 if the admin says "run" |
 
+**M7 (2026-11-24), offline only:** R1 9/9: the validator, the script-localise fixture check (9 jobs; 6 scripts and 2 localised scripts pass check 13), planted faults 24/24, brief and concept-hooks fixture checks, research validator-faults and methods-consistency, `transliterate.py --self-test` 11/11, and no protected path changed vs `main`. Live runs S1–S6, L1–L7, A1, E2E: written, **not run**.
+
 M7 repeats these and shows `git diff --stat main` touches no protected path.
 
 ## 3. Shared-file changes (additions only)
@@ -50,6 +52,8 @@ M7 repeats these and shows `git diff --stat main` touches no protected path.
 | `library/contracts/stages.yaml` (M4) | `localise` → `active` (skill folder `skills/pre-production/localise/` exists). |
 | `library/contracts/examples/localised_script.example.json`, `library/knowledge/voiceover-pacing.md` (M4) | Roman spelling of 99 unified to "ninyaanave" (as `transliterate.py` prints it). |
 | `library/contracts/stages.yaml` (M5) | `client-script-approval` → `active` (run by `localise`, D1). |
+| `scripts/lib/script-checks.mjs` (M7) | The client message must carry every `keep_as_is` item with a digit, except phone numbers; a phone number in the client message is an error. |
+| `evals/` (M7, new files) | `script-localise-fixtures.mjs`, `fixtures/script-localise/` (clients, picks, scripts, jobs, replies, README), `script-localise/run-scenarios.mjs` (16 live runs + offline R1), `script-localise/check-faults.mjs` (24 planted faults), `scenarios/script-localise.md`, `rubrics/script-localise.md`; one paragraph added to `evals/README.md`. |
 
 ## 4. Proposed diffs for protected files (apply at merge, D2)
 

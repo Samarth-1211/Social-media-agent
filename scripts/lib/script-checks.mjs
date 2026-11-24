@@ -244,9 +244,11 @@ export function localisedConsistency(loc, { script = null, pacing = loadPacing()
   const bt = loc.back_translation || {};
   const btOk = bt.meaning_ok && bt.offer_ok && bt.price_ok && bt.cta_ok && !(bt.drift || []).some((d) => !d.fixed);
   if (!btOk && loc.self_check?.passed) err(`${where}: back-translation found drift but self_check passed`);
-  // client message carries the exact offer facts (every keep_as_is item with a digit)
+  // client message carries the exact offer facts (every keep_as_is item with a digit), but never a phone number
   const msg = loc.client_review_message?.text || '';
-  for (const k of down?.keep_as_is || []) if (/\d/.test(k) && !msg.includes(k)) err(`${where}: client_review_message is missing "${k}"`);
+  const isPhone = (k) => (k.match(/\d/g) || []).length >= 8 && !/[₹%]/.test(k);
+  for (const k of down?.keep_as_is || []) if (/\d/.test(k) && !isPhone(k) && !msg.includes(k)) err(`${where}: client_review_message is missing "${k}"`);
+  if (/(?:\d[\s-]?){10}/.test(msg)) err(`${where}: client_review_message contains a phone number`);
   if (!/\bOK\b/i.test(msg)) err(`${where}: client_review_message must ask for "OK" to approve`);
   const d = loc.downstream;
   if (d) {

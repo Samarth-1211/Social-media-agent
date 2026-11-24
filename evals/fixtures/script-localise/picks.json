@@ -1,0 +1,156 @@
+{
+  "$comment": "Creative picks (hooks.downstream) for the scenario jobs. The fixture builder turns each into a full hooks record (pick picked, version 2). A pick with 'base' copies that pick and applies the listed overrides. 'example' (used in jobs.json) means the SHL-01 job example's picked hooks (quick track).",
+  "picks": {
+    "shl-razai": {
+      "concept_key": "C2",
+      "hook": { "id": "2B", "formula_id": "H30", "layers": { "visual": "A hand presses a folded razai on a bed; it stays flat. A '₹249' card drops in.", "spoken": "Razai ghar pe dhulti hi nahi? Shubh mein ₹249 mein dry clean, 31 Dec tak, pickup bhi free.", "text": "Razai dry clean: ₹249" } },
+      "backups": [
+        { "id": "2A", "formula_id": "H15", "layers": { "visual": "Razai stuffed into a bucket, water spilling over.", "spoken": "Razai ghar pe dhulti hi nahi, sahi?", "text": "Razai bucket mein?" } },
+        { "id": "2C", "formula_id": "H13", "layers": { "visual": "Same razai: flat and dull, then fluffed and bright.", "spoken": "Yeh wahi razai hai. Bas dry clean hua.", "text": "Wahi razai, dry clean ke baad" } }
+      ],
+      "concept": {
+        "id": "C2", "title": "Razai wapas fluffy",
+        "logline": "A flat, heavy razai goes to Shubh and comes back fluffed, for ₹249 till 31 Dec.",
+        "insight": "People give up washing a razai at home: it doesn't fit, doesn't dry, and comes out flat.",
+        "angle_type": "proof", "format": "before-after",
+        "story_spine": [
+          { "beat": "hook", "start_sec": 0, "end_sec": 3, "what_we_see": "Flat razai pressed by a hand; price card." },
+          { "beat": "problem", "start_sec": 3, "end_sec": 8, "what_we_see": "Razai in a bucket, won't fit." },
+          { "beat": "before/after", "start_sec": 8, "end_sec": 15, "what_we_see": "Same razai, flat then fluffed (real job)." },
+          { "beat": "cta", "start_sec": 15, "end_sec": 20, "what_we_see": "Offer + WhatsApp end card." }
+        ],
+        "levers": [
+          { "lever_id": "L04", "name": "Before/after contrast", "proof": "{{needed: before/after clip of one real razai job}}" },
+          { "lever_id": "L06", "name": "Value framing", "proof": "₹249 per piece till 31 Dec (brief offer_detail)" }
+        ],
+        "producibility": { "difficulty": "low", "credit_band": "none", "shots": [
+          { "beat": "hook", "what": "Folded razai on a bed", "source": "phone-shoot" },
+          { "beat": "before/after", "what": "Before/after of a real razai", "source": "client-footage" },
+          { "beat": "cta", "what": "Offer and end cards", "source": "motion-graphics" }
+        ] },
+        "risks": ["Before shot must stay mild (no dirty close-ups)."],
+        "mix_note": null
+      },
+      "script_notes": {
+        "do": ["Pay off the hook before the halfway mark.", "₹249, 31 Dec and 'pickup free above ₹299' exactly as in the brief.", "One CTA: WhatsApp."],
+        "dont": ["No 'cheap'.", "No dirty close-ups.", "No snowflake graphics.", "No fake urgency."]
+      },
+      "implied_assets": [
+        { "asset": "Before/after of one real razai job", "source": "client-footage", "must_be_real": true },
+        { "asset": "Offer card ₹249 · 31 Dec tak", "source": "motion-graphics", "must_be_real": false }
+      ],
+      "language": "Hinglish", "writing_script": "roman-hinglish",
+      "learning": { "hook_formula_id": "H30", "angle_type": "proof" }
+    },
+    "shl-razai-planted": {
+      "$comment": "S3: planted invented facts. A lever proof claims 10,000+ razais (no source), a backup hook says ₹199, and a script note asks for 'Indore ka No.1'. None of it is in the brief or the profile.",
+      "base": "shl-razai",
+      "concept_levers": [
+        { "lever_id": "L01", "name": "Local social proof", "proof": "10,000+ razai dhul chuki hain (owner said so)" },
+        { "lever_id": "L06", "name": "Value framing", "proof": "₹249 per piece till 31 Dec (brief offer_detail)" }
+      ],
+      "backups": [
+        { "id": "2A", "formula_id": "H30", "layers": { "visual": "Price card '₹199' over a razai.", "spoken": "Sirf ₹199 intro price, razai dry clean.", "text": "Intro price ₹199" } },
+        { "id": "2C", "formula_id": "H13", "layers": { "visual": "Same razai: flat and dull, then fluffed and bright.", "spoken": "Yeh wahi razai hai. Bas dry clean hua.", "text": "Wahi razai, dry clean ke baad" } }
+      ],
+      "script_notes_do_add": ["Say 'Indore ka No.1 dry cleaner'."]
+    },
+    "sje-flat-middle": {
+      "$comment": "S5: the concept's middle is flat (the same rack shot three times). The critique pass must break it up.",
+      "concept_key": "C1",
+      "hook": { "id": "1A", "formula_id": "H26", "layers": { "visual": "Two sisters at the boutique mirror holding up matching kurta sets.", "spoken": "Bhai Dooj pe behen ke saath matching?", "text": "Behen ke saath matching" } },
+      "backups": [
+        { "id": "1B", "formula_id": "H15", "layers": { "visual": "A sleeve held up to the light at the tailoring table.", "spoken": "Diwali tak ready ho jayega na?", "text": "Diwali tak ready?" } },
+        { "id": "1C", "formula_id": "H17", "layers": { "visual": "Tailor's tape around a sleeve, chalk mark.", "spoken": "Fitting yahin, aapke saamne.", "text": "Fitting yahin" } }
+      ],
+      "concept": {
+        "id": "C1", "title": "Behen ke saath matching",
+        "logline": "Two sisters pick matching festive kurta sets and get them fitted at Saanjh, ₹1,499 with custom fitting.",
+        "insight": "Sisters shop for Bhai Dooj together, and the worry is the fit being ready in time.",
+        "angle_type": "story", "format": "festival-story",
+        "story_spine": [
+          { "beat": "hook", "start_sec": 0, "end_sec": 3, "what_we_see": "Sisters at the mirror with matching sets." },
+          { "beat": "middle", "start_sec": 3, "end_sec": 8, "what_we_see": "Kurta sets on the rack." },
+          { "beat": "middle", "start_sec": 8, "end_sec": 13, "what_we_see": "More kurta sets on the rack." },
+          { "beat": "middle", "start_sec": 13, "end_sec": 18, "what_we_see": "The rack again, closer." },
+          { "beat": "offer", "start_sec": 18, "end_sec": 22, "what_we_see": "₹1,499 with custom fitting." },
+          { "beat": "cta", "start_sec": 22, "end_sec": 25, "what_we_see": "WhatsApp end card." }
+        ],
+        "levers": [
+          { "lever_id": "L10", "name": "Family and friend benefit", "proof": "Sisters buying together (profile customer_words 'behen ke saath matching')" },
+          { "lever_id": "L06", "name": "Value framing", "proof": "₹1,499 with custom fitting (profile price_points)" }
+        ],
+        "producibility": { "difficulty": "low", "credit_band": "none", "shots": [
+          { "beat": "hook", "what": "Two real, consenting customers at the mirror", "source": "phone-shoot" },
+          { "beat": "middle", "what": "Rack of kurta sets", "source": "phone-shoot" },
+          { "beat": "offer", "what": "Price card", "source": "motion-graphics" }
+        ] },
+        "risks": ["No body talk; profile never_use 'slim dikhoge'."],
+        "mix_note": null
+      },
+      "script_notes": {
+        "do": ["Show the tailoring table (profile do).", "₹1,499 with custom fitting, exactly.", "One CTA: WhatsApp, fitting slot."],
+        "dont": ["No body-shaming or 'slim'.", "No named stores."]
+      },
+      "implied_assets": [
+        { "asset": "Two sisters at the mirror (real, consenting customers)", "source": "phone-shoot", "must_be_real": true },
+        { "asset": "Tailoring table", "source": "phone-shoot", "must_be_real": true }
+      ],
+      "language": "Hinglish", "writing_script": "roman-hinglish",
+      "learning": { "hook_formula_id": "H26", "angle_type": "story" }
+    },
+    "sje-festive": {
+      "base": "sje-flat-middle",
+      "concept_spine": [
+        { "beat": "hook", "start_sec": 0, "end_sec": 3, "what_we_see": "Sisters at the mirror with matching sets." },
+        { "beat": "worry", "start_sec": 3, "end_sec": 6.5, "what_we_see": "A loose sleeve; 'Diwali tak ready?'" },
+        { "beat": "fitting", "start_sec": 6.5, "end_sec": 13.5, "what_we_see": "Tailoring table, tape, chalk." },
+        { "beat": "payoff", "start_sec": 13.5, "end_sec": 17, "what_we_see": "Both sisters in fitted sets." },
+        { "beat": "offer", "start_sec": 17, "end_sec": 21, "what_we_see": "₹1,499 with custom fitting." },
+        { "beat": "cta", "start_sec": 21, "end_sec": 25, "what_we_see": "WhatsApp end card." }
+      ]
+    },
+    "nrh-film": {
+      "concept_key": "C1",
+      "hook": { "id": "1A", "formula_id": "H06", "layers": { "visual": "The same frame of the site, month 1 to today, date stamp in the corner.", "spoken": "Har mahine ki 1 tareekh ko yahi jagah shoot ki. Dekhiye kaise bani.", "text": "हर महीने, एक ही जगह" } },
+      "backups": [
+        { "id": "1B", "formula_id": "H15", "layers": { "visual": "The RERA board at the gate, a hand pointing at the number.", "spoken": "'RERA number kahan dekhein?' Achha sawaal. Ye raha.", "text": "RERA कहाँ देखें?" } },
+        { "id": "1C", "formula_id": "H13", "layers": { "visual": "Same frame: an open field, then today's tower.", "spoken": "Yahan khet tha. Ab yahan aapki balcony hai.", "text": "पहले खेत, अब बालकनी" } }
+      ],
+      "concept": {
+        "id": "C1", "title": "Har mahine ki tasveer",
+        "logline": "The same spot on the site filmed every month: the building rises, a family watches it become theirs.",
+        "insight": "Buyers' first fear is delivery; dated footage answers it better than a brochure.",
+        "angle_type": "proof", "format": "process-reveal",
+        "story_spine": [
+          { "beat": "hook", "start_sec": 0, "end_sec": 4, "what_we_see": "Same frame, month 1, date stamp." },
+          { "beat": "the fear", "start_sec": 4, "end_sec": 12, "what_we_see": "Dated cuts as the tower rises." },
+          { "beat": "the site", "start_sec": 12, "end_sec": 35, "what_we_see": "RERA board, director, corridor, possession card." },
+          { "beat": "family moment", "start_sec": 35, "end_sec": 41, "what_we_see": "Sample flat." },
+          { "beat": "cta", "start_sec": 41, "end_sec": 45, "what_we_see": "Call card with RERA line." }
+        ],
+        "levers": [
+          { "lever_id": "L15", "name": "Show the process", "proof": "Monthly site photos from a fixed spot (brief shot_sourcing.existing_footage)" },
+          { "lever_id": "L05", "name": "Specificity", "proof": "RERA P-JBP-21-1234 (brief mandatories); possession {{needed: month year}}" }
+        ],
+        "producibility": { "difficulty": "med", "credit_band": "none", "shots": [
+          { "beat": "hook", "what": "Monthly site photos, same spot", "source": "client-footage" },
+          { "beat": "the site", "what": "RERA board, director, corridor", "source": "phone-shoot" },
+          { "beat": "cta", "what": "Call and RERA end card", "source": "motion-graphics" }
+        ] },
+        "risks": ["Never imply guaranteed delivery or returns; state the RERA-registered possession date only."],
+        "mix_note": null
+      },
+      "script_notes": {
+        "do": ["RERA number and rera.mp.gov.in on the end card.", "The sales number 98260 12345 said and shown (client asked).", "Pay off the hook before the halfway mark."],
+        "dont": ["No returns or appreciation.", "No drone-and-sitar luxury clichés.", "No 'limited flats'."]
+      },
+      "implied_assets": [
+        { "asset": "Monthly site photos from one fixed spot", "source": "client-footage", "must_be_real": true },
+        { "asset": "Director on camera", "source": "phone-shoot", "must_be_real": true }
+      ],
+      "language": "Hindi", "writing_script": "devanagari",
+      "learning": { "hook_formula_id": "H06", "angle_type": "proof" }
+    }
+  }
+}

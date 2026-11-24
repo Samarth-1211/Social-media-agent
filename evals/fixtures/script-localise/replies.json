@@ -1,0 +1,29 @@
+{
+  "$comment": "Scripted replies with the expected result. script_pick: replies at SHL-32's script pick (script v1 = the contract example, pending; recommended A). client: replies at SHL-35's client-script-approval gate. 'with_p2' / 'without_p2' give the routing expected after / before merge-notes P2 is applied.",
+  "script_pick": [
+    { "id": "R1", "from": "ravi", "reply": "A", "expect": { "gate": "approved", "pick": "A", "edits": [], "duration_sec": 20 } },
+    { "id": "R2", "from": "ravi", "reply": "A with scene 3 from B", "expect": { "gate": "approved", "pick": "A", "edit_kinds": ["take-scene"], "downstream_contains": "Hum ghar se le jaate hain", "duration_sec": 20 } },
+    { "id": "R3", "from": "ravi", "reply": "A, scene 4 line: ...aur dhulne ke baad, ekdum naya.", "expect": { "gate": "approved", "pick": "A", "edit_kinds": ["line"], "scene_vo": { "4": "ekdum naya" }, "duration_sec": 20 } },
+    { "id": "R4", "from": "ravi", "reply": "A, shorter by 5 sec", "expect": { "gate": "approved", "pick": "A", "edit_kinds": ["length"], "duration_sec": 15, "roles_kept": ["hook", "payoff", "cta"] } },
+    { "id": "R5", "from": "ravi", "reply": "theek hai", "expect": { "gate": "approved", "pick": "A", "edits": [], "duration_sec": 20 } },
+    { "id": "R6", "from": "ravi", "reply": "B", "expect": { "gate": "approved", "pick": "B", "edits": [], "duration_sec": 20 } },
+    { "id": "R7", "from": "pooja", "reply": "A", "expect": { "gate": "pending", "refused": true, "names": ["ravi", "samarth"] } }
+  ],
+  "client": [
+    { "id": "A1-ok", "reply": "client approved: Haan perfect hai, final karo. (Neha)",
+      "expect": { "gate": "approved", "feedback_entries": 0 } },
+    { "id": "A1-changes", "reply": "client feedback: 'dhulne ke baad' ki jagah 'wash ke baad' hi rakho, wahi hum bolte hain. Aur end mein Shubh Laundry ka naam bhi bolo. (Neha)",
+      "followup": "route ok",
+      "expect": {
+        "feedback_entries": 1,
+        "items": [
+          { "about": "dhulne → wash (wording)", "label": "in_scope", "with_p2": "localise", "without_p2": "script" },
+          { "about": "say the brand name at the end (what is said)", "label": "in_scope", "with_p2": "script", "without_p2": "script" }
+        ],
+        "proposed_stage": "script",
+        "after_route_ok": { "gate_status": "sent_back", "sent_back_to": "script", "script_versions": 1, "script_pick": "pending", "edit_mentions": "F1" }
+      } },
+    { "id": "A1-offer", "reply": "client feedback: offer 25% kar do, 20% kam lag raha hai. (Neha)",
+      "expect": { "feedback_entries": 1, "items": [ { "about": "change the offer to 25%", "label": "change_request", "target": "brief" } ], "admin_only": true, "gate": "pending" } }
+  ]
+}
