@@ -160,7 +160,7 @@ The brief can be auto-approved only if the admin turns on `brief_auto_approve_re
    - offers to share the folder with each person, asking each time.
 3. **Higgsfield** (needed from the generation group onward): each person signs in to their own Higgsfield account the first time a Higgsfield tool is used. In Claude Code: `/mcp`, then authenticate `higgsfield`.
 4. **Tracker page:** say "publish the tracker page" for a read-only board that works on phones too.
-5. **Existing database, brief update** (admin, once): say "upgrade the TDM Studio sheet". It brings an older sheet to layout v4: the research tabs (v2); the BriefQuestions tab, a Dashboard block and three Config rows (v3); three Learnings columns and three creative Config rows for concept and hooks (v4) (`library/storage/google-sheets.md` §7). Run it on the TEST sheet first.
+5. **Existing database, upgrade** (admin, once per release that changes the layout): say "upgrade the TDM Studio sheet". It brings an older sheet to layout v5: the research tabs (v2); the BriefQuestions tab, a Dashboard block and three Config rows (v3); three Learnings columns and three creative Config rows for concept and hooks (v4); the Clients `pronunciation` column and four script/localise Config rows (v5) (`library/storage/google-sheets.md` §7). Run it on the TEST sheet first.
 
 Data lives in the Google Sheet (the source of truth), never inside the plugin folder; updating the plugin never touches it. Without Google, Claude Code can work in files mode (`.tdm-studio/`, this computer only).
 
