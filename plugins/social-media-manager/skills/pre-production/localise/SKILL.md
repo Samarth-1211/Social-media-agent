@@ -70,7 +70,7 @@ Shared knowledge: `${CLAUDE_PLUGIN_ROOT}/library/knowledge/voiceover-pacing.md`,
 
    Roman or English output: `not-needed`. Never mix scripts within a caption line unless it's intentional (brand names, ₹ amounts, RERA numbers, hashtags).
 
-6. **Numbers and money** (`${CLAUDE_SKILL_DIR}/references/numbers-and-money.md`): ₹ and lakh/crore formatting; how each price, percentage, date and phone number is **said** (`transliterate.py --number N` gives the Hindi words and the shop style); phone numbers in groups. Fill `numbers_spoken`.
+6. **Numbers and money** (`${CLAUDE_SKILL_DIR}/references/numbers-and-money.md`): ₹ and lakh/crore formatting; how each price, percentage, date and phone number is **said** (`transliterate.py --number N` gives the Hindi words and the shop style); phone numbers in groups. Fill `numbers_spoken`. **Written vs said:** `scenes[].vo_line`, cards, the SRT and the caption keep numbers exactly as `keep_as_is` writes them (`₹299`, `25 Dec`, `20%`); only `vo_script.lines[].tts_text` (and `numbers_spoken.spoken`) spell them out in words.
 
 7. **Voiceover prep** (`${CLAUDE_SKILL_DIR}/references/vo-prep.md`, `${CLAUDE_SKILL_DIR}/references/pronunciation.md`):
    - `vo_script.lines`: `text` with `[pause 0.3s]`, `*emphasis*` and one `/` breath point; `tts_text` clean, with numbers spelled out; `speed`;
@@ -105,7 +105,7 @@ Shared knowledge: `${CLAUDE_PLUGIN_ROOT}/library/knowledge/voiceover-pacing.md`,
     - `on_screen_cards`, `caption_post_text`;
     - `variants_available`.
 
-15. **Save** after `get_now`: the `localised_script` output (`version` + 1), the four files, and a log line "localised_script v<n>: <language> (<writing_script>), script check <status>". Re-read and confirm. No gate: the producer runs on to `client-script-approval` in the same turn.
+15. **Save** after `get_now`: the `localised_script` output (`version` + 1), the four files, and a log line "localised_script v<n>: <language> (<writing_script>), script check <status>". Re-read and confirm. Validate the record against `localised_script.schema.json` first; the output's `files` is a **list** of links. No gate: the producer runs on to `client-script-approval` in the same turn. **Run directly** (no producer), go straight on to the approval step yourself (§Gate), as the producer would: close the `localise` history row, start `client-script-approval`, show the message, request the `client` gate. Never leave the job at `localise` with a message nobody can approve.
 
 16. **Changes from client feedback** (wording or language routed here by `client-feedback`, or `localise` re-running after `script` changed):
     1. Read the job's latest `client_feedback` entry: items with `target_stage: localise` (in scope), with the client's `quote` and the team's `change`.
@@ -132,7 +132,7 @@ Shared knowledge: `${CLAUDE_PLUGIN_ROOT}/library/knowledge/voiceover-pacing.md`,
 **The approval step (`client-script-approval`, gate `client`).** When the producer runs this stage:
 1. Read `localised_script` fresh. If `self_check.passed` is false, or the client message would carry a placeholder fact, say what's missing and stop. Nothing goes to the client half-done.
 2. Show the assignee the **client review message, ready to copy** (exactly `client_review_message.text`). Under it, one line: "<assignee>: send this to <decision maker> on WhatsApp, then paste their reply here: 'client approved: …' or 'client feedback: …'."
-3. Return no outputs. The producer opens the `client` gate (`shown_outputs`: `script` and `localised_script` at their current versions) and stops. This skill never sends anything and never records the decision.
+3. Return no outputs. Anything you write to `next_action` stays under 200 characters ("Ravi to send the script review message to Neha and paste her reply."). The producer opens the `client` gate (`shown_outputs`: `script` and `localised_script` at their current versions) and stops. This skill never sends anything and never records the decision.
 4. **The reply** is handled by the producer's client-gate rules:
    - a clear OK is recorded as `approved`;
    - anything else goes to `client-feedback`, which labels the items and routes them: what is said, the order or a fact → `script`; how it is said (words, language, script, a name's spelling or pronunciation) → `localise`.

@@ -24,6 +24,9 @@ const fx = (n) => read(path.join(FX, `${n}.json`));
 const ch = (n) => read(path.join(CH, `${n}.json`));
 const ex = (n) => read(path.join(C, 'examples', `${n}.example.json`));
 const renamed = (obj, from, to) => JSON.parse(JSON.stringify(obj).replaceAll(from, to));
+// The SHL-01 contract examples run an offer till 25 Nov; the eval clock is 12 Dec, so example-based jobs move the
+// offer to 25 Dec (otherwise the skills rightly stop on an expired offer).
+const shift = (obj) => JSON.parse(JSON.stringify(obj).replaceAll('2026-11-25', '2026-12-25').replaceAll('25 Nov', '25 Dec').replaceAll('pachchees November', 'pachchees December'));
 
 const ajv = new Ajv2020({ strict: true, allErrors: true });
 addFormats(ajv);
@@ -63,7 +66,7 @@ export function clients() {
 
 function briefFor(s) {
   let b;
-  if (s.brief === 'example') b = ex('brief');
+  if (s.brief === 'example') b = { ...shift(ex('brief')), posting_date: '2026-12-18' };
   else {
     const { base, briefs } = ch('briefs');
     if (!briefs[s.brief]) throw new Error(`no brief ${s.brief}`);
@@ -86,7 +89,7 @@ function pickSpec(key) {
   return b;
 }
 function hooksRecord(s, research) {
-  if (s.hooks === 'example') return renamed(ex('job').outputs.hooks.data, 'SHL-01', s.job_id);
+  if (s.hooks === 'example') return shift(renamed(ex('job').outputs.hooks.data, 'SHL-01', s.job_id));
   const p = pickSpec(s.hooks);
   const hookObj = (h) => ({
     id: h.id, concept_ref: p.concept_key, formula_id: h.formula_id, layers: h.layers, language: p.language,
@@ -125,9 +128,9 @@ function sceneFromRow(r) {
   };
 }
 function scriptRecord(s, hooks, research) {
-  if (s.script === 'example') return renamed(ex('script'), 'SHL-01', s.job_id);
+  if (s.script === 'example') return shift(renamed(ex('script'), 'SHL-01', s.job_id));
   if (s.script === 'example-pending') {
-    const r = renamed(ex('script'), 'SHL-01', s.job_id);
+    const r = shift(renamed(ex('script'), 'SHL-01', s.job_id));
     r.version = 1;
     r.pick = { status: 'pending', version_id: null, edits: [], reply: null, decided_by: null, decided_by_role: null, decided_at: null };
     r.downstream = null;
@@ -169,7 +172,7 @@ function scriptRecord(s, hooks, research) {
 // ── localised scripts ──────────────────────────────────────────────────
 function localisedRecord(s) {
   if (!s.localised) return null;
-  const l = renamed(ex('localised_script'), 'SHL-01', s.job_id);
+  const l = shift(renamed(ex('localised_script'), 'SHL-01', s.job_id));
   if (s.localised === 'example') return l;
   if (s.localised === 'example-planted-drift') {
     // L5: an earlier pass let two meaning changes through: scene 5 lost "25 Nov tak" and gained "sirf aaj";
@@ -181,7 +184,7 @@ function localisedRecord(s) {
       Object.assign(l.vo_script.lines[n - 1], { text: v.text, tts_text: v.tts });
       l.downstream.vo_lines[n - 1].tts_text = v.tts;
     }
-    l.captions_srt.srt = l.captions_srt.srt.replace('Dono pe 20% off, 25 Nov tak.', 'Sirf aaj, 20% off.').replace('Pickup free, ₹299 se upar.', 'Pickup bilkul free.');
+    l.captions_srt.srt = l.captions_srt.srt.replace('Dono pe 20% off, 25 Dec tak.', 'Sirf aaj, 20% off.').replace('Pickup free, ₹299 se upar.', 'Pickup bilkul free.');
     l.numbers_spoken = l.numbers_spoken.filter((x) => !(x.scene === 5 && x.kind === 'date') && !(x.scene === 6));
     return l;
   }

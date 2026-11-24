@@ -26,6 +26,8 @@ Defaults stated at planning and not objected to: field name stays `localised_scr
 
 **M7 (2026-11-24), offline only:** R1 9/9: the validator, the script-localise fixture check (9 jobs; 6 scripts and 2 localised scripts pass check 13), planted faults 24/24, brief and concept-hooks fixture checks, research validator-faults and methods-consistency, `transliterate.py --self-test` 11/11, and no protected path changed vs `main`. Live runs S1–S6, L1–L7, A1, E2E: written, **not run**.
 
+**Live runs (2026-11-24, on the admin's "run"):** 18 of 19 runs pass every check after six skill fixes, four test fixes and one fixture fix. A1-ok fails only on a producer problem that predates this branch (P9). Total ≈ $36.5. Details: `evals/results/2026-11-24_feat-script-localise.md`.
+
 M7 repeats these and shows `git diff --stat main` touches no protected path.
 
 ## 3. Shared-file changes (additions only)
@@ -141,6 +143,13 @@ The client gate works without this. With it, the board and the gate message name
 ### P8. client-feedback: close the items a re-run handled (optional)
 
 Today nobody sets `client_feedback[].items[].status` to `done`, so an item stays `open` after the routed stage has re-run. Proposed, in `skills/brand/client-feedback/SKILL.md` step 3 (quote ledger), add: "Before splitting a new reply about the same job, mark the earlier entry's `in_scope` items `done` when the stage they were routed to has a newer approved version (or `declined` if the admin declined them), and say so in one line." That way the next triage knows what was already fixed, and the `old_version` check stays accurate.
+
+### P9. Producer: placeholder outputs and log kinds (found by the M7 live runs; this problem predates this branch)
+
+In run A1-ok, after the client approved, the producer ran the next stage (`storyboard`, a placeholder) and wrote `"schema": null` into the output and a log line with `"kind": "stage"`. Both are invalid against `job.schema.json` (`schema` must be a string when present; log kinds are event, gate, ruling, error, credit, feedback). It's not caused by this branch, but it breaks the job record after every client approval on the quick track. Proposed, in `skills/control/producer/references/stage-running.md` §4, under the placeholder JSON:
+> - Leave `schema` out of a placeholder output (never `null`). Log the stage start and end as kind `event` ("storyboard v1 written (placeholder)").
+
+And in `gate-rules.md` §1 step 3, after the `next_action` bullets: "Keep `next_action` under 200 characters (the schema limit): who, what, one action." Run L2 produced a 260-character one.
 
 ## 4a. Client script approval: how it runs (M5)
 

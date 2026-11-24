@@ -157,7 +157,8 @@ async function runOne(name) {
 
 // ── checks ──
 const STIFF = /sangrahan|nishulk|swagat hai|swachhata|vastron|संग्रहण|निःशुल्क|स्वागत है|स्वच्छता|वस्त्र/i;
-const JARGON = /\b(scene|CTA|VO|SRT|hook|version|v\d+|B-roll|localis|gate)\b/i;
+// "version" alone is jargon; "English version bhi ready hai" (client-review.md) is plain language
+const JARGON = /\b(scene|CTA|VO|SRT|hook|v\d+|B-roll|localis|gate)\b|(?<!(?:English|Hindi|Hinglish) )\bversion\b/i;
 const surface = (versions) => JSON.stringify((versions || []).map((v) => [v.scenes.map((s) => [s.vo_line, s.on_screen_text.map((c) => c.text)]), v.caption]));
 function fullScript(run, job) {
   const v = job?.outputs?.script?.version;
@@ -236,7 +237,8 @@ function checks(name) {
     }
     case 'L1-SHL33': {
       locOk();
-      const all = JSON.stringify([lo?.scenes, lo?.caption_post, lo?.client_review_message]);
+      // only what the audience sees or hears, not the stage's own notes (which may quote the old line)
+      const all = JSON.stringify([(lo?.scenes || []).map((s) => [s.vo_line, (s.on_screen_text || []).map((c) => c.text)]), lo?.caption_post, lo?.client_review_message?.text]);
       ok('L1: planted stiff lines rewritten', !STIFF.test(all), (all.match(STIFF) || [])[0]);
       ok('L1: facts kept', /₹249/.test(all) && /31 Dec/.test(all) && /₹299/.test(all));
       const ns = lo?.numbers_spoken || [];
@@ -251,7 +253,11 @@ function checks(name) {
       locOk();
       ok('L2: Devanagari output', lo?.writing_script === 'devanagari' && (lo?.scenes || []).some((s) => /[ऀ-ॿ]/.test(s.vo_line)));
       ok('L2: script check honest', ['verified', 'unverified'].includes(lo?.script_check?.status) && (lo?.script_check?.status === 'verified' ? lo.script_check.tool === 'indicxlit' : lo.script_check.tool === 'manual'), JSON.stringify(lo?.script_check));
-      ok('L2: no accidental mixed script (only RERA / numbers / website stay Roman)', (lo?.scenes || []).every((s) => !/\b(?!RERA\b|P-JBP|rera\b|mp\b|gov\b|in\b)[A-Za-z]{3,}\b/.test(s.vo_line.replace(/rera\.mp\.gov\.in|P-JBP-21-1234|\{\{.*?\}\}/g, ''))), (lo?.scenes || []).map((s) => s.vo_line).join(' | ').slice(0, 200));
+      // Roman is allowed only for intended items: RERA, the registration number, the website, placeholders,
+      // and the script's keep_as_is names (a brand without a Devanagari spelling stays Roman, hinglish-style.md §5)
+      const keepRoman = (job?.outputs?.script?.data?.downstream?.keep_as_is || []).filter((k) => /[A-Za-z]/.test(k));
+      const stripKeep = (t) => keepRoman.reduce((a, k) => a.split(k).join(' '), String(t).replace(/rera\.mp\.gov\.in|P-JBP-21-1234|\{\{.*?\}\}/g, ' '));
+      ok('L2: no accidental mixed script (only RERA / numbers / website / kept names stay Roman)', (lo?.scenes || []).every((s) => !/\b(?!RERA\b)[A-Za-z]{3,}\b/.test(stripKeep(s.vo_line))), (lo?.scenes || []).map((s) => stripKeep(s.vo_line)).join(' | ').slice(0, 200));
       const ns = lo?.numbers_spoken || [];
       ok('L3: phone number spoken digit by digit in groups', ns.some((n) => n.kind === 'phone' && n.spoken.split(/[\s,]+/).filter(Boolean).length >= 10), JSON.stringify(ns.filter((n) => n.kind === 'phone')));
       ok('L3: TTS text has no digits (outside RERA)', (lo?.vo_script?.lines || []).every((l) => !/\d/.test(l.tts_text.replace(/P-JBP-21-1234/g, ''))));
@@ -276,10 +282,12 @@ function checks(name) {
     case 'L5-SHL34': {
       ok('L5: a new localised version', (job?.outputs?.localised_script?.version ?? 1) >= 2);
       ok('L5: drift found in scenes 5 and 6', [5, 6].every((n) => (lo?.back_translation?.drift || []).some((d) => d.scene === n && d.fixed)), JSON.stringify(lo?.back_translation?.drift).slice(0, 200));
-      ok('L5: date back in scene 5', /25 Nov/.test(lo?.scenes?.[4]?.vo_line || ''), lo?.scenes?.[4]?.vo_line);
+      // the fixture moves the example offer to 25 Dec (eval clock 12 Dec)
+      ok('L5: date back in scene 5 (25 Dec)', /25 Dec/.test(lo?.scenes?.[4]?.vo_line || ''), lo?.scenes?.[4]?.vo_line);
       ok('L5: condition back in scene 6', /299/.test(lo?.scenes?.[5]?.vo_line || ''), lo?.scenes?.[5]?.vo_line);
-      ok('L5: no "sirf aaj" left', !/sirf aaj/i.test(JSON.stringify(lo?.scenes)) && !/sirf aaj/i.test(lo?.captions_srt?.srt || ''));
-      ok('L5: SRT matches the fix', /25 Nov/.test(lo?.captions_srt?.srt || '') && /299/.test(lo?.captions_srt?.srt || ''));
+      const heard = JSON.stringify([(lo?.scenes || []).map((s) => [s.vo_line, (s.on_screen_text || []).map((c) => c.text)]), (lo?.vo_script?.lines || []).map((l) => l.tts_text), lo?.captions_srt?.srt]);
+      ok('L5: no "sirf aaj" left (lines, TTS, SRT)', !/sirf aaj/i.test(heard));
+      ok('L5: SRT matches the fix', /25 Dec/.test(lo?.captions_srt?.srt || '') && /299/.test(lo?.captions_srt?.srt || ''));
       locOk();
       break;
     }
@@ -335,6 +343,7 @@ function checks(name) {
           break;
         }
         ok('S6: gate approved', g?.status === 'approved', g?.status);
+        { const vr = valid('script', sc); ok('S6: picked script schema-valid (downstream complete)', vr === true, vr); }
         ok('S6: gate recorded before the pick version (shown v1)', g?.shown_outputs?.script === 1 && (job?.outputs?.script?.version ?? 0) >= 2);
         ok(`S6: picked ${e.pick}`, sc?.pick?.status === 'picked' && sc?.pick?.version_id === e.pick, `${sc?.pick?.status}/${sc?.pick?.version_id}`);
         const kinds = (sc?.pick?.edits || []).map((x) => x.kind);

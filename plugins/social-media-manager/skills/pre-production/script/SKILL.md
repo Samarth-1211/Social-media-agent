@@ -41,7 +41,7 @@ Stage contract: reads `client`, `brief`, `hooks`; optionally `concept`, `researc
    - **the caption** (first line survives the "...more" cut), **one CTA**, 3–5 hashtags, an optional pinned comment (`${CLAUDE_SKILL_DIR}/references/caption-cta.md`);
    - `variant_notes` for every other deliverable (`${CLAUDE_SKILL_DIR}/references/platform-variants.md`).
 
-5. **Timing check** (`voiceover-pacing.md`; `config.pace_overrides` replaces a default). Count spoken words per scene (numbers as said), subtract marked pauses, compare with the language's range and hard max. Fix every scene that's over: cut words, move a fact to a card, or re-time with a scene that has room. Check the hook line ends by 3 s, a pattern change every 1.5–3 s, no static scene over 4 s, cards held long enough. Record `timing_ok` and `timing_notes`.
+5. **Timing check** (`voiceover-pacing.md`; `config.pace_overrides` replaces a default). Count spoken words per scene (numbers as said), subtract marked pauses, compare with the language's range and hard max. Fix every scene that's over: cut words, move a fact to a card, or re-time with a scene that has room. Check the hook line ends by 3 s, a pattern change every 1.5–3 s, no static scene over 4 s, every card held at least max(1.0 s, words ÷ 3 + 0.5 s), re-checked after any re-timing. Record `timing_ok` and `timing_notes`.
 
 6. **Fact guard** (`${CLAUDE_SKILL_DIR}/references/fact-guard.md`). Every price, offer, claim, number and proof traces to the brief, profile or research; prices exactly as `offer_detail`; "free" with its condition. Anything else is removed or becomes `{{needed: …}}` with an `unlock`. Record `facts_ok` and `fact_flags`.
 
@@ -57,9 +57,9 @@ Stage contract: reads `client`, `brief`, `hooks`; optionally `concept`, `researc
 
 12. **Self-check** (`${CLAUDE_SKILL_DIR}/checklists/before-showing.md`, SC1–SC10) into `self_check`.
 
-13. **Save** after `get_now`: the `script` output (`version` + 1, `pick.status: pending`, `downstream: null`), the Drive file, a log line "script v<n>: A <structure> / B <structure>, recommended <id>". Re-read and confirm. Producer-run: hand back the version; the producer requests the gate.
+13. **Save** after `get_now`: the `script` output (`version` + 1, `pick.status: pending`, `downstream: null`), the Drive file (listed in the output's `files`, a list of links), a log line "script v<n>: A <structure> / B <structure>, recommended <id>". Validate the record against `script.schema.json` before saving; re-read and confirm. Producer-run: hand back the version; the producer requests the gate.
 
-14. **Show the script pick** (`${CLAUDE_SKILL_DIR}/templates/script-pick.md`) and stop. Run directly: request the gate yourself (`record_gate` request, `shown_outputs: {script: <v>}`), which sets `waiting_on: editor`. The full scene table (`${CLAUDE_SKILL_DIR}/templates/script-version.md`) only when asked.
+14. **Show the script pick** (`${CLAUDE_SKILL_DIR}/templates/script-pick.md`) and stop. Run directly: request the gate yourself (`record_gate` request, `shown_outputs: {script: <v>}`), which sets `waiting_on: editor`. The gate record has only the job schema's gate fields: `gate_label` stays in `stages.yaml` and is never written into it. The full scene table (`${CLAUDE_SKILL_DIR}/templates/script-version.md`) only when asked.
 
 15. **Changes from client feedback** (the producer reopened `script` after `client-feedback` and a confirmed route):
     1. Read the routed items through storage: the job's latest `client_feedback` entry, items with `target_stage: script` and label `in_scope` or `change_request`, with the client's `quote` and the team's `change`. Items for `localise` are left for that stage; it re-runs after you.
@@ -94,9 +94,9 @@ Stage contract: reads `client`, `brief`, `hooks`; optionally `concept`, `researc
 
 On a pick with edits: apply every edit, then **re-run steps 5–10 on the changed scenes** (and timing on the whole version for `length`), and set `rechecked: true`. If an edit breaks a rule (an invented price, over the pace limit), say so in one line with your nearest fix and ask before saving.
 
-Then build `downstream` from the final picked version: `scenes`, `shot_list_seed` (n, `visual_action`, `asset_hint`, `must_be_real`), `audio_cues` (n, times, `vo_line`, `sfx`, `music_cue`), `caption`, `cta`, `keep_as_is` (the brief's list plus every price and date used), and `learning` (`hook_formula_id` from the hook, `structure_type`, `angle_type`, `outcome: untested`).
+Then build `downstream` from the final picked version, on **every** pick (a plain "ok" too), with all its required fields: `version_id`, `structure_type`, `duration_sec`, `language`, `platform`, `scenes`, `shot_list_seed` (n, `visual_action`, `asset_hint`, `must_be_real`), `audio_cues` (n, times, `vo_line`, `sfx`, `music_cue`), `caption`, `cta`, `keep_as_is` (the brief's list plus every price and date used), and `learning` (`hook_formula_id` from the hook, `structure_type`, `angle_type`, `outcome: untested`).
 
-Order matters (gate rules §3 check the versions shown): **first** `record_gate` the decision (`approved`, note "script pick: <id><, edits: …>"; the record carries only the job schema's gate fields), while `script` is still at the version shown; **then** save `pick` + `downstream` as `script` version + 1. That version records the editor's choice; it doesn't need a new gate. Reply in one line ("Picked A (scene 7 line changed, re-checked). Localise next.") and run on: producer step 6, then `localise`.
+Order matters (gate rules §3 check the versions shown): **first** `record_gate` the decision (`approved`, note "script pick: <id><, edits: …>"; the record carries only the job schema's gate fields), while `script` is still at the version shown; **then** save `pick` + `downstream` as `script` version + 1, validated against `script.schema.json`, in both the job's output cell and the Drive file. That version records the editor's choice; it doesn't need a new gate. Reply in one line ("Picked A (scene 7 line changed, re-checked). Localise next.") and run on: producer step 6, then `localise`.
 
 ## If it fails
 
