@@ -57,6 +57,8 @@ Every operation reads before it writes. "Record" means the logical record in `li
 | `set_latest_insight` | `client_id`, `insight_id` | none | Operational, like `next_job_number`: writes `latest_insight_id` without bumping the client `version` or changelog. |
 | `list_tasks` | filter: status, client, kind, `needs_browser` | tasks | Tasks tab only. `tracker` status shows pending ones. |
 | `save_task` | whole task, `expected_version` (none for a new one) | new version | New `task_id` = `T-<yyyymmdd>-<n>`. Never two pending tasks of the same kind for the same client: update the existing one instead. Tasks are never deleted; finished ones become `done` or `cancelled`. |
+| `list_actions` | filter: status (default `queued`), job | actions, oldest first | Actions tab only (layout v6, Sheets only). Read by the producer's "process approvals" (`skills/control/producer/references/page-actions.md`). |
+| `save_action` | whole action, `expected_version` | new version | Producer only: `processing`, then `done` / `refused` / `failed` with a one-line `result`. The tracker page only appends new rows as `queued`; nobody deletes rows. |
 | `export_all` / `import_all` | folder | files written or rows imported | See `files-backup.md`. Admin only. |
 
 ## 3. Rules for every write

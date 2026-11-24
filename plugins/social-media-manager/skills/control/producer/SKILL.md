@@ -23,6 +23,7 @@ Through the storage layer only (`${CLAUDE_PLUGIN_ROOT}/library/storage/README.md
 | `job` (`get_job`) | Current stage, gates, outputs, credits. Read fresh before every move. |
 | Brand brief (`get_brand_brief`) | The ~15-line client view. **Never load the full client profile** unless a stage needs a field the brief lacks. |
 | `team`, `config` | Who may decide each gate; default budgets and the credit policy. |
+| Page actions (`list_actions`) | Only for "process approvals": the tracker page's queued clicks. |
 
 Stage contract: `intake` reads `client`.
 
@@ -33,6 +34,7 @@ Stage contract: `intake` reads `client`.
 - Job state, only through `create_job`, `update_job`, `record_gate`, `add_credit_entry`, `append_log`:
   - `current_stage`, `stage_history`, `gates`, `waiting_on`, `next_action`;
   - `track`, `assignee`, `deadline`, `status`, `credits`, `log`.
+- Page actions, only through `save_action`: `processing`, then `done` / `refused` / `failed` with a one-line `result`.
 
 Never write another stage's outputs, and never change client records.
 
@@ -46,6 +48,7 @@ Never write another stage's outputs, and never change client records.
    - It's a new ask → intake (step 4).
    - No job in focus and it's unclear which job → list the candidates (ID, title, stage) and ask. Never guess.
    - "status", "board", "credits" → hand to `tracker`.
+   - "process approvals" (or a `/loop` running it) → carry out the tracker page's queued actions with `${CLAUDE_SKILL_DIR}/references/page-actions.md`: each one exactly as if its person had typed it.
 
 3. **Read fresh.** Before every move, call `get_job` and re-read `stages.yaml`. The record outranks memory. Take every timestamp from `get_now` (once per turn that writes); never guess the time. The first time a job comes up in a session, show `tracker`'s catch-up card first. **Auto-pick check:** if the job's pending gate is a creative pick, `config.creative_auto_pick_after_hours` is set, and `get_now` − `requested_at` ≥ that many hours, run the auto-pick in `${CLAUDE_PLUGIN_ROOT}/skills/pre-production/hooks/SKILL.md` §Gate first (whoever opens the job, unless their message is itself a pick), then continue.
 

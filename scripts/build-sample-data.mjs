@@ -13,7 +13,7 @@ const P = path.join(ROOT, 'plugins', 'social-media-manager', 'library');
 const OUT = path.join(P, 'storage', 'tracker-page', 'sample-data.json');
 const ex = (n) => JSON.parse(fs.readFileSync(path.join(P, 'contracts', 'examples', `${n}.example.json`), 'utf8'));
 
-const clientA = { ...ex('client'), next_job_number: 4 }; // SHL-01, SHL-02 and SHL-03 exist in the sample
+const clientA = { ...ex('client'), next_job_number: 5 }; // SHL-01 to SHL-04 exist in the sample
 const clientB = {
   client_id: 'narmada-heights',
   client_code: 'NRH',
@@ -63,7 +63,7 @@ const clientB = {
   updated_at: '2026-11-19T15:00:00+05:30',
 };
 
-const job1 = ex('job');
+const job1 = ex('job'); // moved on to the client's script approval below (layout v6 demo)
 const job2 = {
   job_id: 'SHL-02',
   client_id: 'shubh-laundry',
@@ -411,6 +411,67 @@ const job4 = {
   created_at: '2026-11-22T10:00:00+05:30',
   updated_at: '2026-11-22T10:40:00+05:30',
 };
+
+// ── Layout v6 (tracker page actions): two jobs with real pre-production work, so the project page and its buttons
+// can be previewed. SHL-01 moves on from the job example to the client's script approval (the brief, script v2
+// picked and localised_script v1 examples). SHL-04 is a demo copy of it held at the script pick (script v1, A or B).
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const exBrief = ex('brief');
+const exScript = ex('script');
+const exLoc = ex('localised_script');
+const output = (stage, field, version, by, at, summary, data, files) => ({ version, schema: `${field}.schema.json`, stage, by, summary, data, ...(files ? { files } : {}), updated_at: at });
+const scriptV1 = (jobId) => ({
+  ...clone(exScript),
+  job_id: jobId,
+  version: 1,
+  pick: { status: 'pending', version_id: null, edits: [], reply: null, decided_by: null, decided_by_role: null, decided_at: null },
+  downstream: null,
+  updated_at: '2026-11-15T12:45:00+05:30',
+});
+const scriptSummary1 = 'Two versions, 20 s each: A "Wahi sofa, wash ke baad" (before/after, recommended) and B "Ek WhatsApp, chaar steps".';
+const briefOut = (jobId) => output('brief', 'brief', 1, 'samarth', '2026-11-15T12:00:00+05:30', 'Diwali curtain + sofa offer, 20% off till 25 Nov; quick offer-card reel, 20 s.', { ...clone(exBrief), job_id: jobId });
+
+job1.outputs.brief = briefOut('SHL-01');
+job1.outputs.script = output('script', 'script', 2, 'ravi', exScript.updated_at, 'Ravi picked A (scene 7 line changed, re-checked).', clone(exScript));
+job1.outputs.localised_script = output('localise', 'localised_script', 1, 'ravi', exLoc.updated_at, 'Hinglish voice-over, captions and the WhatsApp review message for Neha ji.', clone(exLoc));
+job1.current_stage = 'client-script-approval';
+job1.waiting_on = 'client';
+job1.next_action = "Ravi to send the review message to Neha ji and record her reply.";
+job1.stage_history = [
+  ...job1.stage_history.filter((h) => h.stage !== 'script'),
+  { stage: 'script', status: 'done', started_at: '2026-11-15T12:44:00+05:30', finished_at: '2026-11-15T15:10:00+05:30', by: 'ravi' },
+  { stage: 'localise', status: 'done', started_at: '2026-11-15T15:10:00+05:30', finished_at: '2026-11-15T15:12:00+05:30', by: 'system' },
+  { stage: 'client-script-approval', status: 'in_progress', started_at: '2026-11-15T15:12:00+05:30', finished_at: null, by: 'ravi' },
+];
+job1.gates = [
+  ...job1.gates.filter((g) => g.stage !== 'script'),
+  { stage: 'script', kind: 'stage', owner_role: 'editor', status: 'approved', shown_outputs: { script: 1 }, requested_at: '2026-11-15T12:45:00+05:30', decided_by: 'ravi', decided_by_role: 'editor', decided_at: '2026-11-15T15:10:00+05:30', sent_back_to: null, note: 'script pick: A, edits: scene 7 line' },
+  { stage: 'client-script-approval', kind: 'stage', owner_role: 'client', status: 'pending', shown_outputs: { script: 2, localised_script: 1 }, requested_at: '2026-11-15T15:12:00+05:30', decided_by: null, decided_by_role: null, decided_at: null, sent_back_to: null },
+];
+job1.log = [
+  ...job1.log.filter((l) => !l.message.startsWith('script placeholder')),
+  { at: '2026-11-15T12:45:00+05:30', by: 'system', kind: 'event', message: 'script v1: two versions written; waiting on editor (ravi).' },
+  { at: '2026-11-15T15:10:00+05:30', by: 'ravi', kind: 'gate', message: 'script (script pick) approved by ravi (editor): A, scene 7 line changed. Picked on the tracker page.' },
+  { at: '2026-11-15T15:12:00+05:30', by: 'system', kind: 'event', message: 'localise v1 written; client review message ready; waiting on client.' },
+];
+job1.version = 12;
+job1.updated_at = '2026-11-15T15:12:40+05:30';
+
+const job5 = clone(ex('job'));
+Object.assign(job5, {
+  job_id: 'SHL-04',
+  title: 'Diwali offer reel, demo copy held at the script pick',
+  created_at: '2026-11-15T11:00:00+05:30',
+});
+job5.outputs.request.data = { ...job5.outputs.request.data, job_id: 'SHL-04', title: job5.title };
+job5.outputs.brief = briefOut('SHL-04');
+job5.outputs.hooks.data = { ...job5.outputs.hooks.data, job_id: 'SHL-04' };
+job5.outputs.script = output('script', 'script', 1, 'system', '2026-11-15T12:45:00+05:30', scriptSummary1, scriptV1('SHL-04'));
+job5.log = [
+  ...job5.log.filter((l) => !l.message.startsWith('script placeholder')),
+  { at: '2026-11-15T12:45:00+05:30', by: 'system', kind: 'event', message: 'script v1: two versions written; waiting on editor (ravi).' },
+];
+job5.next_action = 'Ravi to pick script A or B (or ask for changes).';
 const team = [
   { handle: 'samarth', name: 'Samarth', role: 'admin', email: 'admin@example.com', active: true, added_at: '2026-11-10T09:00:00+05:30', version: 1, updated_at: '2026-11-10T09:00:00+05:30' },
   ex('team'),
@@ -425,7 +486,7 @@ const add = (rec, data) => {
 };
 add('client', clientA);
 add('client', clientB);
-for (const j of [job1, job2, job3, job4]) {
+for (const j of [job1, job2, job3, job4, job5]) {
   // Credits rows carry client_id for the Dashboard.
   add('job', j);
 }
@@ -435,7 +496,25 @@ add('insight', insightA);
 add('insight', insightB);
 add('task', taskA);
 
-export const sampleRecords = { clients: [clientA, clientB], jobs: [job1, job2, job3, job4], team, insights: [insightA, insightB], tasks: [taskA] };
+// Page actions (layout v6): one done (the SHL-01 pick above), one refused (wrong person), one still queued.
+const actions = [
+  ex('action'),
+  {
+    action_id: 'A-20261115131500-p7x2', created_at: '2026-11-15T13:15:00+05:30', requested_by: 'pooja', kind: 'approve',
+    job_id: 'SHL-04', client_id: 'shubh-laundry', stage: 'script', gate_shown: { script: 1 }, payload: {},
+    status: 'refused', result: "Not recorded: Pooja (designer) can't decide SHL-04's script pick. Ravi (assigned editor) or Samarth (admin) can.",
+    processed_at: '2026-11-15T13:17:10+05:30', processed_by: 'samarth', version: 2,
+  },
+  {
+    action_id: 'A-20261117180500-m4q8', created_at: '2026-11-17T18:05:00+05:30', requested_by: 'pooja', kind: 'client-feedback',
+    job_id: 'SHL-02', client_id: 'shubh-laundry', stage: 'client-poster-approval', gate_shown: { poster_drafts: 1 },
+    payload: { client_reply: 'Dusra wala achha hai, bas saree ka colour thoda aur laal karo.' },
+    status: 'queued', result: null, processed_at: null, processed_by: null, version: 1,
+  },
+];
+for (const a of actions) add('action', a);
+
+export const sampleRecords = { clients: [clientA, clientB], jobs: [job1, job2, job3, job4, job5], team, insights: [insightA, insightB], tasks: [taskA], actions };
 
 const out = {
   $comment: 'GENERATED by scripts/build-sample-data.mjs. Fictional data in the exact shape Google Sheets get_values returns. Do not edit by hand.',

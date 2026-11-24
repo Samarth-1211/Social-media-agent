@@ -16,6 +16,7 @@ Default folder: `${CLAUDE_PROJECT_DIR}/.tdm-studio/` (or `config.data_folder`). 
 ├── config.json                 config record
 ├── team.json                   [team members]
 ├── tasks.json                  [task records] (pending browser steps and queued research runs)
+├── actions.json                [action records] (export/import only: tracker-page actions, layout v6)
 ├── clients/
 │   ├── index.json              [{client_id, client_code, name, status, business_type, city, updated_at}]
 │   └── <client_id>/
@@ -41,10 +42,10 @@ Records are the logical records from `library/contracts/`. They are validated be
 ## Export (sheet → files)
 
 Admin only.
-1. Read every data tab (`google-sheets.md` §3) and build each client, job, team, insight and task record, plus config.
+1. Read every data tab (`google-sheets.md` §3) and build each client, job, team, insight, task and action record, plus config.
 2. Leave out fields whose cells are empty (`google-sheets.md` §2), so two exports of the same sheet are identical. Validate each one. List any that fail, and export them anyway, flagged in `export-report.md`.
 3. Write the folder above. Each `index.json` lists every record, sorted by ID.
-4. Write `export-report.md`: when, from which sheet (title and ID), and the counts of clients, jobs, team members, insights and tasks.
+4. Write `export-report.md`: when, from which sheet (title and ID), and the counts of clients, jobs, team members, insights, tasks and page actions.
    Raw research files stay in Drive; export lists their links (`raw_files`) but doesn't copy them.
 
 The job file keeps only the last 20 log entries. The full log stays in the sheet. To keep it too, also save the raw Log tab as `log-full.json`.
@@ -67,6 +68,7 @@ Admin only. Confirm the target sheet by title before writing.
 - Follow every rule in `README.md` §3. `version` and `updated_at` work the same way.
 - `get_now` in files mode: read the computer's clock (for example `date -Iseconds` in a shell) and convert it to India time. If no clock is available, ask.
 - Regenerate `client.md` and `job.md`, and update the `index.json` files, on every save.
+- Page actions (layout v6) don't exist in files mode: the tracker page needs the sheet, so the Actions tab has no file. An export writes `actions.json` (all rows) only so an import can restore them.
 - Insights and tasks work as in the sheet: `save_insight` writes `insight.json` whole (findings inside it) and updates `insights/index.json`; `set_latest_insight` changes only `latest_insight_id` in `client.json`; `save_task` rewrites `tasks.json` with the one task changed.
 - `job.json` keeps only the last 20 log entries, so **append every log entry to `jobs/<job_id>/log-full.json` as well**. That file plays the part of the sheet's Log tab; import uses it, when present, to restore the full log.
 

@@ -1,4 +1,4 @@
-// Converts logical records (client, job, team, insight, task, config) to Google Sheets rows and back,
+// Converts logical records (client, job, team, insight, task, action, config) to Google Sheets rows and back,
 // following plugins/social-media-manager/library/storage/sheet-layout.json.
 // Dev tooling: used by validate.mjs (offline round trip) and the storage scenario tests.
 // Skills follow the same rules in prose (library/storage/google-sheets.md); this file is the executable spec.
@@ -52,9 +52,9 @@ function setPath(obj, p, v) {
   o[keys.at(-1)] = v;
 }
 const tabsFor = (record) => layout.tabs.filter((t) => t.record === record);
-const parentKeyOf = { client: 'client_id', job: 'job_id', team: 'handle', insight: 'insight_id', task: 'task_id' };
+const parentKeyOf = { client: 'client_id', job: 'job_id', team: 'handle', insight: 'insight_id', task: 'task_id', action: 'action_id' };
 // Collection names in decodeAll's result, per record type.
-export const collectionOf = { client: 'clients', job: 'jobs', team: 'team', insight: 'insights', task: 'tasks' };
+export const collectionOf = { client: 'clients', job: 'jobs', team: 'team', insight: 'insights', task: 'tasks', action: 'actions' };
 // Config values that are objects or lists are stored as JSON text.
 const configIsJson = (prop, v) => (v !== null && typeof v === 'object') || prop?.type === 'object' || prop?.type === 'array';
 
@@ -139,7 +139,7 @@ function rowsAsObjects(t, rows) {
 }
 
 export function decodeAll(tabs) {
-  const result = { clients: [], jobs: [], team: [], insights: [], tasks: [], config: null };
+  const result = { clients: [], jobs: [], team: [], insights: [], tasks: [], actions: [], config: null };
   const byRecord = Object.fromEntries(Object.entries(collectionOf).map(([rec, coll]) => [rec, result[coll]]));
 
   for (const t of layout.tabs.filter((x) => x.kind === 'record')) {

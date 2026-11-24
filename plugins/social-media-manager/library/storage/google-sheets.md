@@ -83,6 +83,7 @@ Row 1 of every data tab holds the column keys from `sheet-layout.json`, in order
 | Insights | insight sheet | `insight_id` | insight record (everything except `findings`) |
 | InsightFindings | finding | `insight_id` + `seq` | `insight.findings.<category>[]`, in `seq` order; `category` names the list. Editors may change `pinned` and `struck` here directly. |
 | Tasks | pending task | `task_id` | task record |
+| Actions (layout v6) | tracker-page action | `action_id` | action record: a decision or request made on the tracker page, `queued` until the producer processes it (`skills/control/producer/references/page-actions.md`) |
 | Dashboard | (formulas) | | Never written after setup or an upgrade |
 | BriefQuestions (layout v3) | brief client question | `job_id` + `n` | Nothing: a **mirror** of `outputs.brief.data.client_questions`, for the Dashboard and phone answers (§8) |
 
@@ -155,7 +156,7 @@ v1 reads whole tabs. That is fine for thousands of rows. If any tab passes about
 
 ## 7. Upgrading a sheet built with an older layout
 
-`sheet-setup.json` → `upgrades` lists the steps for each layout change. A sheet with no **Insights** tab is on layout v1 (Group 1, plugin 0.1.0); a sheet with Insights but no **BriefQuestions** tab is on layout v2 (0.2.0-alpha.1); a sheet whose **Learnings** tab has no `hook_formula_id` column is on layout v3 (0.2.0-alpha.2). A sheet whose **Clients** tab has no `pronunciation` column is on layout v4 (0.3.0-alpha.1). Apply the upgrades in order, from the sheet's layout to the current one.
+`sheet-setup.json` → `upgrades` lists the steps for each layout change. A sheet with no **Insights** tab is on layout v1 (Group 1, plugin 0.1.0); a sheet with Insights but no **BriefQuestions** tab is on layout v2 (0.2.0-alpha.1); a sheet whose **Learnings** tab has no `hook_formula_id` column is on layout v3 (0.2.0-alpha.2). A sheet whose **Clients** tab has no `pronunciation` column is on layout v4 (0.3.0-alpha.1). A sheet with no **Actions** tab is on layout v5 (0.4.0-alpha.1). Apply the upgrades in order, from the sheet's layout to the current one.
 
 Admin only. Confirm the sheet by title first, and make a backup (`files-backup.md`, Export) if it holds real data.
 1. Send `upgrades[0].batch_requests` in one `update_spreadsheet` call. It widens Jobs, Clients and Credits, adds the Insights, InsightFindings and Tasks tabs at the end, and adds dropdowns and protected headers. Existing columns and tabs don't move.
@@ -170,6 +171,8 @@ Existing rows need nothing: the new cells are empty, which means `urgent` false,
 **v3 → v4 (concept + hooks), `upgrades[2]`:** the same four steps. Its `batch_requests` add the `angle_type` and `outcome` dropdowns and protect the new Learnings header cells. Its `values` write the three new Learnings headers (`hook_formula_id`, `angle_type`, `outcome`, after `source_job`). Its `append` adds `concepts_count`, `hooks_per_concept` and `creative_auto_pick_after_hours` (empty = off) to Config. Existing rows need nothing: empty cells mean a learning isn't about a hook formula or angle.
 
 **v4 → v5 (script + localise), `upgrades[3]`:** the same four steps. Its `batch_requests` widen the Clients tab and protect the new header cell. Its `values` write the `pronunciation` header (after `latest_insight_id`). Its `append` adds `script_versions` (2), `pace_overrides` (`{}`), `localise_variant_languages` (`[]`) and `caption_max_chars_per_line` (32) to Config. Existing rows need nothing: an empty `pronunciation` cell means no entries yet.
+
+**v5 → v6 (tracker-page actions), `upgrades[4]`:** the same four steps. Its `batch_requests` add the **Actions** tab at the end (header, protection, `kind` and `status` dropdowns). Its `values` write the Actions header. Its `append` is empty (no new Config rows). Nothing else changes. Until a sheet has the Actions tab, the tracker page's buttons stay off and say why.
 
 ## 8. Brief records (layout v3)
 
