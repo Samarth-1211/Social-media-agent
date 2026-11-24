@@ -26,6 +26,8 @@ Claude as TDM Groups' social media production team: video jobs, poster jobs, cli
 | `brief` | pre-production | The job's creative brief: drafted by itself after intake (after research), asks only what's missing, in plain words; reads the client's reply to brief questions |
 | `concept` | pre-production | Three insight-led short-video concepts from the brief and research, each a different angle, scored with one recommended (full track; no gate of its own) |
 | `hooks` | pre-production | 8–10 three-layer hooks per concept (or for the reused format on the quick track), scored and critiqued; runs the editor's creative pick (concept + hook) |
+| `script` | pre-production | Two timed, fact-checked short-video scripts from the picked concept and hook: storyboard-ready scenes, cards, voiceover, caption and one CTA; runs the editor's script pick |
+| `localise` | pre-production | The picked script in natural Hinglish, Hindi or English for the audience: Devanagari when needed, spoken numbers, a voiceover script, SRT captions, a back-translation check and a short WhatsApp message for the client; runs the client's script approval |
 
 You don't need to name the skill: just say what you want, in English, Hindi or Hinglish. Each skill can also be called directly as `/social-media-manager:<skill>`.
 
@@ -118,13 +120,32 @@ Both start by themselves after the brief is approved. On the full track you get 
 
 Hooks never invent a number, review or deadline; anything the client must supply shows as `{{needed}}`. If `creative_auto_pick_after_hours` is set in Config (off by default), the ⭐ pair is picked automatically after that many hours without a reply, and logged as `system`.
 
+**Scripts and localisation (script, localise)**
+
+The script starts by itself after the creative pick: two versions with different structures, both opening with the picked hook, shown side by side with one recommended. After the pick, localise runs straight away (no approval) and hands you a WhatsApp message for the client.
+
+| Say | What happens | Who |
+|---|---|---|
+| "script SHL-03" | Writes (or rewrites) the two versions and shows the script pick | assignee, admin |
+| "A" / "B" / "ok" (= the ⭐ version) | Picks that version; localise runs next | the assigned editor, or admin |
+| "A with scene 3 from B" | Takes B's scene 3 into A, re-timed and re-checked | the assigned editor, or admin |
+| "scene 4 line: <your words>" | Uses your line in that scene (timing and facts re-checked) | the assigned editor, or admin |
+| "shorter by 5 sec" / "15 sec ka karo" | Cuts to the new length, keeping the hook, the payoff and the CTA | the assigned editor, or admin |
+| "none, <what to change>" | Two new versions in that direction | the assigned editor, or admin |
+| "A poora dikhao" | The full scene table of version A | anyone |
+| "localise SHL-03" / "localised script dikhao" | Runs (or shows) the localised script: voiceover script, captions, caption post, client message | assignee, admin |
+| (after localise) send the message, then "client approved: <their words>" or "client feedback: <their words>" | Records the client's OK, or hands their changes to client-feedback (wording goes back to localise, content to the script) | assignee, admin |
+
+The script never invents a price, number, review or deadline: anything missing shows as `{{needed}}` for the editor, and the client is asked for it in plain words, never shown the placeholder. Devanagari is checked with IndicXlit when it is installed; otherwise it is marked "unverified" with the words to check. New brand, place or people names get a pronunciation proposal, saved to the client profile once someone confirms.
+
 **Who approves what**
 
 | Gate | Approver |
 |---|---|
 | intake, brief, production plan, finish, final poster, delivery | admin (Samarth) |
-| creative pick (concept + hook), script, localise, style bible, casting, storyboard, voice & music, QA, edit stages, poster drafts | the assigned editor or designer, or admin |
-| client approvals | the assignee or admin, from the client's own message |
+| creative pick (concept + hook), script pick, style bible, casting, storyboard, voice & music, QA, edit stages, poster drafts | the assigned editor or designer, or admin |
+| client approvals (script review, final video, poster) | the assignee or admin, from the client's own message |
+| localise | nobody: it goes straight to the client's script approval |
 | going over a job's credit budget | admin |
 | paid research (Apify, only if switched on) above the auto-approve limit | admin |
 
@@ -198,9 +219,9 @@ Do the "Scheduled run" in references/automation.md §5, against the Google Sheet
 | Folder | What it holds |
 |---|---|
 | `skills/<group>/<skill>/` | One folder per skill. Groups: control, brand, pre-production, generation, quality, post-production, delivery. Each group's README lists its skills. |
-| `library/contracts/` | `stages.yaml` (the pipeline: 25 stages; `intake`, `research`, `brief`, `concept` and `hooks` active, the rest placeholders) and the JSON schemas |
+| `library/contracts/` | `stages.yaml` (the pipeline: 25 stages; `intake`, `research`, `brief`, `concept`, `hooks`, `script`, `localise` and `client-script-approval` active, the rest placeholders) and the JSON schemas |
 | `library/storage/` | How data is saved: Google Sheets layout and rules, setup, backups, tracker page |
-| `library/knowledge/` | Shared know-how: `india-consumer-psychology.md` (evidence on Indian buyers, levers L01–L20, audience variants, language), used by concept, hooks and later script and localise |
+| `library/knowledge/` | Shared know-how: `india-consumer-psychology.md` (evidence on Indian buyers, levers L01–L20, audience variants, language: concept, hooks, script, localise), `voiceover-pacing.md` (speaking pace, reading time, caption limits) and `ai-tells.md` (what makes copy read as AI, in English and Hinglish/Hindi) |
 | `library/templates/` | Shared views: job record, client record, brand brief |
 | `agents/` | Subagents: `market-researcher` (runs research in its own context) |
 | `.mcp.json` | The Higgsfield remote MCP server |

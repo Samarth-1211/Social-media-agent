@@ -231,3 +231,7 @@ No protected file changes are needed for it to work. P2 improves the routing, an
 6. **Live tests (on "run"):** `evals/scenarios/script-localise.md` S1–S6, L1–L7, A1 and R1, plus one end-to-end run (intake → … → hooks pick → script pick → localise → client approval), headless, files mode.
 7. **Regression:** `git diff --stat main` must show no protected path (`skills/control/**`, `skills/brand/**`, `research-methods/`, `agents/market-researcher.md`, `brief/`, `concept/`, `hooks/`, existing `library/knowledge/*`, and existing evals and fixtures) other than the applied P-diffs.
 8. **Clean up:** after the merge, remove the worktree `../tdm-script` and the branch (ask first).
+
+## 7. Branch status (M8, 2026-11-24)
+
+**Complete.** 9 commits on `c62ed16`, not merged, not pushed; plugin version still 0.3.0-alpha.1, no tag. 78 files changed vs `main`, none of them protected (R1). Next: the admin decides on the merge (section 6), P1–P9 (P7 and P8 optional), the version, the native-speaker check, and the live re-runs of S6 and A1 after P1/P2/P9.
